@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ontario Grade Planner — Plan Your OSSD Courses for University | Canada Family Guide</title>
+<meta name="description" content="Interactive Ontario high school course planner. Map your Grade 9–12 courses by career stream, track university prerequisites, and plan your path to the OSSD — built for Ontario students and newcomer families.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://canadafamilyguide.com/planner.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ontario Grade Planner — Plan Your OSSD Courses for University | Canada Family Guide">
+<meta property="og:description" content="Interactive Ontario high school course planner. Map your Grade 9–12 courses by career stream, track university prerequisites, and plan your path to the OSSD — built for Ontario students and newcomer families.">
+<meta property="og:url" content="https://canadafamilyguide.com/planner.html">
+<meta property="og:site_name" content="Canada Family Guide">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ontario Grade Planner — Plan Your OSSD Courses for University | Canada Family Guide">
+<meta name="twitter:description" content="Interactive Ontario high school course planner. Map your Grade 9–12 courses by career stream, track university prerequisites, and plan your path to the OSSD — built for Ontario students and newcomer families.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Ontario Grade Planner — Plan Your OSSD Courses for University | Canada Family Guide",
+  "description": "Interactive Ontario high school course planner. Map your Grade 9–12 courses by career stream, track university prerequisites, and plan your path to the OSSD — built for Ontario students and newcomer families.",
+  "url": "https://canadafamilyguide.com/planner.html",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Canada Family Guide",
+    "url": "https://canadafamilyguide.com/"
+  }
+}
+</script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍁</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root{--red:#C8102E;--red-dark:#9B0B22;--white:#F7F5F0;--black:#111;--grey:#555;--light:#EDE9E0;--green:#1a7a4a;--amber:#B8860B}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--black);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;background:rgba(247,245,240,.96);backdrop-filter:blur(8px);border-bottom:1px solid #ddd;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.nav-logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;color:var(--black);text-decoration:none;display:flex;align-items:center;gap:.4rem}
+.nav-logo span{color:var(--red)}
+.nav-links{display:flex;align-items:center;gap:.5rem}
+.nav-home{display:inline-flex;align-items:center;gap:5px;background:var(--red);color:#fff!important;padding:5px 14px;border-radius:3px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700!important;font-size:.82rem;text-decoration:none;transition:background .2s}
+.nav-home:hover{background:var(--red-dark)!important}
+.nav-link{font-size:.82rem;font-weight:500;color:var(--grey);text-decoration:none;padding:5px 10px;border-radius:6px;transition:all .2s}
+.nav-link:hover,.nav-link.active{color:var(--red)}
+.nav-switch{display:flex;align-items:center;gap:.4rem;margin-left:.5rem}
+.nsw-label{font-size:.72rem;color:var(--grey);font-weight:500}
+.nsw-btn{font-size:.75rem;font-weight:600;padding:4px 10px;border-radius:3px;text-decoration:none;border:1px solid #ddd;color:var(--grey);transition:all .2s}
+.nsw-btn:hover{border-color:var(--red);color:var(--red)}
+.nsw-canada,.nsw-india{background:var(--light)}
+@media(max-width:700px){.nav-links .nav-link{display:none}.nav-switch{display:none}}
+.page-header{background:var(--black);color:#fff;padding:7rem 2rem 3rem}
+.page-header-inner{max-width:900px;margin:0 auto}
+.page-label{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.75rem}
+.page-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:800;line-height:1.1;margin-bottom:1rem}
+.page-sub{color:#aaa;font-size:1rem;line-height:1.7;max-width:600px}
+main{max-width:1000px;margin:0 auto;padding:3rem 2rem 5rem}
+
+/* STEP UI */
+.steps-indicator{display:flex;gap:.5rem;align-items:center;margin-bottom:3rem;flex-wrap:wrap}
+.step-dot{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:#aaa}
+.step-dot.active{color:var(--black);font-weight:600}
+.step-dot.done{color:var(--green)}
+.step-num{width:28px;height:28px;border-radius:50%;background:#ddd;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.8rem}
+.step-dot.active .step-num{background:var(--red);color:#fff}
+.step-dot.done .step-num{background:var(--green);color:#fff}
+.step-sep{color:#ddd;font-size:.8rem}
+
+/* STEP PANELS */
+.step-panel{display:none}
+.step-panel.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.step-q{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.5rem;font-weight:700;margin-bottom:.5rem}
+.step-hint{font-size:.95rem;color:var(--grey);margin-bottom:2rem;line-height:1.6}
+
+/* OPTION GRID */
+.option-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-bottom:2.5rem}
+.option-btn{background:#fff;border:2px solid #e0dbd0;border-radius:6px;padding:1.4rem 1.2rem;cursor:pointer;text-align:left;transition:all .2s;position:relative}
+.option-btn:hover{border-color:var(--red);transform:translateY(-2px)}
+.option-btn.selected{border-color:var(--red);background:#fff5f5}
+.option-btn.selected::after{content:'✓';position:absolute;top:.6rem;right:.8rem;color:var(--red);font-weight:700;font-size:1rem}
+.option-icon{font-size:1.8rem;margin-bottom:.6rem}
+.option-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:.3rem}
+.option-desc{font-size:.8rem;color:var(--grey);line-height:1.4}
+
+/* NAV BUTTONS */
+.step-nav{display:flex;gap:1rem;align-items:center}
+.btn-next{background:var(--red);color:#fff;padding:.8rem 2rem;border-radius:3px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.95rem;border:none;cursor:pointer;transition:background .2s}
+.btn-next:hover{background:var(--red-dark)}
+.btn-next:disabled{background:#ccc;cursor:not-allowed}
+.btn-back{background:transparent;color:var(--grey);padding:.8rem 1.5rem;border-radius:3px;border:1px solid #ddd;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:.95rem;cursor:pointer;transition:all .2s}
+.btn-back:hover{border-color:var(--black);color:var(--black)}
+
+/* RESULTS */
+.result-header{background:var(--red);color:#fff;border-radius:8px 8px 0 0;padding:2rem}
+.result-career{font-family:'Plus Jakarta Sans',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.8;margin-bottom:.4rem}
+.result-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:.5rem}
+.result-sub{font-size:.95rem;opacity:.9;line-height:1.6}
+.result-body{background:#fff;border:1px solid #e0dbd0;border-top:none;border-radius:0 0 8px 8px;padding:2rem}
+
+.year-block{margin-bottom:2.5rem}
+.year-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
+.year-badge{background:var(--red);color:#fff;font-size:.7rem;font-weight:700;padding:.2rem .6rem;border-radius:2px;letter-spacing:.05em}
+.course-table{width:100%;border-collapse:collapse;font-size:.9rem}
+.course-table th{background:var(--light);font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;padding:.6rem 1rem;text-align:left;border-bottom:1px solid #ddd}
+.course-table td{padding:.7rem 1rem;border-bottom:1px solid #f0ebe0;vertical-align:top}
+.course-table tr:last-child td{border-bottom:none}
+.course-type{display:inline-block;font-size:.7rem;font-weight:700;padding:.15rem .5rem;border-radius:2px}
+.type-must{background:#ffe5e5;color:var(--red)}
+.type-rec{background:#e5ffe5;color:var(--green)}
+.type-opt{background:#e8f0ff;color:#2255aa}
+.type-avoid{background:#fff3cd;color:#856404}
+.course-note{font-size:.8rem;color:var(--grey);margin-top:.2rem}
+
+.tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+.tip-card{background:var(--light);border-radius:6px;padding:1.2rem}
+.tip-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem}
+.tip-list{list-style:none;font-size:.85rem;color:var(--grey);line-height:1.8}
+.tip-list li::before{content:'→ ';color:var(--red);font-weight:700}
+
+.uni-bar{background:var(--black);color:#fff;border-radius:6px;padding:1.5rem;margin-top:1.5rem}
+.uni-bar-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;margin-bottom:1rem}
+.uni-list{display:flex;flex-wrap:wrap;gap:.6rem}
+.uni-tag{background:#1a1a1a;border:1px solid #444;border-radius:3px;padding:.4rem 1rem;font-size:.82rem;color:#ddd}
+.uni-tag strong{color:#fff}
+
+.restart-btn{background:transparent;border:2px solid var(--red);color:var(--red);padding:.7rem 1.5rem;border-radius:3px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;margin-top:1.5rem;transition:all .2s}
+.restart-btn:hover{background:var(--red);color:#fff}
+
+footer{background:var(--black);color:#aaa;text-align:center;padding:2rem;font-size:.85rem;margin-top:0}
+footer strong{color:#fff}footer a{color:var(--red);text-decoration:none}
+@media(max-width:700px){.nav-links{display:none}.tips-grid{grid-template-columns:1fr}.option-grid{grid-template-columns:1fr 1fr}}
+
+  .country-switcher { display: flex; align-items: center; background: rgba(255,255,255,0.15); border-radius: 999px; padding: 3px; gap: 2px; margin-left: 12px; }
+  .csw-btn { display: flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 999px; border: none; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.18s; background: none; color: var(--grey); opacity: 0.7; text-decoration: none; white-space: nowrap; }
+  .csw-btn:hover { opacity: 1; }
+  .csw-btn.csw-active { opacity: 1; }
+  .csw-india.csw-active { background: #FF9933; color: #7a3a00; }
+  .csw-canada.csw-active { background: #C8102E; color: #fff; }
+
+
+.oop-callout{background:#fff;border:1px solid #e0dbd0;border-left:4px solid var(--red);border-radius:6px;padding:1.5rem;margin-top:1.5rem}
+.oop-callout-header{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.oop-callout-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:1rem;color:var(--black)}
+.oop-callout-toggle{font-size:.8rem;color:var(--red);font-weight:600}
+.oop-body{margin-top:1rem;display:none}
+.oop-body.open{display:block;animation:fadeIn .25s ease}
+.oop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-top:.8rem}
+.oop-card{background:var(--light);border-radius:4px;padding:1rem}
+.oop-card-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.9rem;margin-bottom:.4rem;color:var(--black)}
+.oop-card-detail{font-size:.82rem;color:var(--grey);line-height:1.5}
+.oop-card-badge{display:inline-block;font-size:.7rem;font-weight:700;background:var(--red);color:#fff;padding:.15rem .5rem;border-radius:2px;margin-top:.4rem}
+.oop-note{font-size:.82rem;color:var(--grey);line-height:1.6;margin-top:1rem;padding-top:.8rem;border-top:1px solid #e0dbd0}
+
+
+.nav-home{display:inline-flex;align-items:center;gap:5px;background:var(--red);color:#fff!important;padding:5px 14px;border-radius:3px;font-weight:700!important;font-size:.82rem;transition:background .2s}
+.nav-home:hover{background:var(--red-dark)!important;color:#fff!important}
+.nav-switch{display:flex;align-items:center;gap:6px;border-left:1px solid #e0dbd0;padding-left:1rem;margin-left:.5rem}
+.nsw-label{font-size:11px;color:var(--grey);font-weight:500}
+.nsw-btn{display:inline-flex;align-items:center;gap:4px;padding:5px 12px;border-radius:999px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:11.5px;text-decoration:none;border:2px solid transparent;transition:all .2s;white-space:nowrap}
+.nsw-canada{background:var(--red);color:#fff;border-color:var(--red)}
+.nsw-india{background:#fff;color:#7a3a00;border-color:#FF9933}
+.nsw-india:hover{background:#FF9933}
+@media(max-width:700px){.nsw-label{display:none}.nsw-btn{padding:4px 10px;font-size:10.5px}.nav-links{display:none}}
+
+
+/* ── UX POLISH PATCH ── */
+/* Body: base font size up to 16px for readability */
+body { font-size: 16px; line-height: 1.75; }
+
+/* Paragraphs: comfortable line height and spacing */
+p { line-height: 1.8; margin-bottom: 1.1em; }
+
+/* Section subtitles: slightly larger, more breathing room */
+.section-sub { font-size: 1rem !important; line-height: 1.75 !important; }
+.page-sub    { font-size: 1rem !important; line-height: 1.75 !important; }
+.hero-sub    { font-size: 1.05rem !important; line-height: 1.8 !important; }
+
+/* Nav links: 0.82rem → 0.9rem */
+.nav-link  { font-size: 0.9rem !important; }
+.nav-home  { font-size: 0.88rem !important; }
+.nsw-btn   { font-size: 0.82rem !important; }
+
+/* Card padding boost */
+.section-card  { padding: 2rem 2rem 1.8rem !important; }
+.flow-card     { padding: 1.6rem 1.7rem !important; }
+.account-card .account-body { padding: 1.3rem 1.4rem !important; }
+.outcome-card  { padding: 1.4rem !important; }
+.fact-card     { padding: 1.4rem 1.6rem !important; }
+.checklist-box { padding: 1.6rem !important; }
+.mistakes-box  { padding: 1.6rem !important; }
+.mistake-text  { font-size: 0.92rem !important; line-height: 1.75 !important; }
+
+/* Max-width: allow content to breathe on large screens */
+main               { max-width: 1100px !important; }
+.page-header-inner { max-width: 1000px !important; }
+
+/* Highlight utility class */
+.highlight { font-weight: 600; color: #111; }
+
+/* Section spacing */
+.section-label { margin-bottom: 0.6rem !important; }
+.section-title { margin-bottom: 1rem !important; }
+
+/* FAQ text size */
+.faq-q   { font-size: 0.95rem !important; padding: 1.1rem 1.3rem !important; }
+.faq-a   { font-size: 0.92rem !important; line-height: 1.75 !important; padding: 1rem 1.3rem !important; }
+
+/* Table readability */
+table    { font-size: 0.9rem !important; }
+
+/* Mobile — most important */
+@media (max-width: 768px) {
+  body          { font-size: 16px !important; }
+  .section-sub  { font-size: 1rem !important; }
+  .page-sub     { font-size: 0.98rem !important; }
+  p             { font-size: 0.97rem !important; line-height: 1.8 !important; }
+  .nav-link     { font-size: 0.88rem !important; }
+  .faq-q        { font-size: 0.92rem !important; }
+  .faq-a        { font-size: 0.9rem !important; }
+  .mistake-text { font-size: 0.9rem !important; }
+}
+
+@media (max-width: 480px) {
+  body { font-size: 15.5px !important; }
+  main { padding: 2.5rem 1.2rem 4rem !important; }
+}
+
+
+/* ── MOBILE FIX PATCH ── */
+
+/* Global image safety */
+img { max-width: 100%; height: auto; }
+
+/* Tables: horizontal scroll on mobile */
+table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* On mobile, tiny labels get a readable floor */
+@media (max-width: 768px) {
+  .section-label,
+  .page-label,
+  .card-badge,
+  .badge-live,
+  .badge-soon,
+  .hero-eyebrow,
+  .about-label,
+  .hero-label,
+  .sections-label,
+  .start-here-label,
+  .next-step-label,
+  .outcome-card-demand,
+  .ai-status,
+  .tool-card-category,
+  .tl-phase-label,
+  .nsw-label,
+  .plan-week-header  { font-size: 0.72rem !important; }
+
+  /* Flow priority badges */
+  .flow-priority,
+  .account-best,
+  .card-soon-note,
+  .etf-tag,
+  .ftag             { font-size: 0.72rem !important; }
+
+  /* Slightly larger section labels for readability */
+  .section-label    { font-size: 0.75rem !important; letter-spacing: .1em !important; }
+
+  /* Card text readable on small screens */
+  .card-desc        { font-size: 0.9rem !important; line-height: 1.65 !important; }
+  .card-list li     { font-size: 0.85rem !important; }
+  .outcome-card-note{ font-size: 0.85rem !important; }
+  .ai-branch-note   { font-size: 0.85rem !important; }
+  .tool-card-use    { font-size: 0.87rem !important; }
+  .mistake-text     { font-size: 0.9rem !important; }
+  .fact-desc        { font-size: 0.85rem !important; }
+
+  /* Page headers more compact on mobile */
+  .page-header      { padding: 5rem 1.5rem 2.5rem !important; }
+  .page-sub         { font-size: 0.95rem !important; }
+
+  /* Stats/grids stack nicely */
+  .reality-grid,
+  .compare-grid     { grid-template-columns: 1fr !important; }
+  
+  /* Travel itinerary readable */
+  .itin-body        { font-size: 0.88rem !important; }
+  .itin-tip         { font-size: 0.83rem !important; }
+
+  /* Hero section padding */
+  .hero-content,
+  .hero-inner       { padding: 0 1rem !important; }
+
+  /* Next step links wrap cleanly */
+  .next-step-links  { gap: 0.5rem !important; }
+  .next-step-link   { font-size: 0.82rem !important; padding: 0.6rem 1rem !important; }
+
+  /* Start flow steps */
+  .sf-step          { font-size: 0.78rem !important; padding: 0.6rem 1rem !important; }
+
+  /* Entry paths stack */
+  .entry-paths      { flex-direction: column !important; }
+  .entry-path       { min-width: unset !important; }
+
+  /* Tools stack single column */
+  .tools-stack,
+  .ai-impact-grid,
+  .outcome-cards    { grid-template-columns: 1fr !important; }
+}
+
+@media (max-width: 480px) {
+  /* Section cards single column */
+  .section-cards    { grid-template-columns: 1fr !important; }
+  
+  /* Compare table readable */
+  .compare-col-header { font-size: 0.9rem !important; }
+  .compare-row        { font-size: 0.82rem !important; }
+  
+  /* About page photo safe */
+  .photo-ring img,
+  .hero-photo       { width: 130px !important; height: 130px !important; }
+  .photo-ring,
+  .hero-photo-wrap  { width: 130px !important; height: 130px !important; }
+
+  /* Timeline phases stack */
+  .tl-phases        { grid-template-columns: 1fr !important; }
+  .tl-phase         { border-right: none !important; border-bottom: 1px solid #e0dbd0 !important; }
+  .tl-phase:last-child { border-bottom: none !important; }
+
+  /* Why pillars stack */
+  .why-pillars,
+  .pillars          { grid-template-columns: 1fr !important; }
+
+  /* Facts grid single col */
+  .facts-inner      { grid-template-columns: 1fr !important; }
+
+  /* Stats row wrap */
+  .stats-row,
+  .stats            { flex-direction: column !important; }
+  .stat             { border-right: none !important; border-bottom: 1px solid #e0dbd0 !important; }
+  .stat:last-child  { border-bottom: none !important; }
+
+  /* Hero padding tight */
+  main              { padding: 2rem 1rem 3rem !important; }
+}
+
+
+/* ── ALIGNMENT CONSISTENCY PATCH ── */
+
+/* Standardise all main content containers to same max-width and left-align */
+main,
+.sections,
+.story-section .story-inner,
+.why-section .why-inner,
+.start-here-inner,
+.about-strip .about-inner,
+.india-inner             { max-width: 1100px !important; margin-left: auto !important; margin-right: auto !important; }
+
+/* Page headers — same width as content so header text aligns with body text */
+.page-header-inner       { max-width: 1100px !important; margin-left: auto !important; margin-right: auto !important; }
+
+/* Hero content — always left-aligned, never centered */
+.hero-content,
+.hero-inner,
+.hero-left               { text-align: left !important; }
+
+/* About page hero — override center alignment to match all other pages */
+.hero                    { text-align: left !important; align-items: flex-start !important; }
+
+/* About page specific — re-align centered elements to left */
+.hero .hero-eyebrow      { text-align: left !important; }
+.hero .hero-name         { text-align: left !important; }
+.hero .hero-role         { text-align: left !important; }
+.hero .hero-text         { text-align: left !important; }
+.hero .stats             { margin-left: 0 !important; }
+
+/* Stats row on about — left-align, keep max-width sensible */
+.stats                   { max-width: 420px !important; margin-left: 0 !important; }
+
+/* Photo on about — left-align */
+.photo-ring              { margin-left: 0 !important; margin-right: auto !important; }
+
+/* Connect section on about — keep centered (it's a CTA, centered is correct) */
+.connect                 { text-align: center !important; }
+.connect .connect-title,
+.connect .connect-sub    { text-align: center !important; }
+
+/* Consistent left padding across all page types */
+.page-header             { padding-left: 2rem !important; padding-right: 2rem !important; }
+
+/* Section labels and titles — always left */
+.section-label,
+.section-title,
+.section-sub,
+.page-label,
+.page-title,
+.page-sub                { text-align: left !important; }
+
+/* Why/philosophy section inner content — left align */
+.why-inner .section-label,
+.why-inner .section-title { text-align: left !important; }
+
+/* About story, facts, why sections — consistent left padding */
+.story, .facts, .why, 
+.disclaimer, .connect    { padding-left: 2rem !important; padding-right: 2rem !important; }
+
+/* Standardise hero padding to match page-header padding */
+.page-header             { padding-top: 7rem !important; padding-bottom: 3rem !important; }
+
+@media (max-width: 768px) {
+  main,
+  .page-header-inner,
+  .sections              { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+  .page-header           { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+  .story, .facts, .why,
+  .disclaimer, .connect  { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+}
+
+
+/* ── LIGHT HEADER PATCH — replaces all dark headers ── */
+.page-header {
+  background: var(--white, #F7F5F0) !important;
+  color: var(--black, #0f0f0f) !important;
+  padding: 7rem 2rem 3.5rem !important;
+  border-bottom: 1px solid #e0dbd0;
+}
+.page-label {
+  font-size: .72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+  color: var(--red, #C8102E) !important;
+  margin-bottom: .6rem !important;
+  background: none !important;
+}
+.page-title {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: clamp(2rem, 4vw, 3rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  margin-bottom: 1rem !important;
+  color: var(--black, #0f0f0f) !important;
+}
+.page-sub {
+  color: var(--grey, #555) !important;
+  font-size: 1rem !important;
+  line-height: 1.75 !important;
+  max-width: 640px !important;
+}
+
+/* Tech-careers hero — was black, now light */
+.hero.hero-light,
+.hero {
+  background: var(--white, #F7F5F0) !important;
+  color: var(--black, #0f0f0f) !important;
+}
+.hero::before { display: none !important; }
+
+/* Hero labels that were light coloured on dark bg */
+.hero-label {
+  color: var(--red, #C8102E) !important;
+  font-size: .72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+}
+
+/* Hero h1 on tech-careers was white, now black */
+.hero h1 { color: var(--black, #0f0f0f) !important; }
+.hero h1 em { color: var(--red, #C8102E) !important; }
+
+/* Hero sub text was grey-on-dark, now dark-on-light */
+.hero-sub { color: var(--grey, #555) !important; }
+
+/* Bullet points on tech-careers hero */
+.hero-bullet { color: var(--black, #0f0f0f) !important; }
+.hero-bullet.bad { color: #c0392b !important; }
+.hero-bullet.good { color: #1a7a4a !important; }
+
+/* CTA button stays red */
+.hero-cta {
+  background: var(--red, #C8102E) !important;
+  color: #fff !important;
+}
+
+/* Education hero — already light but ensure consistency */
+.hero h1 em { color: var(--red, #C8102E) !important; }
+
+/* Remove any gradient overlays */
+.hero-pattern { opacity: .02 !important; }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="education.html">🍁 Canada <span>Path Guide</span></a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-home">🏠 Home</a>
+    <a href="planner.html" class="nav-link active">Grade Planner</a>
+    <a href="streams.html" class="nav-link">Streams</a>
+    <a href="extracurriculars.html" class="nav-link">Activities</a>
+    <a href="community.html" class="nav-link">Community Hours</a>
+    <a href="newcomer.html" class="nav-link">Newcomers</a>
+    <a href="quebec.html" class="nav-link">Quebec/CEGEP</a>
+    <a href="about.html" class="nav-link">About</a>
+  </div>
+  <div class="nav-switch">
+    <span class="nsw-label">Region:</span>
+    <a class="nsw-btn nsw-canada" href="education.html">🇨🇦 Canada</a>
+    <a class="nsw-btn nsw-india" href="india.html">🇮🇳 India</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-label">📋 Interactive Tool</div>
+    <div class="page-title">Grade 9–12 Subject Planner</div>
+    <p class="page-sub">Answer 3 questions. Get your personalized course roadmap — from Grade 9 subjects all the way to university prerequisites and Masters planning.</p>
+  </div>
+</div>
+
+<main>
+  <div class="steps-indicator">
+    <div class="step-dot active" id="dot1"><div class="step-num">1</div> Career Goal</div>
+    <div class="step-sep">—</div>
+    <div class="step-dot" id="dot2"><div class="step-num">2</div> Current Grade</div>
+    <div class="step-sep">—</div>
+    <div class="step-dot" id="dot3"><div class="step-num">3</div> School Type</div>
+    <div class="step-sep">—</div>
+    <div class="step-dot" id="dot4"><div class="step-num">4</div> Your Roadmap</div>
+  </div>
+
+  <!-- STEP 1: Career -->
+  <div class="step-panel active" id="step1">
+    <div class="step-q">What future excites you most?</div>
+    <p class="step-hint">Don't think about your marks right now. Pick the field you'd genuinely love to work in. You can always adjust — but this choice shapes everything below.</p>
+    <div class="option-grid">
+      <button class="option-btn" onclick="selectOption(this,'career','stem')">
+        <div class="option-icon">🤖</div>
+        <div class="option-title">Engineering / Robotics / AI</div>
+        <div class="option-desc">Build machines, write software, design circuits, create AI systems</div>
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'career','medicine')">
+        <div class="option-icon">🩺</div>
+        <div class="option-title">Medicine / Health Sciences</div>
+        <div class="option-desc">Become a doctor, nurse, pharmacist, physiotherapist, or health researcher</div>
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'career','business')">
+        <div class="option-icon">📊</div>
+        <div class="option-title">Business / Finance / Accounting</div>
+        <div class="option-desc">Entrepreneurship, banking, CPA, marketing, management consulting</div>
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'career','trades')">
+        <div class="option-icon">🔧</div>
+        <div class="option-title">Skilled Trades</div>
+        <div class="option-desc">Electrician, plumber, carpenter, HVAC — well-paid, high demand in Canada</div>
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'career','arts')">
+        <div class="option-icon">🎨</div>
+        <div class="option-title">Arts / Design / Media</div>
+        <div class="option-desc">UX design, animation, architecture, film, journalism, fashion</div>
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'career','law')">
+        <div class="option-icon">⚖️</div>
+        <div class="option-title">Law / Social Sciences</div>
+        <div class="option-desc">Lawyer, psychologist, social worker, political scientist, criminologist</div>
+      </button>
+    </div>
+    <div class="step-nav">
+      <button class="btn-next" id="next1" disabled onclick="goStep(2)">Next →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Current Grade -->
+  <div class="step-panel" id="step2">
+    <div class="step-q">What grade are you in right now?</div>
+    <p class="step-hint">This helps us show only the decisions that are still ahead of you — and flag anything urgent you should do soon.</p>
+    <div class="option-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
+      <button class="option-btn" onclick="selectOption(this,'grade','8')">
+        <div class="option-icon">🌱</div>
+        <div class="option-title">Grade 8</div>
+        <div class="option-desc">Planning before high school starts</div>
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'grade','9')">
+        <div class="option-icon">📘</div>
+        <div class="option-title">Grade 9</div>
+        <div class="option-desc">First year of high school</div>
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'grade','10')">
+        <div class="option-icon">📗</div>
+        <div class="option-title">Grade 10</div>
+        <div class="option-desc">Second year</div>
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'grade','11')">
+        <div class="option-icon">📙</div>
+        <div class="option-title">Grade 11</div>
+        <div class="option-desc">Third year — course choices intensify</div>
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'grade','12')">
+        <div class="option-icon">🎯</div>
+        <div class="option-title">Grade 12</div>
+        <div class="option-desc">Final year — university apps now</div>
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'grade','parent')">
+        <div class="option-icon">👪</div>
+        <div class="option-title">I'm a Parent</div>
+        <div class="option-desc">Helping my child plan</div>
+      </button>
+    </div>
+    <div class="step-nav">
+      <button class="btn-back" onclick="goStep(1)">← Back</button>
+      <button class="btn-next" id="next2" disabled onclick="goStep(3)">Next →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: School Type -->
+  <div class="step-panel" id="step3">
+    <div class="step-q">What type of school are you in?</div>
+    <p class="step-hint">Catholic schools (CDSBEO) have Religion credits as part of your optional credits. Public schools have more elective flexibility. Both lead to the same OSSD and university eligibility.</p>
+    <div class="option-grid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">
+      <button class="option-btn" onclick="selectOption(this,'school','catholic')">
+        <div class="option-icon">✝️</div>
+        <div class="option-title">Catholic School (CDSBEO)</div>
+        <div class="option-desc">Includes 4 Religion credits in your optional credits. Cornwall, Hawkesbury, Alexandria area schools.</div>
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'school','public')">
+        <div class="option-icon">🏫</div>
+        <div class="option-title">Public School (UCDSB)</div>
+        <div class="option-desc">Upper Canada District School Board. More elective flexibility in optional 13 credits.</div>
+      </button>
+      <button class="option-btn" onclick="selectOption(this,'school','franco')">
+        <div class="option-icon">🇫🇷</div>
+        <div class="option-title">French School (CSDEO)</div>
+        <div class="option-desc">Conseil scolaire de district de l'Est ontarien. Instruction in French, same OSSD pathway.</div>
+      </button>
+    </div>
+    <div class="step-nav">
+      <button class="btn-back" onclick="goStep(2)">← Back</button>
+      <button class="btn-next" id="next3" disabled onclick="showResults()">See My Roadmap →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: RESULTS -->
+  <div class="step-panel" id="step4">
+    <div id="results-container"></div>
+    <button class="restart-btn" onclick="restart()">↺ Start Over</button>
+  </div>
+</main>
+
+<footer>
+  <p><strong>Canada Family Guide</strong> — Built for families across Canada</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="newcomer-start.html">Newcomer Guide</a>
+    <a href="finance.html">Finance</a>
+    <a href="education.html">Education</a>
+    <a href="planner.html">Grade Planner</a>
+    <a href="streams.html">Career Streams</a>
+    <a href="community.html">Community Hours</a>
+    <a href="extracurriculars.html">Extracurriculars</a>
+    <a href="newcomer.html">Education Newcomers</a>
+    <a href="quebec.html">Quebec/CEGEP</a>
+    <a href="recreation.html">Recreation</a>
+    <a href="travel.html">Travel</a>
+    <a href="tech-careers.html">Tech &amp; AI</a>
+    <a href="healthcare.html">Healthcare</a>
+    <a href="india.html">India Guide</a>
+    <a href="about.html">About</a>
+  </div>
+  <p class="footer-disclaimer">Not financial or legal advice. Information is shared for educational purposes only. Always verify with your school board, a registered financial advisor, or relevant authority.</p>
+</footer>
+
+<script>
+const selections = { career: null, grade: null, school: null };
+
+function selectOption(btn, key, value) {
+  const grid = btn.closest('.option-grid');
+  grid.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selections[key] = value;
+  const nextBtns = { career: 'next1', grade: 'next2', school: 'next3' };
+  document.getElementById(nextBtns[key]).disabled = false;
+}
+
+function goStep(n) {
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('step' + n).classList.add('active');
+  for (let i = 1; i <= 4; i++) {
+    const dot = document.getElementById('dot' + i);
+    dot.classList.remove('active', 'done');
+    if (i < n) dot.classList.add('done');
+    else if (i === n) dot.classList.add('active');
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function restart() {
+  selections.career = null; selections.grade = null; selections.school = null;
+  document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('next1').disabled = true;
+  document.getElementById('next2').disabled = true;
+  document.getElementById('next3').disabled = true;
+  goStep(1);
+}
+
+const roadmaps = {
+  stem: {
+    title: "Engineering, Robotics & Technology",
+    icon: "🤖",
+    tagline: "Your path to Waterloo, UofT, Queen's, Ottawa, Carleton Engineering",
+    grades: [
+      {
+        yr: "Grade 9", badge: "Foundation Year",
+        courses: [
+          { name: "Mathematics — Academic (MPM1D)", type: "must", note: "MUST be Academic, not Applied. This is non-negotiable for engineering." },
+          { name: "Science — Academic (SNC1D)", type: "must", note: "Academic stream. Introduces physics, chemistry, biology fundamentals." },
+          { name: "English — Academic (ENG1D)", type: "must", note: "Required for all 4 years. Academic stream." },
+          { name: "Canadian Geography (CGC1D)", type: "must", note: "Compulsory credit — no choice here." },
+          { name: "French as a Second Language (FSF1D)", type: "must", note: "Required for OSSD. Academic recommended." },
+          { name: "Technological Education (TIJ1O)", type: "rec", note: "Highly recommended — intro to tech, design, and making. Directly relevant to engineering mindset." },
+          { name: "Health & Physical Education (PPL1O)", type: "must", note: "Compulsory. Also helps with community hours (coaching, sports teams)." },
+          { name: "The Arts — any (Visual Art, Drama, Music)", type: "must", note: "One Arts credit compulsory across Gr 9–12. Pick your least stressful option." },
+        ]
+      },
+      {
+        yr: "Grade 10", badge: "Confirm Your Stream",
+        courses: [
+          { name: "Mathematics — Academic (MPM2D)", type: "must", note: "Principles of Mathematics. Must pass with strong marks — feeds directly into Gr 11 Functions." },
+          { name: "Science — Academic (SNC2D)", type: "must", note: "Covers chemistry, physics, biology, earth science. Academic level required." },
+          { name: "English — Academic (ENG2D)", type: "must", note: "Required for OSSD. Maintain Academic stream." },
+          { name: "Canadian History (CHC2D)", type: "must", note: "Compulsory Gr 10 credit." },
+          { name: "Computer Technology (TGJ2O or ICS2O)", type: "rec", note: "Computer science or tech course. Strong foundation for coding — Waterloo CS students often start coding here." },
+          { name: "Career Studies (GLC2O)", type: "must", note: "Compulsory 0.5 credit. Good time to research engineering programs and co-op requirements." },
+          { name: "Civics & Citizenship (CHV2O)", type: "must", note: "Compulsory 0.5 credit. Low effort — pairs with Career Studies in one semester." },
+        ]
+      },
+      {
+        yr: "Grade 11", badge: "⚠️ Critical Year — U-Level Courses",
+        courses: [
+          { name: "Functions (MCR3U) ✦", type: "must", note: "University level. The most important Grade 11 math for STEM. Required for Gr 12 Calculus. Must be U level." },
+          { name: "Physics (SPH3U) ✦", type: "must", note: "University level. Required prerequisite for Gr 12 Physics and for all engineering programs." },
+          { name: "Chemistry (SCH3U) ✦", type: "must", note: "University level. Required for engineering, especially chemical, environmental, materials." },
+          { name: "English (ENG3U)", type: "must", note: "University level. Required for OSSD and all university applications." },
+          { name: "Computer Science (ICS3U)", type: "rec", note: "University level. Highly recommended for software engineering, computer science, AI paths." },
+          { name: "Technological Design (TDJ3M)", type: "opt", note: "Good elective for hands-on engineering exposure. CAD, design, prototyping." },
+          { name: "Applied stream courses (anything ending in E/L/P)", type: "avoid", note: "Avoid applied-level courses in core subjects — they do NOT satisfy university prerequisites." },
+        ]
+      },
+      {
+        yr: "Grade 12", badge: "🎯 University Application Year",
+        courses: [
+          { name: "Advanced Functions (MHF4U) ✦", type: "must", note: "REQUIRED by virtually every engineering and computer science program in Ontario." },
+          { name: "Calculus & Vectors (MCV4U) ✦", type: "must", note: "REQUIRED by Waterloo Engineering, UofT Engineering, Queen's Engineering, Carleton. Take both MHF4U + MCV4U." },
+          { name: "Physics (SPH4U) ✦", type: "must", note: "Required prerequisite for all engineering programs." },
+          { name: "English (ENG4U)", type: "must", note: "Required for OSSD and university admission." },
+          { name: "Chemistry (SCH4U)", type: "rec", note: "Recommended for Chemical, Environmental, Biomedical Engineering." },
+          { name: "Computer Science (ICS4U)", type: "rec", note: "Strongly recommended for software engineering, CS, AI programs. Shows depth to admissions." },
+          { name: "Data Management (MDM4U)", type: "opt", note: "Good if you want to add a strong math course. Useful for data science / business analytics paths." },
+        ]
+      }
+    ],
+    tips: {
+      do: ["Join robotics club (FIRST Robotics, VEX) — Waterloo and UofT love this", "Enter math competitions (AMC, Euclid, CEMC contests)", "Get 85%+ in Gr 11 Physics/Math — these are the gateway marks", "Apply for Shad Valley (summer program for STEM students)", "Start coding side projects in Gr 10–11"],
+      avoid: ["Taking Applied-level Math or Science — these block university admission", "Dropping Physics in Gr 11 thinking you'll add it back — very hard to catch up", "Overloading with non-STEM electives in Gr 12 when your top 6 is being calculated", "Applying without checking specific prerequisites per program — Waterloo ECE needs different courses than Carleton Software Eng"]
+    },
+    universities: [
+      { name: "Waterloo", program: "Engineering / CS / Mechatronics", avg: "92–95%+" },
+      { name: "UofT", program: "Engineering Science / CS", avg: "90–94%" },
+      { name: "Queen's", program: "Engineering", avg: "87–92%" },
+      { name: "Carleton", program: "Software / Electrical / Mechanical", avg: "82–88%" },
+      { name: "Ottawa (uOttawa)", program: "Engineering / CS", avg: "83–88%" },
+      { name: "McMaster", program: "Engineering / Mechatronics", avg: "85–90%" },
+    ]
+  },
+
+  medicine: {
+    title: "Medicine & Health Sciences",
+    icon: "🩺",
+    tagline: "Your path to MD, Nursing, Pharmacy, Kinesiology, and Health Sciences",
+    grades: [
+      {
+        yr: "Grade 9", badge: "Foundation Year",
+        courses: [
+          { name: "Science — Academic (SNC1D)", type: "must", note: "Academic stream essential. Biology component is especially relevant for medicine." },
+          { name: "Mathematics — Academic (MPM1D)", type: "must", note: "Academic only. Med schools require strong math foundation, especially for statistics." },
+          { name: "English — Academic (ENG1D)", type: "must", note: "Communication is core to medicine. Academic stream." },
+          { name: "French (FSF1D)", type: "must", note: "Compulsory. Bilingualism is a real advantage in Eastern Ontario health care." },
+          { name: "Technological Education (TIJ1O)", type: "opt", note: "Optional but useful — health tech, lab skills mindset." },
+          { name: "Health & Physical Education (PPL1O)", type: "must", note: "Compulsory. Also start building community hours through volunteering at hospital or care home." },
+        ]
+      },
+      {
+        yr: "Grade 10", badge: "Build Science Depth",
+        courses: [
+          { name: "Science — Academic (SNC2D)", type: "must", note: "Covers biology, chemistry, physics. The biology and chemistry units directly prepare for Gr 11." },
+          { name: "Mathematics — Academic (MPM2D)", type: "must", note: "Academic level required to access Gr 11 U-level math and science." },
+          { name: "English — Academic (ENG2D)", type: "must", note: "University stream English required throughout." },
+          { name: "Canadian History (CHC2D)", type: "must", note: "Compulsory credit." },
+          { name: "Career Studies (GLC2O) + Civics (CHV2O)", type: "must", note: "Compulsory 0.5 credits each. Use Career Studies to research med school admission routes." },
+        ]
+      },
+      {
+        yr: "Grade 11", badge: "⚠️ Critical Year — Science Depth",
+        courses: [
+          { name: "Biology (SBI3U) ✦", type: "must", note: "University level. Core prerequisite for Health Sciences, Nursing, Kinesiology. Essential for pre-med path." },
+          { name: "Chemistry (SCH3U) ✦", type: "must", note: "University level. Required for pharmacy, biochemistry, most health science programs." },
+          { name: "Functions (MCR3U) ✦", type: "must", note: "University level math. Required for science programs and med school MCAT preparation." },
+          { name: "English (ENG3U)", type: "must", note: "University level required for all university applications." },
+          { name: "Physics (SPH3U)", type: "rec", note: "University level. Recommended — some Health Sciences programs require it. Also helps with MCAT." },
+          { name: "Psychology (HHG3M or HSP3U)", type: "rec", note: "Very relevant for medicine. Introduces you to mental health, human behaviour, health research." },
+        ]
+      },
+      {
+        yr: "Grade 12", badge: "🎯 Application Year",
+        courses: [
+          { name: "Biology (SBI4U) ✦", type: "must", note: "REQUIRED for virtually all Health Sciences, Nursing, Kinesiology, and pre-med programs." },
+          { name: "Chemistry (SCH4U) ✦", type: "must", note: "REQUIRED for pharmacy, biochemistry, many health science programs." },
+          { name: "English (ENG4U)", type: "must", note: "Required for OSSD and university admission." },
+          { name: "Advanced Functions (MHF4U)", type: "must", note: "Required by most life science and health science university programs." },
+          { name: "Physics (SPH4U)", type: "rec", note: "Recommended if applying to Health Sciences at McMaster, Queen's, or other competitive programs." },
+          { name: "Exercise Science / Kinesiology (PPZ4O)", type: "opt", note: "Good addition if specifically targeting Kinesiology at uOttawa or Queen's." },
+        ]
+      }
+    ],
+    tips: {
+      do: ["Volunteer at a hospital, hospice, or long-term care home (also counts for your 40 hours)", "Shadow a doctor, nurse, or pharmacist if possible — ask your family doctor", "Get experience in mental health awareness clubs at school", "Research Health Sciences programs at McMaster, Ottawa, Queens — each has different pre-med routes", "Take the MCAT seriously — plan for it in 3rd year of undergrad"],
+      avoid: ["Thinking you apply to 'medical school' from high school — in Canada you do an undergrad first, then apply to MD", "Dropping chemistry or biology in Gr 11 — these are mandatory prerequisites", "Ignoring the CARS (critical reading) component of MCAT — English marks matter more than you think", "Skipping the volunteer hours — med schools look closely at community involvement"]
+    },
+    universities: [
+      { name: "McMaster", program: "Health Sciences (highly competitive)", avg: "95%+" },
+      { name: "Ottawa (uOttawa)", program: "Health Sciences / Nursing / Kinesiology", avg: "88–93%" },
+      { name: "Queen's", program: "Life Sciences (pre-med track)", avg: "87–92%" },
+      { name: "Waterloo", program: "Health Sciences / Kinesiology", avg: "87–91%" },
+      { name: "Western", program: "Medical Sciences (pre-med)", avg: "90–94%" },
+      { name: "Ryerson/TMU", program: "Nursing", avg: "82–87%" },
+    ]
+  },
+
+  business: {
+    title: "Business, Finance & Accounting",
+    icon: "📊",
+    tagline: "Your path to Schulich, Ivey, Rotman, CPA designation",
+    grades: [
+      {
+        yr: "Grade 9", badge: "Foundation Year",
+        courses: [
+          { name: "Mathematics — Academic (MPM1D)", type: "must", note: "Academic stream required. Strong math is core to finance and accounting." },
+          { name: "English — Academic (ENG1D)", type: "must", note: "Business communication is everything. Academic English required throughout." },
+          { name: "Science — Academic (SNC1D)", type: "must", note: "Academic — keeps your options open." },
+          { name: "Introduction to Business (BMI1O or BBI1O)", type: "rec", note: "If your school offers it, take it. Real introduction to business concepts." },
+        ]
+      },
+      {
+        yr: "Grade 10", badge: "Business Foundation",
+        courses: [
+          { name: "Mathematics — Academic (MPM2D)", type: "must", note: "Academic required for Gr 11 university math stream." },
+          { name: "English — Academic (ENG2D)", type: "must", note: "Academic stream." },
+          { name: "Introduction to Business (BBI2O)", type: "rec", note: "Covers marketing, finance basics, entrepreneurship. Good early exposure." },
+          { name: "Canadian History (CHC2D) + Civics + Career Studies", type: "must", note: "Compulsory credits. Use Career Studies to research CPA and business school pathways." },
+          { name: "Computer Applications (BTT1O/2O)", type: "rec", note: "Excel, Word, business software. Surprisingly useful foundation." },
+        ]
+      },
+      {
+        yr: "Grade 11", badge: "U-Level Business + Math",
+        courses: [
+          { name: "Functions (MCR3U) ✦", type: "must", note: "University level. Required for Gr 12 math, which is required for business school admission." },
+          { name: "English (ENG3U)", type: "must", note: "University level." },
+          { name: "Accounting (BAF3M) ✦", type: "rec", note: "College/University level. If you want to do accounting or CPA — this is your core subject. Take it." },
+          { name: "Marketing (BMI3C or BMX3E)", type: "opt", note: "Good exploration course if interested in marketing/brand management path." },
+          { name: "Entrepreneurship (BDI3C)", type: "opt", note: "Excellent for future entrepreneurs. Practical business planning." },
+          { name: "Economics (CIA3U)", type: "rec", note: "University level. Strong preparation for commerce and economics programs." },
+        ]
+      },
+      {
+        yr: "Grade 12", badge: "🎯 Application Year",
+        courses: [
+          { name: "Advanced Functions (MHF4U) ✦", type: "must", note: "REQUIRED by Schulich (York), Ivey (Western), Rotman (UofT), Queens Commerce, Carleton Sprott." },
+          { name: "English (ENG4U)", type: "must", note: "Required for OSSD and university admission." },
+          { name: "Accounting (BAT4M) ✦", type: "must", note: "If pursuing accounting/CPA — this is essential. Shows specific preparation." },
+          { name: "Economics (CIA4U)", type: "rec", note: "Highly recommended for finance and economics programs." },
+          { name: "Data Management (MDM4U)", type: "rec", note: "Good math credit. Relevant for business analytics, fintech." },
+          { name: "Business Leadership (BOH4M)", type: "opt", note: "Good elective — covers management, HR, organizational behaviour." },
+        ]
+      }
+    ],
+    tips: {
+      do: ["Start a small business or side hustle in high school — real experience matters", "Join DECA (business competition club) — incredibly valuable for Schulich and Ivey", "Volunteer with a local non-profit handling finances or fundraising", "Learn Excel and basic accounting software early", "Research CPA Ontario's student pathway — you can start thinking about it now"],
+      avoid: ["Taking Applied Math — required courses at top business schools all need U-level math", "Assuming any English and Math gets you in — specific Grade 12 U courses are listed as prerequisites", "Ignoring extracurricular business activities — Ivey AEO interviews look at real initiative"]
+    },
+    universities: [
+      { name: "Schulich (York)", program: "BBA", avg: "82–87%" },
+      { name: "Ivey (Western)", program: "HBA (AEO in Gr 11)", avg: "88–93%" },
+      { name: "Rotman (UofT)", program: "Commerce", avg: "87–92%" },
+      { name: "Queen's", program: "Commerce (BCom)", avg: "87–92%" },
+      { name: "Sprott (Carleton)", program: "BCom", avg: "78–84%" },
+      { name: "Telfer (uOttawa)", program: "BCom / BBA", avg: "78–85%" },
+    ]
+  },
+
+  trades: {
+    title: "Skilled Trades",
+    icon: "🔧",
+    tagline: "Your path to apprenticeship, Red Seal certification, and a great career",
+    grades: [
+      {
+        yr: "Grade 9", badge: "Foundation Year",
+        courses: [
+          { name: "Mathematics — Academic or Applied (MPM1D or MFM1P)", type: "must", note: "Academic recommended but Applied (P) is acceptable for trades path. Applied includes practical measurement skills." },
+          { name: "Science — Academic or Applied (SNC1D or SNC1P)", type: "must", note: "Either level works. Focus on the physics and electricity units." },
+          { name: "Technological Education (TIJ1O) ✦", type: "must", note: "Essential. Introduces you to construction, transportation, manufacturing, IT technology." },
+          { name: "English (ENG1D or ENG1P)", type: "must", note: "Academic recommended even for trades — workplace communications matter." },
+        ]
+      },
+      {
+        yr: "Grade 10", badge: "Focus on Tech",
+        courses: [
+          { name: "Construction Technology (TCJ2O) ✦", type: "rec", note: "Directly relevant for carpentry, plumbing, HVAC, electrical trades." },
+          { name: "Transportation Technology (TTJ2O)", type: "opt", note: "Auto mechanics, automotive technology path." },
+          { name: "Mathematics Applied (MFM2P) or Academic (MPM2D)", type: "must", note: "Both lead to Gr 11 math. Applied leads to Gr 11 Workplace or College level math." },
+          { name: "English (ENG2D or ENG2P)", type: "must", note: "Required for OSSD." },
+          { name: "Canadian History + Civics + Career Studies", type: "must", note: "Compulsory credits. Use Career Studies to research apprenticeship registration with Ontario." },
+        ]
+      },
+      {
+        yr: "Grade 11", badge: "Explore OYAP / Cooperative Education",
+        courses: [
+          { name: "Construction Technology (TCJ3C or TCJ3E) ✦", type: "must", note: "Core trades course. College or Workplace level — both are appropriate." },
+          { name: "Co-operative Education (CO-OP) ✦", type: "rec", note: "STRONGLY recommended. Co-op placement at a local trade company = real apprenticeship preview and community hours." },
+          { name: "Mathematics — Workplace or College (MEL3E or MBF3C)", type: "must", note: "Workplace Math for direct apprenticeship. College Math if considering Trades college diploma programs." },
+          { name: "English (ENG3C or ENG3E)", type: "must", note: "College or Workplace level." },
+          { name: "OYAP — Ontario Youth Apprenticeship Program", type: "rec", note: "Ask your guidance counsellor about OYAP. You can start a formal apprenticeship while still in high school." },
+        ]
+      },
+      {
+        yr: "Grade 12", badge: "Graduation + Apprenticeship Entry",
+        courses: [
+          { name: "Construction Technology (TCJ4C) ✦", type: "must", note: "Final year of hands-on trades preparation." },
+          { name: "Co-operative Education (CO-OP)", type: "rec", note: "Another co-op placement. Builds hours toward your apprenticeship log book." },
+          { name: "Mathematics (MEL4E or MAP4C)", type: "must", note: "College Math if going to trades college. Workplace for direct apprenticeship." },
+          { name: "English (ENG4C or ENG4E)", type: "must", note: "Required for OSSD." },
+          { name: "Technological Design (TDJ4M)", type: "opt", note: "Good for trades who want to move into design, project management later." },
+        ]
+      }
+    ],
+    tips: {
+      do: ["Register with Ontario College of Trades — apprenticeships start at 16", "Use OYAP in Grade 11–12 to earn school credits while doing real trade work", "Volunteer with Habitat for Humanity Cornwall — counts for community hours and real construction experience", "Talk to Red Seal tradespeople in your family or community about pay and lifestyle", "Consider Algonquin College, St. Lawrence College for post-secondary trades diplomas"],
+      avoid: ["Thinking trades are a 'backup' — electricians in Ontario earn $40–$80/hr journeyman rate", "Skipping math entirely — trades licensing exams are heavily math-based", "Missing the OYAP registration deadline — it fills up each year"]
+    },
+    universities: [
+      { name: "St. Lawrence College (Cornwall)", program: "Construction Techniques, Electrical", avg: "OSSD required" },
+      { name: "Algonquin College (Ottawa)", program: "Plumbing, Electrical, HVAC, Welding", avg: "OSSD required" },
+      { name: "Ontario College of Trades", program: "Apprenticeship Registration", avg: "Grade 12 or co-op hours" },
+      { name: "Red Seal Program", program: "Interprovincial certification after journeyman", avg: "Journeyman + exam" },
+    ]
+  },
+
+  arts: {
+    title: "Arts, Design & Media",
+    icon: "🎨",
+    tagline: "Your path to OCAD, Ryerson/TMU, Sheridan, Carleton Architecture",
+    grades: [
+      {
+        yr: "Grade 9", badge: "Foundation Year",
+        courses: [
+          { name: "Visual Arts (AVI1O)", type: "must", note: "Start building your portfolio early. OCAD, Sheridan admission requires a strong portfolio." },
+          { name: "English — Academic (ENG1D)", type: "must", note: "Academic strongly recommended — design programs need strong written communication." },
+          { name: "Mathematics — Academic (MPM1D)", type: "rec", note: "Academic recommended. Architecture and UX design involve significant math." },
+          { name: "Technology (TIJ1O or TGJ1O)", type: "rec", note: "Digital Technology course — intro to design software, computers, making." },
+        ]
+      },
+      {
+        yr: "Grade 10", badge: "Deepen Your Creative Practice",
+        courses: [
+          { name: "Visual Arts (AVI2O)", type: "must", note: "Continue building your portfolio. Document everything you create." },
+          { name: "Media Arts (AWM2O)", type: "rec", note: "Photography, digital media, video production — core to film and media paths." },
+          { name: "English — Academic (ENG2D)", type: "must", note: "Academic level recommended." },
+          { name: "Drama or Music (ADA2O/AMI2O)", type: "opt", note: "Counts toward Arts compulsory credit. Good creative complement." },
+          { name: "Computer Technology (TGJ2O)", type: "rec", note: "Graphic software, digital tools, web basics — useful foundation." },
+        ]
+      },
+      {
+        yr: "Grade 11", badge: "Portfolio + Stream Decision",
+        courses: [
+          { name: "Visual Arts (AVI3M) ✦", type: "must", note: "University/College level. Core for OCAD and Sheridan applications." },
+          { name: "English (ENG3U)", type: "must", note: "University level for university programs. U level required for OCAD, Ryerson, Carleton." },
+          { name: "Media Arts (AWM3M)", type: "rec", note: "Photography, animation, digital media. Very relevant for film, animation, journalism paths." },
+          { name: "Communications Technology (TGJ3M)", type: "rec", note: "Graphic design, web design, broadcast media. Excellent for portfolio development." },
+          { name: "Functions (MCR3U)", type: "rec", note: "Required for Architecture programs at Carleton or Waterloo. Take if architecture is your target." },
+        ]
+      },
+      {
+        yr: "Grade 12", badge: "🎯 Portfolio Applications",
+        courses: [
+          { name: "Visual Arts (AVI4M) ✦", type: "must", note: "Required for OCAD, Sheridan animation, Ryerson/TMU design programs." },
+          { name: "English (ENG4U)", type: "must", note: "University level required for OSSD and most program applications." },
+          { name: "Communications Technology (TGJ4M)", type: "rec", note: "Senior design/media course. Strengthens portfolio." },
+          { name: "Advanced Functions (MHF4U)", type: "rec", note: "Required specifically for Carleton Architecture (BAS) and Waterloo Architecture." },
+          { name: "Writer's Craft (EWC4U)", type: "opt", note: "Excellent for journalism, creative writing, media studies paths." },
+        ]
+      }
+    ],
+    tips: {
+      do: ["Build your portfolio every year — not just in Grade 12", "Enter art and design competitions (Scholastic Art, local exhibits)", "Learn Adobe Creative Suite (Illustrator, Photoshop, InDesign) on your own", "For architecture, join AIAS student chapter or visit architecture firms in Ottawa", "Apply to OCAD or Sheridan early — portfolio deadlines are January–February"],
+      avoid: ["Leaving portfolio creation to Grade 12 — it needs to show 3–4 years of growth", "Ignoring math if architecture is your goal — Carleton Architecture needs MHF4U", "Thinking only visual arts leads to creative careers — UX design, game design, film editing are all here"]
+    },
+    universities: [
+      { name: "OCAD University (Toronto)", program: "Fine Arts, Design, Digital Media", avg: "Portfolio-based" },
+      { name: "Sheridan College", program: "Animation, Illustration, Game Design", avg: "Portfolio + 70–75%" },
+      { name: "Ryerson/TMU", program: "Media Production, Graphic Design, Architecture", avg: "80–87%" },
+      { name: "Carleton", program: "Architecture (BAS)", avg: "85% + MHF4U" },
+      { name: "Waterloo", program: "Architecture", avg: "90%+ portfolio" },
+      { name: "Emily Carr (Vancouver)", program: "Fine Arts, Design", avg: "Portfolio-based" },
+    ]
+  },
+
+  law: {
+    title: "Law & Social Sciences",
+    icon: "⚖️",
+    tagline: "Your path to law school (JD), social work, psychology, political science",
+    grades: [
+      {
+        yr: "Grade 9", badge: "Foundation Year",
+        courses: [
+          { name: "English — Academic (ENG1D)", type: "must", note: "The most important subject for law. Academic stream — strong writing and argumentation from Gr 9." },
+          { name: "Mathematics — Academic (MPM1D)", type: "must", note: "Academic recommended. Some law school programs require math prerequisites in undergrad." },
+          { name: "Science — Academic (SNC1D)", type: "must", note: "Academic to keep options open. Psychology path benefits from biology units." },
+          { name: "Canadian Geography (CGC1D)", type: "must", note: "Compulsory. Also relevant for understanding systemic social issues." },
+        ]
+      },
+      {
+        yr: "Grade 10", badge: "Humanities Depth",
+        courses: [
+          { name: "English — Academic (ENG2D)", type: "must", note: "Academic. The single most important subject for future lawyers." },
+          { name: "Canadian History (CHC2D)", type: "must", note: "Compulsory — and directly relevant to law, politics, and social sciences." },
+          { name: "Introduction to Anthropology, Psychology, Sociology (HIF1O or HSP3U prep)", type: "opt", note: "If available in Gr 10 — excellent early exposure to social science thinking." },
+          { name: "Mathematics (MPM2D)", type: "must", note: "Academic — maintains options for social science programs that need statistics." },
+          { name: "Civics (CHV2O)", type: "must", note: "Compulsory 0.5 credit — and probably the most directly relevant compulsory course for law students." },
+        ]
+      },
+      {
+        yr: "Grade 11", badge: "Social Science Specialization",
+        courses: [
+          { name: "English (ENG3U) ✦", type: "must", note: "University level. Must maintain top marks here — law school applications weigh writing heavily." },
+          { name: "Law (CLU3M) ✦", type: "must", note: "University/College level. Core course for prospective law students. Criminal law, rights, Canadian Charter." },
+          { name: "Philosophy (HZT3M)", type: "rec", note: "Excellent for law — logic, ethics, argumentation. Strong preparation for LSAT." },
+          { name: "Intro to Anthropology, Psychology & Sociology (HHG3M or HSP3U) ✦", type: "rec", note: "University level. Core subject for Psychology, Social Work, Political Science paths." },
+          { name: "Canadian & World Politics (CPW3U)", type: "rec", note: "University level. Strongly recommended for political science and constitutional law interests." },
+          { name: "Functions (MCR3U)", type: "rec", note: "U-level math. Recommended for psychology (statistics) and social science research methods." },
+        ]
+      },
+      {
+        yr: "Grade 12", badge: "🎯 Application Year",
+        courses: [
+          { name: "English (ENG4U) ✦", type: "must", note: "REQUIRED for OSSD and all university programs. Top marks here matter most for law school." },
+          { name: "Law (CLN4U) ✦", type: "must", note: "University level. Canadian law, torts, contracts, constitutional law. Directly prepares for JD." },
+          { name: "Philosophy (HZT4U)", type: "rec", note: "University level. Logic and critical thinking — directly relevant to LSAT preparation." },
+          { name: "Psychology (HHB4M) or Sociology (HSB4M)", type: "rec", note: "University/College level. Core for psychology programs; social work programs value this." },
+          { name: "World History (CHY4U)", type: "opt", note: "Good elective for law students — international law, historical context of legal systems." },
+          { name: "Writer's Craft (EWC4U)", type: "opt", note: "Excellent for developing legal writing skills early." },
+        ]
+      }
+    ],
+    tips: {
+      do: ["Join the school's debate club or mock trial team — invaluable for law", "Read Canadian news regularly — Globe and Mail, CBC — understand current legal issues", "Volunteer at a legal aid clinic or with community justice organizations for community hours", "Write for the school newspaper — legal communication is written communication", "Understand that in Canada: undergrad first (3–4 years), then apply to law school (JD = 3 years)"],
+      avoid: ["Thinking you apply to 'law school' from high school — you don't. You do undergrad first", "Neglecting English marks — law schools look very closely at communication scores", "Skipping the LSAT preparation — plan to take it in 3rd year of undergrad", "Choosing law only for money — it's a 7+ year post-secondary journey in Canada"]
+    },
+    universities: [
+      { name: "Ottawa (uOttawa)", program: "Social Sciences / Criminology (pre-law)", avg: "82–88%" },
+      { name: "Carleton", program: "Law & Legal Studies, Political Science", avg: "80–86%" },
+      { name: "Queen's", program: "Political Studies, Psychology", avg: "85–90%" },
+      { name: "UofT", program: "Criminology, Political Science", avg: "87–92%" },
+      { name: "Western", program: "Social Science / Political Science", avg: "83–88%" },
+      { name: "Ottawa Law School (JD)", program: "After undergrad — bilingual JD", avg: "3.5+ GPA + LSAT 160+" },
+      { name: "McGill Faculty of Law", program: "BCL/LLB (out-of-province via OUAC 105)", avg: "88–92%" },
+      { name: "Dalhousie Schulich Law", program: "JD (out-of-province)", avg: "83–88%" },
+    ]
+  }
+};
+
+function showResults() {
+  goStep(4);
+  const { career, grade, school } = selections;
+  const data = roadmaps[career];
+
+  const urgentNote = grade === '11' || grade === '12'
+    ? `<div style="background:#fff3cd;border-left:4px solid #B8860B;padding:1rem 1.5rem;border-radius:0 4px 4px 0;margin-bottom:2rem;font-size:.9rem;color:#555"><strong style="color:#856404">⚠️ You're in Grade ${grade}</strong> — some course decisions may already be behind you. Focus on the upcoming year and speak to your guidance counsellor about any adjustments. It's not too late to optimize.</div>`
+    : '';
+
+  const catholicNote = school === 'catholic'
+    ? `<div style="background:#f0f7ff;border-left:4px solid #2255aa;padding:1rem 1.5rem;border-radius:0 4px 4px 0;margin-bottom:2rem;font-size:.9rem;color:#555"><strong style="color:#2255aa">✝️ Catholic School (CDSBEO):</strong> Your 13 optional credits include 4 Religion credits (one per year, Gr 9–12). You have 9 remaining optional credits for electives. Plan your stream-specific courses within those 9.</div>`
+    : '';
+
+  let yearsHTML = '';
+  const startGrade = grade === 'parent' ? '8' : grade;
+  const gradeOrder = ['9', '10', '11', '12'];
+  const startIdx = gradeOrder.indexOf(startGrade);
+
+  data.grades.forEach((g, i) => {
+    const gradeNum = gradeOrder[i];
+    const isPast = parseInt(gradeNum) < parseInt(startGrade === 'parent' ? '8' : startGrade);
+    const opacity = isPast ? 'opacity:.5' : '';
+
+    let rowsHTML = g.courses.map(c => `
+      <tr>
+        <td><strong>${c.name}</strong><div class="course-note">${c.note}</div></td>
+        <td><span class="course-type type-${c.type}">${c.type === 'must' ? '✦ Required' : c.type === 'rec' ? '★ Recommended' : c.type === 'opt' ? '◆ Optional' : '✗ Avoid'}</span></td>
+      </tr>
+    `).join('');
+
+    yearsHTML += `
+      <div class="year-block" style="${opacity}">
+        <div class="year-title">${g.yr} <span class="year-badge">${g.badge}</span></div>
+        <table class="course-table">
+          <thead><tr><th>Course</th><th>Priority</th></tr></thead>
+          <tbody>${rowsHTML}</tbody>
+        </table>
+      </div>
+    `;
+  });
+
+  const tipsHTML = `
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-label">✅ Do These</div>
+        <ul class="tip-list">${data.tips.do.map(t => `<li>${t}</li>`).join('')}</ul>
+      </div>
+      <div class="tip-card">
+        <div class="tip-label">⚠️ Common Mistakes to Avoid</div>
+        <ul class="tip-list">${data.tips.avoid.map(t => `<li>${t}</li>`).join('')}</ul>
+      </div>
+    </div>
+  `;
+
+  const uniHTML = `
+    <div class="uni-bar">
+      <div class="uni-bar-title">🎓 Target Programs & Typical Admission Averages</div>
+      <div class="uni-list">
+        ${data.universities.map(u => `<div class="uni-tag"><strong>${u.name}</strong> — ${u.program} · ${u.avg}</div>`).join('')}
+      </div>
+    </div>
+  `;
+
+
+  const oopHTML = `
+    <div class="oop-callout">
+      <div class="oop-callout-header" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.oop-callout-toggle').textContent=this.nextElementSibling.classList.contains('open')?'▲ Hide':'▼ Show'">
+        <div class="oop-callout-title">🌐 Targeting an out-of-province university? (McGill, UBC, Dalhousie…)</div>
+        <span class="oop-callout-toggle">▼ Show</span>
+      </div>
+      <div class="oop-body">
+        <p style="font-size:.88rem;color:var(--grey);line-height:1.6;margin-bottom:.5rem">
+          Your Ontario OSSD is accepted at all Canadian universities. You apply through <strong style="color:var(--black)">OUAC 105</strong> (out-of-province applicants), not the regular Ontario 101 stream. Your Grade 12 top-6 average is what matters — same courses, same rigour.
+        </p>
+        <div class="oop-grid">
+          <div class="oop-card">
+            <div class="oop-card-name">McGill University (Montreal)</div>
+            <div class="oop-card-detail">Accepts Ontario OSSD directly. Apply via OUAC 105. No CEGEP required — CEGEP is only for Quebec students entering Quebec universities. McGill looks at your Gr 11 and Gr 12 marks. Typical competitive average: 88–95% depending on program.</div>
+            <div class="oop-card-badge">Montreal, QC</div>
+          </div>
+          <div class="oop-card">
+            <div class="oop-card-name">UBC (Vancouver)</div>
+            <div class="oop-card-detail">Apply via UBC's own portal (not OUAC). Strong focus on personal profile essays alongside grades. Typical competitive average: 90–95%+ for competitive programs.</div>
+            <div class="oop-card-badge">Vancouver, BC</div>
+          </div>
+          <div class="oop-card">
+            <div class="oop-card-name">Dalhousie University (Halifax)</div>
+            <div class="oop-card-detail">Popular out-of-province option, especially for Law and Medicine. Apply via OUAC 105. More accessible averages than McGill/UBC for many programs.</div>
+            <div class="oop-card-badge">Halifax, NS</div>
+          </div>
+          <div class="oop-card">
+            <div class="oop-card-name">University of Alberta / Calgary</div>
+            <div class="oop-card-detail">Strong STEM and business programs. Apply via OUAC 105. Alberta averages tend to be more accessible than Ontario schools for similar programs.</div>
+            <div class="oop-card-badge">Edmonton / Calgary, AB</div>
+          </div>
+        </div>
+        <div class="oop-note">
+          <strong style="color:var(--black)">Key rule:</strong> Your Ontario course prerequisites still apply regardless of target province — McGill Engineering still needs MCV4U and SPH4U, same as Waterloo. The roadmap above guides you correctly for any Canadian university.
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('results-container').innerHTML = `
+    <div class="result-header">
+      <div class="result-career">${data.icon} Your Personalized Roadmap</div>
+      <div class="result-title">${data.title}</div>
+      <div class="result-sub">${data.tagline}</div>
+    </div>
+    <div class="result-body">
+      ${urgentNote}
+      ${catholicNote}
+      <div style="margin-bottom:2rem">
+        <div class="section-label">Course Legend</div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;font-size:.8rem">
+          <span><span class="course-type type-must">✦ Required</span> Must take — prerequisite or compulsory</span>
+          <span><span class="course-type type-rec">★ Recommended</span> Strongly advised for your path</span>
+          <span><span class="course-type type-opt">◆ Optional</span> Good addition if space allows</span>
+          <span><span class="course-type type-avoid">✗ Avoid</span> Will not satisfy university prerequisites</span>
+        </div>
+      </div>
+      ${yearsHTML}
+      ${tipsHTML}
+      ${uniHTML}
+      ${oopHTML}
+      <div style="margin-top:2rem;padding:1.2rem;background:var(--light);border-radius:6px;font-size:.85rem;color:var(--grey)">
+        <strong style="color:var(--black)">Next Steps:</strong> Take this roadmap to your guidance counsellor. Ask about co-op placements, OYAP (for trades), or specific prerequisites for programs you're targeting. Also see our <a href="community.html" style="color:var(--red)">Community Hours Planner</a> for the 40-hour requirement, and the <a href="extracurriculars.html" style="color:var(--red)">Extracurriculars Guide</a> for activities that strengthen your application.
+      </div>
+    </div>
+  `;
+}
+</script>
+</body>
+</html>

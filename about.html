@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Mark Prasanna — Canada Family Guide</title>
+<meta name="description" content="About Mark Prasanna — the person behind Canada Family Guide. A year of learning, two daughters in Ontario schools, and a simple goal: help other immigrant families skip the hard part.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://canadafamilyguide.com/about.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About Mark Prasanna — Canada Family Guide">
+<meta property="og:description" content="The story behind Canada Family Guide — built by an immigrant dad after one year of figuring Canada out the hard way.">
+<meta property="og:url" content="https://canadafamilyguide.com/about.html">
+<meta property="og:site_name" content="Canada Family Guide">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍁</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#C8102E;--red-dark:#9B0B22;
+  --black:#0f0f0f;--white:#F7F5F0;--grey:#666;--light:#EDE9E0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--black);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;background:rgba(247,245,240,.96);backdrop-filter:blur(8px);border-bottom:1px solid #ddd;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.nav-logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;color:var(--black);text-decoration:none;display:flex;align-items:center;gap:.4rem}
+.nav-logo span{color:var(--red)}
+.nav-links{display:flex;align-items:center;gap:.5rem}
+.nav-home{display:inline-flex;align-items:center;gap:5px;background:var(--red);color:#fff!important;padding:5px 14px;border-radius:3px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700!important;font-size:.82rem;text-decoration:none;transition:background .2s}
+.nav-home:hover{background:var(--red-dark)!important}
+.nav-link{font-size:.82rem;font-weight:500;color:var(--grey);text-decoration:none;padding:5px 10px;border-radius:6px;transition:all .2s}
+.nav-link:hover,.nav-link.active{color:var(--red)}
+@media(max-width:700px){.nav-links .nav-link{display:none}}
+
+/* ── PAGE ── */
+.page{padding-top:60px}
+
+/* ── HERO — centered, clean, photo first ── */
+.hero{
+  max-width:700px;
+  margin:0 auto;
+  padding:5rem 2rem 4rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+}
+
+
+/* Name & role */
+.hero-eyebrow{
+  font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--red);margin-bottom:.8rem;
+  animation:fadeUp .4s .1s ease both;
+}
+.hero-name{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(2.2rem,5vw,3.2rem);
+  font-weight:800;line-height:1.05;
+  margin-bottom:.35rem;
+  animation:fadeUp .4s .15s ease both;
+}
+.hero-role{
+  font-size:.83rem;color:var(--grey);
+  margin-bottom:2rem;line-height:1.5;
+  animation:fadeUp .4s .2s ease both;
+}
+
+/* Stats */
+.stats{
+  display:flex;gap:0;
+  border:1px solid #e0dbd0;
+  border-radius:10px;
+  overflow:hidden;
+  background:#fff;
+  width:100%;
+  max-width:420px;
+  margin-bottom:2.2rem;
+  animation:fadeUp .4s .25s ease both;
+  box-shadow:0 2px 12px rgba(0,0,0,.04);
+}
+.stat{
+  flex:1;padding:1rem .6rem;text-align:center;
+  border-right:1px solid #e0dbd0;
+}
+.stat:last-child{border-right:none}
+.stat-num{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:1.7rem;font-weight:800;
+  color:var(--red);line-height:1;margin-bottom:.2rem;
+}
+.stat-label{font-size:.68rem;color:var(--grey);line-height:1.4}
+
+/* Intro text */
+.hero-text{
+  font-size:.97rem;line-height:1.85;color:#444;
+  max-width:540px;font-weight:300;
+  animation:fadeUp .4s .3s ease both;
+}
+.hero-text strong{color:var(--black);font-weight:500}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:linear-gradient(90deg,transparent,#d8d3c8 30%,#d8d3c8 70%,transparent);margin:0 2rem}
+
+/* ── STORY ── */
+.story{max-width:700px;margin:0 auto;padding:4rem 2rem}
+.section-label{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.4rem}
+.section-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.4rem,3vw,1.9rem);font-weight:800;line-height:1.15;margin-bottom:1.8rem}
+
+.story p{font-size:.95rem;line-height:1.9;color:#444;margin-bottom:1.3rem;font-weight:300}
+.story p strong{color:var(--black);font-weight:500}
+.story p:last-child{margin-bottom:0}
+
+/* ── FACTS ── */
+.facts{
+  background:#fff;
+  border-top:1px solid #e0dbd0;
+  border-bottom:1px solid #e0dbd0;
+  padding:3rem 2rem;
+}
+.facts-inner{
+  max-width:700px;margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1rem;
+}
+@media(max-width:560px){.facts-inner{grid-template-columns:1fr}}
+.fact{
+  border:1px solid #e0dbd0;border-radius:8px;
+  padding:1.1rem 1.2rem;
+  display:flex;gap:.8rem;align-items:flex-start;
+  border-left:3px solid var(--red);
+  background:var(--white);
+}
+.fact-icon{font-size:1.2rem;flex-shrink:0;margin-top:.05rem}
+.fact-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.85rem;margin-bottom:.15rem}
+.fact-desc{font-size:.79rem;color:var(--grey);line-height:1.55}
+.fact-desc a{color:var(--red);text-decoration:none;font-weight:600}
+.fact-desc a:hover{text-decoration:underline}
+
+/* ── WHY ── */
+.why{background:var(--light);padding:4rem 2rem;border-bottom:1px solid #d8d3c8}
+.why-inner{max-width:700px;margin:0 auto}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.8rem}
+@media(max-width:600px){.pillars{grid-template-columns:1fr}}
+.pillar{background:#fff;border:1px solid #e0dbd0;border-radius:8px;padding:1.2rem}
+.pillar-icon{font-size:1.4rem;margin-bottom:.5rem}
+.pillar-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.85rem;margin-bottom:.35rem}
+.pillar-desc{font-size:.79rem;color:var(--grey);line-height:1.6}
+
+/* ── DISCLAIMER ── */
+.disclaimer{max-width:700px;margin:0 auto;padding:2rem 2rem;font-size:.8rem;color:var(--grey);line-height:1.8}
+.disclaimer strong{color:var(--black)}
+
+/* ── CONNECT ── */
+.connect{
+  max-width:700px;margin:0 auto;
+  padding:2.5rem 2rem 5rem;text-align:center;
+  border-top:1px solid #e0dbd0;
+}
+.connect-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:.5rem}
+.connect-sub{font-size:.85rem;color:var(--grey);line-height:1.7;margin-bottom:1.4rem;max-width:440px;margin-left:auto;margin-right:auto}
+.connect-btn{
+  display:inline-flex;align-items:center;gap:.55rem;
+  background:#0077B5;color:#fff;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.83rem;
+  padding:.75rem 1.6rem;border-radius:4px;text-decoration:none;
+  transition:all .2s;
+}
+.connect-btn:hover{background:#005f8d;transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,119,181,.25)}
+
+footer{background:#0a0a0a;color:#555;text-align:center;padding:2rem;font-size:.82rem}
+footer a{color:var(--red);text-decoration:none}
+footer strong{color:#888}
+.footer-links{margin:.5rem 0;display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem}
+.footer-links a::after{content:'·';margin-left:.5rem;color:#333}
+.footer-links a:last-child::after{display:none}
+.footer-disclaimer{margin-top:.8rem;font-size:.73rem;color:#333;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6}
+
+@media(max-width:480px){
+  .stats{flex-direction:column;border-radius:8px}
+  .stat{border-right:none;border-bottom:1px solid #e0dbd0;padding:.9rem}
+  .stat:last-child{border-bottom:none}
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── UX POLISH PATCH ── */
+/* Body: base font size up to 16px for readability */
+body { font-size: 16px; line-height: 1.75; }
+
+/* Paragraphs: comfortable line height and spacing */
+p { line-height: 1.8; margin-bottom: 1.1em; }
+
+/* Section subtitles: slightly larger, more breathing room */
+.section-sub { font-size: 1rem !important; line-height: 1.75 !important; }
+.page-sub    { font-size: 1rem !important; line-height: 1.75 !important; }
+.hero-sub    { font-size: 1.05rem !important; line-height: 1.8 !important; }
+
+/* Nav links: 0.82rem → 0.9rem */
+.nav-link  { font-size: 0.9rem !important; }
+.nav-home  { font-size: 0.88rem !important; }
+.nsw-btn   { font-size: 0.82rem !important; }
+
+/* Card padding boost */
+.section-card  { padding: 2rem 2rem 1.8rem !important; }
+.flow-card     { padding: 1.6rem 1.7rem !important; }
+.account-card .account-body { padding: 1.3rem 1.4rem !important; }
+.outcome-card  { padding: 1.4rem !important; }
+.fact-card     { padding: 1.4rem 1.6rem !important; }
+.checklist-box { padding: 1.6rem !important; }
+.mistakes-box  { padding: 1.6rem !important; }
+.mistake-text  { font-size: 0.92rem !important; line-height: 1.75 !important; }
+
+/* Max-width: allow content to breathe on large screens */
+main               { max-width: 1100px !important; }
+.page-header-inner { max-width: 1000px !important; }
+
+/* Highlight utility class */
+.highlight { font-weight: 600; color: #111; }
+
+/* Section spacing */
+.section-label { margin-bottom: 0.6rem !important; }
+.section-title { margin-bottom: 1rem !important; }
+
+/* FAQ text size */
+.faq-q   { font-size: 0.95rem !important; padding: 1.1rem 1.3rem !important; }
+.faq-a   { font-size: 0.92rem !important; line-height: 1.75 !important; padding: 1rem 1.3rem !important; }
+
+/* Table readability */
+table    { font-size: 0.9rem !important; }
+
+/* Mobile — most important */
+@media (max-width: 768px) {
+  body          { font-size: 16px !important; }
+  .section-sub  { font-size: 1rem !important; }
+  .page-sub     { font-size: 0.98rem !important; }
+  p             { font-size: 0.97rem !important; line-height: 1.8 !important; }
+  .nav-link     { font-size: 0.88rem !important; }
+  .faq-q        { font-size: 0.92rem !important; }
+  .faq-a        { font-size: 0.9rem !important; }
+  .mistake-text { font-size: 0.9rem !important; }
+}
+
+@media (max-width: 480px) {
+  body { font-size: 15.5px !important; }
+  main { padding: 2.5rem 1.2rem 4rem !important; }
+}
+
+
+/* ── MOBILE FIX PATCH ── */
+
+/* Global image safety */
+img { max-width: 100%; height: auto; }
+
+/* Tables: horizontal scroll on mobile */
+table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* On mobile, tiny labels get a readable floor */
+@media (max-width: 768px) {
+  .section-label,
+  .page-label,
+  .card-badge,
+  .badge-live,
+  .badge-soon,
+  .hero-eyebrow,
+  .about-label,
+  .hero-label,
+  .sections-label,
+  .start-here-label,
+  .next-step-label,
+  .outcome-card-demand,
+  .ai-status,
+  .tool-card-category,
+  .tl-phase-label,
+  .nsw-label,
+  .plan-week-header  { font-size: 0.72rem !important; }
+
+  /* Flow priority badges */
+  .flow-priority,
+  .account-best,
+  .card-soon-note,
+  .etf-tag,
+  .ftag             { font-size: 0.72rem !important; }
+
+  /* Slightly larger section labels for readability */
+  .section-label    { font-size: 0.75rem !important; letter-spacing: .1em !important; }
+
+  /* Card text readable on small screens */
+  .card-desc        { font-size: 0.9rem !important; line-height: 1.65 !important; }
+  .card-list li     { font-size: 0.85rem !important; }
+  .outcome-card-note{ font-size: 0.85rem !important; }
+  .ai-branch-note   { font-size: 0.85rem !important; }
+  .tool-card-use    { font-size: 0.87rem !important; }
+  .mistake-text     { font-size: 0.9rem !important; }
+  .fact-desc        { font-size: 0.85rem !important; }
+
+  /* Page headers more compact on mobile */
+  .page-header      { padding: 5rem 1.5rem 2.5rem !important; }
+  .page-sub         { font-size: 0.95rem !important; }
+
+  /* Stats/grids stack nicely */
+  .reality-grid,
+  .compare-grid     { grid-template-columns: 1fr !important; }
+  
+  /* Travel itinerary readable */
+  .itin-body        { font-size: 0.88rem !important; }
+  .itin-tip         { font-size: 0.83rem !important; }
+
+  /* Hero section padding */
+  .hero-content,
+  .hero-inner       { padding: 0 1rem !important; }
+
+  /* Next step links wrap cleanly */
+  .next-step-links  { gap: 0.5rem !important; }
+  .next-step-link   { font-size: 0.82rem !important; padding: 0.6rem 1rem !important; }
+
+  /* Start flow steps */
+  .sf-step          { font-size: 0.78rem !important; padding: 0.6rem 1rem !important; }
+
+  /* Entry paths stack */
+  .entry-paths      { flex-direction: column !important; }
+  .entry-path       { min-width: unset !important; }
+
+  /* Tools stack single column */
+  .tools-stack,
+  .ai-impact-grid,
+  .outcome-cards    { grid-template-columns: 1fr !important; }
+}
+
+@media (max-width: 480px) {
+  /* Section cards single column */
+  .section-cards    { grid-template-columns: 1fr !important; }
+  
+  /* Compare table readable */
+  .compare-col-header { font-size: 0.9rem !important; }
+  .compare-row        { font-size: 0.82rem !important; }
+
+  /* Timeline phases stack */
+  .tl-phases        { grid-template-columns: 1fr !important; }
+  .tl-phase         { border-right: none !important; border-bottom: 1px solid #e0dbd0 !important; }
+  .tl-phase:last-child { border-bottom: none !important; }
+
+  /* Why pillars stack */
+  .why-pillars,
+  .pillars          { grid-template-columns: 1fr !important; }
+
+  /* Facts grid single col */
+  .facts-inner      { grid-template-columns: 1fr !important; }
+
+  /* Stats row wrap */
+  .stats-row,
+  .stats            { flex-direction: column !important; }
+  .stat             { border-right: none !important; border-bottom: 1px solid #e0dbd0 !important; }
+  .stat:last-child  { border-bottom: none !important; }
+
+  /* Hero padding tight */
+  main              { padding: 2rem 1rem 3rem !important; }
+}
+
+
+/* ── ALIGNMENT CONSISTENCY PATCH ── */
+
+/* Standardise all main content containers to same max-width and left-align */
+main,
+.sections,
+.story-section .story-inner,
+.why-section .why-inner,
+.start-here-inner,
+.about-strip .about-inner,
+.india-inner             { max-width: 1100px !important; margin-left: auto !important; margin-right: auto !important; }
+
+/* Page headers — same width as content so header text aligns with body text */
+.page-header-inner       { max-width: 1100px !important; margin-left: auto !important; margin-right: auto !important; }
+
+/* Hero content — always left-aligned, never centered */
+.hero-content,
+.hero-inner,
+.hero-left               { text-align: left !important; }
+
+/* About page hero — override center alignment to match all other pages */
+.hero                    { text-align: left !important; align-items: flex-start !important; }
+
+/* About page specific — re-align centered elements to left */
+.hero .hero-eyebrow      { text-align: left !important; }
+.hero .hero-name         { text-align: left !important; }
+.hero .hero-role         { text-align: left !important; }
+.hero .hero-text         { text-align: left !important; }
+.hero .stats             { margin-left: 0 !important; }
+
+/* Stats row on about — left-align, keep max-width sensible */
+.stats                   { max-width: 420px !important; margin-left: 0 !important; }
+
+
+
+/* Connect section on about — keep centered (it's a CTA, centered is correct) */
+.connect                 { text-align: center !important; }
+.connect .connect-title,
+.connect .connect-sub    { text-align: center !important; }
+
+/* Consistent left padding across all page types */
+.page-header             { padding-left: 2rem !important; padding-right: 2rem !important; }
+
+/* Section labels and titles — always left */
+.section-label,
+.section-title,
+.section-sub,
+.page-label,
+.page-title,
+.page-sub                { text-align: left !important; }
+
+/* Why/philosophy section inner content — left align */
+.why-inner .section-label,
+.why-inner .section-title { text-align: left !important; }
+
+/* About story, facts, why sections — consistent left padding */
+.story, .facts, .why, 
+.disclaimer, .connect    { padding-left: 2rem !important; padding-right: 2rem !important; }
+
+/* Standardise hero padding to match page-header padding */
+.page-header             { padding-top: 7rem !important; padding-bottom: 3rem !important; }
+
+@media (max-width: 768px) {
+  main,
+  .page-header-inner,
+  .sections              { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+  .page-header           { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+  .story, .facts, .why,
+  .disclaimer, .connect  { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+}
+
+
+/* ── LIGHT HEADER PATCH — replaces all dark headers ── */
+.page-header {
+  background: var(--white, #F7F5F0) !important;
+  color: var(--black, #0f0f0f) !important;
+  padding: 7rem 2rem 3.5rem !important;
+  border-bottom: 1px solid #e0dbd0;
+}
+.page-label {
+  font-size: .72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+  color: var(--red, #C8102E) !important;
+  margin-bottom: .6rem !important;
+  background: none !important;
+}
+.page-title {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: clamp(2rem, 4vw, 3rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  margin-bottom: 1rem !important;
+  color: var(--black, #0f0f0f) !important;
+}
+.page-sub {
+  color: var(--grey, #555) !important;
+  font-size: 1rem !important;
+  line-height: 1.75 !important;
+  max-width: 640px !important;
+}
+
+/* Tech-careers hero — was black, now light */
+.hero.hero-light,
+.hero {
+  background: var(--white, #F7F5F0) !important;
+  color: var(--black, #0f0f0f) !important;
+}
+.hero::before { display: none !important; }
+
+/* Hero labels that were light coloured on dark bg */
+.hero-label {
+  color: var(--red, #C8102E) !important;
+  font-size: .72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+}
+
+/* Hero h1 on tech-careers was white, now black */
+.hero h1 { color: var(--black, #0f0f0f) !important; }
+.hero h1 em { color: var(--red, #C8102E) !important; }
+
+/* Hero sub text was grey-on-dark, now dark-on-light */
+.hero-sub { color: var(--grey, #555) !important; }
+
+/* Bullet points on tech-careers hero */
+.hero-bullet { color: var(--black, #0f0f0f) !important; }
+.hero-bullet.bad { color: #c0392b !important; }
+.hero-bullet.good { color: #1a7a4a !important; }
+
+/* CTA button stays red */
+.hero-cta {
+  background: var(--red, #C8102E) !important;
+  color: #fff !important;
+}
+
+/* Education hero — already light but ensure consistency */
+.hero h1 em { color: var(--red, #C8102E) !important; }
+
+/* Remove any gradient overlays */
+.hero-pattern { opacity: .02 !important; }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">🍁 Canada <span>Family Guide</span></a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-home">🏠 Home</a>
+    <a href="newcomer-start.html" class="nav-link">Newcomer</a>
+        <a href="education.html" class="nav-link">Education</a>
+    <a href="finance.html" class="nav-link">Finance</a>
+    <a href="travel.html" class="nav-link">Travel</a>
+    <a href="recreation.html" class="nav-link">Recreation</a>
+    <a href="tech-careers.html" class="nav-link">Tech &amp; AI</a>
+    <a href="about.html" class="nav-link active">About</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+
+
+
+    <div class="hero-eyebrow">The person behind the guide</div>
+    <h1 class="hero-name">Mark Prasanna</h1>
+    <div class="hero-role">Head of Monetization Platforms &amp; Canada Regulatory Integration</div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Year in<br>Canada</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Daughters in<br>Ontario schools</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">16</div>
+        <div class="stat-label">Pages of<br>real guidance</div>
+      </div>
+    </div>
+
+    <p class="hero-text">
+      One year in Canada. Two daughters navigating Ontario schools. A lot of questions, some hard lessons — and eventually, a website. <strong>This is that website.</strong>
+    </p>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- STORY -->
+  <div class="story">
+    <div class="section-label">The story</div>
+    <h2 class="section-title">Why this guide exists</h2>
+    <p>
+      When my family arrived in Canada, we started from scratch — just like every other immigrant family. <strong>Which school board? What is OSSD? How does OHIP work? What is a TFSA?</strong> The questions were endless and the answers were scattered across a dozen government websites, WhatsApp groups, and forum threads.
+    </p>
+    <p>
+      My daughters — one in Grade 5, one in Grade 8 — needed me to understand the Ontario school system fast. Not someday. <strong>Right now.</strong> Grade 8 is when course choices start to matter. Community hours need to be tracked. Streams need to be understood. I learned all of this the hard way, piece by piece.
+    </p>
+    <p>
+      After about six months of figuring it out, I realised I had built something in my head that other families would genuinely benefit from. So I turned it into a website. <strong>Not a business. Not a service.</strong> Just a fellow immigrant sharing what took a year to learn — so the next family doesn't have to spend that year confused.
+    </p>
+    <p>
+      Everything on this site is what I actually researched, verified, and in most cases — lived through with my own family in Cornwall, Eastern Ontario.
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- FACTS -->
+  <div class="facts">
+    <div class="facts-inner">
+      <div class="fact">
+        <div class="fact-icon">🏡</div>
+        <div>
+          <div class="fact-title">Cornwall, Ontario</div>
+          <div class="fact-desc">Eastern Ontario — CDSBEO and UCDSB school boards, Ottawa Valley, St. Lawrence River country.</div>
+        </div>
+      </div>
+      <div class="fact">
+        <div class="fact-icon">👧👧</div>
+        <div>
+          <div class="fact-title">Grade 5 &amp; Grade 8</div>
+          <div class="fact-desc">The Grade 8 timeline pushed me to understand the Ontario education system properly — and fast.</div>
+        </div>
+      </div>
+      <div class="fact">
+        <div class="fact-icon">💼</div>
+        <div>
+          <div class="fact-title">Technology leader</div>
+          <div class="fact-desc">Head of Monetization Platforms &amp; Canada Regulatory Integration. Systems thinking applied to family life.</div>
+        </div>
+      </div>
+      <div class="fact">
+        <div class="fact-icon">🇮🇳 → 🇨🇦</div>
+        <div>
+          <div class="fact-title">India to Canada</div>
+          <div class="fact-desc">The India comparison page exists for the same reason everything else does — I needed it myself when deciding to move.</div>
+        </div>
+      </div>
+      <div class="fact">
+        <div class="fact-icon">🎯</div>
+        <div>
+          <div class="fact-title">Just a fun project</div>
+          <div class="fact-desc">No ads, no agenda. Built for immigrant welfare — because the first year in Canada is harder than it needs to be.</div>
+        </div>
+      </div>
+      <div class="fact">
+        <div class="fact-icon">🔗</div>
+        <div>
+          <div class="fact-title">LinkedIn</div>
+          <div class="fact-desc"><a href="https://www.linkedin.com/in/mark-prasanna-66628214/" target="_blank" rel="noopener">Connect with Mark</a> — happy to hear from immigrant families and professionals.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY -->
+  <div class="why">
+    <div class="why-inner">
+      <div class="section-label">The philosophy</div>
+      <h2 class="section-title">What this site is — and what it isn't</h2>
+      <div class="pillars">
+        <div class="pillar">
+          <div class="pillar-icon">✅</div>
+          <div class="pillar-title">Lived experience</div>
+          <div class="pillar-desc">Every page covers something my family actually navigated — school registration, TFSA setup, healthcare, travel, community hours. All real.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">🎯</div>
+          <div class="pillar-title">Practical over theoretical</div>
+          <div class="pillar-desc">Specific steps, real numbers, actual timelines. The kind of information you need when you arrive — not a year later.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">🤝</div>
+          <div class="pillar-title">Community, not commerce</div>
+          <div class="pillar-desc">Free, always. The goal is to reduce the overwhelm every new family feels in their first year in Canada.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer">
+    <strong>Important:</strong> Everything on this site is shared for general educational purposes — not professional legal, financial, or medical advice. School policies, tax rules, and government programs change regularly. Always verify important decisions with your school board, a registered financial advisor, or the relevant authority.
+  </div>
+
+  <!-- CONNECT -->
+  <div class="connect">
+    <div class="section-label">Get in touch</div>
+    <h2 class="connect-title">Fellow immigrant families — say hello</h2>
+    <p class="connect-sub">If something on this site helped you, or if you have a question not covered yet, reach out on LinkedIn. Always happy to connect.</p>
+    <a class="connect-btn" href="https://www.linkedin.com/in/mark-prasanna-66628214/" target="_blank" rel="noopener">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      Connect on LinkedIn
+    </a>
+  </div>
+
+</div>
+
+<footer>
+  <p><strong>Canada Family Guide</strong> — Built for families across Canada</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="newcomer-start.html">Newcomer Guide</a>
+    <a href="finance.html">Finance</a>
+    <a href="education.html">Education</a>
+    <a href="planner.html">Grade Planner</a>
+    <a href="streams.html">Career Streams</a>
+    <a href="community.html">Community Hours</a>
+    <a href="extracurriculars.html">Extracurriculars</a>
+    <a href="newcomer.html">Education Newcomers</a>
+    <a href="quebec.html">Quebec/CEGEP</a>
+    <a href="recreation.html">Recreation</a>
+    <a href="travel.html">Travel</a>
+    <a href="tech-careers.html">Tech &amp; AI</a>
+    <a href="healthcare.html">Healthcare</a>
+    <a href="india.html">India Guide</a>
+    <a href="about.html">About</a>
+  </div>
+  <p class="footer-disclaimer">Not financial or legal advice. Information is shared for educational purposes only. Always verify with your school board, a registered financial advisor, or relevant authority.</p>
+</footer>
+
+</body>
+</html>

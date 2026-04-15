@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Core entry pages — highest priority -->
+  <url>
+    <loc>https://canadafamilyguide.com/</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://canadafamilyguide.com/newcomer.html</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://canadafamilyguide.com/newcomer-start.html</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://canadafamilyguide.com/healthcare.html</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://canadafamilyguide.com/finance.html</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <!-- Education cluster -->
+  <url>
+    <loc>https://canadafamilyguide.com/education.html</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://canadafamilyguide.com/streams.html</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://canadafamilyguide.com/planner.html</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://canadafamilyguide.com/extracurriculars.html</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://canadafamilyguide.com/community.html</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://canadafamilyguide.com/quebec.html</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Career paths cluster -->
+  <url>
+    <loc>https://canadafamilyguide.com/tech-careers.html</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://canadafamilyguide.com/engineering.html</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://canadafamilyguide.com/medicine.html</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://canadafamilyguide.com/arts_science.html</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Lifestyle cluster -->
+  <url>
+    <loc>https://canadafamilyguide.com/travel.html</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://canadafamilyguide.com/recreation.html</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Reference pages -->
+  <url>
+    <loc>https://canadafamilyguide.com/india.html</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://canadafamilyguide.com/about.html</loc>
+    <lastmod>2026-04-15</lastmod>
+    <priority>0.5</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+</urlset>
