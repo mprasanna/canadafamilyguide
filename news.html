@@ -219,16 +219,15 @@ async function loadTab(tab) {
 
   // Show skeleton
   area.innerHTML = `
-    <div class="section-label-sm">${tabLabels[tab].yt}</div>
-    <div class="skeleton-grid">
-      <div class="skeleton-card"></div>
-      <div class="skeleton-card"></div>
-      <div class="skeleton-card"></div>
-    </div>
     <div class="section-label-sm">${tabLabels[tab].news}</div>
     <div class="skeleton-news"></div>
     <div class="skeleton-news"></div>
     <div class="skeleton-news"></div>
+    <div class="skeleton-grid" style="margin-top:2rem">
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+    </div>
   `;
   errBanner.style.display = 'none';
   refreshTime.textContent = 'Loading...';
@@ -244,10 +243,30 @@ async function loadTab(tab) {
 
     let html = '';
 
-    // YouTube section
-    html += `<div class="section-label-sm">${tabLabels[tab].yt}</div>`;
+    // News section — always first
+    html += `<div class="section-label-sm">${tabLabels[tab].news}</div>`;
 
+    if (data.news && data.news.length > 0) {
+      html += `<div class="news-list">`;
+      for (const item of data.news) {
+        html += `
+          <a class="news-item" href="${escapeHtml(item.link)}" target="_blank" rel="noopener">
+            <div class="news-dot"></div>
+            <div class="news-item-body">
+              <div class="news-item-title">${escapeHtml(item.title)}</div>
+              <div class="news-item-meta">${item.age || ''}${item.source ? ' · ' + escapeHtml(item.source) : ''}</div>
+            </div>
+            <div class="news-arrow">→</div>
+          </a>`;
+      }
+      html += `</div>`;
+    } else {
+      html += `<div class="empty-state">No news items loaded right now.</div>`;
+    }
+
+    // YouTube section — only show if there are videos
     if (data.youtube && data.youtube.length > 0) {
+      html += `<div class="section-label-sm" style="margin-top:2rem">${tabLabels[tab].yt}</div>`;
       html += `<div class="yt-grid">`;
       for (const v of data.youtube.slice(0, 6)) {
         const thumb = v.thumbnail
@@ -269,29 +288,6 @@ async function loadTab(tab) {
           </a>`;
       }
       html += `</div>`;
-    } else {
-      html += `<div class="empty-state">No videos loaded right now — check back shortly.</div>`;
-    }
-
-    // News section
-    html += `<div class="section-label-sm" style="margin-top:.5rem">${tabLabels[tab].news}</div>`;
-
-    if (data.news && data.news.length > 0) {
-      html += `<div class="news-list">`;
-      for (const item of data.news) {
-        html += `
-          <a class="news-item" href="${escapeHtml(item.link)}" target="_blank" rel="noopener">
-            <div class="news-dot"></div>
-            <div class="news-item-body">
-              <div class="news-item-title">${escapeHtml(item.title)}</div>
-              <div class="news-item-meta">${item.age || ''}${item.source ? ' · ' + escapeHtml(item.source) : ''}</div>
-            </div>
-            <div class="news-arrow">→</div>
-          </a>`;
-      }
-      html += `</div>`;
-    } else {
-      html += `<div class="empty-state">No news items loaded right now.</div>`;
     }
 
     area.innerHTML = html;
