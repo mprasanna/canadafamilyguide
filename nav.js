@@ -114,3 +114,43 @@
     if (hamBtn) hamBtn.setAttribute('aria-expanded', false);
   }));
 })();
+
+// PWA — inject manifest link and register service worker
+(function() {
+  // Add manifest link if not already present
+  if (!document.querySelector('link[rel="manifest"]')) {
+    const link = document.createElement('link');
+    link.rel = 'manifest';
+    link.href = '/manifest.json';
+    document.head.appendChild(link);
+  }
+
+  // Add theme-color meta if not present
+  if (!document.querySelector('meta[name="theme-color"]')) {
+    const meta = document.createElement('meta');
+    meta.name = 'theme-color';
+    meta.content = '#C8102E';
+    document.head.appendChild(meta);
+  }
+
+  // Add apple-mobile-web-app meta tags for iOS
+  if (!document.querySelector('meta[name="apple-mobile-web-app-capable"]')) {
+    const tags = [
+      { name: 'apple-mobile-web-app-capable', content: 'yes' },
+      { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
+      { name: 'apple-mobile-web-app-title', content: 'Canada Guide' },
+    ];
+    tags.forEach(t => {
+      const m = document.createElement('meta');
+      m.name = t.name; m.content = t.content;
+      document.head.appendChild(m);
+    });
+  }
+
+  // Register service worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    });
+  }
+})();
