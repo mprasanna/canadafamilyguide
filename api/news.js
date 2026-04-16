@@ -24,13 +24,12 @@ const SOURCES = {
     ]
   },
   jobs: {
-    youtube: [
-      { handle: 'careeraxis', name: 'CareerAxis' },
-    ],
+    youtube: [],
     news: [
-      'https://news.google.com/rss/search?q=Canada+tech+jobs+hiring+2025&hl=en-CA&gl=CA&ceid=CA:en',
+      'https://news.google.com/rss/search?q=Canada+tech+jobs+hiring+2026&hl=en-CA&gl=CA&ceid=CA:en',
       'https://news.google.com/rss/search?q=Waterloo+Toronto+tech+jobs+newcomer&hl=en-CA&gl=CA&ceid=CA:en',
       'https://news.google.com/rss/search?q=Canada+immigration+job+market+skilled+workers&hl=en-CA&gl=CA&ceid=CA:en',
+      'https://news.google.com/rss/search?q=Canada+software+engineer+jobs+2026&hl=en-CA&gl=CA&ceid=CA:en',
     ]
   }
 };
