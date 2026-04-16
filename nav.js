@@ -11,6 +11,7 @@
 
   const moreLinks = [
     { href: 'tools.html',        label: '🧮 Financial Planner' },
+    { href: 'credit.html',       label: '💳 Credit Builder' },
     { href: 'travel.html',       label: 'Travel' },
     { href: 'recreation.html',   label: 'Recreation' },
     { href: 'tech-careers.html', label: 'Tech & AI' },

@@ -169,6 +169,27 @@ footer strong{color:#fff}
 .footer-links a{color:#aaa;text-decoration:none;transition:color .2s}
 .footer-links a:hover{color:#fff}
 .footer-disclaimer{font-size:.75rem;color:#666;margin-top:.5rem}
+
+/* GLOBAL SUMMARY BAR */
+.summary-bar{display:none;background:#0f2744;color:#fff;border-radius:10px;padding:1rem 1.5rem;margin-bottom:1.5rem;animation:fadeIn .3s ease}
+.summary-bar.show{display:block}
+.summary-bar-title{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7ecfff;margin-bottom:.8rem}
+.summary-bar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.8rem}
+.summary-item{text-align:center}
+.summary-item-label{font-size:.68rem;color:#aac4e8;margin-bottom:.2rem;text-transform:uppercase;letter-spacing:.05em}
+.summary-item-value{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.1rem;color:#fff}
+.summary-edit{font-size:.75rem;color:#7ecfff;text-decoration:underline;cursor:pointer;margin-top:.6rem;display:inline-block;background:none;border:none}
+
+/* NEXT STEPS */
+.next-steps{background:#fff;border:2px solid var(--red);border-radius:12px;padding:1.5rem;margin-top:1.5rem}
+.next-steps-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;color:var(--black);margin-bottom:1rem}
+.next-step-item{display:flex;align-items:flex-start;gap:.8rem;padding:.7rem 0;border-bottom:1px solid #f0ece4}
+.next-step-item:last-child{border-bottom:none}
+.next-step-check{width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0;margin-top:.1rem}
+.next-step-text{font-size:.85rem;color:var(--grey);line-height:1.5}
+.next-step-text strong{color:var(--black)}
+.emotional-hook{background:linear-gradient(135deg,#0f2744,#1a3a5c);border-radius:10px;padding:1.2rem 1.5rem;color:#fff;text-align:center;margin-top:1rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:1rem;line-height:1.5}
+.emotional-hook span{color:#7ecfff}
 </style>
 </head>
 <body>
@@ -196,6 +217,20 @@ footer strong{color:#fff}
     <div class="progress-step" id="step3" onclick="scrollToSection('savings-section')">
       <span class="step-num">Step 3</span>Savings Plan
     </div>
+  </div>
+
+
+  <!-- GLOBAL SUMMARY BAR -->
+  <div class="summary-bar" id="summary-bar">
+    <div class="summary-bar-title">Your plan summary</div>
+    <div class="summary-bar-grid">
+      <div class="summary-item"><div class="summary-item-label">Take-home</div><div class="summary-item-value" id="sum-income">—</div></div>
+      <div class="summary-item"><div class="summary-item-label">Housing budget</div><div class="summary-item-value" id="sum-housing">—</div></div>
+      <div class="summary-item"><div class="summary-item-label">Monthly savings</div><div class="summary-item-value" id="sum-savings">—</div></div>
+      <div class="summary-item"><div class="summary-item-label">TFSA / month</div><div class="summary-item-value" id="sum-tfsa">—</div></div>
+      <div class="summary-item"><div class="summary-item-label">Effective tax rate</div><div class="summary-item-value" id="sum-tax">—</div></div>
+    </div>
+    <button class="summary-edit" onclick="scrollToSection('tax-section')">✏️ Edit profile</button>
   </div>
 
   <!-- ═══════════════════════════════════════════════ -->
@@ -518,8 +553,29 @@ footer strong{color:#fff}
         </div>
       </div>
 
+
+      <div class="next-steps" id="next-steps" style="display:none">
+        <div class="next-steps-title">🎯 Your next steps this week</div>
+        <div class="next-step-item"><div class="next-step-check">1</div><div class="next-step-text" id="ns-1">—</div></div>
+        <div class="next-step-item"><div class="next-step-check">2</div><div class="next-step-text" id="ns-2">—</div></div>
+        <div class="next-step-item"><div class="next-step-check">3</div><div class="next-step-text" id="ns-3">—</div></div>
+        <div class="next-step-item"><div class="next-step-check">4</div><div class="next-step-text" id="ns-4">—</div></div>
+      </div>
+      <div class="emotional-hook" id="emotional-hook" style="display:none">
+        <span id="emotional-text">—</span>
+      </div>
+
       <div class="disclaimer">⚠️ Estimates only. Contribution room, income, and family circumstances vary. Always verify with a registered financial advisor. Not financial advice.</div>
     </div>
+  </div>
+
+  <!-- LINK TO CREDIT BUILDER -->
+  <div style="background:linear-gradient(135deg,#0d1f6b,#1565C0);border-radius:12px;padding:1.5rem;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:1.5rem">
+    <div>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;margin-bottom:.3rem">Next: Build your Canadian credit score →</div>
+      <div style="font-size:.85rem;color:#bbdefb;line-height:1.6">Your income and savings plan is set. Now tackle the last piece — credit history doesn't transfer from your home country. Start from zero, reach 700+ in 12–18 months.</div>
+    </div>
+    <a href="credit.html" style="background:#fff;color:#1565C0;padding:.7rem 1.4rem;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.85rem;text-decoration:none;white-space:nowrap;flex-shrink:0">Open Credit Builder →</a>
   </div>
 
 </main>
@@ -531,12 +587,22 @@ footer strong{color:#fff}
     <a href="newcomer-start.html">Newcomer Guide</a>
     <a href="finance.html">Finance</a>
     <a href="education.html">Education</a>
-    <a href="tools.html">Financial Tools</a>
+    <a href="planner.html">Grade Planner</a>
+    <a href="streams.html">Career Streams</a>
+    <a href="community.html">Community Hours</a>
+    <a href="extracurriculars.html">Extracurriculars</a>
+    <a href="newcomer.html">Education Newcomers</a>
+    <a href="quebec.html">Quebec/CEGEP</a>
+    <a href="recreation.html">Recreation</a>
+    <a href="travel.html">Travel</a>
+    <a href="tech-careers.html">Tech &amp; AI</a>
     <a href="healthcare.html">Healthcare</a>
+    <a href="india.html">India Guide</a>
     <a href="news.html">Live Updates</a>
+    <a href="tools.html">Financial Planner</a>
     <a href="about.html">About</a>
   </div>
-  <p class="footer-disclaimer">Not financial or legal advice. Always verify with a registered financial advisor.</p>
+  <p class="footer-disclaimer">Not financial or legal advice. Information is shared for educational purposes only. Always verify with your school board, a registered financial advisor, or relevant authority.</p>
 </footer>
 
 <script>
@@ -625,6 +691,9 @@ function calculateTax(){
 
   STATE={takeHome,monthly,marginalRate,salary,province:provCode,housing:0};
 
+  // Update summary bar
+  updateSummaryBar();
+
   // Save to localStorage
   try{localStorage.setItem('cfg_salary',salary);localStorage.setItem('cfg_province',provCode);localStorage.setItem('cfg_monthly',Math.round(monthly));}catch(e){}
 
@@ -689,6 +758,7 @@ function calculateAffordability(){
   STATE.housing=Math.round(rent30=income*.30);
 
   try{localStorage.setItem('cfg_housing',STATE.housing);}catch(e){}
+  updateSummaryBar();
 
   set('rent-25',fmt(rent25));set('rent-33',fmt(rent33));
 
@@ -822,6 +892,8 @@ function calculateSavings(){
 
   document.getElementById('savings-results').classList.add('show');
   document.getElementById('step3').classList.add('done');
+  updateSummaryBar();
+  buildNextSteps(income, housing, tfsaMonthly, rrspMonthly, respMonthly, children, marginal);
 }
 
 // ─────────────────────────────────────────────
@@ -845,6 +917,55 @@ window.addEventListener('load',()=>{
     if(m){document.getElementById('aff-income').value=m;document.getElementById('sav-income').value=m;}
   }catch(e){}
 });
+
+
+// ─────────────────────────────────────────────
+// SUMMARY BAR
+// ─────────────────────────────────────────────
+function updateSummaryBar(){
+  const bar = document.getElementById('summary-bar');
+  if(!bar) return;
+  const monthly = STATE.monthly || 0;
+  const housing = STATE.housing || Math.round(monthly * 0.30);
+  const savings = Math.round(monthly * 0.20);
+  const tfsa = Math.min(Math.round((monthly - housing) * 0.35), 583);
+  if(monthly > 0){
+    set('sum-income', fmt(monthly) + '/mo');
+    set('sum-housing', fmt(housing) + '/mo');
+    set('sum-savings', fmt(savings) + '/mo');
+    set('sum-tfsa', fmt(tfsa) + '/mo');
+    set('sum-tax', STATE.marginalRate > 0 ? pct(STATE.marginalRate) : '—');
+    bar.classList.add('show');
+  }
+}
+
+// ─────────────────────────────────────────────
+// NEXT STEPS + EMOTIONAL HOOK
+// ─────────────────────────────────────────────
+function buildNextSteps(income, housing, tfsa, rrsp, resp, children, marginal){
+  const ns = document.getElementById('next-steps');
+  const hook = document.getElementById('emotional-hook');
+  if(!ns) return;
+
+  const rrspAnnualSaving = Math.round(rrsp * 12 * marginal);
+  const monthsToEmergency = Math.round((income * 3) / (tfsa + rrsp));
+
+  set('ns-1', `<strong>This week: Open a TFSA</strong> — Call your bank (RBC, TD, or Scotiabank) and open a TFSA savings account. Transfer ${fmt(tfsa)} into it. Takes 20 minutes. Every month you delay is tax-free growth lost.`);
+  set('ns-2', `<strong>This week: Set up a secured credit card</strong> — If you're a newcomer, apply for a newcomer secured card ($500 limit). Use it for groceries only. Pay in full every month. Your credit score will reach 680+ within 12 months.`);
+  set('ns-3', children > 0
+    ? `<strong>This month: Open an RESP</strong> — Any bank offers this. Start contributing ${fmt(resp)}/month and you'll receive the 20% Canada Education Savings Grant — ${fmt(Math.min(resp*12, 2500*children)*0.20)}/year free from the government.`
+    : `<strong>This month: Start RRSP contributions</strong> — Contributing ${fmt(rrsp)}/month saves you ~${fmt(rrspAnnualSaving)} in taxes this year. Ask your bank to set up automatic monthly contributions.`);
+  set('ns-4', `<strong>Next 3 months: Build emergency fund</strong> — Target ${fmt(income * 3)} (3 months of take-home). Keep it in a high-interest TFSA savings account (EQ Bank offers 3.5–4%). At your current savings rate, you'll reach this in ~${monthsToEmergency} months.`);
+
+  ns.style.display = 'block';
+
+  // Emotional hook
+  const onTrack = (housing / income) <= 0.33 && tfsa >= 400;
+  set('emotional-text', onTrack
+    ? `✓ You are <span>on track</span> to build a strong financial foundation in Canada within 12 months. Your housing is manageable, your savings plan is realistic, and your tax strategy is sound.`
+    : `You have a clear plan. Focus on the steps above — <span>your first 12 months in Canada</span> set the foundation for everything that follows. One step at a time.`);
+  hook.style.display = 'block';
+}
 
 document.getElementById('salary').addEventListener('keydown',e=>{if(e.key==='Enter')calculateTax();});
 </script>
