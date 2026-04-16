@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canada Tax Calculator 2025 — Take-Home Pay by Province | Canada Family Guide</title>
+<meta name="description" content="Free Canadian take-home pay calculator for 2025. Enter your salary and province to see federal tax, provincial tax, CPP, EI deductions and your exact monthly take-home. Includes RRSP savings impact.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://canadafamilyguide.com/tools.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Canada Tax Calculator 2025 — Take-Home Pay by Province">
+<meta property="og:description" content="See your exact take-home pay after federal tax, provincial tax, CPP and EI. Built for newcomers to Canada.">
+<meta property="og:url" content="https://canadafamilyguide.com/tools.html">
+<meta property="og:site_name" content="Canada Family Guide">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍁</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+<script src="nav.js"></script>
+<style>
+:root{--red:#C8102E;--red-dark:#9B0B22;--black:#0f0f0f;--white:#F7F5F0;--grey:#555;--light:#EDE9E0;--green:#1a7a4a;--blue:#1565C0}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--black);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+
+.page-header{background:linear-gradient(135deg,#0f2744,#1a3a5c);color:#fff;padding:7rem 2rem 3rem}
+.page-header-inner{max-width:900px;margin:0 auto}
+.page-label{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#7ecfff;margin-bottom:.75rem}
+.page-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;margin-bottom:.8rem}
+.page-sub{color:#aac4e8;font-size:.95rem;line-height:1.7;max-width:600px}
+
+main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+
+/* TOOL CARD */
+.tool-card{background:#fff;border:1px solid #e0dbd0;border-radius:12px;overflow:hidden;margin-bottom:1.5rem}
+.tool-card-head{background:var(--red);color:#fff;padding:1rem 1.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem}
+.tool-card-body{padding:1.5rem}
+
+/* INPUTS */
+.input-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem}
+.input-group{display:flex;flex-direction:column;gap:.4rem}
+.input-group label{font-size:.8rem;font-weight:600;color:var(--grey);font-family:'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:.05em}
+.input-group input,.input-group select{
+  border:1.5px solid #e0dbd0;border-radius:6px;padding:.7rem 1rem;
+  font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--black);
+  background:#fff;transition:border-color .2s;width:100%
+}
+.input-group input:focus,.input-group select:focus{outline:none;border-color:var(--red)}
+.input-prefix{position:relative}
+.input-prefix input{padding-left:1.8rem}
+.input-prefix::before{content:'$';position:absolute;left:.7rem;top:50%;transform:translateY(-50%);color:var(--grey);font-size:.95rem;pointer-events:none}
+
+/* CALCULATE BUTTON */
+.calc-btn{width:100%;background:var(--red);color:#fff;border:none;border-radius:8px;padding:.9rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:background .2s;letter-spacing:.02em}
+.calc-btn:hover{background:var(--red-dark)}
+
+/* RESULTS */
+.results{display:none}
+.results.show{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* TAKE HOME HERO */
+.takehome-hero{background:linear-gradient(135deg,#0f2744,#1a3a5c);border-radius:10px;padding:1.8rem 1.5rem;color:#fff;margin-bottom:1.2rem;text-align:center}
+.takehome-label{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7ecfff;margin-bottom:.4rem}
+.takehome-amount{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:3rem;line-height:1;margin-bottom:.3rem}
+.takehome-sub{font-size:.85rem;color:#aac4e8}
+.takehome-annual{font-size:1.1rem;font-weight:600;color:#fff;margin-top:.5rem}
+
+/* BREAKDOWN BAR */
+.breakdown-bar{margin-bottom:1.5rem}
+.bar-track{height:28px;border-radius:6px;overflow:hidden;display:flex;margin-bottom:.8rem}
+.bar-seg{height:100%;transition:width .5s ease}
+.bar-seg-takehome{background:#1a7a4a}
+.bar-seg-fed{background:#C8102E}
+.bar-seg-prov{background:#e05c7a}
+.bar-seg-cpp{background:#1565C0}
+.bar-seg-ei{background:#6A1B9A}
+
+.bar-legend{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.5rem}
+.legend-item{display:flex;align-items:center;gap:.5rem;font-size:.8rem}
+.legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.legend-label{color:var(--grey)}
+.legend-value{font-weight:600;color:var(--black);margin-left:auto}
+
+/* DEDUCTION TABLE */
+.deduction-table{width:100%;border-collapse:collapse;margin-bottom:1.2rem;font-size:.88rem}
+.deduction-table tr{border-bottom:1px solid #f0ece4}
+.deduction-table tr:last-child{border-bottom:none}
+.deduction-table td{padding:.65rem .5rem;color:var(--grey)}
+.deduction-table td:last-child{text-align:right;font-weight:600;color:var(--black)}
+.deduction-table .total-row td{color:var(--black);font-weight:700;font-size:.95rem;border-top:2px solid #e0dbd0;padding-top:.8rem}
+.deduction-table .takehome-row td{color:var(--green);font-weight:800;font-size:1rem}
+
+/* TAX RATES */
+.rate-cards{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.2rem}
+.rate-card{background:var(--light);border-radius:8px;padding:1rem;text-align:center}
+.rate-card-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--grey);margin-bottom:.3rem}
+.rate-card-value{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.6rem;color:var(--black)}
+.rate-card-sub{font-size:.75rem;color:var(--grey);margin-top:.2rem}
+.rate-card.green .rate-card-value{color:var(--green)}
+.rate-card.red .rate-card-value{color:var(--red)}
+
+/* WHAT THIS MEANS */
+.decisions{background:#fff;border:1px solid #e0dbd0;border-radius:10px;overflow:hidden;margin-bottom:1.2rem}
+.decisions-head{background:var(--light);padding:.8rem 1.2rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;color:var(--black);border-bottom:1px solid #e0dbd0}
+.decision-item{display:flex;gap:.8rem;padding:.9rem 1.2rem;border-bottom:1px solid #f0ece4;align-items:flex-start}
+.decision-item:last-child{border-bottom:none}
+.decision-icon{font-size:1.2rem;flex-shrink:0;margin-top:.1rem}
+.decision-text{font-size:.85rem;color:var(--grey);line-height:1.6}
+.decision-text strong{color:var(--black)}
+
+/* RRSP IMPACT */
+.rrsp-impact{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:1rem 1.2rem;margin-bottom:1.2rem;display:none}
+.rrsp-impact.show{display:block}
+.rrsp-impact-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;color:var(--green);margin-bottom:.5rem}
+.rrsp-impact-body{font-size:.85rem;color:#2e7d32;line-height:1.6}
+
+/* DISCLAIMER */
+.disclaimer{font-size:.75rem;color:#999;line-height:1.5;padding:.8rem;background:var(--light);border-radius:6px;margin-top:1rem}
+
+@media(max-width:600px){
+  .input-grid{grid-template-columns:1fr}
+  .rate-cards{grid-template-columns:1fr 1fr}
+  .takehome-amount{font-size:2.4rem}
+  .bar-legend{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<div style="height:60px"></div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-label">💰 Canada Tools</div>
+    <h1 class="page-title">Tax & Take-Home Calculator</h1>
+    <p class="page-sub">Enter your salary and province — see exactly what lands in your bank account each month, where the rest goes, and what it means for your finances.</p>
+  </div>
+</div>
+
+<main>
+
+  <!-- INPUT CARD -->
+  <div class="tool-card">
+    <div class="tool-card-head">Your details</div>
+    <div class="tool-card-body">
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Annual salary</label>
+          <div class="input-prefix">
+            <input type="number" id="salary" placeholder="85000" min="0" max="1000000" value="">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Province</label>
+          <select id="province">
+            <option value="ON">Ontario</option>
+            <option value="BC">British Columbia</option>
+            <option value="AB">Alberta</option>
+            <option value="QC">Quebec</option>
+            <option value="MB">Manitoba</option>
+            <option value="SK">Saskatchewan</option>
+            <option value="NS">Nova Scotia</option>
+            <option value="NB">New Brunswick</option>
+            <option value="NL">Newfoundland & Labrador</option>
+            <option value="PE">Prince Edward Island</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>RRSP contribution / year (optional)</label>
+          <div class="input-prefix">
+            <input type="number" id="rrsp" placeholder="0" min="0" max="31560" value="0">
+          </div>
+          <span style="font-size:.75rem;color:#999;margin-top:.2rem">Max 2025: $31,560 or 18% of last year's income. Leave blank if unsure.</span>
+        </div>
+        <div class="input-group">
+          <label>Pay frequency</label>
+          <select id="frequency">
+            <option value="12">Monthly</option>
+            <option value="26">Bi-weekly</option>
+            <option value="24">Semi-monthly</option>
+            <option value="52">Weekly</option>
+          </select>
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calculate()">Calculate my take-home →</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+
+    <!-- TAKE HOME HERO -->
+    <div class="takehome-hero">
+      <div class="takehome-label">Your take-home pay</div>
+      <div class="takehome-amount" id="res-monthly">$0</div>
+      <div class="takehome-sub" id="res-freq-label">per month</div>
+      <div class="takehome-annual" id="res-annual">$0 per year</div>
+    </div>
+
+    <!-- BREAKDOWN BAR -->
+    <div class="tool-card">
+      <div class="tool-card-head">Where your money goes</div>
+      <div class="tool-card-body">
+        <div class="breakdown-bar">
+          <div class="bar-track" id="bar-track">
+            <div class="bar-seg bar-seg-takehome" id="bar-takehome" style="width:0%"></div>
+            <div class="bar-seg bar-seg-fed" id="bar-fed" style="width:0%"></div>
+            <div class="bar-seg bar-seg-prov" id="bar-prov" style="width:0%"></div>
+            <div class="bar-seg bar-seg-cpp" id="bar-cpp" style="width:0%"></div>
+            <div class="bar-seg bar-seg-ei" id="bar-ei" style="width:0%"></div>
+          </div>
+          <div class="bar-legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#1a7a4a"></div><span class="legend-label">Take-home</span><span class="legend-value" id="leg-takehome">—</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#C8102E"></div><span class="legend-label">Federal tax</span><span class="legend-value" id="leg-fed">—</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#e05c7a"></div><span class="legend-label">Provincial tax</span><span class="legend-value" id="leg-prov">—</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#1565C0"></div><span class="legend-label">CPP</span><span class="legend-value" id="leg-cpp">—</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#6A1B9A"></div><span class="legend-label">EI</span><span class="legend-value" id="leg-ei">—</span></div>
+          </div>
+        </div>
+
+        <table class="deduction-table">
+          <tr><td>Gross salary</td><td id="t-gross">—</td></tr>
+          <tr><td>Federal income tax</td><td id="t-fed">—</td></tr>
+          <tr><td>Provincial income tax</td><td id="t-prov">—</td></tr>
+          <tr><td>CPP contributions</td><td id="t-cpp">—</td></tr>
+          <tr><td>EI premiums</td><td id="t-ei">—</td></tr>
+          <tr><td>Total deductions</td><td id="t-total-ded">—</td></tr>
+          <tr class="takehome-row"><td>✓ Annual take-home</td><td id="t-takehome">—</td></tr>
+        </table>
+
+        <div class="rate-cards">
+          <div class="rate-card red">
+            <div class="rate-card-label">Marginal rate</div>
+            <div class="rate-card-value" id="r-marginal">—</div>
+            <div class="rate-card-sub">Tax on your next dollar</div>
+          </div>
+          <div class="rate-card green">
+            <div class="rate-card-label">Effective rate</div>
+            <div class="rate-card-value" id="r-effective">—</div>
+            <div class="rate-card-sub">What you actually pay</div>
+          </div>
+        </div>
+
+        <div style="background:var(--light);border-radius:8px;padding:.9rem 1.1rem;font-size:.82rem;color:var(--grey);line-height:1.6">
+          <strong style="color:var(--black)">Marginal vs Effective rate explained simply:</strong> You don't pay your top rate on everything you earn. Canada uses brackets — you pay 15% on the first $57k, 20.5% on the next chunk, and so on. Your <em>effective</em> rate is the real average. Most people earning $80–100k pay an effective combined rate of 28–33%, not 43%.
+        </div>
+      </div>
+    </div>
+
+    <!-- RRSP IMPACT -->
+    <div class="rrsp-impact" id="rrsp-impact">
+      <div class="rrsp-impact-title">💚 RRSP tax saving</div>
+      <div class="rrsp-impact-body" id="rrsp-impact-text">—</div>
+    </div>
+
+    <!-- WHAT THIS MEANS -->
+    <div class="decisions">
+      <div class="decisions-head">What this means for you</div>
+      <div class="decision-item">
+        <div class="decision-icon">🏠</div>
+        <div class="decision-text" id="d-housing">—</div>
+      </div>
+      <div class="decision-item">
+        <div class="decision-icon">💰</div>
+        <div class="decision-text" id="d-savings">—</div>
+      </div>
+      <div class="decision-item">
+        <div class="decision-icon">📈</div>
+        <div class="decision-text" id="d-invest">—</div>
+      </div>
+      <div class="decision-item">
+        <div class="decision-icon">🎓</div>
+        <div class="decision-text" id="d-resp">—</div>
+      </div>
+      <div class="decision-item">
+        <div class="decision-icon">💡</div>
+        <div class="decision-text" id="d-tip">—</div>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      ⚠️ This calculator provides estimates based on 2025 federal and provincial tax rates. It does not account for all credits, deductions, or individual circumstances. For personalized advice, consult a registered financial advisor or accountant. Not financial advice.
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  <p><strong>Canada Family Guide</strong> — Built for families across Canada</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="newcomer-start.html">Newcomer Guide</a>
+    <a href="finance.html">Finance</a>
+    <a href="education.html">Education</a>
+    <a href="tools.html">Tax Calculator</a>
+    <a href="healthcare.html">Healthcare</a>
+    <a href="news.html">Live Updates</a>
+    <a href="about.html">About</a>
+  </div>
+  <p class="footer-disclaimer">Not financial or legal advice. Always verify with a registered financial advisor.</p>
+</footer>
+
+<script>
+// ── 2025 TAX DATA ──────────────────────────────────────────────
+
+const FEDERAL = {
+  brackets: [57375, 114750, 158519, 220000],
+  rates:    [0.15, 0.205, 0.26, 0.29, 0.33],
+  bpa: 16129  // Basic Personal Amount 2025
+};
+
+const PROVINCIAL = {
+  ON: { brackets:[51446,102894,150000,220000], rates:[0.0505,0.0915,0.1116,0.1216,0.1316], bpa:11865, name:'Ontario' },
+  BC: { brackets:[47937,95875,110076,133664,181232,252752], rates:[0.0506,0.077,0.105,0.1229,0.147,0.168,0.205], bpa:11981, name:'British Columbia' },
+  AB: { brackets:[148269,177922,237230,355845], rates:[0.10,0.12,0.13,0.14,0.15], bpa:21003, name:'Alberta' },
+  QC: { brackets:[51780,103545], rates:[0.14,0.19,0.24], bpa:17183, name:'Quebec' },
+  MB: { brackets:[47000,100000], rates:[0.108,0.1275,0.174], bpa:15780, name:'Manitoba' },
+  SK: { brackets:[49720,142058], rates:[0.105,0.125,0.145], bpa:17661, name:'Saskatchewan' },
+  NS: { brackets:[29590,59180,93000,150000], rates:[0.0879,0.1495,0.1667,0.175,0.21], bpa:8481, name:'Nova Scotia' },
+  NB: { brackets:[49958,99916,185064], rates:[0.094,0.14,0.16,0.195], bpa:12458, name:'New Brunswick' },
+  NL: { brackets:[43198,86395,154244,215943,275870], rates:[0.087,0.145,0.158,0.178,0.198,0.208], bpa:10818, name:'Newfoundland & Labrador' },
+  PE: { brackets:[32656,64313,105000], rates:[0.0965,0.1363,0.166,0.18], bpa:12000, name:'Prince Edward Island' },
+};
+
+// 2025 CPP & EI
+const CPP = {
+  rate: 0.0595, exemption: 3500,
+  max1: 73200,  // Year's Maximum Pensionable Earnings
+  max2: 81900,  // CPP2 ceiling
+  rate2: 0.04
+};
+const EI = { rate: 0.01666, max: 65700 };
+
+// ── CALCULATION FUNCTIONS ──────────────────────────────────────
+
+function calcTax(income, brackets, rates, bpa) {
+  const taxable = Math.max(0, income - bpa);
+  let tax = 0, prev = 0;
+  for (let i = 0; i < brackets.length; i++) {
+    const top = brackets[i];
+    if (taxable <= prev) break;
+    const chunk = Math.min(taxable, top) - prev;
+    tax += chunk * rates[i];
+    prev = top;
+  }
+  if (taxable > prev) tax += (taxable - prev) * rates[rates.length - 1];
+  return Math.max(0, tax);
+}
+
+function getMarginalRate(income, fedBrackets, fedRates, provBrackets, provRates) {
+  function bracketRate(inc, brackets, rates) {
+    let prev = 0;
+    for (let i = 0; i < brackets.length; i++) {
+      if (inc <= brackets[i]) return rates[i];
+      prev = brackets[i];
+    }
+    return rates[rates.length - 1];
+  }
+  return bracketRate(income, fedBrackets, fedRates) + bracketRate(income, provBrackets, provRates);
+}
+
+function calcCPP(income) {
+  const cpp1 = Math.min(Math.max(0, income - CPP.exemption), CPP.max1 - CPP.exemption) * CPP.rate;
+  const cpp2 = Math.max(0, Math.min(income, CPP.max2) - CPP.max1) * CPP.rate2;
+  return cpp1 + cpp2;
+}
+
+function calcEI(income) {
+  return Math.min(income, EI.max) * EI.rate;
+}
+
+function fmt(n) {
+  return '$' + Math.round(n).toLocaleString('en-CA');
+}
+
+function pct(n) {
+  return (n * 100).toFixed(1) + '%';
+}
+
+// ── MAIN CALCULATE ─────────────────────────────────────────────
+
+function calculate() {
+  const salary   = parseFloat(document.getElementById('salary').value) || 0;
+  const provCode = document.getElementById('province').value;
+  const rrsp     = parseFloat(document.getElementById('rrsp').value) || 0;
+  const freq     = parseInt(document.getElementById('frequency').value);
+
+  if (salary <= 0) { alert('Please enter your annual salary.'); return; }
+
+  const prov = PROVINCIAL[provCode];
+  const taxableIncome = Math.max(0, salary - rrsp);
+
+  const fedTax  = calcTax(taxableIncome, FEDERAL.brackets, FEDERAL.rates, FEDERAL.bpa);
+  const provTax = calcTax(taxableIncome, prov.brackets, prov.rates, prov.bpa);
+  const cpp     = calcCPP(salary);
+  const ei      = calcEI(salary);
+  const totalDed = fedTax + provTax + cpp + ei;
+  const takeHome = salary - totalDed;
+  const perPeriod = takeHome / freq;
+
+  const effectiveRate = totalDed / salary;
+  const marginalRate  = getMarginalRate(taxableIncome, FEDERAL.brackets, FEDERAL.rates, prov.brackets, prov.rates);
+
+  // ── Update UI ──
+
+  const freqLabels = {12:'per month', 26:'per two weeks', 24:'twice a month', 52:'per week'};
+  document.getElementById('res-monthly').textContent   = fmt(perPeriod);
+  document.getElementById('res-freq-label').textContent = freqLabels[freq];
+  document.getElementById('res-annual').textContent    = fmt(takeHome) + ' per year';
+
+  // Bar
+  const s = salary;
+  document.getElementById('bar-takehome').style.width = pct(takeHome/s);
+  document.getElementById('bar-fed').style.width      = pct(fedTax/s);
+  document.getElementById('bar-prov').style.width     = pct(provTax/s);
+  document.getElementById('bar-cpp').style.width      = pct(cpp/s);
+  document.getElementById('bar-ei').style.width       = pct(ei/s);
+
+  // Legend
+  document.getElementById('leg-takehome').textContent = pct(takeHome/s);
+  document.getElementById('leg-fed').textContent      = pct(fedTax/s);
+  document.getElementById('leg-prov').textContent     = pct(provTax/s);
+  document.getElementById('leg-cpp').textContent      = pct(cpp/s);
+  document.getElementById('leg-ei').textContent       = pct(ei/s);
+
+  // Table
+  document.getElementById('t-gross').textContent     = fmt(salary);
+  document.getElementById('t-fed').textContent       = '− ' + fmt(fedTax);
+  document.getElementById('t-prov').textContent      = '− ' + fmt(provTax);
+  document.getElementById('t-cpp').textContent       = '− ' + fmt(cpp);
+  document.getElementById('t-ei').textContent        = '− ' + fmt(ei);
+  document.getElementById('t-total-ded').textContent = '− ' + fmt(totalDed);
+  document.getElementById('t-takehome').textContent  = fmt(takeHome);
+
+  // Rates
+  document.getElementById('r-marginal').textContent  = pct(marginalRate);
+  document.getElementById('r-effective').textContent = pct(effectiveRate);
+
+  // RRSP impact
+  if (rrsp > 0) {
+    const fedWithout  = calcTax(salary, FEDERAL.brackets, FEDERAL.rates, FEDERAL.bpa);
+    const provWithout = calcTax(salary, prov.brackets, prov.rates, prov.bpa);
+    const saving = (fedWithout + provWithout) - (fedTax + provTax);
+    document.getElementById('rrsp-impact-text').innerHTML =
+      `Your $${Math.round(rrsp).toLocaleString()} RRSP contribution saves you <strong>~${fmt(saving)} in taxes this year</strong> — that's money you'd otherwise pay the government, now growing in your account instead. Net cost of the RRSP contribution after tax saving: <strong>${fmt(rrsp - saving)}</strong>.`;
+    document.getElementById('rrsp-impact').classList.add('show');
+  } else {
+    document.getElementById('rrsp-impact').classList.remove('show');
+  }
+
+  // ── What this means ──
+  const monthly      = takeHome / 12;
+  const housing30    = monthly * 0.30;
+  const housing35    = monthly * 0.35;
+  const savingsTarget = monthly * 0.20;
+  const investTarget  = monthly * 0.10;
+  const respMonthly  = 208; // max RESP contribution for full grant
+
+  document.getElementById('d-housing').innerHTML =
+    `<strong>Safe housing budget: ${fmt(housing30)}–${fmt(housing35)}/month.</strong> The 30–35% rule means you can comfortably afford rent in this range without being stretched. In Cornwall/Eastern Ontario, that covers a 2–3 bedroom home. In Toronto, that's a 1-bedroom.`;
+
+  document.getElementById('d-savings').innerHTML =
+    `<strong>Target savings: ${fmt(savingsTarget)}/month (20% rule).</strong> On your income, saving ${fmt(savingsTarget * 12)}/year is achievable and builds a strong emergency fund (3–6 months = ${fmt(monthly * 3)}–${fmt(monthly * 6)}) within your first year.`;
+
+  document.getElementById('d-invest').innerHTML =
+    `<strong>TFSA first, then RRSP.</strong> Your TFSA room is $7,000/year — that's ${fmt(7000/12)}/month to max it out. At your marginal rate of ${pct(marginalRate)}, every $1,000 in RRSP saves you ${fmt(marginalRate * 1000)} in tax immediately.`;
+
+  document.getElementById('d-resp').innerHTML =
+    `<strong>RESP: $208.33/month = free government money.</strong> If you have children, contributing ${fmt(respMonthly)}/month ($2,500/year) earns a 20% Canada Education Savings Grant — that's $500/year free from the government.`;
+
+  document.getElementById('d-tip').innerHTML =
+    rrsp > 0
+      ? `<strong>Your RRSP strategy is working.</strong> By contributing ${fmt(rrsp)}, you've dropped your effective rate from ${pct((calcTax(salary, FEDERAL.brackets, FEDERAL.rates, FEDERAL.bpa) + calcTax(salary, prov.brackets, prov.rates, prov.bpa) + cpp + ei) / salary)} to ${pct(effectiveRate)}. Consider maxing your TFSA first if you haven't already.`
+      : `<strong>Consider starting RRSP contributions.</strong> At your marginal rate of ${pct(marginalRate)}, putting ${fmt(Math.min(salary * 0.18, 31560))} into RRSP (your maximum room) could save you ${fmt(Math.min(salary * 0.18, 31560) * marginalRate)} in taxes this year alone.`;
+
+  // Show results
+  document.getElementById('results').classList.add('show');
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Allow Enter key to trigger calculation
+document.getElementById('salary').addEventListener('keydown', e => { if (e.key === 'Enter') calculate(); });
+</script>
+
+</body>
+</html>
