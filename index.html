@@ -220,6 +220,24 @@ nav{position:fixed;top:0;left:0;right:0;background:rgba(247,245,240,.96);backdro
 img{max-width:100%;height:auto}
 @media(max-width:600px){.section-cards{grid-template-columns:1fr}.hero h1{font-size:2.4rem}.entry-paths{flex-direction:column}}
 
+.news-strip{background:#fff;border-bottom:1px solid #e0dbd0;padding:1.5rem 2rem}
+.news-strip-inner{max-width:1200px;margin:0 auto}
+.news-strip-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px}
+.news-strip-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;color:var(--black);display:flex;align-items:center;gap:6px}
+.news-live-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#1a7a4a;animation:livepulse 2s infinite}
+@keyframes livepulse{0%,100%{opacity:1}50%{opacity:.3}}
+.news-strip-link{font-size:.8rem;font-weight:700;color:var(--red);text-decoration:none;font-family:'Plus Jakarta Sans',sans-serif}
+.news-strip-link:hover{text-decoration:underline}
+.news-strip-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.news-strip-card{background:var(--light);border:1px solid #ddd8ce;border-radius:6px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color .2s}
+.news-strip-card:hover{border-color:var(--red)}
+.news-strip-tag{font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:10px;display:inline-block;margin-bottom:6px}
+.tag-imm{background:#fde8ec;color:#9B0B22}
+.tag-yt{background:#e8f0fe;color:#1565C0}
+.tag-job{background:#e8f5e9;color:#1b5e20}
+.news-strip-card-title{font-size:.83rem;color:var(--black);line-height:1.45;font-weight:500}
+@media(max-width:600px){.news-strip-cards{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -230,6 +248,7 @@ img{max-width:100%;height:auto}
     <a href="newcomer-start.html" class="nav-link">Newcomer</a>
     <a href="education.html" class="nav-link">Education</a>
     <a href="finance.html" class="nav-link">Finance</a>
+    <a href="news.html" class="nav-link" style="color:var(--red);font-weight:700">🔴 Live Updates</a>
     <a href="travel.html" class="nav-link">Travel</a>
     <a href="recreation.html" class="nav-link">Recreation</a>
     <a href="tech-careers.html" class="nav-link">Tech &amp; AI</a>
@@ -256,8 +275,23 @@ img{max-width:100%;height:auto}
   </div>
 </section>
 
-
-<div style="background:var(--light);padding:2.5rem 2rem;border-bottom:1px solid #d8d3c8">
+<div class="news-strip">
+  <div class="news-strip-inner">
+    <div class="news-strip-header">
+      <div class="news-strip-title">
+        <span class="news-live-dot"></span>
+        Latest updates for newcomers
+      </div>
+      <a class="news-strip-link" href="news.html">View all updates →</a>
+    </div>
+    <div class="news-strip-cards" id="strip-cards">
+      <a class="news-strip-card" href="news.html">
+        <span class="news-strip-tag tag-imm">Immigration</span>
+        <div class="news-strip-card-title">Loading latest updates...</div>
+      </a>
+    </div>
+  </div>
+</div>;padding:2.5rem 2rem;border-bottom:1px solid #d8d3c8">
   <div style="max-width:1200px;margin:0 auto">
     <div class="sections-label">Where do you want to start?</div>
     <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.4rem;margin-bottom:.5rem">Pick your path</h2>
@@ -481,6 +515,25 @@ img{max-width:100%;height:auto}
   </div>
   <p class="footer-disclaimer">Not financial or legal advice. Information is shared for educational purposes only. Always verify with your school board, a registered financial advisor, or relevant authority.</p>
 </footer>
+
+<script>
+(async function loadStrip() {
+  try {
+    const res = await fetch('/api/news?tab=immigration');
+    if (!res.ok) return;
+    const data = await res.json();
+    const news = (data.news || []).slice(0, 2).map(i => ({ ...i, tag: 'Immigration', tagClass: 'tag-imm' }));
+    const yt   = (data.youtube || []).slice(0, 1).map(i => ({ ...i, tag: 'Video', tagClass: 'tag-yt' }));
+    const items = [...news, ...yt].slice(0, 3);
+    if (!items.length) return;
+    document.getElementById('strip-cards').innerHTML = items.map(item => `
+      <a class="news-strip-card" href="${item.link}" target="_blank" rel="noopener">
+        <span class="news-strip-tag ${item.tagClass}">${item.tag}</span>
+        <div class="news-strip-card-title">${item.title.length > 80 ? item.title.slice(0,80) + '…' : item.title}</div>
+      </a>`).join('');
+  } catch(e) {}
+})();
+</script>
 
 </body>
 </html>
