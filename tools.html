@@ -1081,19 +1081,28 @@ function buildNextSteps(income, housing, tfsa, rrsp, resp, children, marginal){
 
   // Emotional hook
   const onTrack = (housing / income) <= 0.33 && tfsa >= 400;
+  const cityLabel = (CFG.get().city || '').charAt(0).toUpperCase() + (CFG.get().city || 'Canada').slice(1);
   set('emotional-text', onTrack
-    ? `✓ You are <span>on track</span> to build a strong financial foundation in Canada within 12 months. Your housing is manageable, your savings plan is realistic, and your tax strategy is sound.`
-    : `You have a clear plan. Focus on the steps above — <span>your first 12 months in Canada</span> set the foundation for everything that follows. One step at a time.`);
+    ? `✅ You're on track. Your housing cost is manageable, your savings targets are realistic, and your tax position is solid. <span>Most newcomers don't have this clarity in year one — you do.</span>`
+    : housing/income > 0.40
+    ? `⚠️ Housing is taking a large share of your income — but you have a plan now. <span>Knowing where the pressure is puts you ahead of most families at this stage.</span> Focus on the next steps above.`
+    : `You have a clear picture of your finances in Canada. <span>The first year is the hardest to navigate — you're already doing the right things.</span> One step at a time.`);
   hook.style.display = 'block';
 
   // Next 3 moves block
   const nm = document.getElementById('sav-next-moves');
   if(nm){
     const plan = CFG.get();
+    const tfsaAmt = fmt(Math.min(583, Math.round((income-housing)*0.35)));
+    const emergencyTarget = fmt(income*3);
+    const cityLabel = plan.city ? (plan.city.charAt(0).toUpperCase()+plan.city.slice(1)) : 'your city';
+    const creditDone = plan.creditStage && plan.creditStage !== 'none';
     const moves = [
-      { icon:'💳', text:`<strong>Open a secured credit card this week</strong> — credit history doesn't transfer to Canada. Every month without one is a month of score lost. Takes 30 min at any major bank branch.`, link:'credit.html', linkLabel:'Credit Builder →' },
-      { icon:'🏦', text:`<strong>Open a TFSA at ${plan.monthly ? 'Wealthsimple or ' : ''}your bank</strong> — contribute ${fmt(Math.min(583, Math.round((income-housing)*0.35)))}/month. Tax-free growth from day one. Every year you delay permanently loses $7,000 contribution room.`, link:null, linkLabel:null },
-      { icon:'🏠', text:`<strong>Decide: buy or rent?</strong> — with your income and savings, get a personalised recommendation with real cost numbers and a timeline.`, link:'buy-vs-rent.html', linkLabel:'Buy vs Rent Tool →' },
+      creditDone
+        ? { icon:'💳', text:`<strong>Credit: you've started — keep going.</strong> Every month of on-time full payment moves your score. Check where you stand now.`, link:'credit.html', linkLabel:'Credit Builder →' }
+        : { icon:'💳', text:`<strong>Open a secured credit card this week</strong> — credit history doesn't transfer to Canada. Every month without one is a month of score lost. Takes 30 min at any bank branch.`, link:'credit.html', linkLabel:'Credit Builder →' },
+      { icon:'🏦', text:`<strong>Contribute ${tfsaAmt}/month to your TFSA</strong> — tax-free growth from day one. Target: ${emergencyTarget} emergency fund first (3 months of take-home), then keep investing. Every year you delay loses $7,000 of permanent room.`, link:null, linkLabel:null },
+      { icon:'🏠', text:`<strong>Should you buy in ${cityLabel}?</strong> — based on your ${fmt(income)}/month take-home${plan.savings ? ' and '+fmt(plan.savings)+' saved' : ''}, see whether buying makes sense now, in 12 months, or later.`, link:'buy-vs-rent.html', linkLabel:'Buy vs Rent →' },
     ];
     nm.innerHTML = '<div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:1rem">🎯 Your next 3 moves</div>' +
       moves.map(m=>`<div style="display:flex;gap:.8rem;padding:.85rem 0;border-bottom:1px solid #f0ece4;align-items:flex-start">

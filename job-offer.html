@@ -375,13 +375,13 @@ function evalOffer() {
   let verdictClass, rating, sub;
   if (overall >= 72) {
     verdictClass = 'strong'; rating = '✅ Strong Offer';
-    sub = `This is a competitive offer for ${cd.name}. The salary is ${salaryPct >= 1 ? 'at or above' : 'close to'} market rate for your experience level, and the cost of living in this city leaves you with meaningful disposable income.`;
+    sub = `This is a genuinely competitive offer for ${cd.name}. Your salary is ${salaryPct >= 1.05 ? 'above' : 'at'} market rate for your experience, and the cost of living here leaves real room to save. You're in a good position — negotiate one thing anyway, then accept with confidence.`;
   } else if (overall >= 52) {
-    verdictClass = 'fair'; rating = '⚠️ Fair — Room to Negotiate';
-    sub = `This offer is in the ballpark but below the mid-market range for your role and experience. You have legitimate grounds to negotiate upward. See the negotiation guidance below.`;
+    verdictClass = 'fair'; rating = '⚠️ Fair — Negotiate Before Accepting';
+    sub = `This offer is workable but below what the market typically pays for your role and experience in ${cd.name}. You have clear, legitimate grounds to counter. Negotiating doesn't put offers at risk — most Canadian employers expect it. See the specific counter guidance below.`;
   } else {
-    verdictClass = 'weak'; rating = '❌ Below Market — Negotiate or Reconsider';
-    sub = `This salary is below the typical range for your experience level in ${cd.name}. Either negotiate significantly or understand why it's lower (startup equity, other benefits, career switch). Don't accept without pushing back.`;
+    verdictClass = 'weak'; rating = '❌ Below Market — Push Back Hard';
+    sub = `This salary is meaningfully below what your experience commands in ${cd.name}. Before deciding, understand why: startup with equity? Career pivot? New industry? If none of those apply, this needs a significant counter or you should keep looking. You deserve fair market compensation.`;
   }
 
   document.getElementById('jo-verdict').className = `verdict ${verdictClass}`;

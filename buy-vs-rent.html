@@ -501,9 +501,20 @@ function calcDecision() {
 
   // Verdict
   let verdict, verdictSub, verdictClass;
-  if (score>=70) { verdict='✅ You are ready to buy'; verdictClass='buy'; verdictSub=`Your finances, credit, and stability all point toward buying in ${cd.name}.`; }
-  else if (score>=45) { const mo=score>=60?'6–12 months':'12–18 months'; verdict=`⏳ You can buy in ${mo}`; verdictClass='soon'; verdictSub='You\'re not far off. See your readiness breakdown and timeline below for exactly what to fix.'; }
-  else { verdict='🏠 Keep renting for now'; verdictClass='rent'; verdictSub='Buying now would stretch your finances too far. Renting is the right financial decision while you build toward readiness.'; }
+  if (score>=70) {
+    verdict='✅ You are ready to buy';
+    verdictClass='buy';
+    verdictSub=`Your finances, credit, and stability all point toward buying in ${cd.name}. This is a strong position — not everyone gets here this quickly. Get pre-approval and move with confidence.`;
+  } else if (score>=45) {
+    const mo=score>=60?'6–12 months':'12–18 months';
+    verdict=`⏳ You can buy in ${mo}`;
+    verdictClass='soon';
+    verdictSub=`You're closer than you might feel. The gaps are real but addressable — the breakdown below shows exactly what to fix and in what order. Renting while you build is the smart move, not a failure.`;
+  } else {
+    verdict='🏠 Renting is the right move right now';
+    verdictClass='rent';
+    verdictSub=`This is not a bad result — it's an honest one. Buying before you're ready costs years of financial stress. Renting while you build savings, credit, and stability is exactly what most successful Canadian homeowners did first.`;
+  }
 
   set('verdict-hero', `<div class="verdict-label">Recommendation for your situation</div>
     <div class="verdict-decision">${verdict}</div>

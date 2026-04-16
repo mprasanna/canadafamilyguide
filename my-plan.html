@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Canada Plan — Personal Dashboard | Canada Family Guide</title>
+<meta name="description" content="Your personalised Canada plan — see your financial position, education decisions, and career status in one place. Built from the decisions you've already made.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://canadafamilyguide.com/my-plan.html">
+<meta property="og:site_name" content="Canada Family Guide">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍁</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root{--red:#C8102E;--red-dark:#9B0B22;--black:#0f0f0f;--white:#F7F5F0;--grey:#555;--light:#EDE9E0;--green:#1a7a4a}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--black);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.75;overflow-x:hidden}
+
+/* PAGE HEADER */
+.page-header{background:var(--white);color:var(--black);padding:7rem 2rem 3rem;border-bottom:1px solid #e0dbd0}
+.page-header-inner{max-width:960px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.page-label{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem}
+.page-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;line-height:1.1;margin-bottom:.5rem}
+.page-sub{color:var(--grey);font-size:.95rem;line-height:1.7;max-width:500px}
+.reset-btn{background:var(--light);border:1px solid #d8d3c8;color:var(--grey);font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.78rem;padding:.5rem 1rem;border-radius:6px;cursor:pointer;white-space:nowrap;transition:all .2s;text-decoration:none;display:inline-block;align-self:flex-start;margin-top:2rem}
+.reset-btn:hover{border-color:var(--red);color:var(--red)}
+
+main{max-width:960px;margin:0 auto;padding:2.5rem 2rem 5rem}
+
+/* EMPTY STATE */
+.empty-state{background:#fff;border:2px dashed #d8d3c8;border-radius:12px;padding:3rem 2rem;text-align:center}
+.empty-icon{font-size:3rem;margin-bottom:1rem}
+.empty-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.3rem;margin-bottom:.5rem}
+.empty-sub{font-size:.9rem;color:var(--grey);line-height:1.7;max-width:420px;margin:0 auto 1.5rem}
+.start-btn{display:inline-flex;align-items:center;gap:.4rem;background:var(--red);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;padding:.75rem 1.4rem;border-radius:6px;text-decoration:none;transition:background .2s}
+.start-btn:hover{background:var(--red-dark)}
+
+/* PLAN STATUS BANNER */
+.plan-banner{border-radius:12px;padding:1.5rem 1.8rem;margin-bottom:2rem;display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap}
+.plan-banner.strong{background:#0d3320;color:#fff}
+.plan-banner.building{background:var(--black);color:#fff}
+.plan-banner.early{background:#3d1a00;color:#fff}
+.plan-banner-icon{font-size:2rem;flex-shrink:0}
+.plan-banner-text{}
+.plan-banner-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.65;margin-bottom:.2rem}
+.plan-banner-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.3rem;line-height:1.2;margin-bottom:.3rem}
+.plan-banner-sub{font-size:.88rem;opacity:.85;line-height:1.6}
+.plan-banner-action{margin-left:auto;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25);font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.8rem;padding:.6rem 1.2rem;border-radius:8px;text-decoration:none;white-space:nowrap;transition:background .2s}
+.plan-banner-action:hover{background:rgba(255,255,255,.25)}
+
+/* SYSTEM PANELS */
+.systems-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:2rem}
+.sys-panel{background:#fff;border:1px solid #e0dbd0;border-radius:12px;overflow:hidden}
+.sys-panel-head{padding:1rem 1.3rem;display:flex;align-items:center;gap:.7rem;border-bottom:1px solid #e0dbd0}
+.sys-panel-icon{font-size:1.2rem}
+.sys-panel-label{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--grey)}
+.sys-panel-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem}
+.sys-panel-status{margin-left:auto;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:10px}
+.status-done{background:#e8f5e9;color:#1b5e20}
+.status-partial{background:#fff3e0;color:#c65000}
+.status-todo{background:var(--light);color:var(--grey)}
+.sys-panel-body{padding:1.2rem 1.3rem}
+
+/* METRIC ROWS */
+.metric-row{display:flex;justify-content:space-between;align-items:flex-start;padding:.55rem 0;border-bottom:1px solid #f5f2ec;font-size:.85rem}
+.metric-row:last-child{border-bottom:none}
+.metric-key{color:var(--grey)}
+.metric-val{font-weight:700;color:var(--black);text-align:right;max-width:55%}
+.metric-val.good{color:var(--green)}
+.metric-val.warn{color:#c65000}
+.metric-val.bad{color:var(--red)}
+
+/* ACTION ITEMS */
+.action-list{display:flex;flex-direction:column;gap:.5rem;margin-top:1rem}
+.action-item{display:flex;gap:.7rem;align-items:flex-start;background:var(--light);border-radius:8px;padding:.7rem .9rem;text-decoration:none;color:var(--black);transition:background .2s}
+.action-item:hover{background:#e0dbd0}
+.action-num{width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.72rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.action-text{font-size:.83rem;color:var(--grey);line-height:1.5;flex:1}
+.action-text strong{color:var(--black)}
+.action-arrow{color:var(--red);font-size:.8rem;flex-shrink:0;margin-top:2px}
+
+/* PROGRESS RING */
+.progress-wrap{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.progress-ring{position:relative;width:64px;height:64px;flex-shrink:0}
+.progress-ring svg{transform:rotate(-90deg)}
+.progress-ring-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem}
+.progress-label{font-size:.85rem;color:var(--grey);line-height:1.5}
+.progress-label strong{color:var(--black);display:block;font-size:.95rem}
+
+/* TOOLS COMPLETED */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.6rem;margin-top:1rem}
+.tool-chip{border:1px solid #e0dbd0;border-radius:8px;padding:.6rem .8rem;display:flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--black);transition:border-color .2s;font-size:.78rem}
+.tool-chip:hover{border-color:var(--red)}
+.tool-chip.done{background:#e8f5e9;border-color:#a5d6a7}
+.tool-chip-icon{font-size:.95rem;flex-shrink:0}
+.tool-chip-name{font-weight:600;line-height:1.3}
+.tool-chip-status{font-size:.65rem;color:var(--grey);margin-top:.1rem}
+
+footer{background:#0a0a0a;color:#555;text-align:center;padding:2rem;font-size:.82rem}
+footer a{color:var(--red);text-decoration:none}
+footer strong{color:#888}
+.footer-links{margin:.5rem 0;display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem}
+.footer-links a::after{content:'·';margin-left:.5rem;color:#333}
+.footer-links a:last-child::after{display:none}
+.footer-disclaimer{margin-top:.8rem;font-size:.73rem;color:#333;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6}
+
+@media(max-width:680px){
+  .systems-grid{grid-template-columns:1fr}
+  .page-header-inner{flex-direction:column}
+  .reset-btn{margin-top:0}
+  .plan-banner-action{margin-left:0;margin-top:.8rem}
+}
+</style>
+</head>
+<body>
+<script src="nav.js"></script>
+<div style="height:60px"></div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div>
+      <div class="page-label">🍁 Your Dashboard</div>
+      <h1 class="page-title" id="plan-title">Your Canada Plan</h1>
+      <p class="page-sub" id="plan-sub">Loading your plan...</p>
+    </div>
+    <a class="reset-btn" href="#" onclick="resetPlan();return false;">Reset plan ×</a>
+  </div>
+</div>
+
+<main id="main-content">
+  <div class="empty-state" id="empty-state" style="display:none">
+    <div class="empty-icon">🍁</div>
+    <div class="empty-title">No plan yet — let's build one</div>
+    <p class="empty-sub">Start with the Financial Planner. Enter your salary and the system will remember your situation across all tools.</p>
+    <a class="start-btn" href="tools.html">Start with income & housing →</a>
+  </div>
+
+  <div id="plan-content" style="display:none">
+
+    <!-- STATUS BANNER -->
+    <div class="plan-banner" id="plan-banner">
+      <div class="plan-banner-icon" id="banner-icon">🍁</div>
+      <div class="plan-banner-text">
+        <div class="plan-banner-label">Your overall status</div>
+        <div class="plan-banner-title" id="banner-title">—</div>
+        <div class="plan-banner-sub" id="banner-sub">—</div>
+      </div>
+      <a class="plan-banner-action" href="tools.html" id="banner-action">Continue your plan →</a>
+    </div>
+
+    <!-- SYSTEMS GRID -->
+    <div class="systems-grid">
+
+      <!-- FINANCE PANEL -->
+      <div class="sys-panel">
+        <div class="sys-panel-head">
+          <div class="sys-panel-icon">💰</div>
+          <div>
+            <div class="sys-panel-label">System 1</div>
+            <div class="sys-panel-title">Financial Foundation</div>
+          </div>
+          <div class="sys-panel-status" id="fin-status">—</div>
+        </div>
+        <div class="sys-panel-body">
+          <div id="fin-metrics"></div>
+          <div class="action-list" id="fin-actions"></div>
+        </div>
+      </div>
+
+      <!-- CREDIT PANEL -->
+      <div class="sys-panel">
+        <div class="sys-panel-head">
+          <div class="sys-panel-icon">💳</div>
+          <div>
+            <div class="sys-panel-label">Credit</div>
+            <div class="sys-panel-title">Credit Score Builder</div>
+          </div>
+          <div class="sys-panel-status" id="credit-status">—</div>
+        </div>
+        <div class="sys-panel-body">
+          <div id="credit-metrics"></div>
+          <div class="action-list" id="credit-actions"></div>
+        </div>
+      </div>
+
+      <!-- BUY VS RENT PANEL -->
+      <div class="sys-panel">
+        <div class="sys-panel-head">
+          <div class="sys-panel-icon">🏠</div>
+          <div>
+            <div class="sys-panel-label">Housing Decision</div>
+            <div class="sys-panel-title">Buy vs Rent</div>
+          </div>
+          <div class="sys-panel-status" id="bvr-status">—</div>
+        </div>
+        <div class="sys-panel-body">
+          <div id="bvr-metrics"></div>
+          <div class="action-list" id="bvr-actions"></div>
+        </div>
+      </div>
+
+      <!-- CAREER PANEL -->
+      <div class="sys-panel">
+        <div class="sys-panel-head">
+          <div class="sys-panel-icon">💼</div>
+          <div>
+            <div class="sys-panel-label">System 3</div>
+            <div class="sys-panel-title">Career & Life</div>
+          </div>
+          <div class="sys-panel-status" id="career-status">—</div>
+        </div>
+        <div class="sys-panel-body">
+          <div id="career-metrics"></div>
+          <div class="action-list" id="career-actions"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TOOLS COMPLETED -->
+    <div style="background:#fff;border:1px solid #e0dbd0;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:1rem">Tools completed</div>
+      <div class="tools-grid" id="tools-grid"></div>
+    </div>
+
+    <!-- LAST UPDATED -->
+    <div style="text-align:center;font-size:.78rem;color:#aaa;margin-top:1rem" id="last-updated"></div>
+
+  </div>
+</main>
+
+<footer>
+  <p><strong>Canada Family Guide</strong> — Built for families across Canada</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="tools.html">Financial Planner</a>
+    <a href="credit.html">Credit Builder</a>
+    <a href="buy-vs-rent.html">Buy vs Rent</a>
+    <a href="job-offer.html">Job Evaluator</a>
+    <a href="stream-decision.html">Stream Tool</a>
+    <a href="about.html">About</a>
+  </div>
+  <p class="footer-disclaimer">Your plan is stored locally on your device only. Nothing is sent to any server.</p>
+</footer>
+
+<script>
+function fmt(n){ return '$' + Math.round(n).toLocaleString('en-CA'); }
+function set(id, v){ const el = document.getElementById(id); if(el) el.innerHTML = v; }
+
+function getPlan(){
+  try{ return JSON.parse(localStorage.getItem('cfg_plan') || '{}'); }catch(e){ return {}; }
+}
+function resetPlan(){
+  if(confirm('Clear your saved plan and start fresh?')){
+    localStorage.removeItem('cfg_plan');
+    localStorage.removeItem('cfg_salary');
+    localStorage.removeItem('cfg_province');
+    localStorage.removeItem('cfg_monthly');
+    localStorage.removeItem('cfg_housing');
+    location.reload();
+  }
+}
+
+function metricRow(key, val, cls=''){
+  return `<div class="metric-row"><span class="metric-key">${key}</span><span class="metric-val ${cls}">${val}</span></div>`;
+}
+function actionItem(num, text, href){
+  return `<a class="action-item" href="${href}"><div class="action-num">${num}</div><div class="action-text">${text}</div><div class="action-arrow">→</div></a>`;
+}
+function chipDone(icon, name, status, href){
+  return `<a class="tool-chip done" href="${href}"><div class="tool-chip-icon">${icon}</div><div><div class="tool-chip-name">${name}</div><div class="tool-chip-status">${status}</div></div></a>`;
+}
+function chipTodo(icon, name, href){
+  return `<a class="tool-chip" href="${href}"><div class="tool-chip-icon">${icon}</div><div><div class="tool-chip-name">${name}</div><div class="tool-chip-status">Not started</div></div></a>`;
+}
+
+function render(){
+  const p = getPlan();
+
+  // Check if there's any data
+  const hasFinance = !!(p.monthly || p.salary);
+  const hasCredit  = !!(p.creditStage);
+  const hasBvr     = !!(p.bvrVerdict);
+  const hasJob     = !!(p.lastJobEval);
+  const hasAny     = hasFinance || hasCredit || hasBvr || hasJob;
+
+  if(!hasAny){
+    document.getElementById('empty-state').style.display = 'block';
+    document.getElementById('plan-content').style.display = 'none';
+    set('plan-title', 'Your Canada Plan');
+    set('plan-sub', 'No plan found. Start a tool to build your plan.');
+    return;
+  }
+
+  document.getElementById('empty-state').style.display = 'none';
+  document.getElementById('plan-content').style.display = 'block';
+
+  const city = p.city ? (p.city.charAt(0).toUpperCase() + p.city.slice(1)) : 'Canada';
+  set('plan-title', `Your Canada Plan — ${city}`);
+  set('plan-sub', `Built from your tool sessions. Updated as you use each tool. Stored only on this device.`);
+
+  // ── OVERALL STATUS BANNER ──
+  const completedCount = [hasFinance, hasCredit, hasBvr, hasJob].filter(Boolean).length;
+  let bannerClass, bannerIcon, bannerTitle, bannerSub, bannerHref;
+
+  if(completedCount >= 3){
+    bannerClass = 'strong'; bannerIcon = '✅';
+    bannerTitle = `Strong foundation — ${completedCount} systems mapped`;
+    bannerSub   = `You have a clear financial picture${p.bvrVerdict === 'buy' ? ', a buy decision in reach' : p.bvrVerdict === 'rent' ? ', and a solid renting plan' : ''}. You're ahead of most newcomers at this stage.`;
+    bannerHref  = hasBvr ? 'buy-vs-rent.html' : 'tools.html';
+  } else if(completedCount >= 1){
+    bannerClass = 'building'; bannerIcon = '📈';
+    bannerTitle = `Building — ${completedCount} of 4 systems done`;
+    bannerSub   = `Good start. ${hasFinance ? 'Your financial numbers are in.' : 'Start with your salary.'} ${!hasCredit ? 'Credit Builder is your most impactful next step.' : !hasBvr ? 'Buy vs Rent is the next major decision.' : ''}`;
+    bannerHref  = !hasFinance ? 'tools.html' : !hasCredit ? 'credit.html' : 'buy-vs-rent.html';
+  } else {
+    bannerClass = 'early'; bannerIcon = '🍁';
+    bannerTitle = 'Just getting started';
+    bannerSub   = 'Begin with the Financial Planner. Enter your salary and your plan builds from there.';
+    bannerHref  = 'tools.html';
+  }
+  document.getElementById('plan-banner').className = `plan-banner ${bannerClass}`;
+  set('banner-icon', bannerIcon);
+  set('banner-title', bannerTitle);
+  set('banner-sub', bannerSub);
+  document.getElementById('banner-action').href = bannerHref;
+
+  // ── FINANCE PANEL ──
+  if(hasFinance){
+    set('fin-status', '<span class="sys-panel-status status-done">✓ Done</span>');
+    const prov = p.province || 'ON';
+    const housing = p.housing || Math.round((p.monthly||0) * 0.30);
+    const housingPct = p.monthly ? Math.round(housing / p.monthly * 100) : 0;
+    const hClass = housingPct <= 30 ? 'good' : housingPct <= 35 ? '' : 'warn';
+    set('fin-metrics',
+      metricRow('Annual salary', p.salary ? fmt(p.salary) : '—') +
+      metricRow('Monthly take-home', p.monthly ? fmt(p.monthly) : '—', 'good') +
+      metricRow('Province', prov) +
+      metricRow('Housing budget', housing ? fmt(housing)+'/mo' : '—', hClass) +
+      metricRow('Housing % of income', housingPct ? housingPct+'%' : '—', hClass) +
+      (p.children > 0 ? metricRow('Children', p.children) : '')
+    );
+    set('fin-actions', actionItem(1, `<strong>Update your numbers</strong> if your salary or city changed`, 'tools.html'));
+  } else {
+    set('fin-status', '<span class="sys-panel-status status-todo">Not started</span>');
+    set('fin-metrics', '<p style="font-size:.83rem;color:var(--grey);line-height:1.6">Start here — enter your salary to calculate take-home, housing budget, and savings plan.</p>');
+    set('fin-actions', actionItem(1, '<strong>Calculate your take-home pay</strong> — all provinces, 2025 tax rates', 'tools.html'));
+  }
+
+  // ── CREDIT PANEL ──
+  if(hasCredit){
+    const stageLabels = { none:'No history yet', poor:'Building (under 600)', fair:'Fair (600–649)', good:'Good (650–719)', excellent:'Excellent (720+)', beginner:'Starting out', building:'Building', established:'Established' };
+    const stageGoodness = { none:'bad', poor:'warn', fair:'warn', good:'good', excellent:'good', beginner:'warn', building:'warn', established:'good' };
+    const stage = p.creditStage;
+    const isReady = stage === 'good' || stage === 'excellent' || stage === 'established';
+    set('credit-status', `<span class="sys-panel-status ${isReady ? 'status-done' : 'status-partial'}">${isReady ? '✓ Mortgage-ready' : 'Building'}</span>`);
+    set('credit-metrics',
+      metricRow('Credit stage', stageLabels[stage] || stage, stageGoodness[stage] || '') +
+      metricRow('Mortgage-ready?', isReady ? 'Yes — 650+ score range' : 'Not yet — keep building', isReady ? 'good' : 'warn') +
+      metricRow('Target score', '680+ for good rates, 720+ for best rates')
+    );
+    const creditAction = stage === 'none' || stage === 'beginner'
+      ? actionItem(1, '<strong>Apply for a secured card this week</strong> — 30 min at your bank branch. The single most important first step.', 'credit.html')
+      : stage === 'poor' || stage === 'building'
+      ? actionItem(1, '<strong>Check your utilisation</strong> — keep it under 30% of your limit every month.', 'credit.html')
+      : actionItem(1, '<strong>Check both reports for errors</strong> — Borrowell (Equifax) and Credit Karma Canada (TransUnion). Free.', 'credit.html');
+    set('credit-actions', creditAction);
+  } else {
+    set('credit-status', '<span class="sys-panel-status status-todo">Not started</span>');
+    set('credit-metrics', '<p style="font-size:.83rem;color:var(--grey);line-height:1.6">Your credit score doesn\'t transfer to Canada. Find out your stage and get a month-by-month plan.</p>');
+    set('credit-actions', actionItem(1, '<strong>Build your Canadian credit score</strong> — zero to 700+ in 18 months', 'credit.html'));
+  }
+
+  // ── BUY VS RENT PANEL ──
+  if(hasBvr){
+    const verdictLabels = { buy:'Ready to buy', soon:'Can buy soon', rent:'Keep renting' };
+    const verdictClass  = { buy:'good', soon:'warn', rent:'' };
+    const v = p.bvrVerdict;
+    set('bvr-status', `<span class="sys-panel-status ${v==='buy'?'status-done':v==='soon'?'status-partial':'status-todo'}">${verdictLabels[v]||v}</span>`);
+    const cityName = p.city ? (p.city.charAt(0).toUpperCase()+p.city.slice(1)) : 'your city';
+    set('bvr-metrics',
+      metricRow('Decision', verdictLabels[v] || '—', verdictClass[v] || '') +
+      metricRow('City', cityName) +
+      (p.savings ? metricRow('Saved (down payment)', fmt(p.savings)) : '') +
+      metricRow('Status', v === 'buy' ? 'Get pre-approval' : v === 'soon' ? 'Build savings & credit' : 'Renting is right for now')
+    );
+    const bvrAction = v === 'buy'
+      ? actionItem(1, '<strong>Get mortgage pre-approval</strong> — contact 2–3 brokers, compare rates, lock for 90 days.', 'buy-vs-rent.html')
+      : v === 'soon'
+      ? actionItem(1, '<strong>Re-run the tool</strong> when your savings or credit improves — your timeline will shift.', 'buy-vs-rent.html')
+      : actionItem(1, '<strong>Re-evaluate in 6 months</strong> — run the tool again as your situation evolves.', 'buy-vs-rent.html');
+    set('bvr-actions', bvrAction);
+  } else {
+    set('bvr-status', '<span class="sys-panel-status status-todo">Not started</span>');
+    set('bvr-metrics', '<p style="font-size:.83rem;color:var(--grey);line-height:1.6">Should you buy or rent in Canada? Get a personalised recommendation with real cost numbers and a timeline.</p>');
+    set('bvr-actions', actionItem(1, '<strong>Should you buy or rent?</strong> — score, cost comparison, 9 cities, timeline', 'buy-vs-rent.html'));
+  }
+
+  // ── CAREER PANEL ──
+  if(hasJob){
+    const j = p.lastJobEval;
+    const overall = j.score || 0;
+    const pctLabel = overall >= 72 ? 'Top third of market' : overall >= 52 ? 'Mid-market range' : 'Below market';
+    const pctClass = overall >= 72 ? 'good' : overall >= 52 ? '' : 'warn';
+    set('career-status', `<span class="sys-panel-status ${overall>=72?'status-done':overall>=52?'status-partial':'status-todo'}">${pctLabel}</span>`);
+    set('career-metrics',
+      metricRow('Last offer evaluated', j.salary ? fmt(j.salary) : '—') +
+      metricRow('Role', j.role ? j.role.replace(/_/g,' ') : '—') +
+      metricRow('Market position', pctLabel, pctClass) +
+      metricRow('Score', `${overall}/100`)
+    );
+    set('career-actions', actionItem(1, '<strong>Evaluate your next offer</strong> or re-run with updated salary', 'job-offer.html'));
+  } else {
+    set('career-status', '<span class="sys-panel-status status-todo">Not started</span>');
+    set('career-metrics', '<p style="font-size:.83rem;color:var(--grey);line-height:1.6">Evaluate any job offer against Canadian market rates. See if you\'re above, at, or below market for your city and role.</p>');
+    set('career-actions', actionItem(1, '<strong>Is your salary competitive?</strong> — market ranges, cost of living, negotiation script', 'job-offer.html'));
+  }
+
+  // ── TOOLS GRID ──
+  const tools = [
+    { icon:'💰', name:'Income & Tax', done: hasFinance, status: p.monthly ? `${fmt(p.monthly)}/mo take-home` : 'Done', href:'tools.html' },
+    { icon:'🏘️', name:'Affordability', done: !!(p.housing), status: p.housing ? `${fmt(p.housing)}/mo budget` : 'Done', href:'tools.html' },
+    { icon:'💼', name:'Savings Plan', done: !!(p.monthly && p.housing), status: 'TFSA · RRSP · RESP', href:'tools.html' },
+    { icon:'💳', name:'Credit Builder', done: hasCredit, status: p.creditStage || 'In progress', href:'credit.html' },
+    { icon:'🏠', name:'Buy vs Rent', done: hasBvr, status: p.bvrVerdict || 'Not run', href:'buy-vs-rent.html' },
+    { icon:'💼', name:'Job Evaluator', done: hasJob, status: hasJob ? `${fmt(p.lastJobEval.salary)} evaluated` : 'Not run', href:'job-offer.html' },
+  ];
+  set('tools-grid', tools.map(t =>
+    t.done ? chipDone(t.icon, t.name, t.status, t.href) : chipTodo(t.icon, t.name, t.href)
+  ).join(''));
+
+  // ── LAST UPDATED ──
+  if(p.updated){
+    const d = new Date(p.updated);
+    set('last-updated', `Plan last updated: ${d.toLocaleDateString('en-CA', {month:'long',day:'numeric',year:'numeric'})} at ${d.toLocaleTimeString('en-CA',{hour:'2-digit',minute:'2-digit'})}`);
+  }
+}
+
+render();
+</script>
+</body>
+</html>

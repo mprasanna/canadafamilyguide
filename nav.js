@@ -2,6 +2,7 @@
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 
   const primaryLinks = [
+    { href: 'my-plan.html',        label: '🗺️ My Plan' },
     { href: 'newcomer-start.html', label: 'Newcomer' },
     { href: 'education.html',      label: 'Education' },
     { href: 'finance.html',        label: 'Finance' },
