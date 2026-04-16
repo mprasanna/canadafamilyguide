@@ -244,7 +244,7 @@ footer strong{color:#888}
     <div class="page-label">&#x1F3E0; Finance System</div>
     <h1 class="page-title">Buy vs Rent Decision</h1>
     <p class="page-sub">The biggest financial decision you&#8217;ll make in Canada. Get a clear recommendation with real numbers, cost of living context, and a timeline &#8212; not just a calculator.</p>
-    <div style="margin-top:.8rem;display:flex;gap:.5rem;flex-wrap:wrap"><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">9 Canadian cities</span><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">2025 housing data</span><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">CMHC stress test</span></div>
+    <div style="margin-top:.8rem;display:flex;gap:.5rem;flex-wrap:wrap"><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">15 cities · all provinces</span><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">2025 housing data</span><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">CMHC stress test</span></div>
   </div>
 </div>
 <main style="max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem">
@@ -267,14 +267,35 @@ footer strong{color:#888}
         <div class="input-group">
           <label>City / region</label>
           <select id="br-city">
+          <optgroup label="Ontario">
             <option value="toronto">Toronto / GTA</option>
-            <option value="vancouver">Vancouver / Metro</option>
             <option value="ottawa" selected>Ottawa</option>
+            <option value="hamilton">Hamilton / Kitchener</option>
+            <option value="london_on">London, ON</option>
+          </optgroup>
+          <optgroup label="British Columbia">
+            <option value="vancouver">Vancouver / Metro</option>
+            <option value="victoria">Victoria</option>
+          </optgroup>
+          <optgroup label="Alberta (no provincial tax)">
             <option value="calgary">Calgary</option>
             <option value="edmonton">Edmonton</option>
+          </optgroup>
+          <optgroup label="Quebec">
             <option value="montreal">Montréal</option>
-            <option value="hamilton">Hamilton / Kitchener</option>
-            <option value="other">Other city</option>
+            <option value="quebec_city">Quebec City</option>
+          </optgroup>
+          <optgroup label="Saskatchewan / Manitoba">
+            <option value="saskatoon">Saskatoon</option>
+            <option value="winnipeg">Winnipeg</option>
+          </optgroup>
+          <optgroup label="Atlantic Canada">
+            <option value="halifax">Halifax, NS</option>
+            <option value="moncton">Moncton / Fredericton, NB</option>
+          </optgroup>
+          <optgroup label="Other">
+            <option value="other">Other / smaller city</option>
+          </optgroup>
           </select>
         </div>
         <div class="input-group">
@@ -352,6 +373,7 @@ footer strong{color:#888}
       </div>
     </div>
 
+    <div id="bvr-tax-note" style="display:none;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:.75rem 1rem;font-size:.82rem;color:#1b5e20;margin-bottom:1.2rem">—</div>
     <div class="tool-card">
       <div class="tool-card-head">Your Buying Readiness</div>
       <div class="tool-card-body">
@@ -424,14 +446,21 @@ function fmt(n){return'$'+Math.round(n).toLocaleString('en-CA');}
 // BUY VS RENT
 // ─────────────────────────────────────────────
 const BVR_CITIES = {
-  toronto:  { avgPrice:1080000, name:'Toronto / GTA',    priceTag:'~$1.08M avg', trend:'High demand, limited supply. Prices down ~10% from 2022 peak but still among highest in Canada.' },
-  vancouver:{ avgPrice:1150000, name:'Vancouver / Metro', priceTag:'~$1.15M avg', trend:'Second most expensive city. Condo market more accessible than detached.' },
-  ottawa:   { avgPrice:620000,  name:'Ottawa',            priceTag:'~$620K avg',  trend:'Stable government-driven market. Slower appreciation but also less volatile.' },
-  calgary:  { avgPrice:560000,  name:'Calgary',           priceTag:'~$560K avg',  trend:'No provincial income tax. Strong job market. Prices risen sharply 2022–2024 but still affordable.' },
-  edmonton: { avgPrice:420000,  name:'Edmonton',          priceTag:'~$420K avg',  trend:'Most affordable major city. Good quality of life. Slower price appreciation but stable.' },
-  montreal: { avgPrice:530000,  name:'Montréal',          priceTag:'~$530K avg',  trend:'Unique rent control laws. Buying can be advantageous but French language requirements apply.' },
-  hamilton: { avgPrice:670000,  name:'Hamilton / K-W',    priceTag:'~$670K avg',  trend:'Growing tech hub. More affordable than Toronto. Strong appreciation 2020–2024.' },
-  other:    { avgPrice:500000,  name:'Other city',        priceTag:'~$500K avg',  trend:'Smaller cities generally offer better affordability ratios and lower competition.' }
+  toronto:    { avgPrice:1080000, name:'Toronto / GTA',         taxNote:null,       priceTag:'~$1.08M avg',  trend:'High demand, limited supply. Prices down ~10% from 2022 peak but still among highest in Canada. Land transfer tax applies twice (city + province).' },
+  ottawa:     { avgPrice:620000,  name:'Ottawa',                taxNote:null,       priceTag:'~$620K avg',   trend:'Stable government-driven market. Slower appreciation but also less volatile. Good value vs Toronto for similar quality of life.' },
+  hamilton:   { avgPrice:670000,  name:'Hamilton / K-W',        taxNote:null,       priceTag:'~$670K avg',   trend:'Growing tech hub. More affordable than Toronto with reasonable commute. Strong appreciation 2020–2024.' },
+  london_on:  { avgPrice:580000,  name:'London, ON',            taxNote:null,       priceTag:'~$580K avg',   trend:'Mid-size Ontario city. Good affordability. Healthcare and education sectors strong. Solid newcomer community.' },
+  vancouver:  { avgPrice:1150000, name:'Vancouver / Metro',     taxNote:null,       priceTag:'~$1.15M avg',  trend:'Second most expensive city. BC Property Transfer Tax adds 1–3% on purchase. Condo market more accessible than detached.' },
+  victoria:   { avgPrice:850000,  name:'Victoria, BC',          taxNote:null,       priceTag:'~$850K avg',   trend:'High prices relative to local salaries. Government and tech jobs. Beautiful city but tough for first-time buyers.' },
+  calgary:    { avgPrice:560000,  name:'Calgary, AB',           taxNote:'Alberta has no provincial income tax — your take-home is ~$3,000–8,000/yr higher than Ontario on the same salary. This significantly changes affordability calculations.', priceTag:'~$560K avg', trend:'No provincial tax + more affordable housing = strongest buyer value outside smaller cities. Prices risen 2022–2024 but still competitive.' },
+  edmonton:   { avgPrice:420000,  name:'Edmonton, AB',          taxNote:'Alberta has no provincial income tax — your take-home is ~$3,000–8,000/yr higher than Ontario on the same salary.', priceTag:'~$420K avg', trend:'Most affordable major Canadian city. No provincial tax. Strong oil/gas and healthcare sectors. Underrated value for newcomers.' },
+  montreal:   { avgPrice:530000,  name:'Montréal, QC',          taxNote:'Quebec has higher provincial tax than Ontario, reducing take-home by ~$2,000–5,000/yr. However, subsidized childcare (~$10–15/day) saves families $1,500+/month.', priceTag:'~$530K avg', trend:'Rent control laws protect renters. Buying can be advantageous but French is required for most professional roles.' },
+  quebec_city:{ avgPrice:370000,  name:'Quebec City, QC',       taxNote:'Same Quebec tax note: higher provincial tax, but subsidized childcare.', priceTag:'~$370K avg', trend:'Most affordable major city in Eastern Canada. Very stable market. French required. Excellent quality of life.' },
+  saskatoon:  { avgPrice:340000,  name:'Saskatoon, SK',         taxNote:'Saskatchewan has lower provincial tax than Ontario.', priceTag:'~$340K avg', trend:'Very affordable. Strong agriculture and healthcare sectors. Prairie lifestyle. Growing newcomer community.' },
+  winnipeg:   { avgPrice:360000,  name:'Winnipeg, MB',          taxNote:null,       priceTag:'~$360K avg',   trend:'Affordable prairie city. Strong healthcare and manufacturing. Cold winters but very reasonable cost of homeownership.' },
+  halifax:    { avgPrice:480000,  name:'Halifax, NS',           taxNote:'Nova Scotia has the highest provincial tax rate in Canada.', priceTag:'~$480K avg', trend:'Fast-growing Atlantic hub. Prices have risen sharply since 2020 but still far below Toronto/Vancouver. Strong newcomer-friendly community.' },
+  moncton:    { avgPrice:320000,  name:'Moncton / Fredericton, NB', taxNote:null,   priceTag:'~$320K avg',   trend:'Most affordable region in Canada. Bilingual. Strong newcomer settlement programs. Excellent value for families.' },
+  other:      { avgPrice:450000,  name:'Other / smaller city',  taxNote:null,       priceTag:'~$450K avg',   trend:'Smaller cities offer significantly better affordability ratios. Research your specific market.' }
 };
 
 // ─────────────────────────────────────────────
@@ -525,6 +554,14 @@ function calcDecision() {
       <div class="verdict-score"><div class="verdict-score-num">${Math.round(gds*100)}%</div><div class="verdict-score-label">Housing cost ratio</div></div>
     </div>`);
   document.getElementById('verdict-hero').className = `verdict-hero ${verdictClass}`;
+  // Show provincial tax note if relevant
+  if(cd.taxNote){
+    const tnEl = document.getElementById('bvr-tax-note');
+    if(tnEl){ tnEl.textContent = cd.taxNote; tnEl.style.display='block'; }
+  } else {
+    const tnEl = document.getElementById('bvr-tax-note');
+    if(tnEl) tnEl.style.display='none';
+  }
 
   // Readiness bars
   const bColor = p => p>=75?'#1a7a4a':p>=50?'#9a6f00':'#C8102E';

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Job Offer Evaluator Canada — Is This a Good Offer? | Canada Family Guide</title>
-<meta name="description" content="Is your Canadian job offer competitive? Enter salary, city, role, and experience — get a real assessment with cost of living context, market benchmarks, and negotiation guidance.">
+<meta name="description" content="Is your Canadian job offer competitive? Enter salary, city, role, and experience — get a real assessment with province-adjusted market benchmarks, cost of living, and negotiation guidance. All provinces covered.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://canadafamilyguide.com/job-offer.html">
 <meta property="og:title" content="Job Offer Evaluator — Is This a Good Canadian Salary?">
@@ -113,7 +113,7 @@ footer strong{color:#888}
     <div class="page-label">💼 Career Tools</div>
     <h1 class="page-title">Job Offer Evaluator</h1>
     <p class="page-sub">Is this a good offer for Canada? Enter the salary, city, and role — get a market comparison, cost of living impact, and negotiation guidance.</p>
-    <div style="margin-top:.8rem;display:flex;gap:.5rem;flex-wrap:wrap"><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">12 roles · 9 cities</span><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">2025 Canadian market data</span><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">Cost of living included</span></div>
+    <div style="margin-top:.8rem;display:flex;gap:.5rem;flex-wrap:wrap"><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">12 roles · 18 cities · all provinces</span><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">2025 Canadian market data</span><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">Cost of living included</span></div>
   </div>
 </div>
 <main>
@@ -131,15 +131,41 @@ footer strong{color:#888}
       <div class="input-group">
         <label>City</label>
         <select id="jo-city">
-          <option value="toronto">Toronto / GTA</option>
-          <option value="vancouver">Vancouver / Metro</option>
-          <option value="ottawa" selected>Ottawa</option>
-          <option value="calgary">Calgary</option>
-          <option value="edmonton">Edmonton</option>
-          <option value="montreal">Montréal</option>
-          <option value="waterloo">Waterloo / KW</option>
-          <option value="hamilton">Hamilton</option>
-          <option value="other">Other / smaller city</option>
+          <optgroup label="🟡 Ontario">
+            <option value="toronto">Toronto / GTA</option>
+            <option value="ottawa" selected>Ottawa</option>
+            <option value="waterloo">Waterloo / KW Region</option>
+            <option value="hamilton">Hamilton / Burlington</option>
+            <option value="london_on">London, ON</option>
+          </optgroup>
+          <optgroup label="🔵 British Columbia">
+            <option value="vancouver">Vancouver / Metro</option>
+            <option value="victoria">Victoria</option>
+            <option value="kelowna">Kelowna</option>
+          </optgroup>
+          <optgroup label="🟠 Alberta (no provincial tax)">
+            <option value="calgary">Calgary</option>
+            <option value="edmonton">Edmonton</option>
+          </optgroup>
+          <optgroup label="🟢 Quebec">
+            <option value="montreal">Montréal</option>
+            <option value="quebec_city">Quebec City</option>
+          </optgroup>
+          <optgroup label="⚪ Saskatchewan (no provincial tax)">
+            <option value="saskatoon">Saskatoon</option>
+            <option value="regina">Regina</option>
+          </optgroup>
+          <optgroup label="⚪ Manitoba">
+            <option value="winnipeg">Winnipeg</option>
+          </optgroup>
+          <optgroup label="🔵 Atlantic Canada">
+            <option value="halifax">Halifax, NS</option>
+            <option value="moncton">Moncton / Fredericton, NB</option>
+            <option value="stjohns">St. John's, NL</option>
+          </optgroup>
+          <optgroup label="⚪ Other">
+            <option value="other">Other / smaller city</option>
+          </optgroup>
         </select>
       </div>
       <div class="input-group">
@@ -209,7 +235,7 @@ footer strong{color:#888}
   <div class="tool-card">
     <div class="tool-card-head" id="jo-market-head">Market Salary Ranges — Your Role in Canada</div>
     <div class="tool-card-body">
-      <p style="font-size:.85rem;color:var(--grey);line-height:1.7;margin-bottom:1rem">Based on Canadian market data for your role and experience level. Ranges vary by company size — large tech/finance pays more than SMB.</p>
+      <p style="font-size:.85rem;color:var(--grey);line-height:1.7;margin-bottom:1rem">Ranges adjusted for <strong style="color:var(--black)">${cd.name}</strong> market. Toronto/Vancouver pay ~15–18% above national base; Alberta cities add net value via no provincial tax; Quebec and Atlantic cities pay 10–20% below Toronto base but with lower costs.</p>
       <table class="market-table" id="jo-market-table"></table>
     </div>
   </div>
@@ -286,15 +312,32 @@ const SALARY_DATA = {
 
 // City cost of living multipliers (relative to national median = 1.0)
 const CITY_DATA = {
-  toronto:  {name:'Toronto / GTA',  colIndex:1.45, rent2br:2900, transit:156, groceries:900, childcare:1800, note:'Most expensive city in Canada. High housing costs offset salary advantages.'},
-  vancouver:{name:'Vancouver',      colIndex:1.40, rent2br:3100, transit:110, groceries:880, childcare:1750, note:'Second most expensive. Housing costs are extreme. Remote work from elsewhere is worth considering.'},
-  ottawa:   {name:'Ottawa',         colIndex:1.10, rent2br:2300, transit:125, groceries:820, childcare:1500, note:'Government hub. Good balance of salary and cost of living. Housing more affordable than Toronto/Vancouver.'},
-  calgary:  {name:'Calgary',        colIndex:1.05, rent2br:2100, transit:112, groceries:800, childcare:1400, note:'No provincial income tax — effectively adds 5–8% to your take-home vs Ontario on same salary.'},
-  edmonton: {name:'Edmonton',       colIndex:0.95, rent2br:1800, transit:100, groceries:780, childcare:1300, note:'Most affordable major city. No provincial income tax. Strong oil/gas and tech sector.'},
-  montreal: {name:'Montréal',       colIndex:0.90, rent2br:1900, transit: 97, groceries:760, childcare: 200, note:'Quebec heavily subsidized childcare (~$10–15/day) dramatically reduces family costs. Lower salaries but lower costs.'},
-  waterloo: {name:'Waterloo / KW',  colIndex:1.00, rent2br:2100, transit: 85, groceries:800, childcare:1400, note:'Tech hub. Reasonable cost of living vs salary. University city keeps costs moderate.'},
-  hamilton: {name:'Hamilton',       colIndex:0.95, rent2br:2000, transit: 85, groceries:790, childcare:1350, note:'More affordable than Toronto with reasonable commute. Growing tech scene.'},
-  other:    {name:'Smaller city',   colIndex:0.85, rent2br:1600, transit: 70, groceries:750, childcare:1200, note:'Smaller cities offer significantly better quality of life per dollar. Check specific city costs.'},
+  // Ontario
+  toronto:   {name:'Toronto / GTA',       prov:'ON', taxNote:null,         salaryMult:1.18, colIndex:1.45, rent2br:2900, transit:156, groceries:900,  childcare:1800, note:'Highest salaries in Canada for tech and finance — but housing costs are extreme. Net quality-of-life depends heavily on your role.'},
+  ottawa:    {name:'Ottawa',              prov:'ON', taxNote:null,         salaryMult:1.00, colIndex:1.10, rent2br:2300, transit:125, groceries:820,  childcare:1500, note:'Government and tech hub. Solid balance of salary and cost of living. Bilingual advantage for government roles.'},
+  waterloo:  {name:'Waterloo / KW',       prov:'ON', taxNote:null,         salaryMult:1.05, colIndex:1.00, rent2br:2100, transit: 85, groceries:800,  childcare:1400, note:'Canada's fastest-growing tech hub outside Toronto. Competitive tech salaries with lower housing costs.'},
+  hamilton:  {name:'Hamilton / Burlington',prov:'ON', taxNote:null,         salaryMult:0.95, colIndex:0.95, rent2br:2000, transit: 85, groceries:790,  childcare:1350, note:'Affordable commuter city with growing local tech scene. Strong value vs Toronto salaries.'},
+  london_on: {name:'London, ON',          prov:'ON', taxNote:null,         salaryMult:0.90, colIndex:0.88, rent2br:1800, transit: 80, groceries:780,  childcare:1300, note:'Mid-size Ontario city. Healthcare and education jobs are strong. More affordable than major hubs.'},
+  // British Columbia
+  vancouver: {name:'Vancouver / Metro',   prov:'BC', taxNote:null,         salaryMult:1.15, colIndex:1.40, rent2br:3100, transit:110, groceries:880,  childcare:1750, note:'Second most expensive city. High tech salaries but extreme housing. No-mortgage life means renting long-term for most newcomers.'},
+  victoria:  {name:'Victoria, BC',        prov:'BC', taxNote:null,         salaryMult:0.92, colIndex:1.15, rent2br:2400, transit: 95, groceries:850,  childcare:1600, note:'Government and tech. Beautiful city but expensive relative to salaries. Strong quality of life.'},
+  kelowna:   {name:'Kelowna, BC',         prov:'BC', taxNote:null,         salaryMult:0.85, colIndex:1.05, rent2br:2000, transit: 60, groceries:830,  childcare:1500, note:'Growing tech and agriculture hub. More affordable than Vancouver with strong lifestyle appeal.'},
+  // Alberta — NO provincial income tax
+  calgary:   {name:'Calgary, AB',         prov:'AB', taxNote:'No provincial income tax — adds ~$3,000–8,000/yr vs Ontario on same salary.', salaryMult:1.08, colIndex:1.05, rent2br:2100, transit:112, groceries:800,  childcare:1400, note:'Strong energy and tech sectors. No provincial tax is a significant real advantage. Housing more affordable than Toronto/Vancouver.'},
+  edmonton:  {name:'Edmonton, AB',        prov:'AB', taxNote:'No provincial income tax — adds ~$3,000–8,000/yr vs Ontario on same salary.', salaryMult:1.02, colIndex:0.95, rent2br:1800, transit:100, groceries:780,  childcare:1300, note:'Most affordable major city with no provincial tax. Strong oil/gas, healthcare, and growing tech. Underrated value.'},
+  // Quebec
+  montreal:  {name:'Montréal, QC',        prov:'QC', taxNote:'Higher provincial tax than ON/BC — reduces take-home by ~$2,000–5,000/yr vs Ontario.', salaryMult:0.88, colIndex:0.90, rent2br:1900, transit: 97, groceries:760,  childcare: 200, note:'Subsidized childcare (~$10–15/day) saves $1,500+/mo for families vs other provinces. Lower salaries but dramatically lower family costs.'},
+  quebec_city:{name:'Quebec City, QC',    prov:'QC', taxNote:'Higher provincial tax — same as Montréal context.',                                   salaryMult:0.82, colIndex:0.85, rent2br:1600, transit: 85, groceries:740,  childcare: 200, note:'Very affordable. Strong government and public sector jobs. French required for most roles. Excellent quality of life.'},
+  // Saskatchewan — NO provincial income tax on lower incomes
+  saskatoon: {name:'Saskatoon, SK',       prov:'SK', taxNote:'Lower provincial tax rate than ON.',                                                   salaryMult:0.88, colIndex:0.85, rent2br:1500, transit: 70, groceries:770,  childcare:1250, note:'Affordable prairie city. Agriculture, mining, and healthcare sectors. Underrated newcomer destination.'},
+  regina:    {name:'Regina, SK',          prov:'SK', taxNote:'Lower provincial tax rate than ON.',                                                   salaryMult:0.85, colIndex:0.82, rent2br:1400, transit: 65, groceries:760,  childcare:1200, note:'Provincial capital. Government and energy jobs. Very affordable housing.'},
+  // Manitoba
+  winnipeg:  {name:'Winnipeg, MB',        prov:'MB', taxNote:null,                                                                                   salaryMult:0.88, colIndex:0.88, rent2br:1600, transit: 90, groceries:770,  childcare:1250, note:'Affordable mid-size city. Strong healthcare, education, and manufacturing sectors. Cold winters but low cost of living.'},
+  // Atlantic
+  halifax:   {name:'Halifax, NS',         prov:'NS', taxNote:'NS has highest provincial tax rate in Canada.',                                         salaryMult:0.85, colIndex:0.90, rent2br:1900, transit: 80, groceries:810,  childcare:1350, note:'Fast-growing Atlantic hub. Tech and ocean industries. High NS provincial tax partially offsets lower cost of living.'},
+  moncton:   {name:'Moncton / Fredericton, NB', prov:'NB', taxNote:null,                                                                             salaryMult:0.80, colIndex:0.82, rent2br:1500, transit: 60, groceries:780,  childcare:1200, note:'Bilingual city. Affordable and growing. Strong newcomer community. Government and service sectors.'},
+  stjohns:   {name:'St. John's, NL',     prov:'NL', taxNote:null,                                                                                   salaryMult:0.82, colIndex:0.85, rent2br:1500, transit: 55, groceries:820,  childcare:1200, note:'Oil/gas hub. Tight community. Affordable housing. Lower salaries for non-resource roles.'},
+  other:     {name:'Smaller city',        prov:'CA', taxNote:null,                                                                                   salaryMult:0.85, colIndex:0.85, rent2br:1600, transit: 70, groceries:750,  childcare:1200, note:'Smaller Canadian cities offer significantly better quality of life per dollar. Research your specific city.'},
 };
 
 const EXP_INDEX = {0:0, 2:1, 5:2, 10:3, 15:4};
@@ -349,11 +392,11 @@ function evalOffer() {
   const cd  = CITY_DATA[city];
   const idx = EXP_INDEX[exp];
 
-  const marketMid   = rd.ranges[idx];
+  const marketMid   = Math.round(rd.ranges[idx] * cd.salaryMult);
   const marketLow   = Math.round(marketMid * 0.82);
   const marketHigh  = Math.round(marketMid * 1.22);
   // Adjust for city cost of living
-  const cityAdj     = city === 'toronto' || city === 'vancouver' ? marketMid * 1.10 : city === 'calgary' || city === 'edmonton' ? marketMid * 1.05 : marketMid;
+  const cityAdj     = marketMid; // city-adjusted via salaryMult in CITY_DATA
 
   // Score the offer
   const salaryPct   = salary / cityAdj;
@@ -429,7 +472,8 @@ function evalOffer() {
     }).join('')}</tbody>`);
 
   // COL grid
-  set('jo-col-intro', `In ${cd.name}, a family of 3 typically needs ${fmt((cd.rent2br + cd.transit + cd.groceries + cd.childcare))} / month before savings. Your offer gives you a monthly take-home of ~${fmt(monthlyTakeHome)}. ${cd.note}`);
+  const taxNoteHTML = cd.taxNote ? `<div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:6px;padding:.6rem .9rem;font-size:.8rem;color:#1b5e20;margin-bottom:.8rem"><strong>Provincial tax note:</strong> ${cd.taxNote}</div>` : '';
+  set('jo-col-intro', taxNoteHTML + `In ${cd.name}, a family of 3 typically needs ${fmt((cd.rent2br + cd.transit + cd.groceries + cd.childcare))} / month before savings. Your offer gives you a monthly take-home of ~${fmt(monthlyTakeHome)}. ${cd.note}`);
   set('jo-col-grid', [
     {icon:'🏠', label:'2-bed rent',    val:fmt(cd.rent2br)+'/mo',   note:'Typical market rent'},
     {icon:'🚇', label:'Transit pass',  val:fmt(cd.transit)+'/mo',   note:'Monthly public transit'},

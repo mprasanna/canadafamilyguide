@@ -149,15 +149,15 @@ const TASKS = [
     title:'Health & Identity',
     tasks:[
       {id:'ohip', title:'Apply for OHIP (Ontario health card)', tag:'tag-week1', tagLabel:'Week 1',
-       body:'<strong>Where:</strong> ServiceOntario location. Bring passport, proof of Ontario address (even a lease or letter from landlord), and immigration document.<br><br><strong>3-month wait:</strong> OHIP coverage starts 3 months after you arrive and register. During this period, get private health insurance — some employers provide it, or check providers like Manulife or Sun Life for short-term coverage.',
-       consequence:'⚠️ Without OHIP, doctor visits and ER cost hundreds to thousands of dollars out of pocket. Get private coverage for the 3-month gap.',
+       body:'<span id="health-card-body"><strong>Ontario (OHIP):</strong> ServiceOntario location. Bring passport, proof of Ontario address, and immigration document. <strong>3-month wait</strong> — OHIP starts 3 months after you register. Get private health insurance for the gap (Manulife, Sun Life).</span><span id="health-card-bc" style="display:none"><strong>BC (MSP):</strong> Register at hibc.gov.bc.ca. Same 3-month wait as Ontario. Bring passport, proof of BC address, immigration document.</span><span id="health-card-ab" style="display:none"><strong>Alberta (AHCIP):</strong> Register at alberta.ca/ahcip. No waiting period for PR holders — coverage starts on arrival. Bring passport and immigration document to any registry office.</span><span id="health-card-qc" style="display:none"><strong>Quebec (RAMQ):</strong> Register at ramq.gouv.qc.ca. 3-month wait for most newcomers. Bring passport, proof of Quebec address, and immigration document to a RAMQ office.</span><span id="health-card-other" style="display:none"><strong>Your province:</strong> Each province has its own health card system. Search "[province name] health card registration" or visit your provincial health authority website. Most have a 3-month waiting period.</span>',
+       consequence:'⚠️ Without provincial health coverage, ER visits cost $1,000–$5,000+. Get private insurance for the waiting period — Manulife and Sun Life offer newcomer plans.',
        link:'healthcare.html'},
       {id:'address', title:'Confirm your permanent address — rent a home', tag:'tag-week1', tagLabel:'Week 1',
        body:'<strong>If staying with family short-term:</strong> Get a written letter from the homeowner confirming you live there — needed for OHIP, bank accounts, and school registration.<br><br><strong>Looking to rent:</strong> In Ontario, landlords cannot ask for more than first and last month\'s rent. They can run a credit check — if you have no Canadian credit, offer a reference letter from employer and first 3 months upfront.',
        consequence:'Most government registrations require proof of address. Sort this in week 1.',
        link:null},
       {id:'driver', title:'Check your driving licence eligibility', tag:'tag-week1', tagLabel:'Week 1',
-       body:'<strong>India licence holders:</strong> You qualify for a Direct G licence (skip G1/G2 written test). You\'ll need to pass a G road test only. Book as early as possible — wait times in Ontario are 3–6 months.<br><br><strong>Other countries:</strong> Check if your country is on Ontario\'s reciprocal licence exchange list at drivetest.ca. If not, you start at G1.',
+       body:'<span id="driver-body-on"><strong>Ontario:</strong> India licence holders qualify for Direct G (skip G1/G2, road test only). Book at drivetest.ca — 3–6 month waits. Other countries: check Ontario reciprocal exchange list at drivetest.ca.</span><span id="driver-body-bc" style="display:none"><strong>BC:</strong> ICBC handles licensing. Many countries exchange directly to BC Class 5. Check icbc.com for your country.</span><span id="driver-body-ab" style="display:none"><strong>Alberta:</strong> Indian licence holders exchange directly to Alberta Class 5 — no road test. Other countries: check alberta.ca. Registry office handles applications.</span><span id="driver-body-qc" style="display:none"><strong>Quebec:</strong> SAAQ handles licensing. Check saaq.gouv.qc.ca for your country — most newcomers need knowledge + road test.</span><span id="driver-body-other" style="display:none"><strong>Your province:</strong> Check your provincial motor vehicle authority website for licence exchange rules from your home country.</span>',
        consequence:'⚠️ Book your road test the day you arrive — slots fill months out.',
        link:null},
     ]
@@ -167,7 +167,7 @@ const TASKS = [
     title:'Children — School Registration',
     tasks:[
       {id:'school-board', title:'Identify your school board and register children', tag:'tag-week1', tagLabel:'Week 1',
-       body:'<strong>Ontario boards:</strong> Each city has a public board and a Catholic board. You can choose either regardless of religion.<br><br><strong>Documents needed:</strong> Birth certificate, immunization records (from home country — acceptable), proof of address, and immigration documents for the child.<br><br><strong>ESL assessment:</strong> Most boards assess English within the first week. Your child will be placed in ESL if needed — this is normal and beneficial, not a setback.',
+       body:'<span id="school-body-on"><strong>Ontario:</strong> Each city has a public board and a Catholic board — you can choose either. Contact your local school board (search "[city] school board"). Documents: birth certificate, immunization records, proof of address, immigration documents.</span><span id="school-body-bc" style="display:none"><strong>BC:</strong> Contact your local School District (SD). BC has public and independent (private) schools. ESL support widely available. Search "[city] school district registration".</span><span id="school-body-ab" style="display:none"><strong>Alberta:</strong> Public, Catholic, and Francophone boards available. Contact your local school division. Alberta Education accepts international immunization records.</span><span id="school-body-qc" style="display:none"><strong>Quebec:</strong> English and French school boards available. Most newcomer children are required to attend French schools unless you attended English school in Canada. Contact your local school service centre (CSS).</span><span id="school-body-other" style="display:none"><strong>Your province:</strong> Contact your local school board or district. All provinces accept newcomer children and provide ESL/EAL support. Documents needed are similar across provinces: birth certificate, immunization records, proof of address.</span>',
        consequence:'Ontario has compulsory school attendance for children 6–18. Register immediately.',
        link:'education.html'},
       {id:'immunization', title:'Submit immunization records to local health unit', tag:'tag-week1', tagLabel:'Week 1',
@@ -367,6 +367,70 @@ function buildTracker() {
   body.innerHTML = html;
   updateProgress();
 }
+
+const PROV_NOTES = {
+  ON: null,
+  BC: 'British Columbia — health card is MSP (3-month wait). Driver licence via ICBC.',
+  AB: 'Alberta — <strong>no provincial income tax</strong> and no health card waiting period for PRs. Driver licence via registry offices.',
+  QC: 'Quebec — higher provincial tax but <strong>subsidized childcare (~$10–15/day)</strong>. School system requires French for most newcomers.',
+  SK: 'Saskatchewan — lower provincial tax. Health card via eHealth Saskatchewan.',
+  MB: 'Manitoba — health card via Manitoba Health. No waiting period for PRs.',
+  NS: 'Nova Scotia — highest provincial tax rate. MSI health card, 3-month wait.',
+  NB: 'New Brunswick — bilingual province. Medicare NB health card.',
+  NL: 'Newfoundland — MCP health card, 3-month wait. Lower cost of living.',
+  PE: 'Prince Edward Island — Health PEI card. Small island province, strong newcomer support.',
+};
+
+function setProvince(prov){
+  // Update province note
+  const noteEl = document.getElementById('prov-note');
+  if(noteEl) noteEl.innerHTML = PROV_NOTES[prov] ? '📍 ' + PROV_NOTES[prov] : '';
+
+  // Health card body
+  const hcBodies = ['on','bc','ab','qc','other'];
+  hcBodies.forEach(p => {
+    const el = document.getElementById('health-card-' + p);
+    if(el) el.style.display = 'none';
+  });
+  const hcKey = ['ON','BC','AB','QC'].includes(prov) ? prov.toLowerCase() : 'other';
+  const hcEl = document.getElementById('health-card-' + hcKey);
+  if(hcEl) hcEl.style.display = 'inline';
+
+  // Driver body
+  ['on','bc','ab','qc','other'].forEach(p => {
+    const el = document.getElementById('driver-body-' + p);
+    if(el) el.style.display = 'none';
+  });
+  const driverKey = ['ON','BC','AB','QC'].includes(prov) ? prov.toLowerCase() : 'other';
+  const dEl = document.getElementById('driver-body-' + driverKey);
+  if(dEl) dEl.style.display = 'inline';
+
+  // School body
+  ['on','bc','ab','qc','other'].forEach(p => {
+    const el = document.getElementById('school-body-' + p);
+    if(el) el.style.display = 'none';
+  });
+  const schoolKey = ['ON','BC','AB','QC'].includes(prov) ? prov.toLowerCase() : 'other';
+  const sEl = document.getElementById('school-body-' + schoolKey);
+  if(sEl) sEl.style.display = 'inline';
+
+  // Save to shared plan
+  try{ const p = JSON.parse(localStorage.getItem('cfg_plan')||'{}'); p.province = prov; p.updated=Date.now(); localStorage.setItem('cfg_plan', JSON.stringify(p)); }catch(e){}
+}
+
+// On load — restore province from plan and check for OH notice
+window.addEventListener('load', function(){
+  try{
+    const plan = JSON.parse(localStorage.getItem('cfg_plan')||'{}');
+    if(plan.province){
+      const sel = document.getElementById('province-sel');
+      if(sel) sel.value = plan.province;
+      setProvince(plan.province);
+    } else {
+      setProvince('ON'); // default
+    }
+  }catch(e){ setProvince('ON'); }
+});
 
 buildTracker();
 </script>
