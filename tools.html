@@ -833,7 +833,7 @@ function calculateTax(){
   set('d-resp',`<strong>RESP: $208/month = $500/year free from government.</strong> Contributing $2,500/year per child earns a 20% Canada Education Savings Grant automatically.`);
 
   document.getElementById('tax-results').classList.add('show');
-  const _s1=document.getElementById('step1');if(_s1)_s1.classList.add('done');
+  document.getElementById('step1').classList.add('done');
 
   // Auto-fill affordability
   document.getElementById('aff-income').value=Math.round(monthly);
@@ -846,7 +846,7 @@ function calculateTax(){
 function openAffordability(){
   document.getElementById('aff-section').classList.add('show');
   document.getElementById('connector-1').style.display='block';
-  const _s2a=document.getElementById('step2');if(_s2a)_s2a.classList.add('active');
+  document.getElementById('step2').classList.add('active');
   setTimeout(()=>document.getElementById('aff-section').scrollIntoView({behavior:'smooth',block:'start'}),100);
 }
 
@@ -911,7 +911,7 @@ function calculateAffordability(){
   set('d-aff-tip',`<strong>Newcomer tip:</strong> Sign a 1-year lease first, not 2. Smaller cities are typically 30–60% cheaper than Toronto or Vancouver for equivalent homes — a great starting point while you build credit and Canadian employment history.`);
 
   document.getElementById('aff-results').classList.add('show');
-  const _s2=document.getElementById('step2');if(_s2)_s2.classList.add('done');
+  document.getElementById('step2').classList.add('done');
 
   // Auto-fill savings
   document.getElementById('sav-income').value=Math.round(income);
@@ -934,7 +934,7 @@ function calculateAffordability(){
 function openSavings(){
   document.getElementById('savings-section').classList.add('show');
   document.getElementById('connector-2').style.display='block';
-  const _s3a=document.getElementById('step3');if(_s3a)_s3a.classList.add('active');
+  document.getElementById('step3').classList.add('active');
   setTimeout(()=>document.getElementById('savings-section').scrollIntoView({behavior:'smooth',block:'start'}),100);
 }
 
@@ -998,7 +998,7 @@ function calculateSavings(){
   set('sav-p1',p1);set('sav-p2',p2);set('sav-p3',p3);set('sav-timeline',timeline);
 
   document.getElementById('savings-results').classList.add('show');
-  const _s3=document.getElementById('step3');if(_s3)_s3.classList.add('done');
+  document.getElementById('step3').classList.add('done');
   updateSummaryBar();
   buildNextSteps(income, housing, tfsaMonthly, rrspMonthly, respMonthly, children, marginal);
 }
