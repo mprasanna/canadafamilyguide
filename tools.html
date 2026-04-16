@@ -3,18 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Canada Tax Calculator 2025 — Take-Home Pay by Province | Canada Family Guide</title>
-<meta name="description" content="Free Canadian take-home pay calculator for 2025. Enter your salary and province to see federal tax, provincial tax, CPP, EI deductions and your exact monthly take-home. Includes RRSP savings impact.">
+<title>Canada Financial Tools 2025 — Tax, Affordability & Savings Planner | Canada Family Guide</title>
+<meta name="description" content="Free Canadian financial tools for newcomers. Calculate take-home pay, housing affordability, and RESP/TFSA savings plan — all connected in one flow. Built for families in Canada.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://canadafamilyguide.com/tools.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Canada Tax Calculator 2025 — Take-Home Pay by Province">
-<meta property="og:description" content="See your exact take-home pay after federal tax, provincial tax, CPP and EI. Built for newcomers to Canada.">
+<meta property="og:title" content="Canada Financial Tools — Tax, Affordability & Savings Planner">
+<meta property="og:description" content="See your take-home pay, what you can afford, and how to invest — all connected. Built for newcomer families in Canada.">
 <meta property="og:url" content="https://canadafamilyguide.com/tools.html">
 <meta property="og:site_name" content="Canada Family Guide">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍁</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
-<script src="nav.js"></script>
 <style>
 :root{--red:#C8102E;--red-dark:#9B0B22;--black:#0f0f0f;--white:#F7F5F0;--grey:#555;--light:#EDE9E0;--green:#1a7a4a;--blue:#1565C0}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -27,35 +26,48 @@ body{background:var(--white);color:var(--black);font-family:'DM Sans',sans-serif
 .page-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;margin-bottom:.8rem}
 .page-sub{color:#aac4e8;font-size:.95rem;line-height:1.7;max-width:600px}
 
+/* PROGRESS STEPS */
+.progress-bar{display:flex;align-items:center;gap:0;margin-bottom:2rem;background:#fff;border:1px solid #e0dbd0;border-radius:10px;overflow:hidden}
+.progress-step{flex:1;padding:.8rem .5rem;text-align:center;font-size:.78rem;font-weight:600;color:#999;font-family:'Plus Jakarta Sans',sans-serif;border-right:1px solid #e0dbd0;cursor:pointer;transition:all .2s;position:relative}
+.progress-step:last-child{border-right:none}
+.progress-step.active{background:var(--red);color:#fff}
+.progress-step.done{background:#e8f5e9;color:var(--green)}
+.progress-step .step-num{display:block;font-size:.65rem;opacity:.7;margin-bottom:.1rem}
+
 main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
 
 /* TOOL CARD */
 .tool-card{background:#fff;border:1px solid #e0dbd0;border-radius:12px;overflow:hidden;margin-bottom:1.5rem}
-.tool-card-head{background:var(--red);color:#fff;padding:1rem 1.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem}
+.tool-card-head{background:var(--red);color:#fff;padding:1rem 1.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;display:flex;align-items:center;gap:.6rem}
+.tool-card-head-blue{background:#0f2744}
+.tool-card-head-green{background:#1a5c2e}
 .tool-card-body{padding:1.5rem}
 
 /* INPUTS */
 .input-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem}
 .input-group{display:flex;flex-direction:column;gap:.4rem}
 .input-group label{font-size:.8rem;font-weight:600;color:var(--grey);font-family:'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:.05em}
-.input-group input,.input-group select{
-  border:1.5px solid #e0dbd0;border-radius:6px;padding:.7rem 1rem;
-  font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--black);
-  background:#fff;transition:border-color .2s;width:100%
-}
+.input-group input,.input-group select{border:1.5px solid #e0dbd0;border-radius:6px;padding:.7rem 1rem;font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--black);background:#fff;transition:border-color .2s;width:100%}
 .input-group input:focus,.input-group select:focus{outline:none;border-color:var(--red)}
+.input-hint{font-size:.75rem;color:#999;margin-top:.2rem}
 .input-prefix{position:relative}
 .input-prefix input{padding-left:1.8rem}
 .input-prefix::before{content:'$';position:absolute;left:.7rem;top:50%;transform:translateY(-50%);color:var(--grey);font-size:.95rem;pointer-events:none}
 
-/* CALCULATE BUTTON */
-.calc-btn{width:100%;background:var(--red);color:#fff;border:none;border-radius:8px;padding:.9rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:background .2s;letter-spacing:.02em}
+/* BUTTONS */
+.calc-btn{width:100%;background:var(--red);color:#fff;border:none;border-radius:8px;padding:.9rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:background .2s}
 .calc-btn:hover{background:var(--red-dark)}
+.next-btn{display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;background:#0f2744;color:#fff;border:none;border-radius:8px;padding:.9rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:background .2s;text-decoration:none;margin-top:1rem}
+.next-btn:hover{background:#1a3a5c}
+.next-btn-green{background:#1a5c2e}
+.next-btn-green:hover{background:#0f3a1e}
 
 /* RESULTS */
 .results{display:none}
-.results.show{display:block;animation:fadeIn .3s ease}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.results.show{display:block;animation:fadeIn .35s ease}
+.tool-section{display:none}
+.tool-section.show{display:block;animation:fadeIn .35s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
 /* TAKE HOME HERO */
 .takehome-hero{background:linear-gradient(135deg,#0f2744,#1a3a5c);border-radius:10px;padding:1.8rem 1.5rem;color:#fff;margin-bottom:1.2rem;text-align:center}
@@ -64,32 +76,23 @@ main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
 .takehome-sub{font-size:.85rem;color:#aac4e8}
 .takehome-annual{font-size:1.1rem;font-weight:600;color:#fff;margin-top:.5rem}
 
-/* BREAKDOWN BAR */
-.breakdown-bar{margin-bottom:1.5rem}
+/* BAR */
 .bar-track{height:28px;border-radius:6px;overflow:hidden;display:flex;margin-bottom:.8rem}
-.bar-seg{height:100%;transition:width .5s ease}
-.bar-seg-takehome{background:#1a7a4a}
-.bar-seg-fed{background:#C8102E}
-.bar-seg-prov{background:#e05c7a}
-.bar-seg-cpp{background:#1565C0}
-.bar-seg-ei{background:#6A1B9A}
-
-.bar-legend{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.5rem}
+.bar-seg{height:100%;transition:width .6s ease}
+.bar-legend{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.5rem;margin-bottom:1.2rem}
 .legend-item{display:flex;align-items:center;gap:.5rem;font-size:.8rem}
 .legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
 .legend-label{color:var(--grey)}
 .legend-value{font-weight:600;color:var(--black);margin-left:auto}
 
-/* DEDUCTION TABLE */
+/* TABLE */
 .deduction-table{width:100%;border-collapse:collapse;margin-bottom:1.2rem;font-size:.88rem}
 .deduction-table tr{border-bottom:1px solid #f0ece4}
-.deduction-table tr:last-child{border-bottom:none}
 .deduction-table td{padding:.65rem .5rem;color:var(--grey)}
 .deduction-table td:last-child{text-align:right;font-weight:600;color:var(--black)}
-.deduction-table .total-row td{color:var(--black);font-weight:700;font-size:.95rem;border-top:2px solid #e0dbd0;padding-top:.8rem}
 .deduction-table .takehome-row td{color:var(--green);font-weight:800;font-size:1rem}
 
-/* TAX RATES */
+/* RATE CARDS */
 .rate-cards{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.2rem}
 .rate-card{background:var(--light);border-radius:8px;padding:1rem;text-align:center}
 .rate-card-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--grey);margin-bottom:.3rem}
@@ -99,31 +102,66 @@ main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
 .rate-card.red .rate-card-value{color:var(--red)}
 
 /* WHAT THIS MEANS */
-.decisions{background:#fff;border:1px solid #e0dbd0;border-radius:10px;overflow:hidden;margin-bottom:1.2rem}
-.decisions-head{background:var(--light);padding:.8rem 1.2rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;color:var(--black);border-bottom:1px solid #e0dbd0}
+.decisions{background:#fff;border:1px solid #e0dbd0;border-radius:10px;overflow:hidden;margin-bottom:1rem}
+.decisions-head{background:var(--light);padding:.8rem 1.2rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;border-bottom:1px solid #e0dbd0}
 .decision-item{display:flex;gap:.8rem;padding:.9rem 1.2rem;border-bottom:1px solid #f0ece4;align-items:flex-start}
 .decision-item:last-child{border-bottom:none}
 .decision-icon{font-size:1.2rem;flex-shrink:0;margin-top:.1rem}
 .decision-text{font-size:.85rem;color:var(--grey);line-height:1.6}
 .decision-text strong{color:var(--black)}
 
-/* RRSP IMPACT */
-.rrsp-impact{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:1rem 1.2rem;margin-bottom:1.2rem;display:none}
-.rrsp-impact.show{display:block}
-.rrsp-impact-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;color:var(--green);margin-bottom:.5rem}
-.rrsp-impact-body{font-size:.85rem;color:#2e7d32;line-height:1.6}
+/* RRSP BANNER */
+.rrsp-banner{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:1rem 1.2rem;margin-bottom:1rem;display:none}
+.rrsp-banner.show{display:block}
+.rrsp-banner-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;color:var(--green);margin-bottom:.4rem}
+.rrsp-banner-body{font-size:.85rem;color:#2e7d32;line-height:1.6}
 
-/* DISCLAIMER */
+/* AFFORDABILITY */
+.aff-hero{border-radius:10px;padding:1.5rem;margin-bottom:1.2rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.aff-hero-blue{background:linear-gradient(135deg,#0f2744,#1a3a5c);color:#fff}
+.aff-metric{text-align:center;padding:.8rem}
+.aff-metric-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#aac4e8;margin-bottom:.3rem}
+.aff-metric-value{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.8rem;color:#fff;line-height:1}
+.aff-metric-sub{font-size:.75rem;color:#aac4e8;margin-top:.3rem}
+
+.city-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.8rem;margin-bottom:1.2rem}
+.city-card{background:#fff;border:1px solid #e0dbd0;border-radius:8px;padding:1rem}
+.city-card-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:.5rem}
+.city-card-rent{font-size:.82rem;color:var(--grey);line-height:1.7}
+.city-card-status{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:.4rem}
+.status-good{background:#e8f5e9;color:#1b5e20}
+.status-tight{background:#fff3e0;color:#e65100}
+.status-hard{background:#ffebee;color:#b71c1c}
+
+/* TOGGLE */
+.toggle-wrap{display:flex;gap:0;border:1.5px solid #e0dbd0;border-radius:8px;overflow:hidden;margin-bottom:1.2rem}
+.toggle-btn{flex:1;padding:.7rem;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.88rem;cursor:pointer;border:none;background:#fff;color:var(--grey);transition:all .2s}
+.toggle-btn.active{background:var(--red);color:#fff}
+
+/* SAVINGS */
+.savings-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem}
+.savings-card{background:#fff;border:1px solid #e0dbd0;border-radius:10px;padding:1.2rem;border-top:3px solid var(--green)}
+.savings-card-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--grey);margin-bottom:.4rem}
+.savings-card-value{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem;color:var(--green);margin-bottom:.3rem}
+.savings-card-body{font-size:.8rem;color:var(--grey);line-height:1.6}
+
 .disclaimer{font-size:.75rem;color:#999;line-height:1.5;padding:.8rem;background:var(--light);border-radius:6px;margin-top:1rem}
+
+/* SECTION CONNECTOR */
+.section-connector{text-align:center;padding:1.5rem 0;color:var(--grey);font-size:.85rem;position:relative}
+.section-connector::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(#e0dbd0,#C8102E);transform:translateX(-50%);z-index:0}
+.section-connector-dot{width:36px;height:36px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;margin:0 auto;position:relative;z-index:1}
 
 @media(max-width:600px){
   .input-grid{grid-template-columns:1fr}
-  .rate-cards{grid-template-columns:1fr 1fr}
+  .rate-cards,.savings-grid{grid-template-columns:1fr 1fr}
   .takehome-amount{font-size:2.4rem}
   .bar-legend{grid-template-columns:1fr 1fr}
+  .aff-hero{grid-template-columns:1fr 1fr}
+  .progress-step .step-num{display:none}
+  .progress-step{font-size:.7rem;padding:.6rem .3rem}
 }
 
-/* FOOTER */
 footer{background:#1a1a1a;color:#aaa;padding:2.5rem 2rem;margin-top:3rem;font-size:.82rem}
 footer p{margin-bottom:.8rem;color:#ccc}
 footer strong{color:#fff}
@@ -134,88 +172,99 @@ footer strong{color:#fff}
 </style>
 </head>
 <body>
-
+<script src="nav.js"></script>
 <div style="height:60px"></div>
 
 <div class="page-header">
   <div class="page-header-inner">
     <div class="page-label">💰 Canada Tools</div>
-    <h1 class="page-title">Tax & Take-Home Calculator</h1>
-    <p class="page-sub">Enter your salary and province — see exactly what lands in your bank account each month, where the rest goes, and what it means for your finances.</p>
+    <h1 class="page-title">Your Canada Financial Planner</h1>
+    <p class="page-sub">Three connected tools — tax calculator, housing affordability, and savings plan. Each step feeds the next. Start with your salary.</p>
   </div>
 </div>
 
 <main>
 
-  <!-- INPUT CARD -->
-  <div class="tool-card">
-    <div class="tool-card-head">Your details</div>
-    <div class="tool-card-body">
-      <div class="input-grid">
-        <div class="input-group">
-          <label>Annual salary</label>
-          <div class="input-prefix">
-            <input type="number" id="salary" placeholder="85000" min="0" max="1000000" value="">
-          </div>
-        </div>
-        <div class="input-group">
-          <label>Province</label>
-          <select id="province">
-            <option value="ON">Ontario</option>
-            <option value="BC">British Columbia</option>
-            <option value="AB">Alberta</option>
-            <option value="QC">Quebec</option>
-            <option value="MB">Manitoba</option>
-            <option value="SK">Saskatchewan</option>
-            <option value="NS">Nova Scotia</option>
-            <option value="NB">New Brunswick</option>
-            <option value="NL">Newfoundland & Labrador</option>
-            <option value="PE">Prince Edward Island</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <label>RRSP contribution / year (optional)</label>
-          <div class="input-prefix">
-            <input type="number" id="rrsp" placeholder="0" min="0" max="31560" value="0">
-          </div>
-          <span style="font-size:.75rem;color:#999;margin-top:.2rem">Max 2025: $31,560 or 18% of last year's income. Leave blank if unsure.</span>
-        </div>
-        <div class="input-group">
-          <label>Pay frequency</label>
-          <select id="frequency">
-            <option value="12">Monthly</option>
-            <option value="26">Bi-weekly</option>
-            <option value="24">Semi-monthly</option>
-            <option value="52">Weekly</option>
-          </select>
-        </div>
-      </div>
-      <button class="calc-btn" onclick="calculate()">Calculate my take-home →</button>
+  <!-- PROGRESS -->
+  <div class="progress-bar">
+    <div class="progress-step active" id="step1" onclick="scrollToSection('tax-section')">
+      <span class="step-num">Step 1</span>Tax & Take-Home
+    </div>
+    <div class="progress-step" id="step2" onclick="scrollToSection('aff-section')">
+      <span class="step-num">Step 2</span>Affordability
+    </div>
+    <div class="progress-step" id="step3" onclick="scrollToSection('savings-section')">
+      <span class="step-num">Step 3</span>Savings Plan
     </div>
   </div>
 
-  <!-- RESULTS -->
-  <div class="results" id="results">
-
-    <!-- TAKE HOME HERO -->
-    <div class="takehome-hero">
-      <div class="takehome-label">Your take-home pay</div>
-      <div class="takehome-amount" id="res-monthly">$0</div>
-      <div class="takehome-sub" id="res-freq-label">per month</div>
-      <div class="takehome-annual" id="res-annual">$0 per year</div>
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- STEP 1 — TAX CALCULATOR                        -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div id="tax-section">
+    <div class="tool-card">
+      <div class="tool-card-head">Step 1 — Tax & Take-Home Calculator</div>
+      <div class="tool-card-body">
+        <div class="input-grid">
+          <div class="input-group">
+            <label>Annual salary</label>
+            <div class="input-prefix">
+              <input type="number" id="salary" placeholder="85000" min="0" max="1000000">
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Province</label>
+            <select id="province">
+              <option value="ON">Ontario</option>
+              <option value="BC">British Columbia</option>
+              <option value="AB">Alberta</option>
+              <option value="QC">Quebec</option>
+              <option value="MB">Manitoba</option>
+              <option value="SK">Saskatchewan</option>
+              <option value="NS">Nova Scotia</option>
+              <option value="NB">New Brunswick</option>
+              <option value="NL">Newfoundland & Labrador</option>
+              <option value="PE">Prince Edward Island</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>RRSP contribution / year (optional)</label>
+            <div class="input-prefix">
+              <input type="number" id="rrsp" placeholder="0" min="0" max="31560" value="0">
+            </div>
+            <span class="input-hint">Max 2025: $31,560 or 18% of last year's income. Leave blank if unsure.</span>
+          </div>
+          <div class="input-group">
+            <label>Pay frequency</label>
+            <select id="frequency">
+              <option value="12">Monthly</option>
+              <option value="26">Bi-weekly</option>
+              <option value="24">Semi-monthly</option>
+              <option value="52">Weekly</option>
+            </select>
+          </div>
+        </div>
+        <button class="calc-btn" onclick="calculateTax()">Calculate my take-home →</button>
+      </div>
     </div>
 
-    <!-- BREAKDOWN BAR -->
-    <div class="tool-card">
-      <div class="tool-card-head">Where your money goes</div>
-      <div class="tool-card-body">
-        <div class="breakdown-bar">
+    <div class="results" id="tax-results">
+      <div class="takehome-hero">
+        <div class="takehome-label">Your take-home pay</div>
+        <div class="takehome-amount" id="res-monthly">$0</div>
+        <div class="takehome-sub" id="res-freq-label">per month</div>
+        <div class="takehome-annual" id="res-annual">$0 per year</div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-head">Where your money goes</div>
+        <div class="tool-card-body">
           <div class="bar-track" id="bar-track">
-            <div class="bar-seg bar-seg-takehome" id="bar-takehome" style="width:0%"></div>
-            <div class="bar-seg bar-seg-fed" id="bar-fed" style="width:0%"></div>
-            <div class="bar-seg bar-seg-prov" id="bar-prov" style="width:0%"></div>
-            <div class="bar-seg bar-seg-cpp" id="bar-cpp" style="width:0%"></div>
-            <div class="bar-seg bar-seg-ei" id="bar-ei" style="width:0%"></div>
+            <div class="bar-seg" id="bar-takehome" style="background:#1a7a4a;width:0%"></div>
+            <div class="bar-seg" id="bar-fed"      style="background:#C8102E;width:0%"></div>
+            <div class="bar-seg" id="bar-prov"     style="background:#e05c7a;width:0%"></div>
+            <div class="bar-seg" id="bar-cpp"      style="background:#1565C0;width:0%"></div>
+            <div class="bar-seg" id="bar-ei"       style="background:#6A1B9A;width:0%"></div>
           </div>
           <div class="bar-legend">
             <div class="legend-item"><div class="legend-dot" style="background:#1a7a4a"></div><span class="legend-label">Take-home</span><span class="legend-value" id="leg-takehome">—</span></div>
@@ -224,72 +273,253 @@ footer strong{color:#fff}
             <div class="legend-item"><div class="legend-dot" style="background:#1565C0"></div><span class="legend-label">CPP</span><span class="legend-value" id="leg-cpp">—</span></div>
             <div class="legend-item"><div class="legend-dot" style="background:#6A1B9A"></div><span class="legend-label">EI</span><span class="legend-value" id="leg-ei">—</span></div>
           </div>
-        </div>
-
-        <table class="deduction-table">
-          <tr><td>Gross salary</td><td id="t-gross">—</td></tr>
-          <tr><td>Federal income tax</td><td id="t-fed">—</td></tr>
-          <tr><td>Provincial income tax</td><td id="t-prov">—</td></tr>
-          <tr><td>CPP contributions</td><td id="t-cpp">—</td></tr>
-          <tr><td>EI premiums</td><td id="t-ei">—</td></tr>
-          <tr><td>Total deductions</td><td id="t-total-ded">—</td></tr>
-          <tr class="takehome-row"><td>✓ Annual take-home</td><td id="t-takehome">—</td></tr>
-        </table>
-
-        <div class="rate-cards">
-          <div class="rate-card red">
-            <div class="rate-card-label">Marginal rate</div>
-            <div class="rate-card-value" id="r-marginal">—</div>
-            <div class="rate-card-sub">Tax on your next dollar</div>
+          <table class="deduction-table">
+            <tr><td>Gross salary</td><td id="t-gross">—</td></tr>
+            <tr><td>Federal income tax</td><td id="t-fed">—</td></tr>
+            <tr><td>Provincial income tax</td><td id="t-prov">—</td></tr>
+            <tr><td>CPP contributions</td><td id="t-cpp">—</td></tr>
+            <tr><td>EI premiums</td><td id="t-ei">—</td></tr>
+            <tr><td>Total deductions</td><td id="t-total-ded">—</td></tr>
+            <tr class="takehome-row"><td>✓ Annual take-home</td><td id="t-takehome">—</td></tr>
+          </table>
+          <div class="rate-cards">
+            <div class="rate-card red"><div class="rate-card-label">Marginal rate</div><div class="rate-card-value" id="r-marginal">—</div><div class="rate-card-sub">Tax on your next dollar</div></div>
+            <div class="rate-card green"><div class="rate-card-label">Effective rate</div><div class="rate-card-value" id="r-effective">—</div><div class="rate-card-sub">What you actually pay</div></div>
           </div>
-          <div class="rate-card green">
-            <div class="rate-card-label">Effective rate</div>
-            <div class="rate-card-value" id="r-effective">—</div>
-            <div class="rate-card-sub">What you actually pay</div>
+          <div style="background:var(--light);border-radius:8px;padding:.9rem 1.1rem;font-size:.82rem;color:var(--grey);line-height:1.6">
+            <strong style="color:var(--black)">Marginal vs Effective — simply:</strong> You don't pay your top rate on everything. Canada uses brackets — 15% on the first $57k, 20.5% on the next chunk, and so on. Your effective rate is the real average. Most people earning $80–100k pay an effective combined rate of 28–33%, not 43%.
           </div>
         </div>
+      </div>
 
-        <div style="background:var(--light);border-radius:8px;padding:.9rem 1.1rem;font-size:.82rem;color:var(--grey);line-height:1.6">
-          <strong style="color:var(--black)">Marginal vs Effective rate explained simply:</strong> You don't pay your top rate on everything you earn. Canada uses brackets — you pay 15% on the first $57k, 20.5% on the next chunk, and so on. Your <em>effective</em> rate is the real average. Most people earning $80–100k pay an effective combined rate of 28–33%, not 43%.
+      <div class="rrsp-banner" id="rrsp-banner">
+        <div class="rrsp-banner-title">💚 RRSP tax saving</div>
+        <div class="rrsp-banner-body" id="rrsp-banner-text">—</div>
+      </div>
+
+      <div class="decisions">
+        <div class="decisions-head">What this means for you</div>
+        <div class="decision-item"><div class="decision-icon">🏠</div><div class="decision-text" id="d-housing">—</div></div>
+        <div class="decision-item"><div class="decision-icon">💰</div><div class="decision-text" id="d-savings">—</div></div>
+        <div class="decision-item"><div class="decision-icon">📈</div><div class="decision-text" id="d-invest">—</div></div>
+        <div class="decision-item"><div class="decision-icon">🎓</div><div class="decision-text" id="d-resp">—</div></div>
+      </div>
+
+      <button class="next-btn" onclick="openAffordability()">
+        Plan your housing → Step 2: Affordability ↓
+      </button>
+
+      <div class="disclaimer">⚠️ Estimates based on 2025 federal and provincial tax rates. Not financial advice. Always verify with a registered financial advisor or accountant.</div>
+    </div>
+  </div>
+
+  <!-- CONNECTOR -->
+  <div class="section-connector" id="connector-1" style="display:none">
+    <div class="section-connector-dot">↓</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- STEP 2 — AFFORDABILITY                         -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div id="aff-section" class="tool-section">
+    <div class="tool-card">
+      <div class="tool-card-head tool-card-head-blue">Step 2 — Housing Affordability</div>
+      <div class="tool-card-body">
+        <div style="background:#e8f0fe;border-radius:8px;padding:.8rem 1rem;font-size:.85rem;color:#1565C0;margin-bottom:1.2rem;font-weight:500" id="aff-context">
+          Based on your take-home — update if needed
+        </div>
+        <div class="input-grid">
+          <div class="input-group">
+            <label>Monthly take-home</label>
+            <div class="input-prefix">
+              <input type="number" id="aff-income" placeholder="5800" min="0">
+            </div>
+            <span class="input-hint">Auto-filled from Step 1. Edit if needed.</span>
+          </div>
+          <div class="input-group">
+            <label>Family size</label>
+            <select id="aff-family">
+              <option value="1">1 person</option>
+              <option value="2">2 people</option>
+              <option value="3" selected>3 people</option>
+              <option value="4">4 people</option>
+              <option value="5">5+ people</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>City / Region</label>
+            <select id="aff-city">
+              <option value="cornwall">Eastern Ontario (Cornwall / Kingston)</option>
+              <option value="ottawa">Ottawa</option>
+              <option value="waterloo">Waterloo / KW Region</option>
+              <option value="toronto">Toronto / GTA</option>
+              <option value="hamilton">Hamilton / Burlington</option>
+              <option value="vancouver">Vancouver</option>
+              <option value="calgary">Calgary</option>
+              <option value="edmonton">Edmonton</option>
+              <option value="montreal">Montreal</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Rent or Buy?</label>
+            <select id="aff-mode">
+              <option value="rent">Renting</option>
+              <option value="buy">Buying</option>
+            </select>
+          </div>
+        </div>
+        <button class="calc-btn" style="background:#0f2744" onclick="calculateAffordability()">Show my affordability →</button>
+      </div>
+    </div>
+
+    <div class="results" id="aff-results">
+
+      <!-- RENT RESULTS -->
+      <div id="rent-results">
+        <div class="aff-hero aff-hero-blue">
+          <div class="aff-metric"><div class="aff-metric-label">Comfortable rent (25%)</div><div class="aff-metric-value" id="rent-25">—</div><div class="aff-metric-sub">Leaves room for savings</div></div>
+          <div class="aff-metric"><div class="aff-metric-label">Max rent (33%)</div><div class="aff-metric-value" id="rent-33">—</div><div class="aff-metric-sub">Stretched but manageable</div></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-card-head tool-card-head-blue">What your budget gets you</div>
+          <div class="tool-card-body">
+            <div class="city-grid" id="city-rental-grid"></div>
+            <div style="font-size:.82rem;color:var(--grey);line-height:1.7" id="rent-advice"></div>
+          </div>
         </div>
       </div>
+
+      <!-- BUY RESULTS -->
+      <div id="buy-results" style="display:none">
+        <div class="aff-hero aff-hero-blue">
+          <div class="aff-metric"><div class="aff-metric-label">Max home price</div><div class="aff-metric-value" id="buy-max">—</div><div class="aff-metric-sub">At stress test rate</div></div>
+          <div class="aff-metric"><div class="aff-metric-label">Monthly mortgage est.</div><div class="aff-metric-value" id="buy-mortgage">—</div><div class="aff-metric-sub">25yr · 5.5% rate</div></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-card-head tool-card-head-blue">Down payment breakdown</div>
+          <div class="tool-card-body">
+            <table class="deduction-table">
+              <tr><td>Maximum home price</td><td id="bp-price">—</td></tr>
+              <tr><td>Minimum down payment (5%)</td><td id="bp-min">—</td></tr>
+              <tr><td>To avoid CMHC insurance (20%)</td><td id="bp-20">—</td></tr>
+              <tr><td>CMHC insurance (if &lt;20% down)</td><td id="bp-cmhc">—</td></tr>
+              <tr><td>Land transfer tax (Ontario est.)</td><td id="bp-ltt">—</td></tr>
+              <tr class="takehome-row"><td>Total cash needed (5% down)</td><td id="bp-total">—</td></tr>
+            </table>
+            <div style="font-size:.82rem;color:var(--grey);line-height:1.7;margin-top:.5rem" id="buy-advice"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="decisions">
+        <div class="decisions-head">Housing decisions for you</div>
+        <div class="decision-item"><div class="decision-icon">📍</div><div class="decision-text" id="d-location">—</div></div>
+        <div class="decision-item"><div class="decision-icon">🏫</div><div class="decision-text" id="d-school">—</div></div>
+        <div class="decision-item"><div class="decision-icon">💡</div><div class="decision-text" id="d-aff-tip">—</div></div>
+      </div>
+
+      <button class="next-btn next-btn-green" onclick="openSavings()">
+        Build your savings plan → Step 3 ↓
+      </button>
+    </div>
+  </div>
+
+  <!-- CONNECTOR 2 -->
+  <div class="section-connector" id="connector-2" style="display:none">
+    <div class="section-connector-dot">↓</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- STEP 3 — SAVINGS PLAN                          -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div id="savings-section" class="tool-section">
+    <div class="tool-card">
+      <div class="tool-card-head tool-card-head-green">Step 3 — RESP / TFSA / RRSP Savings Plan</div>
+      <div class="tool-card-body">
+        <div style="background:#e8f5e9;border-radius:8px;padding:.8rem 1rem;font-size:.85rem;color:#1a5c2e;margin-bottom:1.2rem;font-weight:500" id="savings-context">
+          Based on your take-home and housing budget
+        </div>
+        <div class="input-grid">
+          <div class="input-group">
+            <label>Monthly take-home</label>
+            <div class="input-prefix">
+              <input type="number" id="sav-income" placeholder="5800" min="0">
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Monthly rent / mortgage</label>
+            <div class="input-prefix">
+              <input type="number" id="sav-housing" placeholder="1800" min="0">
+            </div>
+            <span class="input-hint">Auto-filled from Step 2. Edit if needed.</span>
+          </div>
+          <div class="input-group">
+            <label>Number of children</label>
+            <select id="sav-children">
+              <option value="0">No children</option>
+              <option value="1">1 child</option>
+              <option value="2">2 children</option>
+              <option value="3">3+ children</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Marginal tax rate</label>
+            <select id="sav-marginal">
+              <option value="0.20">~20% (under $57k)</option>
+              <option value="0.30">~30% ($57k–$100k)</option>
+              <option value="0.35" selected>~35% ($100k–$150k)</option>
+              <option value="0.43">~43% (over $150k)</option>
+            </select>
+          </div>
+        </div>
+        <button class="calc-btn" style="background:#1a5c2e" onclick="calculateSavings()">Build my savings plan →</button>
+      </div>
     </div>
 
-    <!-- RRSP IMPACT -->
-    <div class="rrsp-impact" id="rrsp-impact">
-      <div class="rrsp-impact-title">💚 RRSP tax saving</div>
-      <div class="rrsp-impact-body" id="rrsp-impact-text">—</div>
-    </div>
+    <div class="results" id="savings-results">
+      <div class="tool-card">
+        <div class="tool-card-head tool-card-head-green">Your monthly money plan</div>
+        <div class="tool-card-body">
+          <div class="bar-track" id="sav-bar" style="margin-bottom:.8rem">
+            <div class="bar-seg" id="sav-bar-housing" style="background:#C8102E;width:0%"></div>
+            <div class="bar-seg" id="sav-bar-tfsa"    style="background:#1a7a4a;width:0%"></div>
+            <div class="bar-seg" id="sav-bar-rrsp"    style="background:#1565C0;width:0%"></div>
+            <div class="bar-seg" id="sav-bar-resp"    style="background:#6A1B9A;width:0%"></div>
+            <div class="bar-seg" id="sav-bar-living"  style="background:#e0dbd0;width:0%"></div>
+          </div>
+          <div class="bar-legend" style="margin-bottom:1.5rem">
+            <div class="legend-item"><div class="legend-dot" style="background:#C8102E"></div><span class="legend-label">Housing</span><span class="legend-value" id="sleg-housing">—</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#1a7a4a"></div><span class="legend-label">TFSA</span><span class="legend-value" id="sleg-tfsa">—</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#1565C0"></div><span class="legend-label">RRSP</span><span class="legend-value" id="sleg-rrsp">—</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#6A1B9A"></div><span class="legend-label">RESP</span><span class="legend-value" id="sleg-resp">—</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#aaa"></div><span class="legend-label">Living expenses</span><span class="legend-value" id="sleg-living">—</span></div>
+          </div>
+          <div class="savings-grid" id="savings-cards"></div>
+        </div>
+      </div>
 
-    <!-- WHAT THIS MEANS -->
-    <div class="decisions">
-      <div class="decisions-head">What this means for you</div>
-      <div class="decision-item">
-        <div class="decision-icon">🏠</div>
-        <div class="decision-text" id="d-housing">—</div>
+      <div class="decisions">
+        <div class="decisions-head">Your savings priorities — in order</div>
+        <div class="decision-item"><div class="decision-icon">1️⃣</div><div class="decision-text" id="sav-p1">—</div></div>
+        <div class="decision-item"><div class="decision-icon">2️⃣</div><div class="decision-text" id="sav-p2">—</div></div>
+        <div class="decision-item"><div class="decision-icon">3️⃣</div><div class="decision-text" id="sav-p3">—</div></div>
+        <div class="decision-item"><div class="decision-icon">📅</div><div class="decision-text" id="sav-timeline">—</div></div>
       </div>
-      <div class="decision-item">
-        <div class="decision-icon">💰</div>
-        <div class="decision-text" id="d-savings">—</div>
-      </div>
-      <div class="decision-item">
-        <div class="decision-icon">📈</div>
-        <div class="decision-text" id="d-invest">—</div>
-      </div>
-      <div class="decision-item">
-        <div class="decision-icon">🎓</div>
-        <div class="decision-text" id="d-resp">—</div>
-      </div>
-      <div class="decision-item">
-        <div class="decision-icon">💡</div>
-        <div class="decision-text" id="d-tip">—</div>
-      </div>
-    </div>
 
-    <div class="disclaimer">
-      ⚠️ This calculator provides estimates based on 2025 federal and provincial tax rates. It does not account for all credits, deductions, or individual circumstances. For personalized advice, consult a registered financial advisor or accountant. Not financial advice.
-    </div>
+      <div style="background:var(--light);border:1px solid #e0dbd0;border-radius:10px;padding:1.2rem 1.4rem;margin-top:1rem">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:.8rem">📚 Learn more about these accounts</div>
+        <div style="display:flex;flex-wrap:wrap;gap:.6rem">
+          <a href="finance.html#tfsa" style="background:#e8f5e9;color:#1b5e20;padding:5px 12px;border-radius:20px;font-size:.8rem;font-weight:600;text-decoration:none">TFSA Guide →</a>
+          <a href="finance.html#rrsp" style="background:#e8f0fe;color:#1565C0;padding:5px 12px;border-radius:20px;font-size:.8rem;font-weight:600;text-decoration:none">RRSP Guide →</a>
+          <a href="finance.html#resp" style="background:#f3e5f5;color:#6A1B9A;padding:5px 12px;border-radius:20px;font-size:.8rem;font-weight:600;text-decoration:none">RESP Guide →</a>
+          <a href="finance.html" style="background:var(--light);color:var(--grey);padding:5px 12px;border-radius:20px;font-size:.8rem;font-weight:600;text-decoration:none;border:1px solid #ddd">Full Finance Guide →</a>
+        </div>
+      </div>
 
+      <div class="disclaimer">⚠️ Estimates only. Contribution room, income, and family circumstances vary. Always verify with a registered financial advisor. Not financial advice.</div>
+    </div>
   </div>
 
 </main>
@@ -301,7 +531,7 @@ footer strong{color:#fff}
     <a href="newcomer-start.html">Newcomer Guide</a>
     <a href="finance.html">Finance</a>
     <a href="education.html">Education</a>
-    <a href="tools.html">Tax & Take-Home</a>
+    <a href="tools.html">Financial Tools</a>
     <a href="healthcare.html">Healthcare</a>
     <a href="news.html">Live Updates</a>
     <a href="about.html">About</a>
@@ -310,186 +540,313 @@ footer strong{color:#fff}
 </footer>
 
 <script>
-// ── 2025 TAX DATA ──────────────────────────────────────────────
+// ─────────────────────────────────────────────
+// TAX DATA 2025
+// ─────────────────────────────────────────────
+const FEDERAL={brackets:[57375,114750,158519,220000],rates:[.15,.205,.26,.29,.33],bpa:16129};
+const PROVINCIAL={
+  ON:{brackets:[51446,102894,150000,220000],rates:[.0505,.0915,.1116,.1216,.1316],bpa:11865},
+  BC:{brackets:[47937,95875,110076,133664,181232,252752],rates:[.0506,.077,.105,.1229,.147,.168,.205],bpa:11981},
+  AB:{brackets:[148269,177922,237230,355845],rates:[.10,.12,.13,.14,.15],bpa:21003},
+  QC:{brackets:[51780,103545],rates:[.14,.19,.24],bpa:17183},
+  MB:{brackets:[47000,100000],rates:[.108,.1275,.174],bpa:15780},
+  SK:{brackets:[49720,142058],rates:[.105,.125,.145],bpa:17661},
+  NS:{brackets:[29590,59180,93000,150000],rates:[.0879,.1495,.1667,.175,.21],bpa:8481},
+  NB:{brackets:[49958,99916,185064],rates:[.094,.14,.16,.195],bpa:12458},
+  NL:{brackets:[43198,86395,154244,215943,275870],rates:[.087,.145,.158,.178,.198,.208],bpa:10818},
+  PE:{brackets:[32656,64313,105000],rates:[.0965,.1363,.166,.18],bpa:12000}
+};
+const CPP={rate:.0595,exemption:3500,max1:73200,max2:81900,rate2:.04};
+const EI={rate:.01666,max:65700};
 
-const FEDERAL = {
-  brackets: [57375, 114750, 158519, 220000],
-  rates:    [0.15, 0.205, 0.26, 0.29, 0.33],
-  bpa: 16129  // Basic Personal Amount 2025
+// CITY RENTAL DATA
+const CITY_DATA={
+  cornwall:{name:'Eastern Ontario',studio:'$900–$1,100',one:'$1,100–$1,400',two:'$1,400–$1,800',three:'$1,800–$2,200',avg1:1250,avg2:1600,multiplier:4.0},
+  ottawa:{name:'Ottawa',studio:'$1,400–$1,700',one:'$1,700–$2,200',two:'$2,200–$2,800',three:'$2,800–$3,500',avg1:1950,avg2:2500,multiplier:5.5},
+  waterloo:{name:'Waterloo / KW',studio:'$1,200–$1,500',one:'$1,500–$1,900',two:'$1,900–$2,400',three:'$2,400–$3,000',avg1:1700,avg2:2150,multiplier:5.0},
+  toronto:{name:'Toronto / GTA',studio:'$1,900–$2,400',one:'$2,300–$3,000',two:'$2,800–$3,800',three:'$3,500–$5,000',avg1:2650,avg2:3300,multiplier:8.0},
+  hamilton:{name:'Hamilton',studio:'$1,300–$1,600',one:'$1,600–$2,000',two:'$2,000–$2,600',three:'$2,500–$3,200',avg1:1800,avg2:2300,multiplier:5.5},
+  vancouver:{name:'Vancouver',studio:'$2,000–$2,600',one:'$2,400–$3,200',two:'$3,000–$4,000',three:'$3,800–$5,500',avg1:2800,avg2:3500,multiplier:10.0},
+  calgary:{name:'Calgary',studio:'$1,300–$1,600',one:'$1,600–$2,000',two:'$2,000–$2,600',three:'$2,500–$3,200',avg1:1800,avg2:2300,multiplier:5.0},
+  edmonton:{name:'Edmonton',studio:'$1,100–$1,400',one:'$1,400–$1,800',two:'$1,800–$2,300',three:'$2,200–$2,800',avg1:1600,avg2:2050,multiplier:4.5},
+  montreal:{name:'Montreal',studio:'$1,100–$1,500',one:'$1,400–$1,900',two:'$1,800–$2,400',three:'$2,200–$3,000',avg1:1650,avg2:2100,multiplier:4.5}
 };
 
-const PROVINCIAL = {
-  ON: { brackets:[51446,102894,150000,220000], rates:[0.0505,0.0915,0.1116,0.1216,0.1316], bpa:11865, name:'Ontario' },
-  BC: { brackets:[47937,95875,110076,133664,181232,252752], rates:[0.0506,0.077,0.105,0.1229,0.147,0.168,0.205], bpa:11981, name:'British Columbia' },
-  AB: { brackets:[148269,177922,237230,355845], rates:[0.10,0.12,0.13,0.14,0.15], bpa:21003, name:'Alberta' },
-  QC: { brackets:[51780,103545], rates:[0.14,0.19,0.24], bpa:17183, name:'Quebec' },
-  MB: { brackets:[47000,100000], rates:[0.108,0.1275,0.174], bpa:15780, name:'Manitoba' },
-  SK: { brackets:[49720,142058], rates:[0.105,0.125,0.145], bpa:17661, name:'Saskatchewan' },
-  NS: { brackets:[29590,59180,93000,150000], rates:[0.0879,0.1495,0.1667,0.175,0.21], bpa:8481, name:'Nova Scotia' },
-  NB: { brackets:[49958,99916,185064], rates:[0.094,0.14,0.16,0.195], bpa:12458, name:'New Brunswick' },
-  NL: { brackets:[43198,86395,154244,215943,275870], rates:[0.087,0.145,0.158,0.178,0.198,0.208], bpa:10818, name:'Newfoundland & Labrador' },
-  PE: { brackets:[32656,64313,105000], rates:[0.0965,0.1363,0.166,0.18], bpa:12000, name:'Prince Edward Island' },
-};
-
-// 2025 CPP & EI
-const CPP = {
-  rate: 0.0595, exemption: 3500,
-  max1: 73200,  // Year's Maximum Pensionable Earnings
-  max2: 81900,  // CPP2 ceiling
-  rate2: 0.04
-};
-const EI = { rate: 0.01666, max: 65700 };
-
-// ── CALCULATION FUNCTIONS ──────────────────────────────────────
-
-function calcTax(income, brackets, rates, bpa) {
-  const taxable = Math.max(0, income - bpa);
-  let tax = 0, prev = 0;
-  for (let i = 0; i < brackets.length; i++) {
-    const top = brackets[i];
-    if (taxable <= prev) break;
-    const chunk = Math.min(taxable, top) - prev;
-    tax += chunk * rates[i];
-    prev = top;
+// ─────────────────────────────────────────────
+// HELPERS
+// ─────────────────────────────────────────────
+function calcTax(income,brackets,rates,bpa){
+  const taxable=Math.max(0,income-bpa);
+  let tax=0,prev=0;
+  for(let i=0;i<brackets.length;i++){
+    if(taxable<=prev)break;
+    tax+=( Math.min(taxable,brackets[i])-prev)*rates[i];
+    prev=brackets[i];
   }
-  if (taxable > prev) tax += (taxable - prev) * rates[rates.length - 1];
-  return Math.max(0, tax);
+  if(taxable>prev)tax+=(taxable-prev)*rates[rates.length-1];
+  return Math.max(0,tax);
+}
+function getMarginal(inc,fb,fr,pb,pr){
+  function br(v,b,r){let p=0;for(let i=0;i<b.length;i++){if(v<=b[i])return r[i];p=b[i];}return r[r.length-1];}
+  return br(inc,fb,fr)+br(inc,pb,pr);
+}
+function calcCPP(inc){
+  return Math.min(Math.max(0,inc-CPP.exemption),CPP.max1-CPP.exemption)*CPP.rate+Math.max(0,Math.min(inc,CPP.max2)-CPP.max1)*CPP.rate2;
+}
+function calcEI(inc){return Math.min(inc,EI.max)*EI.rate;}
+function fmt(n){return'$'+Math.round(n).toLocaleString('en-CA');}
+function pct(n){return(n*100).toFixed(1)+'%';}
+function set(id,v){const el=document.getElementById(id);if(el)el.innerHTML=v;}
+
+let STATE={takeHome:0,monthly:0,marginalRate:0,salary:0,province:'ON',housing:0};
+
+// ─────────────────────────────────────────────
+// STEP 1 — TAX
+// ─────────────────────────────────────────────
+function calculateTax(){
+  const salary=parseFloat(document.getElementById('salary').value)||0;
+  const provCode=document.getElementById('province').value;
+  const rrsp=parseFloat(document.getElementById('rrsp').value)||0;
+  const freq=parseInt(document.getElementById('frequency').value);
+  if(salary<=0){alert('Please enter your annual salary.');return;}
+
+  const prov=PROVINCIAL[provCode];
+  const taxable=Math.max(0,salary-rrsp);
+  const fedTax=calcTax(taxable,FEDERAL.brackets,FEDERAL.rates,FEDERAL.bpa);
+  const provTax=calcTax(taxable,prov.brackets,prov.rates,prov.bpa);
+  const cpp=calcCPP(salary);
+  const ei=calcEI(salary);
+  const totalDed=fedTax+provTax+cpp+ei;
+  const takeHome=salary-totalDed;
+  const perPeriod=takeHome/freq;
+  const effectiveRate=totalDed/salary;
+  const marginalRate=getMarginal(taxable,FEDERAL.brackets,FEDERAL.rates,prov.brackets,prov.rates);
+  const monthly=takeHome/12;
+
+  STATE={takeHome,monthly,marginalRate,salary,province:provCode,housing:0};
+
+  // Save to localStorage
+  try{localStorage.setItem('cfg_salary',salary);localStorage.setItem('cfg_province',provCode);localStorage.setItem('cfg_monthly',Math.round(monthly));}catch(e){}
+
+  const freqLabels={12:'per month',26:'per two weeks',24:'twice a month',52:'per week'};
+  set('res-monthly',fmt(perPeriod));
+  set('res-freq-label',freqLabels[freq]);
+  set('res-annual',fmt(takeHome)+' per year');
+
+  const s=salary;
+  ['takehome','fed','prov','cpp','ei'].forEach((k,i)=>{
+    const vals=[takeHome,fedTax,provTax,cpp,ei];
+    const el=document.getElementById('bar-'+k);
+    if(el)el.style.width=pct(vals[i]/s);
+  });
+  set('leg-takehome',pct(takeHome/s));set('leg-fed',pct(fedTax/s));set('leg-prov',pct(provTax/s));set('leg-cpp',pct(cpp/s));set('leg-ei',pct(ei/s));
+
+  set('t-gross',fmt(salary));set('t-fed','− '+fmt(fedTax));set('t-prov','− '+fmt(provTax));
+  set('t-cpp','− '+fmt(cpp));set('t-ei','− '+fmt(ei));set('t-total-ded','− '+fmt(totalDed));set('t-takehome',fmt(takeHome));
+  set('r-marginal',pct(marginalRate));set('r-effective',pct(effectiveRate));
+
+  if(rrsp>0){
+    const fw=calcTax(salary,FEDERAL.brackets,FEDERAL.rates,FEDERAL.bpa);
+    const pw=calcTax(salary,prov.brackets,prov.rates,prov.bpa);
+    const saving=(fw+pw)-(fedTax+provTax);
+    set('rrsp-banner-text',`Your ${fmt(rrsp)} RRSP contribution saves <strong>~${fmt(saving)} in taxes this year</strong>. Net cost after tax saving: <strong>${fmt(rrsp-saving)}</strong>.`);
+    document.getElementById('rrsp-banner').classList.add('show');
+  }else{document.getElementById('rrsp-banner').classList.remove('show');}
+
+  const h30=monthly*.30,h35=monthly*.35,sav=monthly*.20,inv=monthly*.10;
+  set('d-housing',`<strong>Safe housing budget: ${fmt(h30)}–${fmt(h35)}/month.</strong> The 30–35% rule. In Cornwall/Eastern Ontario that covers a 2–3 bedroom home. In Toronto, that's a 1-bedroom.`);
+  set('d-savings',`<strong>Target savings: ${fmt(sav)}/month (20% rule).</strong> That's ${fmt(sav*12)}/year — enough to build a 3-month emergency fund of ${fmt(monthly*3)} in about 15 months.`);
+  set('d-invest',`<strong>TFSA first, then RRSP.</strong> TFSA room is $7,000/year = ${fmt(7000/12)}/month to max it. At your marginal rate of ${pct(marginalRate)}, every $1,000 in RRSP saves ${fmt(marginalRate*1000)} in tax.`);
+  set('d-resp',`<strong>RESP: $208/month = $500/year free from government.</strong> Contributing $2,500/year per child earns a 20% Canada Education Savings Grant automatically.`);
+
+  document.getElementById('tax-results').classList.add('show');
+  document.getElementById('step1').classList.add('done');
+
+  // Auto-fill affordability
+  document.getElementById('aff-income').value=Math.round(monthly);
+  set('aff-context',`✓ Based on your ${fmt(monthly)}/month take-home from Step 1`);
 }
 
-function getMarginalRate(income, fedBrackets, fedRates, provBrackets, provRates) {
-  function bracketRate(inc, brackets, rates) {
-    let prev = 0;
-    for (let i = 0; i < brackets.length; i++) {
-      if (inc <= brackets[i]) return rates[i];
-      prev = brackets[i];
+// ─────────────────────────────────────────────
+// STEP 2 — AFFORDABILITY
+// ─────────────────────────────────────────────
+function openAffordability(){
+  document.getElementById('aff-section').classList.add('show');
+  document.getElementById('connector-1').style.display='block';
+  document.getElementById('step2').classList.add('active');
+  setTimeout(()=>document.getElementById('aff-section').scrollIntoView({behavior:'smooth',block:'start'}),100);
+}
+
+function calculateAffordability(){
+  const income=parseFloat(document.getElementById('aff-income').value)||STATE.monthly||0;
+  const city=document.getElementById('aff-city').value;
+  const mode=document.getElementById('aff-mode').value;
+  const family=parseInt(document.getElementById('aff-family').value);
+  if(income<=0){alert('Please enter your monthly take-home.');return;}
+
+  const cd=CITY_DATA[city];
+  const rent25=income*.25,rent33=income*.33;
+  STATE.housing=Math.round(rent30=income*.30);
+
+  try{localStorage.setItem('cfg_housing',STATE.housing);}catch(e){}
+
+  set('rent-25',fmt(rent25));set('rent-33',fmt(rent33));
+
+  const rentEl=document.getElementById('rent-results');
+  const buyEl=document.getElementById('buy-results');
+
+  if(mode==='rent'){
+    rentEl.style.display='block';buyEl.style.display='none';
+    const statusFor=(avg)=>{
+      if(rent33>=avg)return'status-good';
+      if(rent25>=avg)return'status-tight';
+      return'status-hard';
+    };
+    const statusLabel=(avg)=>{
+      if(rent33>=avg)return'Within budget';
+      if(rent25>=avg)return'Slightly stretched';
+      return'Over budget';
+    };
+    document.getElementById('city-rental-grid').innerHTML=`
+      <div class="city-card"><div class="city-card-name">Studio / 1-bed</div><div class="city-card-rent">${cd.one}</div><span class="city-card-status ${statusFor(cd.avg1)}">${statusLabel(cd.avg1)}</span></div>
+      <div class="city-card"><div class="city-card-name">2-bedroom</div><div class="city-card-rent">${cd.two}</div><span class="city-card-status ${statusFor(cd.avg2)}">${statusLabel(cd.avg2)}</span></div>
+      <div class="city-card"><div class="city-card-name">3-bedroom</div><div class="city-card-rent">${cd.three}</div><span class="city-card-status ${statusFor(cd.avg2*1.3)}">${statusLabel(cd.avg2*1.3)}</span></div>
+    `;
+    set('rent-advice',`In <strong>${cd.name}</strong>, your comfortable rent budget of <strong>${fmt(rent25)}/month</strong> ${rent25>=cd.avg1?'comfortably covers a 1-bedroom':'may be tight for a 1-bedroom — consider roommates or nearby smaller cities'}. ${family>=3?'For a family of '+family+', aim for a 2–3 bedroom at '+fmt(rent33)+'/month maximum.':''}`);
+  }else{
+    rentEl.style.display='none';buyEl.style.display='block';
+    const annualIncome=income*12;
+    const maxPrice=annualIncome*cd.multiplier;
+    const rate=0.055,n=300;
+    const monthlyRate=rate/12;
+    const loanAmt=maxPrice*.95;
+    const mortgage=loanAmt*monthlyRate*Math.pow(1+monthlyRate,n)/(Math.pow(1+monthlyRate,n)-1);
+    const cmhc=loanAmt*(maxPrice<500000?.04:maxPrice<1000000?.031:.028);
+    const ltt=maxPrice*0.015;
+    set('buy-max',fmt(maxPrice));set('buy-mortgage',fmt(mortgage)+'/mo');
+    set('bp-price',fmt(maxPrice));set('bp-min',fmt(maxPrice*.05));set('bp-20',fmt(maxPrice*.20));
+    set('bp-cmhc',fmt(cmhc));set('bp-ltt',fmt(ltt));set('bp-total',fmt(maxPrice*.05+cmhc+ltt+5000));
+    set('buy-advice',`Based on your income × ${cd.multiplier} affordability multiple for ${cd.name}. CMHC insurance required with less than 20% down. Always get pre-approved before house hunting.`);
+    STATE.housing=Math.round(mortgage);
+  }
+
+  set('d-location',`<strong>${cd.name} context:</strong> Your budget of ${fmt(rent25)}–${fmt(rent33)}/month ${mode==='rent'?'for rent':'for mortgage'} is ${rent33>=cd.avg1?'achievable':'tight'} in this city. ${city==='toronto'||city==='vancouver'?'Consider nearby cities — Ottawa, Hamilton, Waterloo, or Eastern Ontario for significantly better value.':''}`);
+  set('d-school','<strong>School bus tip:</strong> Aim for under 800m (walkable) or over 2km (bus eligible) from your child\'s school. The 1–2km zone means you drive twice daily. Confirm exact cutoffs with your school board before signing a lease.');
+  set('d-aff-tip',`<strong>Newcomer tip:</strong> Sign a 1-year lease first, not 2. Eastern Ontario and smaller cities are 40–60% cheaper than Toronto for equivalent homes — a great starting point while you build credit and Canadian employment history.`);
+
+  document.getElementById('aff-results').classList.add('show');
+  document.getElementById('step2').classList.add('done');
+
+  // Auto-fill savings
+  document.getElementById('sav-income').value=Math.round(income);
+  document.getElementById('sav-housing').value=STATE.housing;
+  set('savings-context',`✓ Based on your ${fmt(income)}/month take-home and ${fmt(STATE.housing)}/month housing from Step 2`);
+
+  // Update marginal rate dropdown based on salary
+  const margSel=document.getElementById('sav-marginal');
+  if(STATE.marginalRate>0){
+    const opts=margSel.options;
+    for(let i=0;i<opts.length;i++){
+      if(Math.abs(parseFloat(opts[i].value)-STATE.marginalRate)<0.08){margSel.selectedIndex=i;break;}
     }
-    return rates[rates.length - 1];
   }
-  return bracketRate(income, fedBrackets, fedRates) + bracketRate(income, provBrackets, provRates);
 }
 
-function calcCPP(income) {
-  const cpp1 = Math.min(Math.max(0, income - CPP.exemption), CPP.max1 - CPP.exemption) * CPP.rate;
-  const cpp2 = Math.max(0, Math.min(income, CPP.max2) - CPP.max1) * CPP.rate2;
-  return cpp1 + cpp2;
+// ─────────────────────────────────────────────
+// STEP 3 — SAVINGS
+// ─────────────────────────────────────────────
+function openSavings(){
+  document.getElementById('savings-section').classList.add('show');
+  document.getElementById('connector-2').style.display='block';
+  document.getElementById('step3').classList.add('active');
+  setTimeout(()=>document.getElementById('savings-section').scrollIntoView({behavior:'smooth',block:'start'}),100);
 }
 
-function calcEI(income) {
-  return Math.min(income, EI.max) * EI.rate;
-}
+function calculateSavings(){
+  const income=parseFloat(document.getElementById('sav-income').value)||0;
+  const housing=parseFloat(document.getElementById('sav-housing').value)||0;
+  const children=parseInt(document.getElementById('sav-children').value);
+  const marginal=parseFloat(document.getElementById('sav-marginal').value);
+  if(income<=0){alert('Please enter your monthly take-home.');return;}
 
-function fmt(n) {
-  return '$' + Math.round(n).toLocaleString('en-CA');
-}
+  const leftover=income-housing;
+  const emergency=income*3; // 3-month fund target
 
-function pct(n) {
-  return (n * 100).toFixed(1) + '%';
-}
+  // Suggested allocations
+  const tfsaMonthly=Math.min(Math.round(leftover*.35),583); // max $7000/yr = $583/mo
+  const rrspMonthly=Math.round(leftover*.20);
+  const respMonthly=children>0?Math.min(208*children,Math.round(leftover*.20)):0;
+  const living=income-housing-tfsaMonthly-rrspMonthly-respMonthly;
 
-// ── MAIN CALCULATE ─────────────────────────────────────────────
-
-function calculate() {
-  const salary   = parseFloat(document.getElementById('salary').value) || 0;
-  const provCode = document.getElementById('province').value;
-  const rrsp     = parseFloat(document.getElementById('rrsp').value) || 0;
-  const freq     = parseInt(document.getElementById('frequency').value);
-
-  if (salary <= 0) { alert('Please enter your annual salary.'); return; }
-
-  const prov = PROVINCIAL[provCode];
-  const taxableIncome = Math.max(0, salary - rrsp);
-
-  const fedTax  = calcTax(taxableIncome, FEDERAL.brackets, FEDERAL.rates, FEDERAL.bpa);
-  const provTax = calcTax(taxableIncome, prov.brackets, prov.rates, prov.bpa);
-  const cpp     = calcCPP(salary);
-  const ei      = calcEI(salary);
-  const totalDed = fedTax + provTax + cpp + ei;
-  const takeHome = salary - totalDed;
-  const perPeriod = takeHome / freq;
-
-  const effectiveRate = totalDed / salary;
-  const marginalRate  = getMarginalRate(taxableIncome, FEDERAL.brackets, FEDERAL.rates, prov.brackets, prov.rates);
-
-  // ── Update UI ──
-
-  const freqLabels = {12:'per month', 26:'per two weeks', 24:'twice a month', 52:'per week'};
-  document.getElementById('res-monthly').textContent   = fmt(perPeriod);
-  document.getElementById('res-freq-label').textContent = freqLabels[freq];
-  document.getElementById('res-annual').textContent    = fmt(takeHome) + ' per year';
+  // RRSP tax saving
+  const rrspAnnual=rrspMonthly*12;
+  const rrspTaxSaving=Math.round(rrspAnnual*marginal);
 
   // Bar
-  const s = salary;
-  document.getElementById('bar-takehome').style.width = pct(takeHome/s);
-  document.getElementById('bar-fed').style.width      = pct(fedTax/s);
-  document.getElementById('bar-prov').style.width     = pct(provTax/s);
-  document.getElementById('bar-cpp').style.width      = pct(cpp/s);
-  document.getElementById('bar-ei').style.width       = pct(ei/s);
+  const total=income;
+  document.getElementById('sav-bar-housing').style.width=pct(housing/total);
+  document.getElementById('sav-bar-tfsa').style.width=pct(tfsaMonthly/total);
+  document.getElementById('sav-bar-rrsp').style.width=pct(rrspMonthly/total);
+  document.getElementById('sav-bar-resp').style.width=pct(respMonthly/total);
+  document.getElementById('sav-bar-living').style.width=pct(Math.max(0,living)/total);
 
-  // Legend
-  document.getElementById('leg-takehome').textContent = pct(takeHome/s);
-  document.getElementById('leg-fed').textContent      = pct(fedTax/s);
-  document.getElementById('leg-prov').textContent     = pct(provTax/s);
-  document.getElementById('leg-cpp').textContent      = pct(cpp/s);
-  document.getElementById('leg-ei').textContent       = pct(ei/s);
+  set('sleg-housing',fmt(housing));
+  set('sleg-tfsa',fmt(tfsaMonthly));
+  set('sleg-rrsp',fmt(rrspMonthly));
+  set('sleg-resp',respMonthly>0?fmt(respMonthly):'—');
+  set('sleg-living',fmt(Math.max(0,living)));
 
-  // Table
-  document.getElementById('t-gross').textContent     = fmt(salary);
-  document.getElementById('t-fed').textContent       = '− ' + fmt(fedTax);
-  document.getElementById('t-prov').textContent      = '− ' + fmt(provTax);
-  document.getElementById('t-cpp').textContent       = '− ' + fmt(cpp);
-  document.getElementById('t-ei').textContent        = '− ' + fmt(ei);
-  document.getElementById('t-total-ded').textContent = '− ' + fmt(totalDed);
-  document.getElementById('t-takehome').textContent  = fmt(takeHome);
+  // Cards
+  const cards=[
+    {label:'TFSA / month',value:fmt(tfsaMonthly),body:`Tax-free growth. No tax on withdrawals. ${fmt(tfsaMonthly*12)}/year. Max room: $7,000/yr. Start here — it's your most flexible account.`,color:'#1a7a4a'},
+    {label:'RRSP / month',value:fmt(rrspMonthly),body:`Saves ~${fmt(rrspTaxSaving)}/year in taxes at your marginal rate. Best if you expect lower income in retirement. Reduces taxable income now.`,color:'#1565C0'},
+    ...(children>0?[{label:'RESP / month',value:fmt(respMonthly),body:`${fmt(respMonthly*12)}/year × 20% CESG = ${fmt(Math.min(respMonthly*12,2500*children)*.20)} free government grant per year. Invest early — it compounds significantly.`,color:'#6A1B9A'}]:[]),
+    {label:'Emergency fund target',value:fmt(emergency),body:`3 months of take-home. At your current savings rate, you can build this in ~${Math.round(emergency/(tfsaMonthly+rrspMonthly))} months.`,color:'#e65100'},
+  ];
+  document.getElementById('savings-cards').innerHTML=cards.map(c=>`
+    <div class="savings-card" style="border-top-color:${c.color}">
+      <div class="savings-card-label">${c.label}</div>
+      <div class="savings-card-value" style="color:${c.color}">${c.value}</div>
+      <div class="savings-card-body">${c.body}</div>
+    </div>`).join('');
 
-  // Rates
-  document.getElementById('r-marginal').textContent  = pct(marginalRate);
-  document.getElementById('r-effective').textContent = pct(effectiveRate);
+  // Priorities
+  const p1=`<strong>First: TFSA — ${fmt(tfsaMonthly)}/month.</strong> Open immediately. Put in XEQT or a high-interest savings account. Tax-free growth from day one. Every year you delay is contribution room lost forever.`;
+  const p2=`<strong>Second: Emergency fund — ${fmt(emergency)} target.</strong> Keep 3 months in a high-interest TFSA savings account (EQ Bank: 3.5–4%). This protects you from needing to break investments if something goes wrong.`;
+  const p3=children>0
+    ?`<strong>Third: RESP — ${fmt(respMonthly)}/month per child.</strong> The 20% CESG is instant 20% return — better than any investment. $2,500/year per child = $500 free. Don't leave this on the table.`
+    :`<strong>Third: RRSP — ${fmt(rrspMonthly)}/month.</strong> After TFSA is maxed, RRSP saves you ${fmt(rrspTaxSaving)}/year in taxes. The refund can go back into your TFSA the following year.`;
+  const timeline=`<strong>12-month milestone:</strong> Emergency fund + TFSA started + credit score above 680. After 12 months of on-time rent and credit card payments, your financial foundation in Canada is solid.`;
 
-  // RRSP impact
-  if (rrsp > 0) {
-    const fedWithout  = calcTax(salary, FEDERAL.brackets, FEDERAL.rates, FEDERAL.bpa);
-    const provWithout = calcTax(salary, prov.brackets, prov.rates, prov.bpa);
-    const saving = (fedWithout + provWithout) - (fedTax + provTax);
-    document.getElementById('rrsp-impact-text').innerHTML =
-      `Your $${Math.round(rrsp).toLocaleString()} RRSP contribution saves you <strong>~${fmt(saving)} in taxes this year</strong> — that's money you'd otherwise pay the government, now growing in your account instead. Net cost of the RRSP contribution after tax saving: <strong>${fmt(rrsp - saving)}</strong>.`;
-    document.getElementById('rrsp-impact').classList.add('show');
-  } else {
-    document.getElementById('rrsp-impact').classList.remove('show');
-  }
+  set('sav-p1',p1);set('sav-p2',p2);set('sav-p3',p3);set('sav-timeline',timeline);
 
-  // ── What this means ──
-  const monthly      = takeHome / 12;
-  const housing30    = monthly * 0.30;
-  const housing35    = monthly * 0.35;
-  const savingsTarget = monthly * 0.20;
-  const investTarget  = monthly * 0.10;
-  const respMonthly  = 208; // max RESP contribution for full grant
-
-  document.getElementById('d-housing').innerHTML =
-    `<strong>Safe housing budget: ${fmt(housing30)}–${fmt(housing35)}/month.</strong> The 30–35% rule means you can comfortably afford rent in this range without being stretched. In Cornwall/Eastern Ontario, that covers a 2–3 bedroom home. In Toronto, that's a 1-bedroom.`;
-
-  document.getElementById('d-savings').innerHTML =
-    `<strong>Target savings: ${fmt(savingsTarget)}/month (20% rule).</strong> On your income, saving ${fmt(savingsTarget * 12)}/year is achievable and builds a strong emergency fund (3–6 months = ${fmt(monthly * 3)}–${fmt(monthly * 6)}) within your first year.`;
-
-  document.getElementById('d-invest').innerHTML =
-    `<strong>TFSA first, then RRSP.</strong> Your TFSA room is $7,000/year — that's ${fmt(7000/12)}/month to max it out. At your marginal rate of ${pct(marginalRate)}, every $1,000 in RRSP saves you ${fmt(marginalRate * 1000)} in tax immediately.`;
-
-  document.getElementById('d-resp').innerHTML =
-    `<strong>RESP: $208.33/month = free government money.</strong> If you have children, contributing ${fmt(respMonthly)}/month ($2,500/year) earns a 20% Canada Education Savings Grant — that's $500/year free from the government.`;
-
-  document.getElementById('d-tip').innerHTML =
-    rrsp > 0
-      ? `<strong>Your RRSP strategy is working.</strong> By contributing ${fmt(rrsp)}, you've dropped your effective rate from ${pct((calcTax(salary, FEDERAL.brackets, FEDERAL.rates, FEDERAL.bpa) + calcTax(salary, prov.brackets, prov.rates, prov.bpa) + cpp + ei) / salary)} to ${pct(effectiveRate)}. Consider maxing your TFSA first if you haven't already.`
-      : `<strong>Consider starting RRSP contributions.</strong> At your marginal rate of ${pct(marginalRate)}, putting ${fmt(Math.min(salary * 0.18, 31560))} into RRSP (your maximum room) could save you ${fmt(Math.min(salary * 0.18, 31560) * marginalRate)} in taxes this year alone.`;
-
-  // Show results
-  document.getElementById('results').classList.add('show');
-  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.getElementById('savings-results').classList.add('show');
+  document.getElementById('step3').classList.add('done');
 }
 
-// Allow Enter key to trigger calculation
-document.getElementById('salary').addEventListener('keydown', e => { if (e.key === 'Enter') calculate(); });
-</script>
+// ─────────────────────────────────────────────
+// SECTION SCROLL
+// ─────────────────────────────────────────────
+function scrollToSection(id){
+  const el=document.getElementById(id);
+  if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+}
 
+// ─────────────────────────────────────────────
+// LOCALSTORAGE — restore on load
+// ─────────────────────────────────────────────
+window.addEventListener('load',()=>{
+  try{
+    const s=localStorage.getItem('cfg_salary');
+    const p=localStorage.getItem('cfg_province');
+    const m=localStorage.getItem('cfg_monthly');
+    if(s){document.getElementById('salary').value=s;}
+    if(p){document.getElementById('province').value=p;}
+    if(m){document.getElementById('aff-income').value=m;document.getElementById('sav-income').value=m;}
+  }catch(e){}
+});
+
+document.getElementById('salary').addEventListener('keydown',e=>{if(e.key==='Enter')calculateTax();});
+</script>
 </body>
 </html>
