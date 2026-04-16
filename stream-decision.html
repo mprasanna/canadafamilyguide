@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ontario Stream Decision Tool — Academic vs Applied vs STEM for Grade 9 | Canada Family Guide</title>
+<meta name="description" content="Which Ontario high school stream is right for your child? Get a personalised Academic vs Applied vs STEM recommendation with course list, university path, and a 4-year plan. Built for newcomer parents.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://canadafamilyguide.com/stream-decision.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ontario Stream Decision Tool — Which Stream for Your Child?">
+<meta property="og:description" content="Academic vs Applied vs STEM — get a clear recommendation with university paths and a 4-year plan. For newcomer families in Ontario.">
+<meta property="og:url" content="https://canadafamilyguide.com/stream-decision.html">
+<meta property="og:site_name" content="Canada Family Guide">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍁</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root{--red:#C8102E;--red-dark:#9B0B22;--black:#0f0f0f;--white:#F7F5F0;--grey:#555;--light:#EDE9E0;--green:#1a7a4a}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--black);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+
+/* PAGE HEADER — matches site theme */
+.page-header{background:var(--white);color:var(--black);padding:7rem 2rem 3rem;border-bottom:1px solid #e0dbd0}
+.page-header-inner{max-width:900px;margin:0 auto}
+.page-label{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem}
+.page-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;margin-bottom:.8rem;color:var(--black)}
+.page-sub{color:var(--grey);font-size:.95rem;line-height:1.7;max-width:600px}
+
+main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+
+/* TOOL CARD */
+.tool-card{background:#fff;border:1px solid #e0dbd0;border-radius:12px;overflow:hidden;margin-bottom:1.5rem}
+.tool-card-head{background:var(--black);color:#fff;padding:1rem 1.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem}
+.tool-card-body{padding:1.5rem}
+
+/* INPUTS */
+.input-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem}
+.input-group{display:flex;flex-direction:column;gap:.4rem}
+.input-group label{font-size:.8rem;font-weight:600;color:var(--grey);font-family:'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:.05em}
+.input-group select,.input-group input{border:1.5px solid #e0dbd0;border-radius:6px;padding:.7rem 1rem;font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--black);background:#fff;transition:border-color .2s;width:100%}
+.input-group select:focus,.input-group input:focus{outline:none;border-color:var(--red)}
+.input-hint{font-size:.75rem;color:#999;margin-top:.2rem}
+.calc-btn{width:100%;background:var(--red);color:#fff;border:none;border-radius:8px;padding:.9rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:background .2s}
+.calc-btn:hover{background:var(--red-dark)}
+
+/* RESULTS */
+.results{display:none}
+.results.show{display:block;animation:fadeIn .35s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* VERDICT */
+.stream-verdict{border-radius:12px;padding:2rem 1.5rem;margin-bottom:1.2rem;color:#fff}
+.sv-label{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.75;margin-bottom:.4rem}
+.sv-stream{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:2.2rem;line-height:1.1;margin-bottom:.3rem}
+.sv-tagline{font-size:.95rem;opacity:.9;margin-bottom:1rem;line-height:1.5}
+.sv-pills{display:flex;flex-wrap:wrap;gap:.5rem}
+.sv-pill{background:rgba(255,255,255,.15);border-radius:20px;padding:.3rem .9rem;font-size:.78rem;font-weight:600}
+
+/* MARK CONTEXT */
+.mark-context{background:var(--light);border-radius:10px;padding:1.2rem 1.5rem;margin-bottom:1.2rem}
+.mc-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;margin-bottom:.8rem}
+.mc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.6rem}
+.mc-item{background:#fff;border:1px solid #e0dbd0;border-radius:8px;padding:.8rem;text-align:center}
+.mc-subject{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--grey);margin-bottom:.3rem}
+.mc-grade{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.3rem}
+.mc-note{font-size:.68rem;color:var(--grey);margin-top:.2rem;line-height:1.4}
+
+/* COURSE PLAN */
+.year-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem}
+.year-card{background:#fff;border:1px solid #e0dbd0;border-radius:10px;overflow:hidden}
+.year-head{padding:.8rem 1rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.88rem;color:#fff}
+.year-body{padding:1rem}
+.course-item{display:flex;gap:.6rem;padding:.4rem 0;border-bottom:1px solid #f5f2ec;font-size:.83rem;align-items:flex-start}
+.course-item:last-child{border-bottom:none}
+.course-code{font-weight:700;color:var(--black);min-width:60px;font-size:.78rem}
+.course-name{color:var(--grey);line-height:1.4}
+.course-flag{font-size:.65rem;font-weight:700;padding:1px 6px;border-radius:3px;margin-left:auto;white-space:nowrap;flex-shrink:0}
+.flag-req{background:#ffebee;color:#b71c1c}
+.flag-rec{background:#e8f5e9;color:#1b5e20}
+.flag-opt{background:var(--light);color:var(--grey)}
+
+/* UNI PATHS */
+.paths-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.8rem;margin-bottom:1.2rem}
+.path-card{background:#fff;border:1px solid #e0dbd0;border-radius:10px;padding:1.1rem;border-top:3px solid var(--red)}
+.path-icon{font-size:1.5rem;margin-bottom:.4rem}
+.path-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;margin-bottom:.3rem}
+.path-schools{font-size:.78rem;color:var(--grey);line-height:1.5;margin-bottom:.5rem}
+.path-prereqs{font-size:.75rem;line-height:1.5}
+.path-prereq-label{font-weight:700;color:var(--black);display:block;margin-bottom:.2rem}
+
+/* MISTAKES */
+.mistake-item{display:flex;gap:.8rem;padding:.9rem 0;border-bottom:1px solid #f0ece4;align-items:flex-start}
+.mistake-item:last-child{border-bottom:none}
+.mistake-x{color:var(--red);font-weight:800;font-size:1rem;flex-shrink:0;margin-top:.1rem}
+.mistake-text{font-size:.85rem;color:var(--grey);line-height:1.6}
+.mistake-text strong{color:var(--black)}
+
+/* TIMELINE */
+.tl-item{display:flex;gap:1rem;margin-bottom:0}
+.tl-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:36px}
+.tl-dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.75rem;color:#fff;border:3px solid #fff;box-shadow:0 0 0 2px #e0dbd0}
+.tl-line{width:2px;background:#e0dbd0;flex:1;min-height:20px;margin:4px 0}
+.tl-right{flex:1;padding-bottom:1.4rem}
+.tl-phase{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.75rem;color:var(--red);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem}
+.tl-title{font-size:.9rem;font-weight:600;color:var(--black);margin-bottom:.25rem}
+.tl-body{font-size:.82rem;color:var(--grey);line-height:1.6}
+
+/* CONNECT */
+.connect-row{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.5rem}
+.connect-link{flex:1;min-width:180px;background:#fff;border:1px solid #e0dbd0;border-radius:10px;padding:1rem 1.2rem;text-decoration:none;color:var(--black);transition:border-color .2s}
+.connect-link:hover{border-color:var(--red)}
+.connect-link-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--red);margin-bottom:.3rem}
+.connect-link-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem}
+.connect-link-sub{font-size:.78rem;color:var(--grey);margin-top:.2rem}
+
+.disclaimer{font-size:.75rem;color:#999;line-height:1.5;padding:.8rem;background:var(--light);border-radius:6px;margin-top:1rem}
+
+@media(max-width:600px){
+  .input-grid,.year-grid,.paths-grid{grid-template-columns:1fr}
+  .mc-grid{grid-template-columns:1fr 1fr}
+}
+
+footer{background:#0a0a0a;color:#555;text-align:center;padding:2rem;font-size:.82rem}
+footer a{color:var(--red);text-decoration:none}
+footer strong{color:#888}
+.footer-links{margin:.5rem 0;display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem}
+.footer-links a::after{content:'·';margin-left:.5rem;color:#333}
+.footer-links a:last-child::after{display:none}
+.footer-disclaimer{margin-top:.8rem;font-size:.73rem;color:#333;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6}
+</style>
+</head>
+<body>
+<script src="nav.js"></script>
+<div style="height:60px"></div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-label">🎓 Education Tools</div>
+    <h1 class="page-title">Ontario Stream Decision Tool</h1>
+    <p class="page-sub">Academic, Applied, or STEM? The stream your child chooses in Grade 9 shapes their university options, course load, and the next four years. Get a clear recommendation — not just a description.</p>
+    <div style="margin-top:.8rem;display:flex;gap:.5rem;flex-wrap:wrap"><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">Ontario Ministry of Education</span><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">2025 course codes</span><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">OUAC pathways</span></div>
+  </div>
+</div>
+
+<main>
+
+  <!-- EXPLAINER -->
+  <div style="background:#fff;border:1px solid #e0dbd0;border-radius:10px;padding:1.2rem 1.5rem;margin-bottom:1.5rem">
+    <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:.8rem">What is stream selection in Ontario?</div>
+    <div style="font-size:.85rem;color:var(--grey);line-height:1.8">In Ontario, students entering Grade 9 choose a <strong style="color:var(--black)">pathway</strong> that determines which courses they take across Grade 9–12. The choice affects university admission requirements, course difficulty, and available programs. Most newcomer families don't fully understand the system — this tool gives you a clear recommendation based on your child's actual situation.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin-top:1rem">
+      <div style="background:var(--light);border-radius:8px;padding:.8rem;text-align:center">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;color:var(--black)">Academic</div>
+        <div style="font-size:.75rem;color:var(--grey);margin-top:.2rem;line-height:1.4">University-bound. Harder content. Required for most university programs.</div>
+      </div>
+      <div style="background:var(--light);border-radius:8px;padding:.8rem;text-align:center">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;color:var(--black)">Applied</div>
+        <div style="font-size:.75rem;color:var(--grey);margin-top:.2rem;line-height:1.4">Practical, hands-on. College-bound. Can switch to Academic with strong grades.</div>
+      </div>
+      <div style="background:var(--light);border-radius:8px;padding:.8rem;text-align:center">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;color:var(--black)">STEM / IB / AP</div>
+        <div style="font-size:.75rem;color:var(--grey);margin-top:.2rem;line-height:1.4">Academic + enriched. High ability students. Not all schools offer this.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INPUT TOOL -->
+  <div class="tool-card">
+    <div class="tool-card-head">Tell us about your child</div>
+    <div class="tool-card-body">
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Current grade (entering)</label>
+          <select id="sd-grade">
+            <option value="8">Finishing Grade 8 (entering Gr 9)</option>
+            <option value="9">Currently in Grade 9</option>
+            <option value="10">Currently in Grade 10</option>
+            <option value="11">Currently in Grade 11</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Math marks (current/recent)</label>
+          <select id="sd-math">
+            <option value="90">90%+ (Excellent)</option>
+            <option value="80">80–89% (Strong)</option>
+            <option value="70" selected>70–79% (Solid)</option>
+            <option value="60">60–69% (Passing)</option>
+            <option value="50">Under 60% (Struggling)</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>English marks</label>
+          <select id="sd-english">
+            <option value="90">90%+ (Excellent)</option>
+            <option value="80">80–89% (Strong)</option>
+            <option value="70" selected>70–79% (Solid)</option>
+            <option value="60">60–69% (Passing)</option>
+            <option value="50">Under 60% (Struggling)</option>
+          </select>
+          <span class="input-hint">If English is a second language, base on current ESL performance.</span>
+        </div>
+        <div class="input-group">
+          <label>Science marks</label>
+          <select id="sd-science">
+            <option value="90">90%+ (Excellent)</option>
+            <option value="80">80–89% (Strong)</option>
+            <option value="70" selected>70–79% (Solid)</option>
+            <option value="60">60–69% (Passing)</option>
+            <option value="50">Under 60% (Struggling)</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Career interest / direction</label>
+          <select id="sd-goal">
+            <option value="engineering">Engineering / Computer Science</option>
+            <option value="medicine">Medicine / Health Sciences</option>
+            <option value="business">Business / Commerce</option>
+            <option value="arts">Arts / Humanities / Law</option>
+            <option value="trades">Skilled Trades / Technology</option>
+            <option value="science">Pure Science (Biology, Chemistry, Physics)</option>
+            <option value="undecided">Not sure yet</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>How does your child work?</label>
+          <select id="sd-style">
+            <option value="independent">Self-directed, handles pressure well</option>
+            <option value="average">Average — needs some support</option>
+            <option value="practical">Hands-on learner, prefers applied work</option>
+            <option value="struggling">Struggles with abstract concepts</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Language background</label>
+          <select id="sd-language">
+            <option value="fluent">English is strong / first language</option>
+            <option value="good">Good English, some gaps</option>
+            <option value="esl">Currently in ESL / English developing</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>University goal</label>
+          <select id="sd-uni">
+            <option value="yes">Yes — university is the goal</option>
+            <option value="likely">Probably — keeping options open</option>
+            <option value="college">College or apprenticeship is fine</option>
+            <option value="unsure">Genuinely unsure</option>
+          </select>
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calcStream()">Get my stream recommendation →</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="stream-results">
+
+    <!-- VERDICT -->
+    <div id="stream-verdict" class="stream-verdict">
+      <div class="sv-label">Recommended stream</div>
+      <div class="sv-stream" id="sv-stream">—</div>
+      <div class="sv-tagline" id="sv-tagline">—</div>
+      <div class="sv-pills" id="sv-pills"></div>
+    </div>
+
+    <!-- MARK CONTEXT -->
+    <div class="mark-context">
+      <div class="mc-title">How your child's marks compare to stream entry expectations</div>
+      <div class="mc-grid" id="mc-grid"></div>
+    </div>
+
+    <!-- 4-YEAR COURSE PLAN -->
+    <div class="tool-card">
+      <div class="tool-card-head" id="plan-head">4-Year Course Plan</div>
+      <div class="tool-card-body">
+        <p style="font-size:.85rem;color:var(--grey);line-height:1.7;margin-bottom:1rem" id="plan-intro">—</p>
+        <div class="year-grid" id="year-grid"></div>
+      </div>
+    </div>
+
+    <!-- UNIVERSITY PATHS -->
+    <div class="tool-card">
+      <div class="tool-card-head" id="paths-head">University / College Paths Open to You</div>
+      <div class="tool-card-body">
+        <div class="paths-grid" id="paths-grid"></div>
+        <div style="font-size:.82rem;color:var(--grey);line-height:1.7;margin-top:.5rem" id="paths-note">—</div>
+      </div>
+    </div>
+
+    <!-- KEY DECISIONS -->
+    <div class="tool-card">
+      <div class="tool-card-head">Key decisions — Grade by Grade</div>
+      <div class="tool-card-body" id="tl-body-stream"></div>
+    </div>
+
+    <!-- NEWCOMER MISTAKES -->
+    <div class="tool-card">
+      <div class="tool-card-head" style="background:#b71c1c">Mistakes newcomer families make</div>
+      <div class="tool-card-body" id="mistakes-body"></div>
+    </div>
+
+    <!-- CONNECT -->
+    <div class="connect-row">
+      <a href="education.html" class="connect-link">
+        <div class="connect-link-label">Learn more</div>
+        <div class="connect-link-title">Education Guide →</div>
+        <div class="connect-link-sub">Ontario school system, OSSD, credits explained</div>
+      </a>
+      <a href="planner.html" class="connect-link">
+        <div class="connect-link-label">Plan your courses</div>
+        <div class="connect-link-title">Grade Planner →</div>
+        <div class="connect-link-sub">Map Grade 9–12 courses for your university target</div>
+      </a>
+      <a href="streams.html" class="connect-link">
+        <div class="connect-link-label">Career streams</div>
+        <div class="connect-link-title">Career Pathways →</div>
+        <div class="connect-link-sub">Engineering, medicine, business — what each requires</div>
+      </a>
+    </div>
+
+    <div class="disclaimer">Course codes and requirements are based on Ontario Ministry of Education guidelines. Always confirm with your school's guidance counsellor — individual school offerings vary. Not official educational advice.</div>
+  </div>
+
+</main>
+
+<footer>
+  <p><strong>Canada Family Guide</strong> — Built for families across Canada</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="newcomer-start.html">Newcomer Guide</a>
+    <a href="education.html">Education</a>
+    <a href="planner.html">Grade Planner</a>
+    <a href="streams.html">Career Streams</a>
+    <a href="tools.html">Financial Planner</a>
+    <a href="finance.html">Finance Guide</a>
+    <a href="healthcare.html">Healthcare</a>
+    <a href="about.html">About</a>
+  </div>
+  <p class="footer-disclaimer">Not official educational advice. Confirm requirements with your school board and guidance counsellor.</p>
+</footer>
+
+<script>
+function set(id, v){ const el=document.getElementById(id); if(el) el.innerHTML=v; }
+function fmt(n){ return '$'+Math.round(n).toLocaleString('en-CA'); }
+
+const STREAM_COLORS = {
+  academic: '#0f0f0f',
+  applied:  '#1a3d00',
+  stem:     '#C8102E',
+  academic_esl: '#3d2200'
+};
+
+function calcStream() {
+  const grade    = parseInt(document.getElementById('sd-grade').value);
+  const math     = parseInt(document.getElementById('sd-math').value);
+  const english  = parseInt(document.getElementById('sd-english').value);
+  const science  = parseInt(document.getElementById('sd-science').value);
+  const goal     = document.getElementById('sd-goal').value;
+  const style    = document.getElementById('sd-style').value;
+  const language = document.getElementById('sd-language').value;
+  const uni      = document.getElementById('sd-uni').value;
+
+  const avg = Math.round((math + english + science) / 3);
+
+  // ── STREAM DECISION LOGIC ──
+  let stream, streamColor, tagline, pills;
+
+  const wantsUni = uni === 'yes' || uni === 'likely';
+  const esling   = language === 'esl';
+  const practical = style === 'practical' || style === 'struggling';
+  const strong   = avg >= 80 && math >= 80;
+  const excellent = avg >= 88 && math >= 85;
+
+  if (goal === 'trades') {
+    stream = 'Applied Stream';
+    streamColor = STREAM_COLORS.applied;
+    tagline = 'The Applied stream gives you the practical, hands-on education that maps directly to college and skilled trades programs.';
+    pills = ['College-ready', 'Practical learning', 'Faster to employment', 'Can upgrade to Academic later'];
+  } else if (!wantsUni && practical) {
+    stream = 'Applied Stream';
+    streamColor = STREAM_COLORS.applied;
+    tagline = 'With a hands-on learning style and no strong university goal, Applied is the better fit — less abstract pressure, more practical skills.';
+    pills = ['Hands-on focus', 'College pathway', 'Less abstract pressure', 'Real-world skills'];
+  } else if (esling && avg < 70) {
+    stream = 'Academic (ESL Support)';
+    streamColor = STREAM_COLORS.academic_esl;
+    tagline = 'Academic stream is the right goal — but with English still developing, take ESL courses alongside. Keep university as the target. English improves fast at this age.';
+    pills = ['Academic pathway', 'ESL courses alongside', 'University still possible', 'Give English 1–2 years'];
+  } else if (excellent && (goal === 'engineering' || goal === 'medicine' || goal === 'science')) {
+    stream = 'Academic / STEM / IB';
+    streamColor = STREAM_COLORS.stem;
+    tagline = `Excellent marks and a ${goal === 'engineering' ? 'engineering/CS' : goal === 'medicine' ? 'medicine/health' : 'science'} goal. If your school offers STEM, IB, or AP — go for it. If not, take the hardest Academic courses available.`;
+    pills = ['University-bound', 'Enriched pathway', `${goal === 'engineering' ? 'Engineering/CS ready' : goal === 'medicine' ? 'Pre-med track' : 'Science track'}`, 'Competitive advantage'];
+  } else if (wantsUni || (!practical && avg >= 65)) {
+    stream = 'Academic Stream';
+    streamColor = STREAM_COLORS.academic;
+    tagline = 'Academic is the right path. It keeps all university options open, and your child\'s marks support the workload.';
+    pills = ['All university options open', 'Required for most programs', 'Standard high school path', 'Builds stronger foundation'];
+  } else {
+    stream = 'Applied Stream (with upgrade plan)';
+    streamColor = STREAM_COLORS.applied;
+    tagline = 'Start in Applied to build confidence — but plan to upgrade to Academic by Grade 10 with strong grades (75%+). Applied is not a dead end when planned correctly.';
+    pills = ['Start with less pressure', 'Upgrade path available', 'Build confidence first', 'University still possible'];
+  }
+
+  // Mark context
+  const subjects = [
+    { name:'Math', mark:math, threshold:70, uniReq:70 },
+    { name:'English', mark:english, threshold:65, uniReq:70 },
+    { name:'Science', mark:science, threshold:65, uniReq:65 },
+  ];
+  const markColor = m => m >= 80 ? '#1a7a4a' : m >= 70 ? '#9a6f00' : '#C8102E';
+
+  // Build verdict
+  document.getElementById('stream-verdict').style.background = streamColor;
+  set('sv-stream', stream);
+  set('sv-tagline', tagline);
+  set('sv-pills', pills.map(p => `<div class="sv-pill">${p}</div>`).join(''));
+
+  // Mark context grid
+  set('mc-grid', subjects.map(s => `
+    <div class="mc-item">
+      <div class="mc-subject">${s.name}</div>
+      <div class="mc-grade" style="color:${markColor(s.mark)}">${s.mark}%</div>
+      <div class="mc-note">${s.mark >= 80 ? '✓ Strong' : s.mark >= 70 ? 'On track' : s.mark >= 60 ? 'Needs improvement' : '⚠ Needs support'}</div>
+    </div>`).join('') + `
+    <div class="mc-item">
+      <div class="mc-subject">Average</div>
+      <div class="mc-grade" style="color:${markColor(avg)}">${avg}%</div>
+      <div class="mc-note">${avg >= 80 ? 'Above average' : avg >= 70 ? 'On track' : 'Needs support'}</div>
+    </div>
+    <div class="mc-item">
+      <div class="mc-subject">Academic min.</div>
+      <div class="mc-grade" style="color:var(--grey)">70%</div>
+      <div class="mc-note">Recommended entry mark</div>
+    </div>
+    <div class="mc-item">
+      <div class="mc-subject">Uni admission</div>
+      <div class="mc-grade" style="color:var(--grey)">75–85%</div>
+      <div class="mc-note">Typical Ontario range</div>
+    </div>`);
+
+  // Course plan
+  const isAcademic = stream.includes('Academic') || stream.includes('STEM') || stream.includes('IB');
+  buildCoursePlan(isAcademic, goal, excellent, grade);
+
+  // University paths
+  buildUniPaths(goal, isAcademic, excellent);
+
+  // Grade-by-grade timeline
+  buildTimeline(stream, isAcademic, goal, grade, avg, language);
+
+  // Mistakes
+  buildMistakes(goal, language, isAcademic, stream);
+
+  document.getElementById('stream-results').classList.add('show');
+  document.getElementById('stream-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function buildCoursePlan(academic, goal, excellent, startGrade) {
+  set('plan-head', academic ? '4-Year Academic Course Plan' : '4-Year Applied / Upgrade Course Plan');
+  set('plan-intro', academic
+    ? `This plan maps your child's Grade 9–12 courses in the Academic stream. Compulsory courses are marked as required. University-prerequisite courses for ${getGoalLabel(goal)} are highlighted.`
+    : `This plan shows the Applied stream path with upgrade checkpoints. A 75%+ average in Grade 9 is the target to move to Academic in Grade 10 if needed.`);
+
+  const plans = academic ? getAcademicPlan(goal, excellent) : getAppliedPlan(goal);
+  set('year-grid', plans.map(y => `
+    <div class="year-card">
+      <div class="year-head" style="background:${y.color}">${y.year}</div>
+      <div class="year-body">
+        ${y.courses.map(c => `
+          <div class="course-item">
+            <span class="course-code">${c.code}</span>
+            <span class="course-name">${c.name}</span>
+            <span class="course-flag ${c.flagClass}">${c.flag}</span>
+          </div>`).join('')}
+      </div>
+    </div>`).join(''));
+}
+
+function getAcademicPlan(goal, excellent) {
+  const engGoal = (goal === 'engineering' || goal === 'science') ? 'Advanced Functions (MHF4U)' : 'English (ENG4U)';
+  return [
+    { year:'Grade 9', color:'#C8102E', courses:[
+      { code:'MPM1D', name:'Principles of Mathematics', flag:'Required', flagClass:'flag-req' },
+      { code:'ENG1D', name:'English', flag:'Required', flagClass:'flag-req' },
+      { code:'SNC1D', name:'Science', flag:'Required', flagClass:'flag-req' },
+      { code:'CGC1D', name:'Geography', flag:'Required', flagClass:'flag-req' },
+      { code:'PPL1O', name:'Phys Ed', flag:'Required', flagClass:'flag-req' },
+      { code:'ART1O', name:'Elective (Arts / Tech)', flag:'Optional', flagClass:'flag-opt' },
+    ]},
+    { year:'Grade 10', color:'#0f0f0f', courses:[
+      { code:'MPM2D', name:'Principles of Math', flag:'Required', flagClass:'flag-req' },
+      { code:'ENG2D', name:'English', flag:'Required', flagClass:'flag-req' },
+      { code:'SNC2D', name:'Science', flag:'Required', flagClass:'flag-req' },
+      { code:'CHC2D', name:'Canadian History', flag:'Required', flagClass:'flag-req' },
+      { code:'CHV2O', name:'Civics (0.5 credit)', flag:'Required', flagClass:'flag-req' },
+      { code:'GLC2O', name:'Career Studies (0.5)', flag:'Required', flagClass:'flag-req' },
+    ]},
+    { year:'Grade 11', color:'#1a3d00', courses:[
+      { code:'MCR3U', name:'Functions', flag: goal==='engineering'||goal==='medicine'?'Critical':'Recommended', flagClass: goal==='engineering'||goal==='medicine'?'flag-req':'flag-rec' },
+      { code:'ENG3U', name:'English', flag:'Required', flagClass:'flag-req' },
+      { code:goal==='engineering'?'SPH3U':goal==='medicine'?'SBI3U':'SCH3U', name:goal==='engineering'?'Physics':'Biology/Chemistry', flag:'Critical', flagClass:'flag-req' },
+      { code:goal==='medicine'?'SCH3U':goal==='business'?'BAF3M':'MCV4U prep', name:goal==='medicine'?'Chemistry':'Accounting/Elective', flag:'Recommended', flagClass:'flag-rec' },
+      { code:'Various', name:'2 electives of choice', flag:'Optional', flagClass:'flag-opt' },
+    ]},
+    { year:'Grade 12', color:'#555', courses:[
+      { code:'MHF4U', name:'Advanced Functions', flag: goal==='engineering'||goal==='medicine'||goal==='science'?'Critical':'Recommended', flagClass: goal==='engineering'||goal==='medicine'||goal==='science'?'flag-req':'flag-rec' },
+      { code:'ENG4U', name:'English', flag:'Required', flagClass:'flag-req' },
+      { code:goal==='engineering'?'MCV4U':goal==='medicine'?'SBI4U':goal==='business'?'BAT4M':'MDM4U', name:goal==='engineering'?'Calculus & Vectors':goal==='medicine'?'Biology':goal==='business'?'Accounting':'Data Management', flag:'Critical', flagClass:'flag-req' },
+      { code:goal==='engineering'?'SPH4U':goal==='medicine'?'SCH4U':goal==='business'?'BOH4M':'Elective', name:goal==='engineering'?'Physics':goal==='medicine'?'Chemistry':goal==='business'?'Business Leadership':'Elective', flag:'Recommended', flagClass:'flag-rec' },
+      { code:'Various', name:'Personal choice electives', flag:'Optional', flagClass:'flag-opt' },
+    ]},
+  ];
+}
+
+function getAppliedPlan(goal) {
+  return [
+    { year:'Grade 9 (Applied)', color:'#1a3d00', courses:[
+      { code:'MFM1P', name:'Foundations of Math (Applied)', flag:'Required', flagClass:'flag-req' },
+      { code:'ENG1P', name:'English (Applied)', flag:'Required', flagClass:'flag-req' },
+      { code:'SNC1P', name:'Science (Applied)', flag:'Required', flagClass:'flag-req' },
+      { code:'CGC1P', name:'Geography (Applied)', flag:'Required', flagClass:'flag-req' },
+      { code:'PPL1O', name:'Phys Ed', flag:'Required', flagClass:'flag-req' },
+      { code:'Target', name:'Aim for 75%+ to upgrade', flag:'Key goal', flagClass:'flag-rec' },
+    ]},
+    { year:'Grade 10 (Upgrade Decision)', color:'#9a6f00', courses:[
+      { code:'IF 75%+', name:'Switch to MPM2D (Academic Math)', flag:'Upgrade path', flagClass:'flag-rec' },
+      { code:'MFM2P', name:'Foundations of Math (if staying Applied)', flag:'Applied', flagClass:'flag-opt' },
+      { code:'ENG2D/P', name:'English (choose level based on guidance)', flag:'Required', flagClass:'flag-req' },
+      { code:'SNC2P', name:'Science (Applied)', flag:'Required', flagClass:'flag-req' },
+      { code:'CHC2D', name:'Canadian History', flag:'Required', flagClass:'flag-req' },
+      { code:'GLC2O', name:'Career Studies (0.5)', flag:'Required', flagClass:'flag-req' },
+    ]},
+    { year:'Grade 11', color:'#0f0f0f', courses:[
+      { code:'MBF3C', name:'Foundations for College Math', flag:'Applied path', flagClass:'flag-opt' },
+      { code:'ENG3C', name:'English for College', flag:'Required', flagClass:'flag-req' },
+      { code:'Technology', name:'Technical / Vocational electives', flag:'Core', flagClass:'flag-rec' },
+      { code:'Various', name:'College-prep electives', flag:'Optional', flagClass:'flag-opt' },
+    ]},
+    { year:'Grade 12 + College Options', color:'#555', courses:[
+      { code:'MAP4C', name:'Math for College Tech', flag:'College req.', flagClass:'flag-req' },
+      { code:'ENG4C', name:'English for College', flag:'Required', flagClass:'flag-req' },
+      { code:'College', name:'Apply to 2-3 year college programs', flag:'Target', flagClass:'flag-rec' },
+      { code:'Or', name:'Trades apprenticeship pathway', flag:'Option', flagClass:'flag-opt' },
+    ]},
+  ];
+}
+
+function buildUniPaths(goal, academic, excellent) {
+  set('paths-head', academic ? 'University Programs This Path Opens' : 'College & Upgrade Options');
+
+  const allPaths = {
+    engineering: { icon:'⚙️', name:'Engineering / CS', schools:'Waterloo, U of T, McMaster, Ryerson', prereqs:'MHF4U + MCV4U + SPH4U (for Eng). Min 85–93% for top schools.', color:'#C8102E' },
+    medicine:    { icon:'🩺', name:'Medicine / Health Sci', schools:'McMaster, Ottawa, Western, Queens', prereqs:'Biology (SBI4U) + Chemistry (SCH4U) + English (ENG4U). MCAT required for med school.', color:'#0f0f0f' },
+    business:    { icon:'📊', name:'Business / Commerce', schools:'Schulich (York), Ivey (Western), DeGroote (McMaster)', prereqs:'ENG4U + Math (MHF4U or MDM4U). Top schools 85%+ average.', color:'#1a3d00' },
+    arts:        { icon:'📚', name:'Humanities / Law', schools:'U of T, Western, Queens, Carleton', prereqs:'ENG4U + 5 other Grade 12 U-level courses. Law school after undergrad.', color:'#555' },
+    science:     { icon:'🔬', name:'Pure Sciences', schools:'U of T, Western, McMaster, Waterloo', prereqs:'SCH4U + SBI4U + MHF4U. Research focus vs professional programs.', color:'#C8102E' },
+    trades:      { icon:'🔧', name:'Skilled Trades / Tech', schools:'Seneca, Humber, Sheridan, George Brown', prereqs:'Gr 12 C-level math and English. Apprenticeship programs available.', color:'#1a3d00' },
+    undecided:   { icon:'🎯', name:'Keep options open', schools:'Any Ontario university with 75–80%+ average', prereqs:'ENG4U + 5 Grade 12 U-level courses. Choose Arts & Science for max flexibility.', color:'#0f0f0f' },
+  };
+
+  const path = allPaths[goal] || allPaths.undecided;
+  const generalPath = allPaths.undecided;
+  const tradePath = allPaths.trades;
+
+  const pathsHTML = [path, generalPath, tradePath].filter((p,i,arr) => arr.indexOf(p) === i).slice(0,3);
+
+  set('paths-grid', pathsHTML.map(p => `
+    <div class="path-card" style="border-top-color:${p.color}">
+      <div class="path-icon">${p.icon}</div>
+      <div class="path-name">${p.name}</div>
+      <div class="path-schools">${p.schools}</div>
+      <div class="path-prereqs">
+        <span class="path-prereq-label">Key requirements:</span>
+        ${p.prereqs}
+      </div>
+    </div>`).join(''));
+
+  set('paths-note', academic
+    ? `University admissions in Ontario are <strong>percentage-based</strong>. A 75% average in Academic courses is the minimum for most programs — top engineering and medicine programs require 85–93%. Marks in Grade 11 and 12 count most. Grade 9–10 don't directly appear on university applications.`
+    : `Applied stream graduates can attend college directly. To access university, you typically need to upgrade to Academic in Grade 10–11 or complete a college-to-university bridging program. It's not a dead end — but plan the upgrade early.`);
+}
+
+function buildTimeline(stream, academic, goal, grade, avg, language) {
+  const steps = [];
+  if (grade <= 8) {
+    steps.push({ phase:'Grade 8 → 9', color:'#C8102E', title:'Choose your stream at registration', body:'When your school sends home course selection forms (usually January–March), your child selects Academic or Applied for core subjects. Ask the guidance counsellor for help — newcomer families often don\'t receive these forms in time.', });
+    steps.push({ phase:'Grade 9', color:'#0f0f0f', title:'First semester is critical — don\'t fall behind', body:`${academic?'Academic courses move faster than Grade 8. The first 6 weeks set the tone. If marks drop below 65%, act immediately — talk to the teacher, arrange tutoring, don\'t wait.':'Applied courses are more manageable. Focus on consistency. Target 75%+ to keep the upgrade option open.'}`, });
+  }
+  if (academic) {
+    steps.push({ phase:'Grade 10', color:'#1a3d00', title:'Confirm stream, take Civics + Career Studies', body:'Two compulsory half-credit courses. Also: talk to your guidance counsellor about Grade 11 course selection — this is where the path toward your university goal becomes concrete.', });
+    steps.push({ phase:'Grade 11', color:'#9a6f00', title:`Critical year for ${getGoalLabel(goal)}`, body:`Grade 11 marks don't go on university applications, but they qualify you for Grade 12 courses. Failing to take the right Grade 11 course locks you out of Grade 12 prerequisites. ${goal==='engineering'?'Take Functions (MCR3U) and Physics (SPH3U).':goal==='medicine'?'Take Functions (MCR3U), Biology (SBI3U), and Chemistry (SCH3U).':'Choose Grade 11 courses based on your target program\'s Grade 12 requirements.'}`, });
+    steps.push({ phase:'Grade 12', color:'#C8102E', title:'University application year', body:'Apply through OUAC (Ontario Universities\' Application Centre) in January. You\'ll list your top 3 program choices. First-semester Grade 12 marks are sent with the application. Final marks confirm the offer. Keep marks up — universities can rescind offers.', });
+    steps.push({ phase:'After Gr 12', color:'#1a7a4a', title:'University transition', body:'Most Ontario universities start in September. Apply for student loans (OSAP) in spring — opens April, apply as early as possible. Scholarship applications open in February–March for most schools.', });
+  } else {
+    steps.push({ phase:'Grade 9 Applied', color:'#1a3d00', title:'Target 75%+ and review the upgrade option', body:'Applied moves at a manageable pace. If your child earns 75%+ in all subjects, they can request a transfer to Academic courses in Grade 10. This window is important — don\'t miss it.', });
+    steps.push({ phase:'Grade 10 Decision', color:'#9a6f00', title:'Upgrade to Academic now or stay Applied?', body:'If marks are 75%+: request transfer to Academic Math (MPM2D) and English (ENG2D) at minimum. If staying Applied: start exploring college programs and open a clear post-secondary plan with your guidance counsellor.', });
+    steps.push({ phase:'Grade 11–12', color:'#0f0f0f', title:'College application or bridging path', body:'Apply to college programs through Ontario Colleges (ontariocolleges.ca) in January–February. If upgrading to Academic in Grade 11, it\'s still possible to access university via college transfer or mature student entry.', });
+  }
+
+  document.getElementById('tl-body-stream').innerHTML = steps.map((s,i) => `
+    <div class="tl-item">
+      <div class="tl-left">
+        <div class="tl-dot" style="background:${s.color}">${i+1}</div>
+        ${i < steps.length-1 ? '<div class="tl-line"></div>' : ''}
+      </div>
+      <div class="tl-right">
+        <div class="tl-phase">${s.phase}</div>
+        <div class="tl-title">${s.title}</div>
+        <div class="tl-body">${s.body}</div>
+      </div>
+    </div>`).join('');
+}
+
+function buildMistakes(goal, language, academic, stream) {
+  const mistakes = [
+    { text: `<strong>Assuming the Ontario system works like back home.</strong> In many countries, all students take the same courses and compete on marks. In Ontario, the <em>stream</em> determines the ceiling. A 95% in Applied Math does not get your child into engineering — they need Academic Math. Parents often discover this in Grade 11 when it's too late.` },
+    { text: `<strong>Not reading course selection forms.</strong> Schools send home course selection packages in February–March. Many newcomer families don't recognise these as critical decisions and return them blank or with wrong choices. Ask your school's guidance counsellor for a meeting every year.` },
+    { text: `<strong>Prioritising language courses over core academics.</strong> ESL is important, but your child cannot delay taking Academic Math, Science, and English. These need to be taken ${academic?'concurrently':'as soon as language is ready'}. Delaying Grade 9 Academic courses by one year pushes back the entire university timeline.` },
+    { text: `<strong>${goal==='engineering'||goal==='medicine'?'Not taking the right sciences in Grade 11.':'Waiting until Grade 12 to think about prerequisites.'}</strong> ${goal==='engineering'?'Missing Functions (MCR3U) in Grade 11 means you cannot take Calculus (MCV4U) in Grade 12 — which locks you out of engineering. This decision happens in Grade 10 course selection.':goal==='medicine'?'Both Biology and Chemistry must be taken in Grade 11 AND Grade 12. Missing SBI3U or SCH3U in Grade 11 means no SBI4U or SCH4U in Grade 12 — and no medicine path.':'University programs list required courses on their websites. Check these in Grade 10, not Grade 12.'}` },
+    { text: `<strong>Not knowing about the OSAP student loan.</strong> Ontario Student Assistance Program covers tuition + living costs for low-to-moderate income families. Many newcomers don't apply assuming they don't qualify. Apply every year from Grade 12 onward — even if you think you won't get it.` },
+  ];
+
+  document.getElementById('mistakes-body').innerHTML = mistakes.map(m => `
+    <div class="mistake-item">
+      <div class="mistake-x">✗</div>
+      <div class="mistake-text">${m.text}</div>
+    </div>`).join('');
+}
+
+function getGoalLabel(goal) {
+  return { engineering:'Engineering / CS', medicine:'Medicine', business:'Business', arts:'Arts / Humanities', trades:'Skilled Trades', science:'Science', undecided:'your goal' }[goal] || 'your goal';
+}
+</script>
+</body>
+</html>

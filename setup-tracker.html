@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Newcomer Setup Tracker — First 90 Days Checklist Canada | Canada Family Guide</title>
+<meta name="description" content="Interactive checklist for your first 90 days in Canada. SIN, banking, OHIP, school, licence, credit — track every step with deadlines and what happens if you miss them.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://canadafamilyguide.com/setup-tracker.html">
+<meta property="og:title" content="Newcomer Setup Tracker — First 90 Days in Canada">
+<meta property="og:description" content="Every step to set up your life in Canada, in the right order, with deadlines and consequences.">
+<meta property="og:site_name" content="Canada Family Guide">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍁</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root{--red:#C8102E;--red-dark:#9B0B22;--black:#0f0f0f;--white:#F7F5F0;--grey:#555;--light:#EDE9E0;--green:#1a7a4a}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--black);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+.page-header{background:var(--white);color:var(--black);padding:7rem 2rem 3rem;border-bottom:1px solid #e0dbd0}
+.page-header-inner{max-width:900px;margin:0 auto}
+.page-label{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem}
+.page-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;margin-bottom:.8rem}
+.page-sub{color:var(--grey);font-size:.95rem;line-height:1.7;max-width:600px}
+main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+
+/* PROGRESS OVERVIEW */
+.progress-overview{background:var(--black);border-radius:12px;padding:1.5rem;color:#fff;margin-bottom:1.5rem}
+.po-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.8rem}
+.po-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem}
+.po-count{font-size:.85rem;color:#aaa}
+.po-bar-bg{height:10px;background:#222;border-radius:5px;overflow:hidden;margin-bottom:.8rem}
+.po-bar{height:10px;background:var(--red);border-radius:5px;transition:width .5s ease}
+.po-phases{display:flex;gap:.6rem;flex-wrap:wrap}
+.po-phase{font-size:.72rem;font-weight:600;padding:.2rem .7rem;border-radius:10px;background:#1a1a1a;color:#aaa}
+.po-phase.done{background:#0d3320;color:#4caf50}
+.po-phase.partial{background:#3d2200;color:#ff9800}
+
+/* PHASE SECTIONS */
+.phase-section{margin-bottom:2rem}
+.phase-header{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;cursor:pointer}
+.phase-icon{font-size:1.4rem}
+.phase-title-wrap{}
+.phase-label{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:.1rem}
+.phase-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem}
+.phase-badge{margin-left:auto;font-size:.72rem;font-weight:700;padding:.2rem .7rem;border-radius:10px;background:var(--light);color:var(--grey)}
+.phase-badge.done{background:#e8f5e9;color:var(--green)}
+
+/* TASK CARDS */
+.task-list{display:flex;flex-direction:column;gap:.6rem}
+.task-card{background:#fff;border:1px solid #e0dbd0;border-radius:10px;overflow:hidden;transition:border-color .2s}
+.task-card.completed{border-color:#a5d6a7;background:#fafff8}
+.task-top{display:flex;align-items:center;gap:.8rem;padding:.9rem 1rem;cursor:pointer}
+.task-check{width:24px;height:24px;border-radius:50%;border:2px solid #ddd;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;cursor:pointer}
+.task-check.checked{background:var(--green);border-color:var(--green);color:#fff;font-size:.75rem}
+.task-check:hover{border-color:var(--green)}
+.task-main{flex:1}
+.task-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.9rem;color:var(--black)}
+.task-card.completed .task-title{color:var(--green);text-decoration:line-through;text-decoration-color:#a5d6a7}
+.task-meta{display:flex;gap:.5rem;margin-top:.2rem;flex-wrap:wrap}
+.task-tag{font-size:.65rem;font-weight:700;padding:1px 7px;border-radius:3px}
+.tag-urgent{background:#ffebee;color:#b71c1c}
+.tag-week1{background:#fff3e0;color:#e65100}
+.tag-month1{background:#e8f0fe;color:#1565C0}
+.tag-month3{background:#f3e5f5;color:#6A1B9A}
+.tag-ongoing{background:var(--light);color:var(--grey)}
+.task-expand{font-size:.7rem;color:#aaa;flex-shrink:0}
+.task-detail{display:none;padding:.2rem 1rem 1rem 3.4rem;border-top:1px solid #f0ece4}
+.task-detail.open{display:block}
+.task-detail-body{font-size:.83rem;color:var(--grey);line-height:1.7;margin-bottom:.6rem}
+.task-detail-body strong{color:var(--black)}
+.task-consequence{background:#fff8f0;border:1px solid #ffe0b2;border-radius:6px;padding:.6rem .8rem;font-size:.78rem;color:#7a4000;margin-bottom:.6rem}
+.task-link{display:inline-flex;align-items:center;gap:.3rem;font-size:.78rem;font-weight:600;color:var(--red);text-decoration:none}
+.task-link:hover{text-decoration:underline}
+
+footer{background:#0a0a0a;color:#555;text-align:center;padding:2rem;font-size:.82rem}
+footer a{color:var(--red);text-decoration:none}
+footer strong{color:#888}
+.footer-links{margin:.5rem 0;display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem}
+.footer-links a::after{content:'·';margin-left:.5rem;color:#333}
+.footer-links a:last-child::after{display:none}
+.footer-disclaimer{margin-top:.8rem;font-size:.73rem;color:#333;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6}
+</style>
+</head>
+<body>
+<script src="nav.js"></script>
+<div style="height:60px"></div>
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-label">🏠 Newcomer Tools</div>
+    <h1 class="page-title">Setup Tracker</h1>
+    <p class="page-sub">Every step to set up your life in Canada — in the right order, with deadlines, what to bring, and what happens if you delay.</p>
+  </div>
+</div>
+<main>
+
+<div class="progress-overview">
+  <div class="po-header">
+    <div class="po-title">Your Canada Setup Progress</div>
+    <div class="po-count" id="po-count">0 of 24 completed</div>
+  </div>
+  <div class="po-bar-bg"><div class="po-bar" id="po-bar" style="width:0%"></div></div>
+  <div class="po-phases">
+    <div class="po-phase" id="ph-day1">Day 1–3</div>
+    <div class="po-phase" id="ph-week1">Week 1</div>
+    <div class="po-phase" id="ph-month1">Month 1</div>
+    <div class="po-phase" id="ph-month3">Month 1–3</div>
+    <div class="po-phase" id="ph-ongoing">Ongoing</div>
+  </div>
+</div>
+
+<div id="tracker-body"></div>
+
+</main>
+<footer>
+  <p><strong>Canada Family Guide</strong> — Built for families across Canada</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="setup-tracker.html">Setup Tracker</a>
+    <a href="newcomer-start.html">Newcomer Guide</a>
+    <a href="tools.html">Financial Planner</a>
+    <a href="healthcare.html">Healthcare</a>
+    <a href="education.html">Education</a>
+    <a href="about.html">About</a>
+  </div>
+  <p class="footer-disclaimer">Not legal or immigration advice. Always verify requirements with official government sources.</p>
+</footer>
+<script>
+const TASKS = [
+  {
+    phase:'day1', phaseLabel:'Day 1–3', icon:'🚀',
+    title:'Immediate Priorities',
+    tasks:[
+      {id:'sin', title:'Apply for your SIN (Social Insurance Number)', tag:'tag-urgent', tagLabel:'Do immediately',
+       body:'<strong>Where:</strong> Service Canada office (walk-in, no appointment needed for most). Bring your passport + work permit or PR card. Takes about 30 minutes. Your SIN is required to work legally, open bank accounts, and file taxes.<br><br><strong>Temporary residents:</strong> You receive a 9-digit SIN starting with "9" — this is normal. Renew when your permit renews.',
+       consequence:'⚠️ You cannot receive your first paycheque without a SIN. Some employers will hold pay until it\'s provided.',
+       link:null},
+      {id:'bank', title:'Open a Canadian bank account', tag:'tag-urgent', tagLabel:'Do immediately',
+       body:'<strong>Best option for newcomers:</strong> RBC, TD, or Scotiabank all have newcomer banking packages — free for 1 year, no credit history required. Bring your passport, SIN, and immigration documents.<br><br><strong>Also open:</strong> EQ Bank savings account (online, free, 3–4% interest) for an emergency fund once you have a mailing address.',
+       consequence:'⚠️ Without a bank account you cannot receive direct deposit, pay rent electronically, or start building Canadian credit.',
+       link:'tools.html'},
+      {id:'simcard', title:'Get a Canadian SIM card', tag:'tag-urgent', tagLabel:'Day 1',
+       body:'<strong>Best plans for newcomers:</strong> Koodo, Public Mobile, or Fido offer good value prepaid plans. Avoid long-term contracts until you know where you\'ll be staying.<br><br>If your phone is locked to another carrier, buy a cheap unlocked phone temporarily (~$80 at Walmart) or unlock your existing phone.',
+       consequence:'You need a Canadian number for bank accounts, school registrations, and government services.',
+       link:null},
+    ]
+  },
+  {
+    phase:'week1', phaseLabel:'Week 1', icon:'📋',
+    title:'Health & Identity',
+    tasks:[
+      {id:'ohip', title:'Apply for OHIP (Ontario health card)', tag:'tag-week1', tagLabel:'Week 1',
+       body:'<strong>Where:</strong> ServiceOntario location. Bring passport, proof of Ontario address (even a lease or letter from landlord), and immigration document.<br><br><strong>3-month wait:</strong> OHIP coverage starts 3 months after you arrive and register. During this period, get private health insurance — some employers provide it, or check providers like Manulife or Sun Life for short-term coverage.',
+       consequence:'⚠️ Without OHIP, doctor visits and ER cost hundreds to thousands of dollars out of pocket. Get private coverage for the 3-month gap.',
+       link:'healthcare.html'},
+      {id:'address', title:'Confirm your permanent address — rent a home', tag:'tag-week1', tagLabel:'Week 1',
+       body:'<strong>If staying with family short-term:</strong> Get a written letter from the homeowner confirming you live there — needed for OHIP, bank accounts, and school registration.<br><br><strong>Looking to rent:</strong> In Ontario, landlords cannot ask for more than first and last month\'s rent. They can run a credit check — if you have no Canadian credit, offer a reference letter from employer and first 3 months upfront.',
+       consequence:'Most government registrations require proof of address. Sort this in week 1.',
+       link:null},
+      {id:'driver', title:'Check your driving licence eligibility', tag:'tag-week1', tagLabel:'Week 1',
+       body:'<strong>India licence holders:</strong> You qualify for a Direct G licence (skip G1/G2 written test). You\'ll need to pass a G road test only. Book as early as possible — wait times in Ontario are 3–6 months.<br><br><strong>Other countries:</strong> Check if your country is on Ontario\'s reciprocal licence exchange list at drivetest.ca. If not, you start at G1.',
+       consequence:'⚠️ Book your road test the day you arrive — slots fill months out.',
+       link:null},
+    ]
+  },
+  {
+    phase:'week1', phaseLabel:'Week 1', icon:'👨‍👩‍👧',
+    title:'Children — School Registration',
+    tasks:[
+      {id:'school-board', title:'Identify your school board and register children', tag:'tag-week1', tagLabel:'Week 1',
+       body:'<strong>Ontario boards:</strong> Each city has a public board and a Catholic board. You can choose either regardless of religion.<br><br><strong>Documents needed:</strong> Birth certificate, immunization records (from home country — acceptable), proof of address, and immigration documents for the child.<br><br><strong>ESL assessment:</strong> Most boards assess English within the first week. Your child will be placed in ESL if needed — this is normal and beneficial, not a setback.',
+       consequence:'Ontario has compulsory school attendance for children 6–18. Register immediately.',
+       link:'education.html'},
+      {id:'immunization', title:'Submit immunization records to local health unit', tag:'tag-week1', tagLabel:'Week 1',
+       body:'<strong>In Ottawa area:</strong> Submit to EOHU (Eastern Ontario Health Unit). Other regions have their own process — check with your school board.<br><br><strong>Missing records:</strong> If records from home country are incomplete, a Canadian doctor can assess and provide catch-up immunizations. Ask your walk-in clinic or new family doctor.',
+       consequence:'⚠️ Schools may suspend children without immunization records on file.',
+       link:null},
+    ]
+  },
+  {
+    phase:'month1', phaseLabel:'Month 1', icon:'💰',
+    title:'Financial Foundation',
+    tasks:[
+      {id:'tfsa', title:'Open a TFSA (Tax-Free Savings Account)', tag:'tag-month1', tagLabel:'Month 1',
+       body:'<strong>Available at:</strong> Any major bank, Questrade, or Wealthsimple (recommended for low fees).<br><br>As a new resident, you start accumulating TFSA room from the year you arrive ($7,000 for 2025). Every year you delay, you permanently lose that year\'s contribution room. Open it even with a small amount.',
+       consequence:'Every year you delay costs you ~$7,000 of permanent tax-free contribution room. Open in month 1.',
+       link:'tools.html'},
+      {id:'secured-card', title:'Apply for a secured credit card', tag:'tag-month1', tagLabel:'Month 1',
+       body:'<strong>Where:</strong> Go in person to your bank branch and ask specifically for a newcomer secured credit card. You deposit $500–$1,000 as collateral and receive a card with that limit.<br><br><strong>How to use it:</strong> Charge groceries only (~$100/month). Pay the FULL balance every month without exception. This builds your credit score from zero to 600+ within 6–9 months.',
+       consequence:'Credit history doesn\'t transfer from your home country. Every month without a Canadian credit card is a month of credit history lost.',
+       link:'tools.html'},
+      {id:'fhsa', title:'Open an FHSA (First Home Savings Account) if you plan to buy', tag:'tag-month1', tagLabel:'Month 1',
+       body:'Only relevant if you intend to buy a home in Canada eventually. The FHSA gives you $8,000/year in tax deductions on contributions, $40,000 lifetime. Contributions are tax-free and withdrawals for a first home purchase are also tax-free.<br><br><strong>Open it even if buying is 3–5 years away</strong> — the contribution room accumulates from the year you open it.',
+       consequence:'Every year the FHSA is closed costs you $8,000 of tax-deductible room that cannot be recovered.',
+       link:'tools.html'},
+    ]
+  },
+  {
+    phase:'month1', phaseLabel:'Month 1', icon:'🏥',
+    title:'Healthcare & Emergency',
+    tasks:[
+      {id:'private-health', title:'Get private health insurance for the 3-month OHIP gap', tag:'tag-month1', tagLabel:'Urgent if new',
+       body:'<strong>Options:</strong> Manulife Travel Insurance, Sun Life Visitors to Canada, Blue Cross temporary coverage. Costs ~$100–200/month for a family.<br><br>If your employer provides benefits from day 1, confirm they cover you during the OHIP wait period. Many do — check your benefits documentation.',
+       consequence:'ER visit in Ontario costs $1,000–$5,000+ without coverage. A single hospitalization without insurance could cost tens of thousands.',
+       link:'healthcare.html'},
+      {id:'walkin', title:'Find your nearest walk-in clinic and hospital', tag:'tag-month1', tagLabel:'Month 1',
+       body:'<strong>Before OHIP:</strong> Walk-in clinics charge $80–200 per visit without coverage. Know where they are.<br><br><strong>Health811:</strong> Free nurse consultation line, 24/7, 200+ languages. Call 811 before going to ER for non-emergencies.',
+       consequence:null,
+       link:'healthcare.html'},
+      {id:'family-doctor', title:'Register for a family doctor', tag:'tag-month1', tagLabel:'Month 1',
+       body:'<strong>Health Care Connect:</strong> Ontario\'s official program to match you with a family doctor. Register at ontario.ca/page/find-family-doctor-or-nurse-practitioner<br><br><strong>Reality:</strong> Wait times for a family doctor can be 6–24 months in many areas. Register on day 1 and use walk-in clinics in the meantime.',
+       consequence:'Without a family doctor, you pay for walk-in visits or wait hours at ERs for non-emergency issues.',
+       link:'healthcare.html'},
+    ]
+  },
+  {
+    phase:'month3', phaseLabel:'Months 1–3', icon:'📄',
+    title:'Legal & Government',
+    tasks:[
+      {id:'pr-address', title:'Update your address with IRCC (immigration)', tag:'tag-month3', tagLabel:'Within 180 days',
+       body:'<strong>How:</strong> Log into your MyCIC account online and update your Canadian address.<br><br>This is required within 180 days of receiving your PR. Missing this can affect future renewals and citizenship applications.',
+       consequence:'⚠️ Failure to notify IRCC of your address can affect your PR status records.',
+       link:null},
+      {id:'pr-card', title:'Apply for your PR card if not already received', tag:'tag-month3', tagLabel:'Within 30 days of arrival',
+       body:'<strong>If you entered Canada without your PR card:</strong> Apply through IRCC online within 30 days of confirming your permanent residence.<br><br>Your PR card is required to re-enter Canada by air, land, or sea after international travel. Without it, you need a Travel Document (PRTD) which takes weeks to obtain.',
+       consequence:'⚠️ Cannot board flights back to Canada without PR card or PRTD.',
+       link:null},
+      {id:'taxes', title:'Understand your first tax filing (due April 30)', tag:'tag-month3', tagLabel:'Within year 1',
+       body:'<strong>First year:</strong> You file taxes for the portion of the year you were resident in Canada. Even if you worked only 3 months, file — you may be owed GST/HST credit and other benefits.<br><br><strong>Free filing:</strong> Use SimpleTax (Wealthsimple Tax) for free. H&R Block and TurboTax also have newcomer options.',
+       consequence:'⚠️ Not filing means you miss GST/HST credits ($300–600/year for families) and CCB (Canada Child Benefit — up to $7,000+/year per child).',
+       link:null},
+    ]
+  },
+  {
+    phase:'ongoing', phaseLabel:'Ongoing', icon:'📈',
+    title:'Build & Grow',
+    tasks:[
+      {id:'ccb', title:'Apply for Canada Child Benefit (CCB) if you have children', tag:'tag-ongoing', tagLabel:'After first tax return',
+       body:'<strong>What it is:</strong> Tax-free monthly payment for families with children under 18. Up to $7,000+ per year per child under 6, depending on income.<br><br><strong>How:</strong> Apply through CRA My Account or file your taxes — the CRA automatically assesses CCB eligibility.',
+       consequence:'Many newcomers miss thousands of dollars in CCB by not knowing about it or not filing taxes.',
+       link:null},
+      {id:'credit-build', title:'Build credit score to 700+ over 12–18 months', tag:'tag-ongoing', tagLabel:'Ongoing',
+       body:'Use your secured card for small purchases only. Pay in full every month. After 12 months, request a credit limit increase. After 18 months, apply for a first rewards card. Check your score monthly on Borrowell (free) and Credit Karma Canada (free).',
+       consequence:'Low credit score = higher mortgage rates, rejected rental applications, higher car loan interest.',
+       link:'tools.html'},
+      {id:'resp', title:'Open RESP for children if applicable', tag:'tag-ongoing', tagLabel:'As soon as possible',
+       body:'<strong>What it is:</strong> Registered Education Savings Plan. Invest for your child\'s university education and receive a 20% Canada Education Savings Grant (CESG) automatically.<br><br>Contributing $2,500/year = $500 free from the government every year. Compounds significantly over 15–18 years.',
+       consequence:'Every year you delay loses $500 in free government grant money (CESG).',
+       link:'tools.html'},
+      {id:'network', title:'Build your Canadian professional network', tag:'tag-ongoing', tagLabel:'Ongoing',
+       body:'<strong>Best actions:</strong> LinkedIn — connect with people in your field in your city. Attend local tech/business meetups (Meetup.com, Eventbrite). Newcomer professional associations in your city often run networking events specifically for immigrants.',
+       consequence:'Most Canadian jobs are found through networks. Applying online without a contact yields very low response rates in most industries.',
+       link:null},
+    ]
+  },
+];
+
+// Load saved state
+function getSaved() {
+  try { return JSON.parse(localStorage.getItem('cfg_tracker') || '{}'); } catch(e) { return {}; }
+}
+function save(state) {
+  try { localStorage.setItem('cfg_tracker', JSON.stringify(state)); } catch(e) {}
+}
+
+let state = getSaved();
+
+function countAll() {
+  let total = 0, done = 0;
+  TASKS.forEach(ph => ph.tasks.forEach(t => { total++; if(state[t.id]) done++; }));
+  return {total, done};
+}
+
+function updateProgress() {
+  const {total, done} = countAll();
+  document.getElementById('po-count').textContent = `${done} of ${total} completed`;
+  document.getElementById('po-bar').style.width = `${Math.round(done/total*100)}%`;
+
+  // Phase badges
+  const phases = {day1:[], week1:[], month1:[], month3:[], ongoing:[]};
+  TASKS.forEach(ph => {
+    const pTasks = ph.tasks;
+    const pDone  = pTasks.filter(t => state[t.id]).length;
+    const key    = ph.phase;
+    if (!phases[key]) phases[key] = [];
+    phases[key].push({total: pTasks.length, done: pDone});
+  });
+  Object.keys(phases).forEach(k => {
+    const el = document.getElementById('ph-' + k);
+    if (!el || !phases[k].length) return;
+    const tot  = phases[k].reduce((a,b) => a + b.total, 0);
+    const dn   = phases[k].reduce((a,b) => a + b.done, 0);
+    el.classList.remove('done','partial');
+    if (dn === tot) el.classList.add('done');
+    else if (dn > 0) el.classList.add('partial');
+  });
+}
+
+function toggleTask(id) {
+  state[id] = !state[id];
+  save(state);
+  // Update card
+  const card  = document.getElementById('card-' + id);
+  const check = document.getElementById('check-' + id);
+  if (state[id]) {
+    card.classList.add('completed');
+    check.classList.add('checked');
+    check.textContent = '✓';
+  } else {
+    card.classList.remove('completed');
+    check.classList.remove('checked');
+    check.textContent = '';
+  }
+  updateProgress();
+}
+
+function toggleDetail(id) {
+  const det = document.getElementById('detail-' + id);
+  det.classList.toggle('open');
+  const exp = document.getElementById('exp-' + id);
+  exp.textContent = det.classList.contains('open') ? '▲' : '▼';
+}
+
+function buildTracker() {
+  const body = document.getElementById('tracker-body');
+  let html = '';
+
+  TASKS.forEach(phase => {
+    const pDone  = phase.tasks.filter(t => state[t.id]).length;
+    const pTotal = phase.tasks.length;
+    const allDone = pDone === pTotal;
+
+    html += `<div class="phase-section">
+      <div class="phase-header">
+        <div class="phase-icon">${phase.icon}</div>
+        <div class="phase-title-wrap">
+          <div class="phase-label">${phase.phaseLabel}</div>
+          <div class="phase-title">${phase.title}</div>
+        </div>
+        <div class="phase-badge ${allDone ? 'done' : ''}">${pDone}/${pTotal} ${allDone ? '✓' : ''}</div>
+      </div>
+      <div class="task-list">`;
+
+    phase.tasks.forEach(t => {
+      const done = !!state[t.id];
+      html += `<div class="task-card ${done ? 'completed' : ''}" id="card-${t.id}">
+        <div class="task-top">
+          <div class="task-check ${done ? 'checked' : ''}" id="check-${t.id}" onclick="toggleTask('${t.id}')">${done ? '✓' : ''}</div>
+          <div class="task-main" onclick="toggleDetail('${t.id}')">
+            <div class="task-title">${t.title}</div>
+            <div class="task-meta">
+              <span class="task-tag ${t.tag}">${t.tagLabel}</span>
+            </div>
+          </div>
+          <div class="task-expand" id="exp-${t.id}" onclick="toggleDetail('${t.id}')">▼</div>
+        </div>
+        <div class="task-detail" id="detail-${t.id}">
+          <div class="task-detail-body">${t.body}</div>
+          ${t.consequence ? `<div class="task-consequence">⚠️ ${t.consequence}</div>` : ''}
+          ${t.link ? `<a href="${t.link}" class="task-link">Related tool →</a>` : ''}
+        </div>
+      </div>`;
+    });
+
+    html += `</div></div>`;
+  });
+
+  body.innerHTML = html;
+  updateProgress();
+}
+
+buildTracker();
+</script>
+</body>
+</html>

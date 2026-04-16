@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buy vs Rent Decision Tool &#8212; Canada Housing for Newcomers | Canada Family Guide</title>
+<meta name="description" content="Should you buy or rent in Canada? Get a personalised buy vs rent decision with financial comparison, timeline, and context. Covers Toronto, Ottawa, Calgary, Vancouver and more.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://canadafamilyguide.com/buy-vs-rent.html">
+<meta property="og:title" content="Buy vs Rent Decision Tool &#8212; Canada Housing for Newcomers">
+<meta property="og:description" content="Clear buy vs rent recommendation with timeline. Built for newcomer families in Canada.">
+<meta property="og:url" content="https://canadafamilyguide.com/buy-vs-rent.html">
+<meta property="og:site_name" content="Canada Family Guide">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1F341;</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root{--red:#C8102E;--red-dark:#9B0B22;--black:#0f0f0f;--white:#F7F5F0;--grey:#555;--light:#EDE9E0;--green:#1a7a4a;--blue:#1565C0}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--black);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+
+.page-header{background:var(--white);color:var(--black);padding:7rem 2rem 3rem;border-bottom:1px solid #e0dbd0}
+.page-header-inner{max-width:900px;margin:0 auto}
+.page-label{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem}
+.page-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;margin-bottom:.8rem;color:var(--black)}
+.page-sub{color:var(--grey);font-size:.95rem;line-height:1.7;max-width:600px}
+
+/* PROGRESS STEPS */
+.progress-bar{display:flex;align-items:center;gap:0;margin-bottom:2rem;background:#fff;border:1px solid #e0dbd0;border-radius:10px;overflow:hidden}
+.progress-step{flex:1;padding:.8rem .5rem;text-align:center;font-size:.78rem;font-weight:600;color:#999;font-family:'Plus Jakarta Sans',sans-serif;border-right:1px solid #e0dbd0;cursor:pointer;transition:all .2s;position:relative}
+.progress-step:last-child{border-right:none}
+.progress-step.active{background:var(--red);color:#fff}
+.progress-step.done{background:#e8f5e9;color:var(--green)}
+.progress-step .step-num{display:block;font-size:.65rem;opacity:.7;margin-bottom:.1rem}
+
+main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+
+/* TOOL CARD */
+.tool-card{background:#fff;border:1px solid #e0dbd0;border-radius:12px;overflow:hidden;margin-bottom:1.5rem}
+.tool-card-head{background:var(--black);color:#fff;padding:1rem 1.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;display:flex;align-items:center;gap:.6rem}
+.tool-card-head-step2{background:#1a3d1a}
+.tool-card-head-step3{background:#2d1a00}
+.tool-card-body{padding:1.5rem}
+
+/* INPUTS */
+.input-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem}
+.input-group{display:flex;flex-direction:column;gap:.4rem}
+.input-group label{font-size:.8rem;font-weight:600;color:var(--grey);font-family:'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:.05em}
+.input-group input,.input-group select{border:1.5px solid #e0dbd0;border-radius:6px;padding:.7rem 1rem;font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--black);background:#fff;transition:border-color .2s;width:100%}
+.input-group input:focus,.input-group select:focus{outline:none;border-color:var(--red)}
+.input-hint{font-size:.75rem;color:#999;margin-top:.2rem}
+.input-prefix{position:relative}
+.input-prefix input{padding-left:1.8rem}
+.input-prefix::before{content:'$';position:absolute;left:.7rem;top:50%;transform:translateY(-50%);color:var(--grey);font-size:.95rem;pointer-events:none}
+
+/* BUTTONS */
+.calc-btn{width:100%;background:var(--red);color:#fff;border:none;border-radius:8px;padding:.9rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:background .2s}
+.calc-btn:hover{background:var(--red-dark)}
+.next-btn{display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;background:var(--black);color:#fff;border:none;border-radius:8px;padding:.9rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:background .2s;text-decoration:none;margin-top:1rem}
+.next-btn:hover{background:#333}
+.next-btn-green{background:var(--green)}
+.next-btn-green:hover{background:#0f5c35}
+
+/* RESULTS */
+.results{display:none}
+.results.show{display:block;animation:fadeIn .35s ease}
+.tool-section{display:none}
+.tool-section.show{display:block;animation:fadeIn .35s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* TAKE HOME HERO */
+.takehome-hero{background:var(--black);border-radius:10px;padding:1.8rem 1.5rem;color:#fff;margin-bottom:1.2rem;text-align:center}
+.takehome-label{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#aaa;margin-bottom:.4rem}
+.takehome-amount{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:3rem;line-height:1;margin-bottom:.3rem}
+.takehome-sub{font-size:.85rem;color:#aaa}
+.takehome-annual{font-size:1.1rem;font-weight:600;color:#fff;margin-top:.5rem}
+
+/* BAR */
+.bar-track{height:28px;border-radius:6px;overflow:hidden;display:flex;margin-bottom:.8rem}
+.bar-seg{height:100%;transition:width .6s ease}
+.bar-legend{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.5rem;margin-bottom:1.2rem}
+.legend-item{display:flex;align-items:center;gap:.5rem;font-size:.8rem}
+.legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.legend-label{color:var(--grey)}
+.legend-value{font-weight:600;color:var(--black);margin-left:auto}
+
+/* TABLE */
+.deduction-table{width:100%;border-collapse:collapse;margin-bottom:1.2rem;font-size:.88rem}
+.deduction-table tr{border-bottom:1px solid #f0ece4}
+.deduction-table td{padding:.65rem .5rem;color:var(--grey)}
+.deduction-table td:last-child{text-align:right;font-weight:600;color:var(--black)}
+.deduction-table .takehome-row td{color:var(--green);font-weight:800;font-size:1rem}
+
+/* RATE CARDS */
+.rate-cards{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.2rem}
+.rate-card{background:var(--light);border-radius:8px;padding:1rem;text-align:center}
+.rate-card-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--grey);margin-bottom:.3rem}
+.rate-card-value{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.6rem;color:var(--black)}
+.rate-card-sub{font-size:.75rem;color:var(--grey);margin-top:.2rem}
+.rate-card.green .rate-card-value{color:var(--green)}
+.rate-card.red .rate-card-value{color:var(--red)}
+
+/* WHAT THIS MEANS */
+.decisions{background:#fff;border:1px solid #e0dbd0;border-radius:10px;overflow:hidden;margin-bottom:1rem}
+.decisions-head{background:var(--light);padding:.8rem 1.2rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;border-bottom:1px solid #e0dbd0}
+.decision-item{display:flex;gap:.8rem;padding:.9rem 1.2rem;border-bottom:1px solid #f0ece4;align-items:flex-start}
+.decision-item:last-child{border-bottom:none}
+.decision-icon{font-size:1.2rem;flex-shrink:0;margin-top:.1rem}
+.decision-text{font-size:.85rem;color:var(--grey);line-height:1.6}
+.decision-text strong{color:var(--black)}
+
+/* RRSP BANNER */
+.rrsp-banner{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:1rem 1.2rem;margin-bottom:1rem;display:none}
+.rrsp-banner.show{display:block}
+.rrsp-banner-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;color:var(--green);margin-bottom:.4rem}
+.rrsp-banner-body{font-size:.85rem;color:#2e7d32;line-height:1.6}
+
+/* AFFORDABILITY */
+.aff-hero{border-radius:10px;padding:1.5rem;margin-bottom:1.2rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.aff-hero-blue{background:var(--black);color:#fff}
+.aff-metric{text-align:center;padding:.8rem}
+.aff-metric-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#aaa;margin-bottom:.3rem}
+.aff-metric-value{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.8rem;color:#fff;line-height:1}
+.aff-metric-sub{font-size:.75rem;color:#aaa;margin-top:.3rem}
+
+.city-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.8rem;margin-bottom:1.2rem}
+.city-card{background:#fff;border:1px solid #e0dbd0;border-radius:8px;padding:1rem}
+.city-card-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:.5rem}
+.city-card-rent{font-size:.82rem;color:var(--grey);line-height:1.7}
+.city-card-status{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:.4rem}
+.status-good{background:#e8f5e9;color:#1b5e20}
+.status-tight{background:#fff3e0;color:#e65100}
+.status-hard{background:#ffebee;color:#b71c1c}
+
+/* TOGGLE */
+.toggle-wrap{display:flex;gap:0;border:1.5px solid #e0dbd0;border-radius:8px;overflow:hidden;margin-bottom:1.2rem}
+.toggle-btn{flex:1;padding:.7rem;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.88rem;cursor:pointer;border:none;background:#fff;color:var(--grey);transition:all .2s}
+.toggle-btn.active{background:var(--red);color:#fff}
+
+/* SAVINGS */
+.savings-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem}
+.savings-card{background:#fff;border:1px solid #e0dbd0;border-radius:10px;padding:1.2rem;border-top:3px solid var(--green)}
+.savings-card-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--grey);margin-bottom:.4rem}
+.savings-card-value{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem;color:var(--green);margin-bottom:.3rem}
+.savings-card-body{font-size:.8rem;color:var(--grey);line-height:1.6}
+
+.disclaimer{font-size:.75rem;color:#999;line-height:1.5;padding:.8rem;background:var(--light);border-radius:6px;margin-top:1rem}
+
+/* SECTION CONNECTOR */
+.section-connector{text-align:center;padding:1.5rem 0;color:var(--grey);font-size:.85rem;position:relative}
+.section-connector::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(#e0dbd0,#C8102E);transform:translateX(-50%);z-index:0}
+.section-connector-dot{width:36px;height:36px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;margin:0 auto;position:relative;z-index:1}
+
+@media(max-width:600px){
+  .input-grid{grid-template-columns:1fr}
+  .rate-cards,.savings-grid{grid-template-columns:1fr 1fr}
+  .takehome-amount{font-size:2.4rem}
+  .bar-legend{grid-template-columns:1fr 1fr}
+  .aff-hero{grid-template-columns:1fr 1fr}
+  .progress-step .step-num{display:none}
+  .progress-step{font-size:.7rem;padding:.6rem .3rem}
+}
+
+/* ── BUY VS RENT STYLES ── */
+.verdict-hero{border-radius:12px;padding:2rem 1.5rem;color:#fff}
+.verdict-hero.rent{background:var(--black)}
+.verdict-hero.buy{background:#0d3320}
+.verdict-hero.soon{background:#3d2200}
+.verdict-label{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.7;margin-bottom:.4rem}
+.verdict-decision{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:2rem;margin-bottom:.4rem;line-height:1.1}
+.verdict-sub{font-size:.9rem;opacity:.85;max-width:520px;line-height:1.6;margin-bottom:1rem}
+.verdict-score-row{display:flex;gap:1.5rem;flex-wrap:wrap}
+.verdict-score{background:rgba(255,255,255,.12);border-radius:8px;padding:.6rem 1.1rem;text-align:center}
+.verdict-score-num{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.4rem}
+.verdict-score-label{font-size:.7rem;opacity:.75;margin-top:.1rem}
+.readiness-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.2rem}
+.readiness-card{background:#fff;border:1px solid #e0dbd0;border-radius:8px;padding:1rem}
+.readiness-name{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--grey);margin-bottom:.5rem;display:flex;justify-content:space-between}
+.readiness-bar-bg{height:7px;background:#e0dbd0;border-radius:4px;margin-bottom:.5rem;overflow:hidden}
+.readiness-bar{height:7px;border-radius:4px;transition:width .7s ease}
+.readiness-status{font-size:.78rem;font-weight:600;margin-bottom:.2rem}
+.readiness-tip{font-size:.75rem;color:var(--grey);line-height:1.5}
+.cost-compare{background:#fff;border:1px solid #e0dbd0;border-radius:12px;overflow:hidden;margin-bottom:1.2rem}
+.cost-compare-head{background:var(--black);color:#fff;padding:1rem 1.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem}
+.cost-cols{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #e0dbd0}
+.cost-col{padding:1.2rem 1.5rem}
+.cost-col:first-child{border-right:1px solid #e0dbd0}
+.cost-col-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.85rem;margin-bottom:.8rem;display:flex;align-items:center;gap:.4rem}
+.cost-row{display:flex;justify-content:space-between;font-size:.82rem;padding:.35rem 0;border-bottom:1px solid #f0ece4}
+.cost-row:last-child{border-bottom:none}
+.cost-key{color:var(--grey)}
+.cost-val{font-weight:600;color:var(--black)}
+.cost-total{display:flex;justify-content:space-between;padding:.8rem 1.5rem;background:var(--light);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem}
+.cost-winner{background:var(--black);color:#fff;text-align:center;padding:.7rem;font-size:.82rem;font-weight:600}
+.insights-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.8rem;margin-bottom:1.2rem}
+.insight-card{background:#fff;border:1px solid #e0dbd0;border-radius:8px;padding:1rem}
+.insight-icon{font-size:1.4rem;margin-bottom:.4rem}
+.insight-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--grey);margin-bottom:.3rem}
+.insight-val{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:.2rem}
+.insight-desc{font-size:.75rem;color:var(--grey);line-height:1.5}
+.tl-section{background:#fff;border:1px solid #e0dbd0;border-radius:12px;overflow:hidden;margin-bottom:1.2rem}
+.tl-item{display:flex;gap:1rem}
+.tl-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:36px}
+.tl-dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.75rem;color:#fff;flex-shrink:0;border:3px solid #fff;box-shadow:0 0 0 2px #e0dbd0}
+.tl-line{width:2px;background:#e0dbd0;flex:1;min-height:20px;margin:4px 0}
+.tl-right{flex:1;padding-bottom:1.4rem}
+.tl-month{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.75rem;color:var(--red);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.3rem}
+.tl-title{font-size:.9rem;font-weight:600;color:var(--black);margin-bottom:.3rem}
+.tl-body-text{font-size:.82rem;color:var(--grey);line-height:1.6}
+.tl-tag{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 10px;border-radius:10px;background:var(--light);color:var(--black);margin-top:.4rem}
+@media(max-width:600px){
+  .factors-grid,.card-recs,.readiness-grid,.cost-cols{grid-template-columns:1fr}
+  .cost-col:first-child{border-right:none;border-bottom:1px solid #e0dbd0}
+  .rules-grid,.insights-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:420px){.rules-grid,.insights-grid{grid-template-columns:1fr}}
+
+
+.finance-hub{background:var(--light);border:1px solid #d8d3c8;border-radius:12px;padding:1.5rem;margin-top:1.5rem}
+.fh-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:.8rem}
+.fh-title{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:.95rem;margin-bottom:1rem}
+.fh-tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.6rem}
+.fh-tool{background:#fff;border:1px solid #e0dbd0;border-radius:8px;padding:.8rem;text-decoration:none;color:var(--black);transition:border-color .2s;display:flex;align-items:center;gap:.5rem}
+.fh-tool:hover{border-color:var(--red)}
+.fh-tool.current{border-color:var(--red);background:#fff8f8}
+.fh-tool-icon{font-size:1rem;flex-shrink:0}
+.fh-tool-name{font-family:"Plus Jakarta Sans",sans-serif;font-weight:700;font-size:.78rem;color:var(--black)}
+.fh-tool-status{font-size:.65rem;color:var(--grey);margin-top:.1rem}
+footer{background:#0a0a0a;color:#555;text-align:center;padding:2rem;font-size:.82rem}
+footer a{color:var(--red);text-decoration:none}
+footer strong{color:#888}
+.footer-links{margin:.5rem 0;display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem}
+.footer-links a::after{content:"·";margin-left:.5rem;color:#333}
+.footer-links a:last-child::after{display:none}
+.footer-disclaimer{margin-top:.8rem;font-size:.73rem;color:#333;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6}
+@media(max-width:600px){.input-grid,.readiness-grid,.cost-cols,.insights-grid{grid-template-columns:1fr}.cost-col:first-child{border-right:none;border-bottom:1px solid #e0dbd0}.fh-tools{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<script src="nav.js"></script>
+<div style="height:60px"></div>
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-label">&#x1F3E0; Finance System</div>
+    <h1 class="page-title">Buy vs Rent Decision</h1>
+    <p class="page-sub">The biggest financial decision you&#8217;ll make in Canada. Get a clear recommendation with real numbers, cost of living context, and a timeline &#8212; not just a calculator.</p>
+    <div style="margin-top:.8rem;display:flex;gap:.5rem;flex-wrap:wrap"><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">9 Canadian cities</span><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">2025 housing data</span><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">CMHC stress test</span></div>
+  </div>
+</div>
+<main style="max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem">
+  <div class="tool-card">
+    <div class="tool-card-head">Buy vs Rent Decision</div>
+    <div class="tool-card-body">
+      <p style="font-size:.88rem;color:var(--grey);line-height:1.7;margin-bottom:1.2rem">The biggest financial decision you'll make in Canada. Get a clear recommendation with real numbers, context, and a timeline — not just a calculator.</p>
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Combined household income</label>
+          <select id="br-income">
+            <option value="60">Under $70,000</option>
+            <option value="85">$70,000 – $100,000</option>
+            <option value="120" selected>$100,000 – $140,000</option>
+            <option value="160">$140,000 – $180,000</option>
+            <option value="200">$180,000 – $220,000</option>
+            <option value="250">Over $220,000</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>City / region</label>
+          <select id="br-city">
+            <option value="toronto">Toronto / GTA</option>
+            <option value="vancouver">Vancouver / Metro</option>
+            <option value="ottawa" selected>Ottawa</option>
+            <option value="calgary">Calgary</option>
+            <option value="edmonton">Edmonton</option>
+            <option value="montreal">Montréal</option>
+            <option value="hamilton">Hamilton / Kitchener</option>
+            <option value="other">Other city</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Current savings (down payment)</label>
+          <select id="br-savings">
+            <option value="0">Under $20,000</option>
+            <option value="25">$20,000 – $40,000</option>
+            <option value="50">$40,000 – $80,000</option>
+            <option value="100">$80,000 – $120,000</option>
+            <option value="150">Over $120,000</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Credit score (estimated)</label>
+          <select id="br-credit">
+            <option value="none">No Canadian credit yet</option>
+            <option value="poor">Building — under 600</option>
+            <option value="fair" selected>Fair — 600 to 649</option>
+            <option value="good">Good — 650 to 719</option>
+            <option value="excellent">Excellent — 720+</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Time in Canada</label>
+          <select id="br-time">
+            <option value="new">Under 1 year</option>
+            <option value="1to2" selected>1 – 2 years</option>
+            <option value="3plus">3+ years</option>
+            <option value="5plus">5+ years</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>How long do you plan to stay?</label>
+          <select id="br-stay">
+            <option value="1to2">1 – 2 years (uncertain)</option>
+            <option value="3to5" selected>3 – 5 years (likely)</option>
+            <option value="5plus">5+ years (settled)</option>
+            <option value="permanent">Permanently (this is home)</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Current rent (monthly)</label>
+          <select id="br-rent">
+            <option value="1500">Under $1,800</option>
+            <option value="2000" selected>$1,800 – $2,200</option>
+            <option value="2500">$2,200 – $2,800</option>
+            <option value="3200">$2,800 – $3,600</option>
+            <option value="4000">Over $3,600</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>PR / Citizenship status</label>
+          <select id="br-status">
+            <option value="pr">Permanent Resident or Citizen</option>
+            <option value="wp">Work Permit (open/employer)</option>
+            <option value="other">Study or visitor permit</option>
+          </select>
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calcDecision()">Get my buy vs rent decision →</button>
+    </div>
+  </div>
+
+  <div class="results" id="bvr-results">
+
+    <div class="tool-card">
+      <div class="tool-card-head">Your Decision</div>
+      <div class="tool-card-body" style="padding:0">
+        <div id="verdict-hero" class="verdict-hero rent">
+          <div class="verdict-label">Recommendation for your situation</div>
+          <div class="verdict-decision" id="verdict-decision">—</div>
+          <div class="verdict-sub" id="verdict-sub">—</div>
+          <div class="verdict-score-row" id="verdict-scores"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-card-head">Your Buying Readiness</div>
+      <div class="tool-card-body">
+        <div class="readiness-grid" id="readiness-grid"></div>
+      </div>
+    </div>
+
+    <div class="cost-compare">
+      <div class="cost-compare-head">Monthly Cost Breakdown — Rent vs Buy</div>
+      <div class="cost-cols">
+        <div class="cost-col">
+          <div class="cost-col-title">🏠 <span>Renting (now)</span></div>
+          <div id="rent-rows"></div>
+        </div>
+        <div class="cost-col">
+          <div class="cost-col-title">🔑 <span>Buying</span></div>
+          <div id="buy-rows"></div>
+        </div>
+      </div>
+      <div class="cost-total" id="cost-total-row"></div>
+      <div class="cost-winner" id="cost-winner">—</div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-card-head">Context for Your City</div>
+      <div class="tool-card-body">
+        <div class="insights-grid" id="insights-grid"></div>
+      </div>
+    </div>
+
+    <div class="tl-section">
+      <div class="tool-card-head" id="tl-head" style="border-radius:0">Your Path</div>
+      <div style="padding:1.5rem" id="tl-body"></div>
+    </div>
+
+    <div class="next-moves" id="bvr-next-moves" style="display:none;background:#fff;border:2px solid var(--red);border-radius:12px;padding:1.5rem;margin-bottom:1rem"></div>
+    <div class="disclaimer" style="margin-top:1rem">Not financial or real estate advice. Numbers are estimates based on typical Canadian market conditions. Consult a mortgage broker and real estate lawyer before any purchase decision.</div>
+  </div>
+
+
+<div class="finance-hub">
+  <div class="fh-label">Finance System</div>
+  <div class="fh-title">All 5 tools in the Financial Foundation</div>
+  <div class="fh-tools">
+    <a class="fh-tool" href="tools.html"><div class="fh-tool-icon">&#x1F4B0;</div><div><div class="fh-tool-name">Income &amp; Savings</div><div class="fh-tool-status">3-step planner</div></div></a>
+    <a class="fh-tool" href="credit.html"><div class="fh-tool-icon">&#x1F4B3;</div><div><div class="fh-tool-name">Credit Builder</div><div class="fh-tool-status">Zero to 700+</div></div></a>
+    <a class="fh-tool current" href="buy-vs-rent.html"><div class="fh-tool-icon">&#x1F3E0;</div><div><div class="fh-tool-name">Buy vs Rent</div><div class="fh-tool-status">You are here</div></div></a>
+    <a class="fh-tool" href="finance.html"><div class="fh-tool-icon">&#x1F4DA;</div><div><div class="fh-tool-name">Finance Guide</div><div class="fh-tool-status">TFSA &#xB7; RRSP &#xB7; RESP</div></div></a>
+  </div>
+</div>
+</main>
+<footer>
+  <p><strong>Canada Family Guide</strong> &#8212; Built for families across Canada</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="tools.html">Financial Planner</a>
+    <a href="credit.html">Credit Builder</a>
+    <a href="buy-vs-rent.html">Buy vs Rent</a>
+    <a href="finance.html">Finance Guide</a>
+    <a href="newcomer-start.html">Newcomer Guide</a>
+    <a href="education.html">Education</a>
+    <a href="healthcare.html">Healthcare</a>
+    <a href="about.html">About</a>
+  </div>
+  <p class="footer-disclaimer">Not financial or real estate advice. Information is shared for educational purposes only. Consult a mortgage broker and real estate lawyer before any purchase decision.</p>
+</footer>
+<script>
+function set(id,v){const el=document.getElementById(id);if(el)el.innerHTML=v;}
+function fmt(n){return'$'+Math.round(n).toLocaleString('en-CA');}
+// BUY VS RENT
+// ─────────────────────────────────────────────
+const BVR_CITIES = {
+  toronto:  { avgPrice:1080000, name:'Toronto / GTA',    priceTag:'~$1.08M avg', trend:'High demand, limited supply. Prices down ~10% from 2022 peak but still among highest in Canada.' },
+  vancouver:{ avgPrice:1150000, name:'Vancouver / Metro', priceTag:'~$1.15M avg', trend:'Second most expensive city. Condo market more accessible than detached.' },
+  ottawa:   { avgPrice:620000,  name:'Ottawa',            priceTag:'~$620K avg',  trend:'Stable government-driven market. Slower appreciation but also less volatile.' },
+  calgary:  { avgPrice:560000,  name:'Calgary',           priceTag:'~$560K avg',  trend:'No provincial income tax. Strong job market. Prices risen sharply 2022–2024 but still affordable.' },
+  edmonton: { avgPrice:420000,  name:'Edmonton',          priceTag:'~$420K avg',  trend:'Most affordable major city. Good quality of life. Slower price appreciation but stable.' },
+  montreal: { avgPrice:530000,  name:'Montréal',          priceTag:'~$530K avg',  trend:'Unique rent control laws. Buying can be advantageous but French language requirements apply.' },
+  hamilton: { avgPrice:670000,  name:'Hamilton / K-W',    priceTag:'~$670K avg',  trend:'Growing tech hub. More affordable than Toronto. Strong appreciation 2020–2024.' },
+  other:    { avgPrice:500000,  name:'Other city',        priceTag:'~$500K avg',  trend:'Smaller cities generally offer better affordability ratios and lower competition.' }
+};
+
+// ─────────────────────────────────────────────
+// CFG SHARED PLAN STATE
+// One localStorage key shared across all finance tools
+// Schema: { salary, province, monthly, housing, city, savings, creditStage, children, updated }
+// ─────────────────────────────────────────────
+const CFG = {
+  KEY: 'cfg_plan',
+  get() {
+    try { return JSON.parse(localStorage.getItem(this.KEY) || '{}'); } catch(e) { return {}; }
+  },
+  set(patch) {
+    try {
+      const current = this.get();
+      const updated = { ...current, ...patch, updated: Date.now() };
+      localStorage.setItem(this.KEY, JSON.stringify(updated));
+      // Also keep legacy keys in sync for backward compat
+      if (patch.salary)   localStorage.setItem('cfg_salary', patch.salary);
+      if (patch.province) localStorage.setItem('cfg_province', patch.province);
+      if (patch.monthly)  localStorage.setItem('cfg_monthly', Math.round(patch.monthly));
+      if (patch.housing)  localStorage.setItem('cfg_housing', Math.round(patch.housing || 0));
+    } catch(e) {}
+  },
+  fmt(n) { return '$' + Math.round(n).toLocaleString('en-CA'); },
+  // Returns a human-readable summary banner for pre-fill notice
+  banner(fields) {
+    const p = this.get();
+    const parts = [];
+    if (fields.includes('income') && p.monthly) parts.push(`take-home ${this.fmt(p.monthly)}/mo`);
+    if (fields.includes('city') && p.city)       parts.push(p.city.charAt(0).toUpperCase() + p.city.slice(1));
+    if (fields.includes('savings') && p.savings) parts.push(`savings ${this.fmt(p.savings)}`);
+    if (fields.includes('credit') && p.creditStage) parts.push(`credit: ${p.creditStage}`);
+    return parts.length ? `✓ Pre-filled from your plan — ${parts.join(' · ')}` : null;
+  }
+};
+
+
+function calcDecision() {
+  const income  = parseInt(document.getElementById('br-income').value)*1000;
+  const city    = document.getElementById('br-city').value;
+  const savings = parseInt(document.getElementById('br-savings').value)*1000;
+  const credit  = document.getElementById('br-credit').value;
+  const time    = document.getElementById('br-time').value;
+  const stay    = document.getElementById('br-stay').value;
+  const rent    = parseInt(document.getElementById('br-rent').value);
+  const status  = document.getElementById('br-status').value;
+
+  const cd = BVR_CITIES[city];
+  const price = cd.avgPrice;
+  const ideal20 = price * 0.20;
+  const minDown = price <= 500000 ? price*0.05 : (500000*0.05 + (price-500000)*0.10);
+
+  // Readiness score 0–100
+  let score = 0;
+  if (savings >= ideal20) score+=30; else if (savings >= minDown*1.5) score+=20; else if (savings >= minDown) score+=10;
+  const mortgage = price - Math.min(savings, ideal20);
+  const stressRate = 0.0725;
+  const monthlyM = mortgage*(stressRate/12)/(1-Math.pow(1+stressRate/12,-300));
+  const gds = (monthlyM*12 + price*0.015)/income;
+  if (gds<0.28) score+=25; else if (gds<0.32) score+=18; else if (gds<0.39) score+=10;
+  const creditPts = {none:0,poor:0,fair:7,good:14,excellent:20};
+  score += creditPts[credit]||0;
+  const stayPts = {'1to2':0,'3to5':6,'5plus':11,'permanent':15};
+  score += stayPts[stay]||0;
+  if (status==='pr') score+=10; else if (status==='wp') score+=5;
+
+  // Verdict
+  let verdict, verdictSub, verdictClass;
+  if (score>=70) { verdict='✅ You are ready to buy'; verdictClass='buy'; verdictSub=`Your finances, credit, and stability all point toward buying in ${cd.name}.`; }
+  else if (score>=45) { const mo=score>=60?'6–12 months':'12–18 months'; verdict=`⏳ You can buy in ${mo}`; verdictClass='soon'; verdictSub='You\'re not far off. See your readiness breakdown and timeline below for exactly what to fix.'; }
+  else { verdict='🏠 Keep renting for now'; verdictClass='rent'; verdictSub='Buying now would stretch your finances too far. Renting is the right financial decision while you build toward readiness.'; }
+
+  set('verdict-hero', `<div class="verdict-label">Recommendation for your situation</div>
+    <div class="verdict-decision">${verdict}</div>
+    <div class="verdict-sub">${verdictSub}</div>
+    <div class="verdict-score-row">
+      <div class="verdict-score"><div class="verdict-score-num">${score}/100</div><div class="verdict-score-label">Readiness score</div></div>
+      <div class="verdict-score"><div class="verdict-score-num">${cd.priceTag}</div><div class="verdict-score-label">${cd.name} avg</div></div>
+      <div class="verdict-score"><div class="verdict-score-num">${Math.round(gds*100)}%</div><div class="verdict-score-label">Housing cost ratio</div></div>
+    </div>`);
+  document.getElementById('verdict-hero').className = `verdict-hero ${verdictClass}`;
+
+  // Readiness bars
+  const bColor = p => p>=75?'#1a7a4a':p>=50?'#9a6f00':'#C8102E';
+  const downPct = Math.min(100,Math.round((savings/ideal20)*100));
+  const incPct  = Math.min(100,Math.round(((0.39-Math.min(gds,0.39))/0.39)*100));
+  const credPct = {none:5,poor:28,fair:55,good:78,excellent:100}[credit];
+  const stabPct = {'1to2':10,'3to5':50,'5plus':80,'permanent':100}[stay];
+  const statPct = {pr:100,wp:50,other:10}[status];
+
+  const bars = [
+    { name:'Down Payment', pct:downPct, color:bColor(downPct), status:downPct>=100?'✓ Strong':downPct>=50?'Building':'Needs work', tip:downPct>=100?`${fmt(savings)} saved — covers 20% down, avoids CMHC insurance.`:`Need ${fmt(Math.max(0,ideal20-savings))} more for 20% down. Minimum is ${fmt(Math.max(0,minDown-savings))} more.` },
+    { name:'Income Stress Test', pct:incPct, color:bColor(incPct), status:incPct>=75?'✓ Passes comfortably':incPct>=50?'Borderline':'Fails stress test', tip:`Housing costs would be ~${Math.round(gds*100)}% of income (lender max 39%). ${gds>0.39?'Would likely be declined.':'Should qualify.'}` },
+    { name:'Credit Score', pct:credPct, color:bColor(credPct), status:credPct>=78?'✓ Mortgage-ready':credPct>=55?'Minimum threshold':'Not ready', tip:credit==='none'?'No Canadian credit history — lenders require at least 2 years.':credit==='poor'?'Under 600 = refusal or very high rates. Build to 650+ first.':credit==='fair'?'May qualify at 600+ but rates will be higher. 680+ meaningfully better.':'Good score — qualify for competitive rates.' },
+    { name:'Stability & Plans', pct:stabPct, color:bColor(stabPct), status:stabPct>=80?'✓ Long-term settled':stabPct>=50?'Planning to stay':'Too uncertain', tip:stay==='1to2'?'Buying for under 3 years almost always loses money after transaction costs (~5%).':stay==='3to5'?'Break-even is typically 3–4 years. You may come out ahead.':'Buying makes clear financial sense when you stay 5+ years.' },
+    { name:'Immigration Status', pct:statPct, color:bColor(statPct), status:status==='pr'?'✓ Full eligibility':status==='wp'?'Eligible with conditions':'Limited', tip:status==='pr'?'Full access to all Canadian mortgage products.':status==='wp'?'Can get mortgages but may need 20–35% down and fewer lender options.':'Study/visitor permits have very limited mortgage access.' },
+  ];
+
+  document.getElementById('readiness-grid').innerHTML = bars.map(b=>`
+    <div class="readiness-card">
+      <div class="readiness-name">${b.name}<span style="color:var(--black)">${b.pct}%</span></div>
+      <div class="readiness-bar-bg"><div class="readiness-bar" style="width:${b.pct}%;background:${b.color}"></div></div>
+      <div class="readiness-status" style="color:${b.color}">${b.status}</div>
+      <div class="readiness-tip">${b.tip}</div>
+    </div>`).join('');
+
+  // Cost comparison
+  const actualDown = Math.min(savings,ideal20);
+  const loanAmt    = price - actualDown;
+  const rate       = credit==='excellent'?0.0525:credit==='good'?0.056:0.062;
+  const mPI        = loanAmt*(rate/12)/(1-Math.pow(1+rate/12,-300));
+  const propTax    = price*0.012/12;
+  const maint      = price*0.01/12;
+  const cmhc       = actualDown < price*0.20 ? (loanAmt*0.031)/300 : 0;
+  const ins        = 120;
+  const buyTotal   = mPI+propTax+maint+ins+cmhc;
+  const diff       = buyTotal - rent;
+
+  document.getElementById('rent-rows').innerHTML = `
+    <div class="cost-row"><span class="cost-key">Monthly rent</span><span class="cost-val">${fmt(rent)}</span></div>
+    <div class="cost-row"><span class="cost-key">Tenant insurance</span><span class="cost-val">~$40</span></div>
+    <div class="cost-row"><span class="cost-key">Maintenance</span><span class="cost-val">$0</span></div>`;
+  document.getElementById('buy-rows').innerHTML = `
+    <div class="cost-row"><span class="cost-key">Mortgage P+I</span><span class="cost-val">${fmt(mPI)}</span></div>
+    <div class="cost-row"><span class="cost-key">Property tax</span><span class="cost-val">${fmt(propTax)}</span></div>
+    <div class="cost-row"><span class="cost-key">Maintenance</span><span class="cost-val">${fmt(maint)}</span></div>
+    <div class="cost-row"><span class="cost-key">Home insurance</span><span class="cost-val">${fmt(ins)}</span></div>
+    ${cmhc>0?`<div class="cost-row"><span class="cost-key">CMHC premium</span><span class="cost-val">${fmt(cmhc)}</span></div>`:''}`;
+  set('cost-total-row',`<span><strong>Rent total</strong> ${fmt(rent+40)}/mo</span><span><strong>Buy total</strong> ${fmt(buyTotal)}/mo</span>`);
+  set('cost-winner', diff>0 ? `Renting saves ${fmt(Math.abs(diff))}/month — but buying builds ~${fmt(mPI*0.35)}/month in equity` : `Buying is ${fmt(Math.abs(diff))}/month cheaper AND builds ~${fmt(mPI*0.35)}/month equity`);
+
+  // City insights
+  const priceToInc = (price/income).toFixed(1);
+  const insights = [
+    { icon:'📊', label:'Price-to-income ratio', val:`${priceToInc}×`, desc:`Under 5× is healthy. Over 7× is stretched. ${cd.name} context: ${(cd.avgPrice/100000).toFixed(1)}× at $100K income.` },
+    { icon:'🏙️', label:'Market character', val:cd.name, desc:cd.trend },
+    { icon:'💰', label:'Upfront costs to buy', val:fmt(actualDown+price*0.03), desc:`Down payment (${fmt(actualDown)}) + closing costs (land transfer, legal, ~3%).` },
+    { icon:'📅', label:'Break-even horizon', val:stay==='1to2'?'⚠ Won\'t break even':'~3–4 years', desc:'Transaction costs (buying + selling) are ~5–7% of home price. You need time to recover these.' },
+    { icon:'🔑', label:'FHSA benefit', val:'$40,000', desc:'First Home Savings Account — up to $8,000/year tax deductible. Open one now even if buying is years away.' },
+    { icon:'📈', label:'Rent vs invest', val:diff>500?'Invest the diff':'Buy builds equity', desc:diff>500?`The ${fmt(diff)}/mo you save renting, invested at 7%, grows to ${fmt(diff*12*5*1.4)} over 5 years.`:'Monthly costs are similar but buying builds equity each payment.' },
+  ];
+  document.getElementById('insights-grid').innerHTML = insights.map(i=>`
+    <div class="insight-card">
+      <div class="insight-icon">${i.icon}</div>
+      <div class="insight-label">${i.label}</div>
+      <div class="insight-val">${i.val}</div>
+      <div class="insight-desc">${i.desc}</div>
+    </div>`).join('');
+
+  // Timeline
+  const tl = buildBVRTimeline(score, credit, savings, minDown, ideal20, income, price, stay, status, city);
+  set('tl-head', score>=70?'Your Buying Path':'Your Path to Buying Ready');
+  document.getElementById('tl-body').innerHTML = tl.map((s,i)=>`
+    <div class="tl-item">
+      <div class="tl-left">
+        <div class="tl-dot" style="background:${s.color}">${s.num}</div>
+        ${i<tl.length-1?'<div class="tl-line"></div>':''}
+      </div>
+      <div class="tl-right">
+        <div class="tl-month">${s.when}</div>
+        <div class="tl-title">${s.title}</div>
+        <div class="tl-body-text">${s.body}</div>
+        <span class="tl-tag">${s.tag}</span>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('bvr-results').classList.add('show');
+  // Save to shared plan
+  CFG.set({
+    city: document.getElementById('br-city').value,
+    savings: parseInt(document.getElementById('br-savings').value)*1000,
+    creditStage: document.getElementById('br-credit').value,
+    bvrVerdict: verdictClass
+  });
+
+  // Next 3 moves
+  const movesEl = document.getElementById('bvr-next-moves');
+  if(movesEl){
+    const plan = CFG.get();
+    const movesData = verdictClass === 'buy' ? [
+      { icon:'🏦', text:`<strong>Get mortgage pre-approval this week</strong> — contact 2–3 mortgage brokers (not just your bank). A broker shops multiple lenders and typically finds 0.3–0.7% better rates. Lock your rate for 90 days.` },
+      { icon:'💳', text:`<strong>Check your credit score before applying</strong> — going from 680 to 720+ can save $150–300/month on the same mortgage.`, link:'credit.html', linkLabel:'Credit Builder →' },
+      { icon:'📋', text:`<strong>Open your FHSA immediately if you haven't</strong> — $8,000 tax deduction this year, $40,000 lifetime. Even if you buy in 3 months, the contribution saves taxes now.` },
+    ] : verdictClass === 'soon' ? [
+      { icon:'💳', text:`<strong>Credit score is your biggest lever right now</strong> — improving from 625 to 720 reduces your mortgage rate by ~1% and saves thousands annually.`, link:'credit.html', linkLabel:'Credit Builder →' },
+      { icon:'💰', text:`<strong>Direct savings to FHSA first</strong> — $8,000/year is tax-deductible AND tax-free on withdrawal. Better than a regular savings account by a wide margin.` },
+      { icon:'📅', text:`<strong>Book a mortgage broker consultation</strong> — free, takes 45 minutes, and tells you exactly what you need to qualify. Knowledge now removes surprises later.` },
+    ] : [
+      { icon:'💰', text:`<strong>Focus savings: FHSA then TFSA</strong> — FHSA is specifically for a first home purchase and gives you the best tax treatment of any account.`, link:'tools.html', linkLabel:'Savings Planner →' },
+      { icon:'💳', text:`<strong>Start building credit now</strong> — even 12 months of a secured card with full monthly payments transforms your mortgage options.`, link:'credit.html', linkLabel:'Credit Builder →' },
+      { icon:'📍', text:`<strong>Consider adjusting your city target</strong> — Edmonton and Calgary offer dramatically better price-to-income ratios than Toronto/Vancouver with strong job markets.` },
+    ];
+    movesEl.innerHTML = '<div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:1rem">🎯 Your next 3 moves</div>' +
+      movesData.map(m=>`<div style="display:flex;gap:.8rem;padding:.85rem 0;border-bottom:1px solid #f0ece4;align-items:flex-start">
+        <div style="font-size:1.1rem;flex-shrink:0;margin-top:.1rem">${m.icon}</div>
+        <div style="font-size:.85rem;color:var(--grey);line-height:1.6;flex:1">${m.text}${m.link?` <a href="${m.link}" style="color:var(--red);font-weight:600">${m.linkLabel}</a>`:''}</div>
+      </div>`).join('');
+    movesEl.style.display='block';
+  }
+
+  document.getElementById('bvr-results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function buildBVRTimeline(score, credit, savings, minDown, ideal20, income, price, stay, status, city) {
+  if (score>=70) return [
+    { num:'1', when:'Now — Month 1', color:'#C8102E', title:'Get mortgage pre-approval', body:'Contact 2–3 mortgage brokers (not just your bank). A broker shops multiple lenders and often finds better rates. You\'ll need: 2 years tax returns, pay stubs, bank statements, SIN.', tag:'Start here' },
+    { num:'2', when:'Month 1–2', color:'#1a7a4a', title:'Open FHSA if not already open', body:'$8,000 deductible this year, $40,000 lifetime. Even if you buy in 6 months, open now for the tax deduction.', tag:'Tax savings' },
+    { num:'3', when:'Month 2–3', color:'#9a6f00', title:'Hire a buyer\'s agent', body:'In Canada, the buyer\'s agent is paid by the seller — it costs you nothing. Interview 2–3 agents with newcomer buyer experience.', tag:'Free for buyers' },
+    { num:'4', when:'Month 2–4', color:'#0f0f0f', title:'House hunt with conditions', body:'Always include a home inspection condition (minimum 5 business days) and financing condition. Never waive inspection in a competitive market.', tag:'Protect yourself' },
+    { num:'5', when:'Closing day', color:'#1a7a4a', title:`Budget ${fmt(Math.round(price*0.04))} for closing costs`, body:'Land transfer tax, legal fees, title insurance, home inspection. Budget ~4% of purchase price.', tag:'Budget item' },
+  ];
+  const steps = [{ num:'1', when:'Now', color:'#C8102E', title:'Open your FHSA immediately', body:'$8,000/year tax deduction, $40,000 lifetime. Available at any major bank. Contributes to your down payment tax-free.', tag:'Start today' }];
+  if (credit!=='excellent'&&credit!=='good') steps.push({ num:`${steps.length+1}`, when:'Months 1–12', color:'#0f0f0f', title:'Build credit to 680+', body:'Going from 625 to 720 can save $150–300/month on the same mortgage. Pay in full, keep under 30%, don\'t open new accounts. Use Step 4 Credit Builder above.', tag:'Biggest lever' });
+  if (savings<ideal20) { const gap=ideal20-savings; const mos=Math.ceil(gap/(income*0.15/12)); steps.push({ num:`${steps.length+1}`, when:`Months 1–${Math.min(mos,24)}`, color:'#9a6f00', title:`Save ${fmt(gap)} more for 20% down`, body:`20% down avoids CMHC insurance. At 15% savings rate on your income that's ~${mos} months. Max TFSA and FHSA first.`, tag:'Financial goal' }); }
+  if (status==='wp') steps.push({ num:`${steps.length+1}`, when:'Ongoing', color:'#555', title:'PR unlocks best mortgage products', body:'As a PR you qualify for all CMHC-insured products (5% down) and best rates. Work permits can still get mortgages but need 20–35% down.', tag:'Status matters' });
+  const readyIn = score>=60?'6–12 months':score>=45?'12–18 months':'18–24 months';
+  steps.push({ num:`${steps.length+1}`, when:`${readyIn} from now`, color:'#1a7a4a', title:'Get pre-approved and start searching', body:'Once credit is 680+, savings cover 20% down, and you have 2+ years Canadian income history — get pre-approved. A mortgage broker will get better rates than your bank alone.', tag:'Your target' });
+  return steps;
+}
+</script>
+
+// Pre-fill from shared plan on load
+window.addEventListener('load', function(){
+  try{
+    const plan = CFG.get();
+    if(!plan.updated) return;
+
+    // Pre-fill income bracket
+    if(plan.monthly){
+      const annualEst = plan.monthly * 12;
+      const incSel = document.getElementById('br-income');
+      const opts = [{v:60,max:70000},{v:85,max:100000},{v:120,max:140000},{v:160,max:180000},{v:200,max:220000},{v:250,max:999999}];
+      for(const o of opts){ if(annualEst <= o.max*1000){ incSel.value=o.v; break; } }
+    }
+    // Pre-fill city
+    if(plan.city){
+      const citySel = document.getElementById('br-city');
+      if([...citySel.options].some(o=>o.value===plan.city)) citySel.value = plan.city;
+    }
+    // Pre-fill savings bracket
+    if(plan.savings){
+      const savSel = document.getElementById('br-savings');
+      const savOpts = [{v:0,max:20000},{v:25,max:40000},{v:50,max:80000},{v:100,max:120000},{v:150,max:999999}];
+      for(const o of savOpts){ if(plan.savings <= o.max){ savSel.value=o.v; break; } }
+    }
+    // Pre-fill credit stage
+    if(plan.creditStage && ['none','poor','fair','good','excellent'].includes(plan.creditStage)){
+      document.getElementById('br-credit').value = plan.creditStage;
+    }
+
+    // Show banner
+    const parts=[];
+    if(plan.monthly) parts.push('income '+CFG.fmt(plan.monthly)+'/mo');
+    if(plan.city) parts.push(plan.city.charAt(0).toUpperCase()+plan.city.slice(1));
+    if(plan.savings) parts.push('savings '+CFG.fmt(plan.savings));
+    if(parts.length){
+      const banner=document.createElement('div');
+      banner.style.cssText='background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:.7rem 1rem;font-size:.82rem;color:#1b5e20;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem';
+      banner.innerHTML='<span>&#x2713;</span><span>Pre-filled from your plan: <strong>'+parts.join(' · ')+'</strong> — <a href="tools.html" style="color:#1a7a4a;font-weight:600">Edit plan</a></span>';
+      const main=document.querySelector('main');
+      if(main) main.insertBefore(banner, main.firstChild);
+    }
+  }catch(e){}
+});
+
+</script>
+</body>
+</html>

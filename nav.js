@@ -10,12 +10,17 @@
   ];
 
   const moreLinks = [
-    { href: 'tools.html',        label: '🧮 Financial Planner' },
-    { href: 'credit.html',       label: '💳 Credit Builder' },
-    { href: 'travel.html',       label: 'Travel' },
-    { href: 'recreation.html',   label: 'Recreation' },
-    { href: 'tech-careers.html', label: 'Tech & AI' },
-    { href: 'about.html',        label: 'About' },
+    { href: 'tools.html',             label: '💰 Financial Planner' },
+    { href: 'credit.html',            label: '💳 Credit Builder' },
+    { href: 'buy-vs-rent.html',       label: '🏠 Buy vs Rent' },
+    { href: 'stream-decision.html',   label: '🎓 Stream Decision' },
+    { href: 'university-planner.html',label: '🎓 Uni Planner' },
+    { href: 'job-offer.html',         label: '💼 Job Evaluator' },
+    { href: 'setup-tracker.html',     label: '📋 Setup Tracker' },
+    { href: 'travel.html',            label: 'Travel' },
+    { href: 'recreation.html',        label: 'Recreation' },
+    { href: 'tech-careers.html',      label: 'Tech & AI' },
+    { href: 'about.html',             label: 'About' },
   ];
 
   const allLinks = [...primaryLinks, ...moreLinks];
@@ -73,7 +78,7 @@
 .nav-ham[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .nav-ham[aria-expanded="true"] span:nth-child(2){opacity:0}
 .nav-ham[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.nav-mob-panel{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(247,245,240,.98);backdrop-filter:blur(8px);border-bottom:1px solid #ddd;z-index:199;padding:.75rem 1.5rem 1rem;grid-template-columns:1fr 1fr;gap:2px}
+.nav-mob-panel{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(247,245,240,.98);backdrop-filter:blur(8px);border-bottom:1px solid #ddd;z-index:199;padding:.75rem 1.5rem 1rem;grid-template-columns:1fr 1fr 1fr;gap:2px;max-height:calc(100vh - 60px);overflow-y:auto}
 .nav-mob-panel.open{display:grid}
 .nav-mob-item{font-size:.9rem;font-weight:500;color:#0f0f0f;text-decoration:none;padding:10px 12px;border-radius:6px;transition:background .15s,color .15s}
 .nav-mob-item:hover{background:#EDE9E0;color:#C8102E}
