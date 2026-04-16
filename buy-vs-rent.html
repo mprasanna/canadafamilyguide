@@ -673,7 +673,7 @@ function calcDecision() {
       { icon:'💳', text:`<strong>Start building credit now</strong> — even 12 months of a secured card with full monthly payments transforms your mortgage options.`, link:'credit.html', linkLabel:'Credit Builder →' },
       { icon:'📍', text:`<strong>Consider adjusting your city target</strong> — Edmonton and Calgary offer dramatically better price-to-income ratios than Toronto/Vancouver with strong job markets.` },
     ];
-    movesEl.innerHTML = '<div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:1rem">🎯 Your next 3 moves</div>' +
+    movesEl.innerHTML = `<div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:1rem">🎯 Your next 3 moves</div>` +
       movesData.map(m=>`<div style="display:flex;gap:.8rem;padding:.85rem 0;border-bottom:1px solid #f0ece4;align-items:flex-start">
         <div style="font-size:1.1rem;flex-shrink:0;margin-top:.1rem">${m.icon}</div>
         <div style="font-size:.85rem;color:var(--grey);line-height:1.6;flex:1">${m.text}${m.link?` <a href="${m.link}" style="color:var(--red);font-weight:600">${m.linkLabel}</a>`:''}</div>

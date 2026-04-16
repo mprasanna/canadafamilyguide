@@ -536,7 +536,7 @@ function buildCreditPlan() {
       { icon:'🏠', text:`<strong>Ready to decide on buying?</strong> — Your credit stage directly affects your mortgage rate. See what you can qualify for now.`, link:'buy-vs-rent.html', linkLabel:'Buy vs Rent Tool →' },
       { icon:'💰', text:`<strong>Check your savings plan</strong> — while building credit, your TFSA and FHSA should be growing simultaneously. Every month both compound.`, link:'tools.html', linkLabel:'Financial Planner →' },
     ];
-    movesEl.innerHTML = '<div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:1rem">🎯 Your next 3 moves</div>' +
+    movesEl.innerHTML = `<div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:1rem">🎯 Your next 3 moves</div>` +
       moves.map(m=>`<div style="display:flex;gap:.8rem;padding:.85rem 0;border-bottom:1px solid #f0ece4;align-items:flex-start">
         <div style="font-size:1.1rem;flex-shrink:0;margin-top:.1rem">${m.icon}</div>
         <div style="font-size:.85rem;color:var(--grey);line-height:1.6;flex:1">${m.text}${m.link?` <a href="${m.link}" style="color:var(--red);font-weight:600">${m.linkLabel}</a>`:''}</div>

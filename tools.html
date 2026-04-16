@@ -1104,7 +1104,7 @@ function buildNextSteps(income, housing, tfsa, rrsp, resp, children, marginal){
       { icon:'🏦', text:`<strong>Contribute ${tfsaAmt}/month to your TFSA</strong> — tax-free growth from day one. Target: ${emergencyTarget} emergency fund first (3 months of take-home), then keep investing. Every year you delay loses $7,000 of permanent room.`, link:null, linkLabel:null },
       { icon:'🏠', text:`<strong>Should you buy in ${cityLabel}?</strong> — based on your ${fmt(income)}/month take-home${plan.savings ? ' and '+fmt(plan.savings)+' saved' : ''}, see whether buying makes sense now, in 12 months, or later.`, link:'buy-vs-rent.html', linkLabel:'Buy vs Rent →' },
     ];
-    nm.innerHTML = '<div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:1rem">🎯 Your next 3 moves</div>' +
+    nm.innerHTML = `<div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:1rem">🎯 Your next 3 moves</div>` +
       moves.map(m=>`<div style="display:flex;gap:.8rem;padding:.85rem 0;border-bottom:1px solid #f0ece4;align-items:flex-start">
         <div style="font-size:1.1rem;flex-shrink:0;margin-top:.1rem">${m.icon}</div>
         <div style="font-size:.85rem;color:var(--grey);line-height:1.6;flex:1">${m.text}${m.link?` <a href="${m.link}" style="color:var(--red);font-weight:600">${m.linkLabel}</a>`:''}</div>
