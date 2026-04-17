@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Canada Family Guide</title>
+<meta name="description" content="Get in touch with Canada Family Guide. A question, feedback, or a hello from a fellow immigrant family — all welcome.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://canadafamilyguide.com/contact.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Contact — Canada Family Guide">
+<meta property="og:description" content="Questions, feedback, or a hello — I read every message.">
+<meta property="og:url" content="https://canadafamilyguide.com/contact.html">
+<meta property="og:site_name" content="Canada Family Guide">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍁</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#C8102E;--red-dark:#9B0B22;
+  --black:#0f0f0f;--white:#F7F5F0;--grey:#666;--light:#EDE9E0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--black);font-family:'DM Sans',sans-serif;overflow-x:hidden;font-size:16px;line-height:1.75}
+
+nav{position:fixed;top:0;left:0;right:0;background:rgba(247,245,240,.96);backdrop-filter:blur(8px);border-bottom:1px solid #ddd;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px}
+.nav-logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;color:var(--black);text-decoration:none;display:flex;align-items:center;gap:.4rem}
+.nav-logo span{color:var(--red)}
+.nav-links{display:flex;align-items:center;gap:.5rem}
+.nav-home{display:inline-flex;align-items:center;gap:5px;background:var(--red);color:#fff!important;padding:5px 14px;border-radius:3px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700!important;font-size:.88rem;text-decoration:none;transition:background .2s}
+.nav-home:hover{background:var(--red-dark)!important}
+.nav-link{font-size:.9rem;font-weight:500;color:var(--grey);text-decoration:none;padding:5px 10px;border-radius:6px;transition:all .2s}
+.nav-link:hover,.nav-link.active{color:var(--red)}
+@media(max-width:700px){.nav-links .nav-link{display:none}}
+
+/* ── PAGE ── */
+.page{padding-top:60px}
+
+/* ── HEADER ── */
+.header{max-width:640px;margin:0 auto;padding:4.5rem 2rem 1.5rem}
+.header-label{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.55rem}
+.header-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.9rem,4vw,2.6rem);font-weight:800;line-height:1.12;margin-bottom:.8rem}
+.header-sub{font-size:1rem;line-height:1.75;color:var(--grey)}
+.header-sub strong{color:var(--black);font-weight:500}
+
+/* ── FORM ── */
+.form-section{max-width:640px;margin:0 auto;padding:2rem 2rem 2rem}
+
+.ct-form{display:block}
+.ct-row{margin-bottom:1.25rem}
+.ct-row.two{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:520px){.ct-row.two{grid-template-columns:1fr;gap:0}.ct-row.two .ct-row{margin-bottom:1.25rem}}
+
+.ct-label{
+  display:block;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:.78rem;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;
+  color:var(--black);margin-bottom:.45rem;
+}
+.ct-label .req{color:var(--red);margin-left:.15rem}
+
+.ct-input,.ct-select,.ct-textarea{
+  width:100%;
+  font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--black);
+  background:#fff;border:1px solid #d8d3c8;border-radius:6px;
+  padding:.75rem .9rem;
+  transition:border-color .15s, box-shadow .15s;
+  -webkit-appearance:none;appearance:none;
+}
+.ct-input:focus,.ct-select:focus,.ct-textarea:focus{
+  outline:none;border-color:var(--red);
+  box-shadow:0 0 0 3px rgba(200,16,46,.12);
+}
+.ct-select{
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat:no-repeat;background-position:right 1rem center;
+  padding-right:2.4rem;cursor:pointer;
+}
+.ct-textarea{resize:vertical;min-height:150px;line-height:1.6}
+
+.ct-submit{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--red);color:#fff;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.92rem;
+  padding:.9rem 1.9rem;border:none;border-radius:6px;cursor:pointer;
+  transition:background .15s, transform .15s, box-shadow .15s;
+}
+.ct-submit:hover{background:var(--red-dark);transform:translateY(-1px);box-shadow:0 6px 18px rgba(200,16,46,.22)}
+.ct-submit:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
+
+.ct-status{
+  margin-top:1.1rem;padding:.85rem 1rem;
+  border-radius:6px;font-size:.9rem;line-height:1.55;
+  display:none;
+}
+.ct-status.success{display:block;background:#e8f5ee;color:#1a7a4a;border:1px solid #b5dcc5}
+.ct-status.error{display:block;background:#fdecef;color:#9B0B22;border:1px solid #f3c2cb}
+
+.ct-footnote{
+  font-size:.82rem;color:var(--grey);margin-top:1.1rem;line-height:1.65;
+}
+
+/* Subtle reassurance panel */
+.reassure{
+  max-width:640px;margin:0 auto;padding:0 2rem 4rem;
+}
+.reassure-box{
+  background:#fff;border:1px solid #e0dbd0;border-radius:8px;
+  padding:1.2rem 1.4rem;
+  display:flex;gap:.9rem;align-items:flex-start;
+}
+.reassure-icon{font-size:1.2rem;line-height:1;margin-top:.1rem}
+.reassure-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.9rem;margin-bottom:.25rem}
+.reassure-desc{font-size:.85rem;color:var(--grey);line-height:1.65}
+.reassure-desc a{color:var(--red);text-decoration:none;font-weight:600}
+.reassure-desc a:hover{text-decoration:underline}
+
+footer{background:#0a0a0a;color:#555;text-align:center;padding:2rem;font-size:.82rem}
+footer a{color:var(--red);text-decoration:none}
+footer strong{color:#888}
+.footer-links{margin:.5rem 0;display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem}
+.footer-links a::after{content:'·';margin-left:.5rem;color:#333}
+.footer-links a:last-child::after{display:none}
+.footer-disclaimer{margin-top:.8rem;font-size:.75rem;color:#333;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6}
+</style>
+</head>
+<body>
+<script src="nav.js"></script>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-label">Contact</div>
+    <h1 class="header-title">Get in touch</h1>
+    <p class="header-sub">A question, feedback, or a hello — <strong>all welcome.</strong> I read every message myself.</p>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-section">
+    <form class="ct-form" id="ctForm" action="https://api.web3forms.com/submit" method="POST">
+
+      <!-- Web3Forms wiring -->
+      <input type="hidden" name="access_key" value="72b4da98-3bdb-47a4-b133-2d29019d665a">
+      <input type="hidden" name="subject" value="[Contact] New message from Canada Family Guide">
+      <input type="hidden" name="from_name" value="Canada Family Guide — Contact">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
+      <div class="ct-row two">
+        <div class="ct-row" style="margin-bottom:0">
+          <label class="ct-label" for="ct-name">Name <span class="req">*</span></label>
+          <input class="ct-input" type="text" id="ct-name" name="name" required maxlength="120" autocomplete="name">
+        </div>
+        <div class="ct-row" style="margin-bottom:0">
+          <label class="ct-label" for="ct-email">Email <span class="req">*</span></label>
+          <input class="ct-input" type="email" id="ct-email" name="email" required maxlength="180" autocomplete="email">
+        </div>
+      </div>
+
+      <div class="ct-row">
+        <label class="ct-label" for="ct-topic">Topic <span class="req">*</span></label>
+        <select class="ct-select" id="ct-topic" name="topic" required>
+          <option value="" disabled selected>Select a topic…</option>
+          <option value="Education (Ontario schools)">Education (Ontario schools)</option>
+          <option value="Finance &amp; TFSA">Finance &amp; TFSA</option>
+          <option value="Healthcare / OHIP">Healthcare / OHIP</option>
+          <option value="Immigration &amp; settling in">Immigration &amp; settling in</option>
+          <option value="India → Canada move">India → Canada move</option>
+          <option value="Feedback on the site">Feedback on the site</option>
+          <option value="General question">General question</option>
+          <option value="Just saying hello">Just saying hello</option>
+        </select>
+      </div>
+
+      <div class="ct-row">
+        <label class="ct-label" for="ct-message">Message <span class="req">*</span></label>
+        <textarea class="ct-textarea" id="ct-message" name="message" required maxlength="2000" placeholder="What's on your mind?"></textarea>
+      </div>
+
+      <button class="ct-submit" type="submit" id="ct-submit">
+        <span id="ct-submit-text">Send message</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+
+      <div class="ct-status" id="ct-status" role="status" aria-live="polite"></div>
+
+      <p class="ct-footnote">
+        Your message goes straight to my inbox. I don't share your email, and replies usually come within a few days.
+      </p>
+    </form>
+  </div>
+
+  <!-- Reassure / alt -->
+  <div class="reassure">
+    <div class="reassure-box">
+      <div class="reassure-icon">💡</div>
+      <div>
+        <div class="reassure-title">Curious who's behind this site?</div>
+        <div class="reassure-desc">Read the <a href="about.html">About page</a> — one immigrant dad, two daughters in Ontario schools, and one year of figuring Canada out the hard way.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p><strong>Canada Family Guide</strong> — Built for families across Canada</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="newcomer-start.html">Newcomer Guide</a>
+    <a href="finance.html">Finance</a>
+    <a href="education.html">Education</a>
+    <a href="planner.html">Grade Planner</a>
+    <a href="streams.html">Career Streams</a>
+    <a href="community.html">Community Hours</a>
+    <a href="extracurriculars.html">Extracurriculars</a>
+    <a href="newcomer.html">Education Newcomers</a>
+    <a href="quebec.html">Quebec/CEGEP</a>
+    <a href="recreation.html">Recreation</a>
+    <a href="travel.html">Travel</a>
+    <a href="tech-careers.html">Tech &amp; AI</a>
+    <a href="healthcare.html">Healthcare</a>
+    <a href="india.html">India Guide</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <p class="footer-disclaimer">Not financial or legal advice. Information is shared for educational purposes only. Always verify with your school board, a registered financial advisor, or relevant authority.</p>
+</footer>
+
+<script>
+  (function(){
+    var form       = document.getElementById('ctForm');
+    var status     = document.getElementById('ct-status');
+    var button     = document.getElementById('ct-submit');
+    var buttonText = document.getElementById('ct-submit-text');
+    if(!form) return;
+
+    form.addEventListener('submit', async function(e){
+      e.preventDefault();
+
+      button.disabled = true;
+      buttonText.textContent = 'Sending…';
+      status.className = 'ct-status';
+      status.textContent = '';
+
+      try{
+        var fd = new FormData(form);
+        var response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: fd
+        });
+        var data = await response.json();
+
+        if(data.success){
+          status.className = 'ct-status success';
+          status.textContent = 'Thanks — your message is on its way. I\u2019ll reply within a few days.';
+          form.reset();
+          buttonText.textContent = 'Sent ✓';
+          setTimeout(function(){
+            button.disabled = false;
+            buttonText.textContent = 'Send message';
+          }, 4000);
+        } else {
+          throw new Error(data.message || 'Submission failed');
+        }
+      } catch(err){
+        status.className = 'ct-status error';
+        status.textContent = 'Something went wrong — please try again in a moment.';
+        button.disabled = false;
+        buttonText.textContent = 'Send message';
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>

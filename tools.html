@@ -20,11 +20,11 @@
 html{scroll-behavior:smooth}
 body{background:var(--white);color:var(--black);font-family:'DM Sans',sans-serif;overflow-x:hidden}
 
-.page-header{background:var(--white);color:var(--black);padding:7rem 2rem 3rem;border-bottom:1px solid #e0dbd0}
+.page-header{background:linear-gradient(135deg,#0f2744,#1a3a5c);color:#fff;padding:7rem 2rem 3rem}
 .page-header-inner{max-width:900px;margin:0 auto}
-.page-label{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem}
-.page-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;margin-bottom:.8rem;color:var(--black)}
-.page-sub{color:var(--grey);font-size:.95rem;line-height:1.7;max-width:600px}
+.page-label{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#7ecfff;margin-bottom:.75rem}
+.page-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;margin-bottom:.8rem}
+.page-sub{color:#aac4e8;font-size:.95rem;line-height:1.7;max-width:600px}
 
 /* PROGRESS STEPS */
 .progress-bar{display:flex;align-items:center;gap:0;margin-bottom:2rem;background:#fff;border:1px solid #e0dbd0;border-radius:10px;overflow:hidden}
@@ -38,9 +38,9 @@ main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
 
 /* TOOL CARD */
 .tool-card{background:#fff;border:1px solid #e0dbd0;border-radius:12px;overflow:hidden;margin-bottom:1.5rem}
-.tool-card-head{background:var(--black);color:#fff;padding:1rem 1.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;display:flex;align-items:center;gap:.6rem}
-.tool-card-head-step2{background:#1a3d1a}
-.tool-card-head-step3{background:#2d1a00}
+.tool-card-head{background:var(--red);color:#fff;padding:1rem 1.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;display:flex;align-items:center;gap:.6rem}
+.tool-card-head-blue{background:#0f2744}
+.tool-card-head-green{background:#1a5c2e}
 .tool-card-body{padding:1.5rem}
 
 /* INPUTS */
@@ -57,10 +57,10 @@ main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
 /* BUTTONS */
 .calc-btn{width:100%;background:var(--red);color:#fff;border:none;border-radius:8px;padding:.9rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:background .2s}
 .calc-btn:hover{background:var(--red-dark)}
-.next-btn{display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;background:var(--black);color:#fff;border:none;border-radius:8px;padding:.9rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:background .2s;text-decoration:none;margin-top:1rem}
-.next-btn:hover{background:#333}
-.next-btn-green{background:var(--green)}
-.next-btn-green:hover{background:#0f5c35}
+.next-btn{display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;background:#0f2744;color:#fff;border:none;border-radius:8px;padding:.9rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:background .2s;text-decoration:none;margin-top:1rem}
+.next-btn:hover{background:#1a3a5c}
+.next-btn-green{background:#1a5c2e}
+.next-btn-green:hover{background:#0f3a1e}
 
 /* RESULTS */
 .results{display:none}
@@ -70,10 +70,10 @@ main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
 /* TAKE HOME HERO */
-.takehome-hero{background:var(--black);border-radius:10px;padding:1.8rem 1.5rem;color:#fff;margin-bottom:1.2rem;text-align:center}
-.takehome-label{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#aaa;margin-bottom:.4rem}
+.takehome-hero{background:linear-gradient(135deg,#0f2744,#1a3a5c);border-radius:10px;padding:1.8rem 1.5rem;color:#fff;margin-bottom:1.2rem;text-align:center}
+.takehome-label{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7ecfff;margin-bottom:.4rem}
 .takehome-amount{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:3rem;line-height:1;margin-bottom:.3rem}
-.takehome-sub{font-size:.85rem;color:#aaa}
+.takehome-sub{font-size:.85rem;color:#aac4e8}
 .takehome-annual{font-size:1.1rem;font-weight:600;color:#fff;margin-top:.5rem}
 
 /* BAR */
@@ -118,11 +118,11 @@ main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
 
 /* AFFORDABILITY */
 .aff-hero{border-radius:10px;padding:1.5rem;margin-bottom:1.2rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.aff-hero-blue{background:var(--black);color:#fff}
+.aff-hero-blue{background:linear-gradient(135deg,#0f2744,#1a3a5c);color:#fff}
 .aff-metric{text-align:center;padding:.8rem}
-.aff-metric-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#aaa;margin-bottom:.3rem}
+.aff-metric-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#aac4e8;margin-bottom:.3rem}
 .aff-metric-value{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.8rem;color:#fff;line-height:1}
-.aff-metric-sub{font-size:.75rem;color:#aaa;margin-top:.3rem}
+.aff-metric-sub{font-size:.75rem;color:#aac4e8;margin-top:.3rem}
 
 .city-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.8rem;margin-bottom:1.2rem}
 .city-card{background:#fff;border:1px solid #e0dbd0;border-radius:8px;padding:1rem}
@@ -162,54 +162,23 @@ main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
   .progress-step{font-size:.7rem;padding:.6rem .3rem}
 }
 
-@media(max-width:600px){
-  .factors-grid,.card-recs,.readiness-grid,.cost-cols{grid-template-columns:1fr}
-  .cost-col:first-child{border-right:none;border-bottom:1px solid #e0dbd0}
-  .rules-grid,.insights-grid{grid-template-columns:1fr 1fr}
-}
-@media(max-width:420px){.rules-grid,.insights-grid{grid-template-columns:1fr}}
-
-
-/* ── NEXT MOVES BLOCK ── */
-.next-moves{background:#fff;border:2px solid var(--red);border-radius:12px;padding:1.5rem;margin-top:1.5rem}
-.next-moves > div:last-child{border-bottom:none!important}
-/* ── TAB NAVIGATION ── */
-.tab-nav{display:flex;gap:0;background:#fff;border:1px solid #e0dbd0;border-radius:10px;overflow:hidden;margin-bottom:1.5rem}
-.tab-btn{flex:1;padding:.75rem .4rem;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.78rem;cursor:pointer;border:none;border-right:1px solid #e0dbd0;background:#fff;color:var(--grey);transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:2px}
-.tab-btn:last-child{border-right:none}
-.tab-btn:hover{background:var(--light);color:var(--black)}
-.tab-btn.active{background:var(--red);color:#fff}
-.tab-btn.done{background:#e8f5e9;color:var(--green)}
-.tab-step{font-size:.62rem;font-weight:600;opacity:.65;text-transform:uppercase;letter-spacing:.05em}
-/* Credit and Buy vs Rent tabs get a left separator to signal they're independent tools */
-
-
-/* TAB PANELS */
-.tab-panel{display:none}
-.tab-panel.active{display:block;animation:fadeIn .25s ease}
-
-@media(max-width:600px){
-  .tab-btn{font-size:.68rem;padding:.6rem .2rem}
-  .tab-step{display:none}
-}
-
-footer{background:#0a0a0a;color:#555;text-align:center;padding:2rem;font-size:.82rem}
-footer a{color:var(--red);text-decoration:none}
-footer strong{color:#888}
-.footer-links{margin:.5rem 0;display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem}
-.footer-links a::after{content:'·';margin-left:.5rem;color:#333}
-.footer-links a:last-child::after{display:none}
-.footer-disclaimer{margin-top:.8rem;font-size:.73rem;color:#333;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6}
+footer{background:#1a1a1a;color:#aaa;padding:2.5rem 2rem;margin-top:3rem;font-size:.82rem}
+footer p{margin-bottom:.8rem;color:#ccc}
+footer strong{color:#fff}
+.footer-links{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin-bottom:1rem}
+.footer-links a{color:#aaa;text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:#fff}
+.footer-disclaimer{font-size:.75rem;color:#666;margin-top:.5rem}
 
 /* GLOBAL SUMMARY BAR */
-.summary-bar{display:none;background:var(--black);color:#fff;border-radius:10px;padding:1rem 1.5rem;margin-bottom:1.5rem;animation:fadeIn .3s ease}
+.summary-bar{display:none;background:#0f2744;color:#fff;border-radius:10px;padding:1rem 1.5rem;margin-bottom:1.5rem;animation:fadeIn .3s ease}
 .summary-bar.show{display:block}
-.summary-bar-title{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#aaa;margin-bottom:.8rem}
+.summary-bar-title{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7ecfff;margin-bottom:.8rem}
 .summary-bar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.8rem}
 .summary-item{text-align:center}
-.summary-item-label{font-size:.68rem;color:#aaa;margin-bottom:.2rem;text-transform:uppercase;letter-spacing:.05em}
+.summary-item-label{font-size:.68rem;color:#aac4e8;margin-bottom:.2rem;text-transform:uppercase;letter-spacing:.05em}
 .summary-item-value{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.1rem;color:#fff}
-.summary-edit{font-size:.75rem;color:#ccc;text-decoration:underline;cursor:pointer;margin-top:.6rem;display:inline-block;background:none;border:none}
+.summary-edit{font-size:.75rem;color:#7ecfff;text-decoration:underline;cursor:pointer;margin-top:.6rem;display:inline-block;background:none;border:none}
 
 /* NEXT STEPS */
 .next-steps{background:#fff;border:2px solid var(--red);border-radius:12px;padding:1.5rem;margin-top:1.5rem}
@@ -219,11 +188,11 @@ footer strong{color:#888}
 .next-step-check{width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0;margin-top:.1rem}
 .next-step-text{font-size:.85rem;color:var(--grey);line-height:1.5}
 .next-step-text strong{color:var(--black)}
-.emotional-hook{background:var(--black);border-radius:10px;padding:1.2rem 1.5rem;color:#fff;text-align:center;margin-top:1rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:1rem;line-height:1.5}
-.emotional-hook span{color:var(--red)}
+.emotional-hook{background:linear-gradient(135deg,#0f2744,#1a3a5c);border-radius:10px;padding:1.2rem 1.5rem;color:#fff;text-align:center;margin-top:1rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:1rem;line-height:1.5}
+.emotional-hook span{color:#7ecfff}
 </style>
 </head>
-<body>
+<body data-auto-thumbs="true">
 <script src="nav.js"></script>
 <div style="height:60px"></div>
 
@@ -231,23 +200,25 @@ footer strong{color:#888}
   <div class="page-header-inner">
     <div class="page-label">💰 Canada Tools</div>
     <h1 class="page-title">Your Canada Financial Planner</h1>
-    <p class="page-sub">A 3-step planner: see your take-home, plan your housing, build your savings strategy. Credit Builder and Buy vs Rent are separate tools in the Finance System.</p>
-    <div style="margin-top:.8rem;display:flex;gap:.5rem;flex-wrap:wrap"><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">2025 tax data</span><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">All provinces</span><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">Not financial advice</span></div>
+    <p class="page-sub">Three connected tools — tax calculator, housing affordability, and savings plan. Each step feeds the next. Start with your salary.</p>
   </div>
 </div>
 
 <main>
 
-  <!-- 3-TAB NAV -->
-  <div class="tab-nav">
-    <button class="tab-btn active" onclick="switchTab('income',this)"><span class="tab-step">Step 1</span>Income</button>
-    <button class="tab-btn" onclick="switchTab('housing',this)"><span class="tab-step">Step 2</span>Housing</button>
-    <button class="tab-btn" onclick="switchTab('savings',this)"><span class="tab-step">Step 3</span>Savings</button>
+  <!-- PROGRESS -->
+  <div class="progress-bar">
+    <div class="progress-step active" id="step1" onclick="scrollToSection('tax-section')">
+      <span class="step-num">Step 1</span>Tax & Take-Home
+    </div>
+    <div class="progress-step" id="step2" onclick="scrollToSection('aff-section')">
+      <span class="step-num">Step 2</span>Affordability
+    </div>
+    <div class="progress-step" id="step3" onclick="scrollToSection('savings-section')">
+      <span class="step-num">Step 3</span>Savings Plan
+    </div>
   </div>
 
-
-  <!-- TAB 1: INCOME -->
-  <div class="tab-panel active" id="tab-income">
 
   <!-- GLOBAL SUMMARY BAR -->
   <div class="summary-bar" id="summary-bar">
@@ -369,18 +340,13 @@ footer strong{color:#888}
         <div class="decision-item"><div class="decision-icon">🎓</div><div class="decision-text" id="d-resp">—</div></div>
       </div>
 
-      <button class="next-btn" onclick="switchTab('housing', document.querySelectorAll('.tab-btn')[1])">
+      <button class="next-btn" onclick="openAffordability()">
         Plan your housing → Step 2: Affordability ↓
       </button>
 
       <div class="disclaimer">⚠️ Estimates based on 2025 federal and provincial tax rates. Not financial advice. Always verify with a registered financial advisor or accountant.</div>
     </div>
   </div>
-
-  </div><!-- /tab-income -->
-
-  <!-- TAB 2: HOUSING -->
-  <div class="tab-panel" id="tab-housing">
 
   <!-- CONNECTOR -->
   <div class="section-connector" id="connector-1" style="display:none">
@@ -390,11 +356,11 @@ footer strong{color:#888}
   <!-- ═══════════════════════════════════════════════ -->
   <!-- STEP 2 — AFFORDABILITY                         -->
   <!-- ═══════════════════════════════════════════════ -->
-  <div id="aff-section" class="tool-section show">
+  <div id="aff-section" class="tool-section">
     <div class="tool-card">
-      <div class="tool-card-head">Step 2 — Housing Affordability</div>
+      <div class="tool-card-head tool-card-head-blue">Step 2 — Housing Affordability</div>
       <div class="tool-card-body">
-        <div style="background:var(--light);border-radius:8px;padding:.8rem 1rem;font-size:.85rem;color:var(--black);margin-bottom:1.2rem;font-weight:500" id="aff-context">
+        <div style="background:#e8f0fe;border-radius:8px;padding:.8rem 1rem;font-size:.85rem;color:#1565C0;margin-bottom:1.2rem;font-weight:500" id="aff-context">
           Based on your take-home — update if needed
         </div>
         <div class="input-grid">
@@ -437,7 +403,7 @@ footer strong{color:#888}
             </select>
           </div>
         </div>
-        <button class="calc-btn" onclick="calculateAffordability()">Show my affordability →</button>
+        <button class="calc-btn" style="background:#0f2744" onclick="calculateAffordability()">Show my affordability →</button>
       </div>
     </div>
 
@@ -451,7 +417,7 @@ footer strong{color:#888}
         </div>
 
         <div class="tool-card">
-          <div class="tool-card-head tool-card-head">What your budget gets you</div>
+          <div class="tool-card-head tool-card-head-blue">What your budget gets you</div>
           <div class="tool-card-body">
             <div class="city-grid" id="city-rental-grid"></div>
             <div style="font-size:.82rem;color:var(--grey);line-height:1.7" id="rent-advice"></div>
@@ -467,14 +433,14 @@ footer strong{color:#888}
         </div>
 
         <div class="tool-card">
-          <div class="tool-card-head tool-card-head">Down payment breakdown</div>
+          <div class="tool-card-head tool-card-head-blue">Down payment breakdown</div>
           <div class="tool-card-body">
             <table class="deduction-table">
               <tr><td>Maximum home price</td><td id="bp-price">—</td></tr>
               <tr><td>Minimum down payment (5%)</td><td id="bp-min">—</td></tr>
               <tr><td>To avoid CMHC insurance (20%)</td><td id="bp-20">—</td></tr>
               <tr><td>CMHC insurance (if &lt;20% down)</td><td id="bp-cmhc">—</td></tr>
-              <tr><td>Land transfer tax + closing costs</td><td id="bp-ltt">—</td></tr>
+              <tr><td>Land transfer tax (Ontario est.)</td><td id="bp-ltt">—</td></tr>
               <tr class="takehome-row"><td>Total cash needed (5% down)</td><td id="bp-total">—</td></tr>
             </table>
             <div style="font-size:.82rem;color:var(--grey);line-height:1.7;margin-top:.5rem" id="buy-advice"></div>
@@ -489,16 +455,11 @@ footer strong{color:#888}
         <div class="decision-item"><div class="decision-icon">💡</div><div class="decision-text" id="d-aff-tip">—</div></div>
       </div>
 
-      <button class="next-btn next-btn-green" onclick="switchTab('savings', document.querySelectorAll('.tab-btn')[2])">
+      <button class="next-btn next-btn-green" onclick="openSavings()">
         Build your savings plan → Step 3 ↓
       </button>
     </div>
   </div>
-
-  </div><!-- /tab-housing -->
-
-  <!-- TAB 3: SAVINGS -->
-  <div class="tab-panel" id="tab-savings">
 
   <!-- CONNECTOR 2 -->
   <div class="section-connector" id="connector-2" style="display:none">
@@ -508,11 +469,11 @@ footer strong{color:#888}
   <!-- ═══════════════════════════════════════════════ -->
   <!-- STEP 3 — SAVINGS PLAN                          -->
   <!-- ═══════════════════════════════════════════════ -->
-  <div id="savings-section" class="tool-section show">
+  <div id="savings-section" class="tool-section">
     <div class="tool-card">
-      <div class="tool-card-head">Step 3 — RESP / TFSA / RRSP Savings Plan</div>
+      <div class="tool-card-head tool-card-head-green">Step 3 — RESP / TFSA / RRSP Savings Plan</div>
       <div class="tool-card-body">
-        <div style="background:var(--light);border-radius:8px;padding:.8rem 1rem;font-size:.85rem;color:var(--black);margin-bottom:1.2rem;font-weight:500" id="savings-context">
+        <div style="background:#e8f5e9;border-radius:8px;padding:.8rem 1rem;font-size:.85rem;color:#1a5c2e;margin-bottom:1.2rem;font-weight:500" id="savings-context">
           Based on your take-home and housing budget
         </div>
         <div class="input-grid">
@@ -548,25 +509,25 @@ footer strong{color:#888}
             </select>
           </div>
         </div>
-        <button class="calc-btn" onclick="calculateSavings()">Build my savings plan →</button>
+        <button class="calc-btn" style="background:#1a5c2e" onclick="calculateSavings()">Build my savings plan →</button>
       </div>
     </div>
 
     <div class="results" id="savings-results">
       <div class="tool-card">
-        <div class="tool-card-head">Your monthly money plan</div>
+        <div class="tool-card-head tool-card-head-green">Your monthly money plan</div>
         <div class="tool-card-body">
           <div class="bar-track" id="sav-bar" style="margin-bottom:.8rem">
             <div class="bar-seg" id="sav-bar-housing" style="background:#C8102E;width:0%"></div>
             <div class="bar-seg" id="sav-bar-tfsa"    style="background:#1a7a4a;width:0%"></div>
-            <div class="bar-seg" id="sav-bar-rrsp"    style="background:#555;width:0%"></div>
+            <div class="bar-seg" id="sav-bar-rrsp"    style="background:#1565C0;width:0%"></div>
             <div class="bar-seg" id="sav-bar-resp"    style="background:#6A1B9A;width:0%"></div>
             <div class="bar-seg" id="sav-bar-living"  style="background:#e0dbd0;width:0%"></div>
           </div>
           <div class="bar-legend" style="margin-bottom:1.5rem">
             <div class="legend-item"><div class="legend-dot" style="background:#C8102E"></div><span class="legend-label">Housing</span><span class="legend-value" id="sleg-housing">—</span></div>
             <div class="legend-item"><div class="legend-dot" style="background:#1a7a4a"></div><span class="legend-label">TFSA</span><span class="legend-value" id="sleg-tfsa">—</span></div>
-            <div class="legend-item"><div class="legend-dot" style="background:#555"></div><span class="legend-label">RRSP</span><span class="legend-value" id="sleg-rrsp">—</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#1565C0"></div><span class="legend-label">RRSP</span><span class="legend-value" id="sleg-rrsp">—</span></div>
             <div class="legend-item"><div class="legend-dot" style="background:#6A1B9A"></div><span class="legend-label">RESP</span><span class="legend-value" id="sleg-resp">—</span></div>
             <div class="legend-item"><div class="legend-dot" style="background:#aaa"></div><span class="legend-label">Living expenses</span><span class="legend-value" id="sleg-living">—</span></div>
           </div>
@@ -586,11 +547,12 @@ footer strong{color:#888}
         <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:.8rem">📚 Learn more about these accounts</div>
         <div style="display:flex;flex-wrap:wrap;gap:.6rem">
           <a href="finance.html#tfsa" style="background:#e8f5e9;color:#1b5e20;padding:5px 12px;border-radius:20px;font-size:.8rem;font-weight:600;text-decoration:none">TFSA Guide →</a>
-          <a href="finance.html#rrsp" style="background:var(--light);color:var(--black);padding:5px 12px;border-radius:20px;font-size:.8rem;font-weight:600;text-decoration:none;border:1px solid #ddd">RRSP Guide →</a>
+          <a href="finance.html#rrsp" style="background:#e8f0fe;color:#1565C0;padding:5px 12px;border-radius:20px;font-size:.8rem;font-weight:600;text-decoration:none">RRSP Guide →</a>
           <a href="finance.html#resp" style="background:#f3e5f5;color:#6A1B9A;padding:5px 12px;border-radius:20px;font-size:.8rem;font-weight:600;text-decoration:none">RESP Guide →</a>
           <a href="finance.html" style="background:var(--light);color:var(--grey);padding:5px 12px;border-radius:20px;font-size:.8rem;font-weight:600;text-decoration:none;border:1px solid #ddd">Full Finance Guide →</a>
         </div>
       </div>
+
 
       <div class="next-steps" id="next-steps" style="display:none">
         <div class="next-steps-title">🎯 Your next steps this week</div>
@@ -604,45 +566,16 @@ footer strong{color:#888}
       </div>
 
       <div class="disclaimer">⚠️ Estimates only. Contribution room, income, and family circumstances vary. Always verify with a registered financial advisor. Not financial advice.</div>
-
-      <div class="next-moves" id="sav-next-moves" style="display:none"></div>
-
-
     </div>
   </div>
 
-  </div><!-- /tab-savings -->
-
-  <!-- FINANCE SYSTEM HUB -->
-  <div style="background:var(--light);border:1px solid #d8d3c8;border-radius:12px;padding:1.8rem;margin-top:1.5rem">
-    <div style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem">Finance System</div>
-    <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;margin-bottom:.4rem">Your financial foundation — 5 tools total</div>
-    <p style="font-size:.83rem;color:var(--grey);line-height:1.6;margin-bottom:1.2rem">Income, housing, and savings are connected here. Credit building and buy vs rent are standalone tools — each powerful enough to deserve their own space.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.8rem">
-      <div style="background:#fff;border:2px solid var(--red);border-radius:10px;padding:1rem">
-        <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--red);margin-bottom:.3rem">Steps 1–3 ✓ You are here</div>
-        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;margin-bottom:.2rem">Income & Savings</div>
-        <div style="font-size:.75rem;color:var(--grey)">Tax calculator · Housing · TFSA/RRSP/RESP plan</div>
-      </div>
-      <a href="credit.html" style="background:#fff;border:1px solid #e0dbd0;border-radius:10px;padding:1rem;text-decoration:none;color:var(--black);transition:border-color .2s;display:block">
-        <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--grey);margin-bottom:.3rem">Standalone tool</div>
-        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;margin-bottom:.2rem">&#x1F4B3; Credit Builder</div>
-        <div style="font-size:.75rem;color:var(--grey)">Zero to 700+ in 18 months. Month-by-month plan.</div>
-        <div style="font-size:.75rem;font-weight:700;color:var(--red);margin-top:.5rem">Open Credit Builder &#x2192;</div>
-      </a>
-      <a href="buy-vs-rent.html" style="background:#fff;border:1px solid #e0dbd0;border-radius:10px;padding:1rem;text-decoration:none;color:var(--black);transition:border-color .2s;display:block">
-        <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--grey);margin-bottom:.3rem">Standalone tool</div>
-        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;margin-bottom:.2rem">&#x1F3E0; Buy vs Rent</div>
-        <div style="font-size:.75rem;color:var(--grey)">Should you buy? Score, cost comparison, city data, timeline.</div>
-        <div style="font-size:.75rem;font-weight:700;color:var(--red);margin-top:.5rem">Open Buy vs Rent &#x2192;</div>
-      </a>
-      <a href="finance.html" style="background:#fff;border:1px solid #e0dbd0;border-radius:10px;padding:1rem;text-decoration:none;color:var(--black);transition:border-color .2s;display:block">
-        <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--grey);margin-bottom:.3rem">Deep guide</div>
-        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;margin-bottom:.2rem">&#x1F4DA; Finance Guide</div>
-        <div style="font-size:.75rem;color:var(--grey)">TFSA, RRSP, RESP, FHSA, XEQT — the full knowledge base.</div>
-        <div style="font-size:.75rem;font-weight:700;color:var(--red);margin-top:.5rem">Read Finance Guide &#x2192;</div>
-      </a>
+  <!-- LINK TO CREDIT BUILDER -->
+  <div style="background:linear-gradient(135deg,#0d1f6b,#1565C0);border-radius:12px;padding:1.5rem;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:1.5rem">
+    <div>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;margin-bottom:.3rem">Next: Build your Canadian credit score →</div>
+      <div style="font-size:.85rem;color:#bbdefb;line-height:1.6">Your income and savings plan is set. Now tackle the last piece — credit history doesn't transfer from your home country. Start from zero, reach 700+ in 12–18 months.</div>
     </div>
+    <a href="credit.html" style="background:#fff;color:#1565C0;padding:.7rem 1.4rem;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.85rem;text-decoration:none;white-space:nowrap;flex-shrink:0">Open Credit Builder →</a>
   </div>
 
 </main>
@@ -667,8 +600,6 @@ footer strong{color:#888}
     <a href="india.html">India Guide</a>
     <a href="news.html">Live Updates</a>
     <a href="tools.html">Financial Planner</a>
-    <a href="credit.html">Credit Builder</a>
-    <a href="buy-vs-rent.html">Buy vs Rent</a>
     <a href="about.html">About</a>
   </div>
   <p class="footer-disclaimer">Not financial or legal advice. Information is shared for educational purposes only. Always verify with your school board, a registered financial advisor, or relevant authority.</p>
@@ -733,41 +664,6 @@ function fmt(n){return'$'+Math.round(n).toLocaleString('en-CA');}
 function pct(n){return(n*100).toFixed(1)+'%';}
 function set(id,v){const el=document.getElementById(id);if(el)el.innerHTML=v;}
 
-// ─────────────────────────────────────────────
-// CFG SHARED PLAN STATE
-// One localStorage key shared across all finance tools
-// Schema: { salary, province, monthly, housing, city, savings, creditStage, children, updated }
-// ─────────────────────────────────────────────
-const CFG = {
-  KEY: 'cfg_plan',
-  get() {
-    try { return JSON.parse(localStorage.getItem(this.KEY) || '{}'); } catch(e) { return {}; }
-  },
-  set(patch) {
-    try {
-      const current = this.get();
-      const updated = { ...current, ...patch, updated: Date.now() };
-      localStorage.setItem(this.KEY, JSON.stringify(updated));
-      // Also keep legacy keys in sync for backward compat
-      if (patch.salary)   localStorage.setItem('cfg_salary', patch.salary);
-      if (patch.province) localStorage.setItem('cfg_province', patch.province);
-      if (patch.monthly)  localStorage.setItem('cfg_monthly', Math.round(patch.monthly));
-      if (patch.housing)  localStorage.setItem('cfg_housing', Math.round(patch.housing || 0));
-    } catch(e) {}
-  },
-  fmt(n) { return '$' + Math.round(n).toLocaleString('en-CA'); },
-  // Returns a human-readable summary banner for pre-fill notice
-  banner(fields) {
-    const p = this.get();
-    const parts = [];
-    if (fields.includes('income') && p.monthly) parts.push(`take-home ${this.fmt(p.monthly)}/mo`);
-    if (fields.includes('city') && p.city)       parts.push(p.city.charAt(0).toUpperCase() + p.city.slice(1));
-    if (fields.includes('savings') && p.savings) parts.push(`savings ${this.fmt(p.savings)}`);
-    if (fields.includes('credit') && p.creditStage) parts.push(`credit: ${p.creditStage}`);
-    return parts.length ? `✓ Pre-filled from your plan — ${parts.join(' · ')}` : null;
-  }
-};
-
 let STATE={takeHome:0,monthly:0,marginalRate:0,salary:0,province:'ON',housing:0};
 
 // ─────────────────────────────────────────────
@@ -799,7 +695,7 @@ function calculateTax(){
   updateSummaryBar();
 
   // Save to localStorage
-  CFG.set({salary, province:provCode, monthly:Math.round(monthly), marginalRate:Math.round(marginalRate*100)/100});
+  try{localStorage.setItem('cfg_salary',salary);localStorage.setItem('cfg_province',provCode);localStorage.setItem('cfg_monthly',Math.round(monthly));}catch(e){}
 
   const freqLabels={12:'per month',26:'per two weeks',24:'twice a month',52:'per week'};
   set('res-monthly',fmt(perPeriod));
@@ -827,7 +723,7 @@ function calculateTax(){
   }else{document.getElementById('rrsp-banner').classList.remove('show');}
 
   const h30=monthly*.30,h35=monthly*.35,sav=monthly*.20,inv=monthly*.10;
-  set('d-housing',`<strong>Safe housing budget: ${fmt(h30)}–${fmt(h35)}/month.</strong> The 30–35% rule. In most mid-size cities that covers a 2–3 bedroom home. In Toronto, that's a 1-bedroom.`);
+  set('d-housing',`<strong>Safe housing budget: ${fmt(h30)}–${fmt(h35)}/month.</strong> The 30–35% rule. In Cornwall/Eastern Ontario that covers a 2–3 bedroom home. In Toronto, that's a 1-bedroom.`);
   set('d-savings',`<strong>Target savings: ${fmt(sav)}/month (20% rule).</strong> That's ${fmt(sav*12)}/year — enough to build a 3-month emergency fund of ${fmt(monthly*3)} in about 15 months.`);
   set('d-invest',`<strong>TFSA first, then RRSP.</strong> TFSA room is $7,000/year = ${fmt(7000/12)}/month to max it. At your marginal rate of ${pct(marginalRate)}, every $1,000 in RRSP saves ${fmt(marginalRate*1000)} in tax.`);
   set('d-resp',`<strong>RESP: $208/month = $500/year free from government.</strong> Contributing $2,500/year per child earns a 20% Canada Education Savings Grant automatically.`);
@@ -862,8 +758,6 @@ function calculateAffordability(){
   STATE.housing=Math.round(rent30=income*.30);
 
   try{localStorage.setItem('cfg_housing',STATE.housing);}catch(e){}
-  const cityVal = document.getElementById('aff-city').value;
-  CFG.set({housing: STATE.housing, city: cityVal});
   updateSummaryBar();
 
   set('rent-25',fmt(rent25));set('rent-33',fmt(rent33));
@@ -908,7 +802,7 @@ function calculateAffordability(){
 
   set('d-location',`<strong>${cd.name} context:</strong> Your budget of ${fmt(rent25)}–${fmt(rent33)}/month ${mode==='rent'?'for rent':'for mortgage'} is ${rent33>=cd.avg1?'achievable':'tight'} in this city. ${city==='toronto'||city==='vancouver'?'Consider nearby cities — Ottawa, Hamilton, Waterloo, or Eastern Ontario for significantly better value.':''}`);
   set('d-school','<strong>School bus tip:</strong> Aim for under 800m (walkable) or over 2km (bus eligible) from your child\'s school. The 1–2km zone means you drive twice daily. Confirm exact cutoffs with your school board before signing a lease.');
-  set('d-aff-tip',`<strong>Newcomer tip:</strong> Sign a 1-year lease first, not 2. Smaller cities are typically 30–60% cheaper than Toronto or Vancouver for equivalent homes — a great starting point while you build credit and Canadian employment history.`);
+  set('d-aff-tip',`<strong>Newcomer tip:</strong> Sign a 1-year lease first, not 2. Eastern Ontario and smaller cities are 40–60% cheaper than Toronto for equivalent homes — a great starting point while you build credit and Canadian employment history.`);
 
   document.getElementById('aff-results').classList.add('show');
   document.getElementById('step2').classList.add('done');
@@ -944,7 +838,6 @@ function calculateSavings(){
   const children=parseInt(document.getElementById('sav-children').value);
   const marginal=parseFloat(document.getElementById('sav-marginal').value);
   if(income<=0){alert('Please enter your monthly take-home.');return;}
-  CFG.set({children});
 
   const leftover=income-housing;
   const emergency=income*3; // 3-month fund target
@@ -976,7 +869,7 @@ function calculateSavings(){
   // Cards
   const cards=[
     {label:'TFSA / month',value:fmt(tfsaMonthly),body:`Tax-free growth. No tax on withdrawals. ${fmt(tfsaMonthly*12)}/year. Max room: $7,000/yr. Start here — it's your most flexible account.`,color:'#1a7a4a'},
-    {label:'RRSP / month',value:fmt(rrspMonthly),body:`Saves ~${fmt(rrspTaxSaving)}/year in taxes at your marginal rate. Best if you expect lower income in retirement. Reduces taxable income now.`,color:'#555'},
+    {label:'RRSP / month',value:fmt(rrspMonthly),body:`Saves ~${fmt(rrspTaxSaving)}/year in taxes at your marginal rate. Best if you expect lower income in retirement. Reduces taxable income now.`,color:'#1565C0'},
     ...(children>0?[{label:'RESP / month',value:fmt(respMonthly),body:`${fmt(respMonthly*12)}/year × 20% CESG = ${fmt(Math.min(respMonthly*12,2500*children)*.20)} free government grant per year. Invest early — it compounds significantly.`,color:'#6A1B9A'}]:[]),
     {label:'Emergency fund target',value:fmt(emergency),body:`3 months of take-home. At your current savings rate, you can build this in ~${Math.round(emergency/(tfsaMonthly+rrspMonthly))} months.`,color:'#e65100'},
   ];
@@ -1016,25 +909,12 @@ function scrollToSection(id){
 // ─────────────────────────────────────────────
 window.addEventListener('load',()=>{
   try{
-    const plan = CFG.get();
-    const s = plan.salary || localStorage.getItem('cfg_salary');
-    const p = plan.province || localStorage.getItem('cfg_province');
-    const m = plan.monthly || localStorage.getItem('cfg_monthly');
-    const c = plan.city;
-    const h = plan.housing || localStorage.getItem('cfg_housing');
+    const s=localStorage.getItem('cfg_salary');
+    const p=localStorage.getItem('cfg_province');
+    const m=localStorage.getItem('cfg_monthly');
     if(s){document.getElementById('salary').value=s;}
     if(p){document.getElementById('province').value=p;}
     if(m){document.getElementById('aff-income').value=m;document.getElementById('sav-income').value=m;}
-    if(c){const cityEl=document.getElementById('aff-city');if(cityEl)cityEl.value=c;}
-    if(h){document.getElementById('sav-housing').value=h;}
-    // Show returning user banner if we have a plan
-    if(plan.monthly){
-      const banner=document.createElement('div');
-      banner.style.cssText='background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:.7rem 1rem;font-size:.82rem;color:#1b5e20;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem';
-      banner.innerHTML='<span>&#x2713;</span><span>Welcome back — your plan: <strong>'+CFG.fmt(plan.monthly)+'/mo take-home'+(plan.city?', '+plan.city.charAt(0).toUpperCase()+plan.city.slice(1):'')+'</strong>. Fields pre-filled. <a href="#" onclick="CFG.set({});location.reload();return false;" style="color:#1a7a4a;font-weight:600;margin-left:.5rem">Reset plan ×</a></span>';
-      const main=document.querySelector('main');
-      if(main)main.insertBefore(banner,main.firstChild);
-    }
   }catch(e){}
 });
 
@@ -1081,61 +961,14 @@ function buildNextSteps(income, housing, tfsa, rrsp, resp, children, marginal){
 
   // Emotional hook
   const onTrack = (housing / income) <= 0.33 && tfsa >= 400;
-  const cityLabel = (CFG.get().city || '').charAt(0).toUpperCase() + (CFG.get().city || 'Canada').slice(1);
   set('emotional-text', onTrack
-    ? `✅ You're on track. Your housing cost is manageable, your savings targets are realistic, and your tax position is solid. <span>Most newcomers don't have this clarity in year one — you do.</span>`
-    : housing/income > 0.40
-    ? `⚠️ Housing is taking a large share of your income — but you have a plan now. <span>Knowing where the pressure is puts you ahead of most families at this stage.</span> Focus on the next steps above.`
-    : `You have a clear picture of your finances in Canada. <span>The first year is the hardest to navigate — you're already doing the right things.</span> One step at a time.`);
+    ? `✓ You are <span>on track</span> to build a strong financial foundation in Canada within 12 months. Your housing is manageable, your savings plan is realistic, and your tax strategy is sound.`
+    : `You have a clear plan. Focus on the steps above — <span>your first 12 months in Canada</span> set the foundation for everything that follows. One step at a time.`);
   hook.style.display = 'block';
-
-  // Next 3 moves block
-  const nm = document.getElementById('sav-next-moves');
-  if(nm){
-    const plan = CFG.get();
-    const tfsaAmt = fmt(Math.min(583, Math.round((income-housing)*0.35)));
-    const emergencyTarget = fmt(income*3);
-    const cityLabel = plan.city ? (plan.city.charAt(0).toUpperCase()+plan.city.slice(1)) : 'your city';
-    const creditDone = plan.creditStage && plan.creditStage !== 'none';
-    const moves = [
-      creditDone
-        ? { icon:'💳', text:`<strong>Credit: you've started — keep going.</strong> Every month of on-time full payment moves your score. Check where you stand now.`, link:'credit.html', linkLabel:'Credit Builder →' }
-        : { icon:'💳', text:`<strong>Open a secured credit card this week</strong> — credit history doesn't transfer to Canada. Every month without one is a month of score lost. Takes 30 min at any bank branch.`, link:'credit.html', linkLabel:'Credit Builder →' },
-      { icon:'🏦', text:`<strong>Contribute ${tfsaAmt}/month to your TFSA</strong> — tax-free growth from day one. Target: ${emergencyTarget} emergency fund first (3 months of take-home), then keep investing. Every year you delay loses $7,000 of permanent room.`, link:null, linkLabel:null },
-      { icon:'🏠', text:`<strong>Should you buy in ${cityLabel}?</strong> — based on your ${fmt(income)}/month take-home${plan.savings ? ' and '+fmt(plan.savings)+' saved' : ''}, see whether buying makes sense now, in 12 months, or later.`, link:'buy-vs-rent.html', linkLabel:'Buy vs Rent →' },
-    ];
-    nm.innerHTML = `<div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:1rem">🎯 Your next 3 moves</div>` +
-      moves.map(m=>`<div style="display:flex;gap:.8rem;padding:.85rem 0;border-bottom:1px solid #f0ece4;align-items:flex-start">
-        <div style="font-size:1.1rem;flex-shrink:0;margin-top:.1rem">${m.icon}</div>
-        <div style="font-size:.85rem;color:var(--grey);line-height:1.6;flex:1">${m.text}${m.link?` <a href="${m.link}" style="color:var(--red);font-weight:600">${m.linkLabel}</a>`:''}</div>
-      </div>`).join('');
-    nm.style.display='block';
-  }
 }
 
 document.getElementById('salary').addEventListener('keydown',e=>{if(e.key==='Enter')calculateTax();});
-
-// ─────────────────────────────────────────────
-// TAB SWITCHER
-// ─────────────────────────────────────────────
-function switchTab(name, btn) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  const panel = document.getElementById('tab-' + name);
-  if (panel) panel.classList.add('active');
-  if (btn) btn.classList.add('active');
-  window.scrollTo({top: 0, behavior: 'smooth'});
-}
-
-function openAffordability(){
-  switchTab('housing', document.querySelectorAll('.tab-btn')[1]);
-}
-function openSavings(){
-  switchTab('savings', document.querySelectorAll('.tab-btn')[2]);
-}
-
-// ─────────────────────────────────────────────
-
 </script>
+<script src="feedback.js"></script>
 </body>
 </html>
