@@ -10,14 +10,20 @@
   ];
 
   const moreLinks = [
-    { href: 'tools.html',          label: '🧮 Financial Planner' },
-    { href: 'cost-of-living.html', label: '💵 Cost of Living' },
-    { href: 'credit.html',         label: '💳 Credit Builder' },
-    { href: 'travel.html',         label: 'Travel' },
-    { href: 'recreation.html',     label: 'Recreation' },
-    { href: 'tech-careers.html',   label: 'Tech & AI' },
-    { href: 'about.html',          label: 'About' },
-    { href: 'contact.html',        label: 'Contact' },
+    { href: 'tools.html',             label: '🧮 Financial Planner' },
+    { href: 'cost-of-living.html',    label: '💵 Cost of Living' },
+    { href: 'credit.html',            label: '💳 Credit Builder' },
+    { href: 'buy-vs-rent.html',       label: '🏠 Buy vs Rent' },
+    { href: 'stream-decision.html',   label: '🎯 Stream Decision' },
+    { href: 'university-planner.html',label: '🎓 University Planner' },
+    { href: 'job-offer.html',         label: '💼 Job Offer Evaluator' },
+    { href: 'setup-tracker.html',     label: '✅ Setup Tracker' },
+    { href: 'my-plan.html',           label: '📋 My Plan' },
+    { href: 'travel.html',            label: 'Travel' },
+    { href: 'recreation.html',        label: 'Recreation' },
+    { href: 'tech-careers.html',      label: 'Tech & AI' },
+    { href: 'about.html',             label: 'About' },
+    { href: 'contact.html',           label: 'Contact' },
   ];
 
   const allLinks = [...primaryLinks, ...moreLinks];
@@ -64,7 +70,7 @@
 .nav-more-btn:hover{color:#C8102E;border-color:#C8102E}
 .nav-more-arrow{font-size:.65rem;transition:transform .2s;display:inline-block}
 .nav-more-btn[aria-expanded="true"] .nav-more-arrow{transform:rotate(180deg)}
-.nav-more-drop{display:none;position:absolute;right:0;top:calc(100% + 8px);background:#fff;border:1px solid #e0dbd0;border-radius:8px;padding:6px;min-width:150px;z-index:300;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.nav-more-drop{display:none;position:absolute;right:0;top:calc(100% + 8px);background:#fff;border:1px solid #e0dbd0;border-radius:8px;padding:6px;min-width:200px;max-height:calc(100vh - 100px);overflow-y:auto;z-index:300;box-shadow:0 4px 16px rgba(0,0,0,.08)}
 .nav-more-drop.open{display:block}
 .nav-more-item{display:block;font-size:.85rem;font-weight:500;color:#0f0f0f;text-decoration:none;padding:7px 12px;border-radius:5px;transition:background .15s,color .15s}
 .nav-more-item:hover{background:#F7F5F0;color:#C8102E}
@@ -75,7 +81,7 @@
 .nav-ham[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .nav-ham[aria-expanded="true"] span:nth-child(2){opacity:0}
 .nav-ham[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.nav-mob-panel{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(247,245,240,.98);backdrop-filter:blur(8px);border-bottom:1px solid #ddd;z-index:199;padding:.75rem 1.5rem 1rem;grid-template-columns:1fr 1fr;gap:2px}
+.nav-mob-panel{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(247,245,240,.98);backdrop-filter:blur(8px);border-bottom:1px solid #ddd;z-index:199;padding:.75rem 1.5rem 1rem;grid-template-columns:1fr 1fr;gap:2px;max-height:calc(100vh - 60px);overflow-y:auto}
 .nav-mob-panel.open{display:grid}
 .nav-mob-item{font-size:.9rem;font-weight:500;color:#0f0f0f;text-decoration:none;padding:10px 12px;border-radius:6px;transition:background .15s,color .15s}
 .nav-mob-item:hover{background:#EDE9E0;color:#C8102E}
