@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Canada Credit Score Builder — Newcomer Credit Journey | Canada Family Guide</title>
+<title>Canada Credit Score Builder 2025 — Newcomer Credit Journey | Canada Family Guide</title>
 <meta name="description" content="Free credit score builder for newcomers to Canada. Find your credit stage, get a personalised month-by-month plan, and know exactly which cards to get first. Built for immigrant families.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://canadafamilyguide.com/credit.html">
@@ -20,154 +20,40 @@
 html{scroll-behavior:smooth}
 body{background:var(--white);color:var(--black);font-family:'DM Sans',sans-serif;overflow-x:hidden}
 
-.page-header{background:var(--white);color:var(--black);padding:7rem 2rem 3rem;border-bottom:1px solid #e0dbd0}
+.page-header{background:linear-gradient(135deg,#0d1f6b,#1565C0);color:#fff;padding:7rem 2rem 3rem}
 .page-header-inner{max-width:900px;margin:0 auto}
-.page-label{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem}
-.page-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;margin-bottom:.8rem;color:var(--black)}
-.page-sub{color:var(--grey);font-size:.95rem;line-height:1.7;max-width:600px}
-
-/* PROGRESS STEPS */
-.progress-bar{display:flex;align-items:center;gap:0;margin-bottom:2rem;background:#fff;border:1px solid #e0dbd0;border-radius:10px;overflow:hidden}
-.progress-step{flex:1;padding:.8rem .5rem;text-align:center;font-size:.78rem;font-weight:600;color:#999;font-family:'Plus Jakarta Sans',sans-serif;border-right:1px solid #e0dbd0;cursor:pointer;transition:all .2s;position:relative}
-.progress-step:last-child{border-right:none}
-.progress-step.active{background:var(--red);color:#fff}
-.progress-step.done{background:#e8f5e9;color:var(--green)}
-.progress-step .step-num{display:block;font-size:.65rem;opacity:.7;margin-bottom:.1rem}
+.page-label{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#90caf9;margin-bottom:.75rem}
+.page-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;margin-bottom:.8rem}
+.page-sub{color:#bbdefb;font-size:.95rem;line-height:1.7;max-width:600px}
 
 main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
 
 /* TOOL CARD */
 .tool-card{background:#fff;border:1px solid #e0dbd0;border-radius:12px;overflow:hidden;margin-bottom:1.5rem}
-.tool-card-head{background:var(--black);color:#fff;padding:1rem 1.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;display:flex;align-items:center;gap:.6rem}
-.tool-card-head-step2{background:#1a3d1a}
-.tool-card-head-step3{background:#2d1a00}
+.tool-card-head{color:#fff;padding:1rem 1.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem}
 .tool-card-body{padding:1.5rem}
 
 /* INPUTS */
 .input-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem}
 .input-group{display:flex;flex-direction:column;gap:.4rem}
 .input-group label{font-size:.8rem;font-weight:600;color:var(--grey);font-family:'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:.05em}
-.input-group input,.input-group select{border:1.5px solid #e0dbd0;border-radius:6px;padding:.7rem 1rem;font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--black);background:#fff;transition:border-color .2s;width:100%}
-.input-group input:focus,.input-group select:focus{outline:none;border-color:var(--red)}
-.input-hint{font-size:.75rem;color:#999;margin-top:.2rem}
-.input-prefix{position:relative}
-.input-prefix input{padding-left:1.8rem}
-.input-prefix::before{content:'$';position:absolute;left:.7rem;top:50%;transform:translateY(-50%);color:var(--grey);font-size:.95rem;pointer-events:none}
-
-/* BUTTONS */
-.calc-btn{width:100%;background:var(--red);color:#fff;border:none;border-radius:8px;padding:.9rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:background .2s}
-.calc-btn:hover{background:var(--red-dark)}
-.next-btn{display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;background:var(--black);color:#fff;border:none;border-radius:8px;padding:.9rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:background .2s;text-decoration:none;margin-top:1rem}
-.next-btn:hover{background:#333}
-.next-btn-green{background:var(--green)}
-.next-btn-green:hover{background:#0f5c35}
+.input-group select{border:1.5px solid #e0dbd0;border-radius:6px;padding:.7rem 1rem;font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--black);background:#fff;transition:border-color .2s;width:100%}
+.input-group select:focus{outline:none;border-color:var(--blue)}
+.calc-btn{width:100%;color:#fff;border:none;border-radius:8px;padding:.9rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:background .2s}
 
 /* RESULTS */
 .results{display:none}
 .results.show{display:block;animation:fadeIn .35s ease}
-.tool-section{display:none}
-.tool-section.show{display:block;animation:fadeIn .35s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-/* TAKE HOME HERO */
-.takehome-hero{background:var(--black);border-radius:10px;padding:1.8rem 1.5rem;color:#fff;margin-bottom:1.2rem;text-align:center}
-.takehome-label{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#aaa;margin-bottom:.4rem}
-.takehome-amount{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:3rem;line-height:1;margin-bottom:.3rem}
-.takehome-sub{font-size:.85rem;color:#aaa}
-.takehome-annual{font-size:1.1rem;font-weight:600;color:#fff;margin-top:.5rem}
-
-/* BAR */
-.bar-track{height:28px;border-radius:6px;overflow:hidden;display:flex;margin-bottom:.8rem}
-.bar-seg{height:100%;transition:width .6s ease}
-.bar-legend{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.5rem;margin-bottom:1.2rem}
-.legend-item{display:flex;align-items:center;gap:.5rem;font-size:.8rem}
-.legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
-.legend-label{color:var(--grey)}
-.legend-value{font-weight:600;color:var(--black);margin-left:auto}
-
-/* TABLE */
-.deduction-table{width:100%;border-collapse:collapse;margin-bottom:1.2rem;font-size:.88rem}
-.deduction-table tr{border-bottom:1px solid #f0ece4}
-.deduction-table td{padding:.65rem .5rem;color:var(--grey)}
-.deduction-table td:last-child{text-align:right;font-weight:600;color:var(--black)}
-.deduction-table .takehome-row td{color:var(--green);font-weight:800;font-size:1rem}
-
-/* RATE CARDS */
-.rate-cards{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.2rem}
-.rate-card{background:var(--light);border-radius:8px;padding:1rem;text-align:center}
-.rate-card-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--grey);margin-bottom:.3rem}
-.rate-card-value{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.6rem;color:var(--black)}
-.rate-card-sub{font-size:.75rem;color:var(--grey);margin-top:.2rem}
-.rate-card.green .rate-card-value{color:var(--green)}
-.rate-card.red .rate-card-value{color:var(--red)}
-
-/* WHAT THIS MEANS */
-.decisions{background:#fff;border:1px solid #e0dbd0;border-radius:10px;overflow:hidden;margin-bottom:1rem}
-.decisions-head{background:var(--light);padding:.8rem 1.2rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;border-bottom:1px solid #e0dbd0}
-.decision-item{display:flex;gap:.8rem;padding:.9rem 1.2rem;border-bottom:1px solid #f0ece4;align-items:flex-start}
-.decision-item:last-child{border-bottom:none}
-.decision-icon{font-size:1.2rem;flex-shrink:0;margin-top:.1rem}
-.decision-text{font-size:.85rem;color:var(--grey);line-height:1.6}
-.decision-text strong{color:var(--black)}
-
-/* RRSP BANNER */
-.rrsp-banner{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:1rem 1.2rem;margin-bottom:1rem;display:none}
-.rrsp-banner.show{display:block}
-.rrsp-banner-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;color:var(--green);margin-bottom:.4rem}
-.rrsp-banner-body{font-size:.85rem;color:#2e7d32;line-height:1.6}
-
-/* AFFORDABILITY */
-.aff-hero{border-radius:10px;padding:1.5rem;margin-bottom:1.2rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.aff-hero-blue{background:var(--black);color:#fff}
-.aff-metric{text-align:center;padding:.8rem}
-.aff-metric-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#aaa;margin-bottom:.3rem}
-.aff-metric-value{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.8rem;color:#fff;line-height:1}
-.aff-metric-sub{font-size:.75rem;color:#aaa;margin-top:.3rem}
-
-.city-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.8rem;margin-bottom:1.2rem}
-.city-card{background:#fff;border:1px solid #e0dbd0;border-radius:8px;padding:1rem}
-.city-card-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:.5rem}
-.city-card-rent{font-size:.82rem;color:var(--grey);line-height:1.7}
-.city-card-status{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:.4rem}
-.status-good{background:#e8f5e9;color:#1b5e20}
-.status-tight{background:#fff3e0;color:#e65100}
-.status-hard{background:#ffebee;color:#b71c1c}
-
-/* TOGGLE */
-.toggle-wrap{display:flex;gap:0;border:1.5px solid #e0dbd0;border-radius:8px;overflow:hidden;margin-bottom:1.2rem}
-.toggle-btn{flex:1;padding:.7rem;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.88rem;cursor:pointer;border:none;background:#fff;color:var(--grey);transition:all .2s}
-.toggle-btn.active{background:var(--red);color:#fff}
-
-/* SAVINGS */
-.savings-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem}
-.savings-card{background:#fff;border:1px solid #e0dbd0;border-radius:10px;padding:1.2rem;border-top:3px solid var(--green)}
-.savings-card-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--grey);margin-bottom:.4rem}
-.savings-card-value{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.5rem;color:var(--green);margin-bottom:.3rem}
-.savings-card-body{font-size:.8rem;color:var(--grey);line-height:1.6}
-
-.disclaimer{font-size:.75rem;color:#999;line-height:1.5;padding:.8rem;background:var(--light);border-radius:6px;margin-top:1rem}
-
-/* SECTION CONNECTOR */
-.section-connector{text-align:center;padding:1.5rem 0;color:var(--grey);font-size:.85rem;position:relative}
-.section-connector::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(#e0dbd0,#C8102E);transform:translateX(-50%);z-index:0}
-.section-connector-dot{width:36px;height:36px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;margin:0 auto;position:relative;z-index:1}
-
-@media(max-width:600px){
-  .input-grid{grid-template-columns:1fr}
-  .rate-cards,.savings-grid{grid-template-columns:1fr 1fr}
-  .takehome-amount{font-size:2.4rem}
-  .bar-legend{grid-template-columns:1fr 1fr}
-  .aff-hero{grid-template-columns:1fr 1fr}
-  .progress-step .step-num{display:none}
-  .progress-step{font-size:.7rem;padding:.6rem .3rem}
-}
-
-/* ── CREDIT BUILDER STYLES ── */
+/* STAGE BADGE */
 .stage-hero{border-radius:12px;padding:2rem 1.5rem;text-align:center;margin-bottom:1.2rem;color:#fff}
 .stage-label{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.8;margin-bottom:.5rem}
 .stage-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:2.2rem;margin-bottom:.4rem}
 .stage-score{font-size:1rem;opacity:.9;margin-bottom:.3rem}
 .stage-desc{font-size:.88rem;opacity:.85;max-width:500px;margin:0 auto;line-height:1.6}
+
+/* CREDIT FACTORS */
 .factors-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.2rem}
 .factor-card{background:#fff;border:1px solid #e0dbd0;border-radius:8px;padding:1rem}
 .factor-name{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--grey);margin-bottom:.6rem;display:flex;justify-content:space-between}
@@ -176,73 +62,87 @@ main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
 .factor-bar{height:6px;border-radius:3px;transition:width .6s ease}
 .factor-status{font-size:.78rem;font-weight:600;margin-bottom:.2rem}
 .factor-tip{font-size:.75rem;color:var(--grey);line-height:1.5}
+
+/* JOURNEY TIMELINE */
 .journey{margin-bottom:1.2rem}
 .journey-item{display:flex;gap:1rem;margin-bottom:0}
 .journey-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:40px}
 .journey-dot{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.75rem;color:#fff;flex-shrink:0;border:3px solid #fff;box-shadow:0 0 0 2px #e0dbd0}
 .journey-line{width:2px;background:#e0dbd0;flex:1;min-height:24px;margin:4px 0}
 .journey-right{flex:1;padding-bottom:1.5rem}
-.journey-month{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.78rem;color:var(--red);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.3rem}
+.journey-month{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.78rem;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.3rem}
 .journey-title{font-size:.92rem;font-weight:600;color:var(--black);margin-bottom:.3rem}
 .journey-body{font-size:.82rem;color:var(--grey);line-height:1.6}
-.journey-score{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 10px;border-radius:10px;background:var(--light);color:var(--black);margin-top:.4rem}
+.journey-score{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 10px;border-radius:10px;background:#e8f0fe;color:#1565C0;margin-top:.4rem}
+
+/* CARD RECOMMENDATIONS */
 .card-recs{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.2rem}
-.card-rec{background:#fff;border:1px solid #e0dbd0;border-radius:10px;padding:1.1rem;border-top:3px solid var(--black)}
-.card-rec-step{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--grey);margin-bottom:.3rem}
+.card-rec{background:#fff;border:1px solid #e0dbd0;border-radius:10px;padding:1.1rem;border-top:3px solid var(--blue)}
+.card-rec-step{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--blue);margin-bottom:.3rem}
 .card-rec-bank{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:.2rem}
 .card-rec-product{font-size:.82rem;color:var(--grey);margin-bottom:.5rem}
 .card-rec-why{font-size:.78rem;color:var(--grey);line-height:1.5}
 .card-rec-tag{display:inline-block;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:.5rem}
 .tag-free{background:#e8f5e9;color:#1b5e20}
-.tag-best{background:var(--light);color:var(--black)}
+.tag-best{background:#e8f0fe;color:#1565C0}
 .tag-newcomer{background:#fff3e0;color:#e65100}
+
+/* RULES */
 .rules-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.8rem;margin-bottom:1.2rem}
 .rule-card{background:#fff;border:1px solid #e0dbd0;border-radius:8px;padding:1rem;text-align:center}
-.rule-num{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.8rem;color:var(--black);margin-bottom:.3rem}
+.rule-num{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.8rem;color:var(--blue);margin-bottom:.3rem}
 .rule-label{font-size:.8rem;font-weight:600;color:var(--black);margin-bottom:.2rem}
 .rule-desc{font-size:.75rem;color:var(--grey);line-height:1.5}
+
+/* MISTAKES */
 .mistake-item{display:flex;gap:.8rem;padding:.9rem 0;border-bottom:1px solid #f0ece4;align-items:flex-start}
 .mistake-item:last-child{border-bottom:none}
 .mistake-x{color:var(--red);font-weight:800;font-size:1rem;flex-shrink:0;margin-top:.1rem}
 .mistake-text{font-size:.85rem;color:var(--grey);line-height:1.6}
 .mistake-text strong{color:var(--black)}
 
-.finance-hub{background:var(--light);border:1px solid #d8d3c8;border-radius:12px;padding:1.5rem;margin-top:1.5rem}
-.fh-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:.8rem}
-.fh-title{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:.95rem;margin-bottom:1rem}
-.fh-tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.6rem}
-.fh-tool{background:#fff;border:1px solid #e0dbd0;border-radius:8px;padding:.8rem;text-decoration:none;color:var(--black);transition:border-color .2s;display:flex;align-items:center;gap:.5rem}
-.fh-tool:hover{border-color:var(--red)}
-.fh-tool.current{border-color:var(--red);background:#fff8f8}
-.fh-tool-icon{font-size:1rem;flex-shrink:0}
-.fh-tool-name{font-family:"Plus Jakarta Sans",sans-serif;font-weight:700;font-size:.78rem;color:var(--black)}
-.fh-tool-status{font-size:.65rem;color:var(--grey);margin-top:.1rem}
+/* CONNECT TO TOOLS */
+.connect-card{background:linear-gradient(135deg,#0f2744,#1a3a5c);border-radius:12px;padding:1.5rem;color:#fff;margin-top:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.connect-card-text{font-size:.9rem;color:#aac4e8;line-height:1.6}
+.connect-card-text strong{color:#fff;display:block;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;margin-bottom:.3rem}
+.connect-btn{background:var(--red);color:#fff;padding:.7rem 1.4rem;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.85rem;text-decoration:none;white-space:nowrap;flex-shrink:0;transition:background .2s}
+.connect-btn:hover{background:var(--red-dark)}
+
+.disclaimer{font-size:.75rem;color:#999;line-height:1.5;padding:.8rem;background:var(--light);border-radius:6px;margin-top:1rem}
+
+@media(max-width:600px){
+  .input-grid{grid-template-columns:1fr}
+  .factors-grid,.card-recs{grid-template-columns:1fr}
+  .rules-grid{grid-template-columns:1fr 1fr}
+}
+
 footer{background:#0a0a0a;color:#555;text-align:center;padding:2rem;font-size:.82rem}
 footer a{color:var(--red);text-decoration:none}
 footer strong{color:#888}
 .footer-links{margin:.5rem 0;display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem}
-.footer-links a::after{content:"·";margin-left:.5rem;color:#333}
+.footer-links a::after{content:'·';margin-left:.5rem;color:#333}
 .footer-links a:last-child::after{display:none}
 .footer-disclaimer{margin-top:.8rem;font-size:.73rem;color:#333;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6}
-@media(max-width:600px){.input-grid,.factors-grid,.card-recs{grid-template-columns:1fr}.rules-grid{grid-template-columns:1fr 1fr}.fh-tools{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 <script src="nav.js"></script>
 <div style="height:60px"></div>
+
 <div class="page-header">
   <div class="page-header-inner">
-    <div class="page-label">&#x1F4B3; Finance System</div>
+    <div class="page-label">💳 Canada Tools</div>
     <h1 class="page-title">Credit Score Builder</h1>
-    <p class="page-sub">Your credit history doesn&#8217;t transfer to Canada. You start from zero &#8212; but with the right steps you can reach 700+ in 12&#8211;18 months.</p>
-    <div style="margin-top:.8rem;display:flex;gap:.5rem;flex-wrap:wrap"><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">Canadian credit system</span><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">Equifax &amp; TransUnion</span><span style="font-size:.7rem;font-weight:600;background:rgba(200,16,46,.15);color:var(--red);padding:.25rem .7rem;border-radius:10px">2025 card data</span></div>
+    <p class="page-sub">Your credit history doesn't transfer to Canada. You start from zero — but with the right steps you can reach 700+ in 12–18 months. This plan shows you exactly how.</p>
   </div>
 </div>
-<main style="max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem">
+
+<main>
+
+  <!-- INPUT CARD -->
   <div class="tool-card">
-    <div class="tool-card-head">Credit Score Builder</div>
+    <div class="tool-card-head" style="background:#1565C0">Tell us where you are</div>
     <div class="tool-card-body">
-      <p style="font-size:.88rem;color:var(--grey);line-height:1.7;margin-bottom:1.2rem">Your credit history doesn't transfer to Canada. You start from zero — but with the right steps you can reach 700+ in 12–18 months.</p>
       <div class="input-grid">
         <div class="input-group">
           <label>How long in Canada?</label>
@@ -281,7 +181,7 @@ footer strong{color:#888}
           </select>
         </div>
         <div class="input-group">
-          <label>Canadian bank account?</label>
+          <label>Do you have a Canadian bank account?</label>
           <select id="cr-bank">
             <option value="yes">Yes — opened already</option>
             <option value="no">Not yet</option>
@@ -297,12 +197,14 @@ footer strong{color:#888}
           </select>
         </div>
       </div>
-      <button class="calc-btn" onclick="buildCreditPlan()">Build my credit plan →</button>
+      <button class="calc-btn" style="background:#1565C0" onclick="buildCreditPlan()">Build my credit plan →</button>
     </div>
   </div>
 
+  <!-- RESULTS -->
   <div class="results" id="credit-results">
 
+    <!-- STAGE -->
     <div class="stage-hero" id="stage-hero">
       <div class="stage-label">Your credit stage</div>
       <div class="stage-name" id="stage-name">—</div>
@@ -310,8 +212,9 @@ footer strong{color:#888}
       <div class="stage-desc" id="stage-desc">—</div>
     </div>
 
+    <!-- FACTORS -->
     <div class="tool-card">
-      <div class="tool-card-head">What builds your score — and where you stand</div>
+      <div class="tool-card-head" style="background:#1565C0">What builds your score — and where you stand</div>
       <div class="tool-card-body">
         <div class="factors-grid" id="factors-grid"></div>
         <div style="font-size:.82rem;color:var(--grey);background:var(--light);border-radius:8px;padding:.9rem 1rem;line-height:1.6">
@@ -320,123 +223,178 @@ footer strong{color:#888}
       </div>
     </div>
 
+    <!-- JOURNEY -->
     <div class="tool-card">
-      <div class="tool-card-head">Your month-by-month credit journey</div>
+      <div class="tool-card-head" style="background:#1565C0">Your month-by-month credit journey</div>
       <div class="tool-card-body">
         <div class="journey" id="journey-timeline"></div>
       </div>
     </div>
 
+    <!-- THE 3 RULES -->
     <div class="tool-card">
-      <div class="tool-card-head">The 3 rules that matter most</div>
+      <div class="tool-card-head" style="background:#0d1f6b">The 3 rules that matter most</div>
       <div class="tool-card-body">
         <div class="rules-grid">
-          <div class="rule-card"><div class="rule-num">30%</div><div class="rule-label">Utilisation limit</div><div class="rule-desc">Never use more than 30% of your credit limit. If your limit is $500, keep balance under $150. This single rule has the biggest impact after payment history.</div></div>
-          <div class="rule-card"><div class="rule-num">100%</div><div class="rule-label">Pay in full</div><div class="rule-desc">Pay your full balance every month — not just the minimum. Minimum payments keep you in debt and cost you interest. Full payment = zero interest + score improvement.</div></div>
-          <div class="rule-card"><div class="rule-num">6mo</div><div class="rule-label">Before applying again</div><div class="rule-desc">Every credit application creates a "hard inquiry" that drops your score slightly. Wait 6 months between applications. Don't apply for multiple cards at once.</div></div>
+          <div class="rule-card">
+            <div class="rule-num">30%</div>
+            <div class="rule-label">Utilisation limit</div>
+            <div class="rule-desc">Never use more than 30% of your credit limit. If your limit is $500, keep balance under $150. This single rule has the biggest impact after payment history.</div>
+          </div>
+          <div class="rule-card">
+            <div class="rule-num">100%</div>
+            <div class="rule-label">Pay in full</div>
+            <div class="rule-desc">Pay your full balance every month — not just the minimum. Minimum payments keep you in debt and cost you interest. Full payment = zero interest + score improvement.</div>
+          </div>
+          <div class="rule-card">
+            <div class="rule-num">6mo</div>
+            <div class="rule-label">Before applying again</div>
+            <div class="rule-desc">Every credit application creates a "hard inquiry" that drops your score slightly. Wait 6 months between applications. Don't apply for multiple cards at once.</div>
+          </div>
         </div>
       </div>
     </div>
 
+    <!-- CARD RECOMMENDATIONS -->
     <div class="tool-card">
-      <div class="tool-card-head">Which cards to get — in order</div>
+      <div class="tool-card-head" style="background:#1565C0">Which cards to get — in order</div>
       <div class="tool-card-body">
         <div class="card-recs" id="card-recs"></div>
         <div style="font-size:.82rem;color:var(--grey);line-height:1.7;margin-top:.5rem">
-          <strong style="color:var(--black)">Newcomer tip:</strong> All major Canadian banks have newcomer packages that include a secured credit card with no credit history required. Go to a branch — don't apply online for your first card. Bring your passport, SIN, and work permit or PR card.
+          <strong style="color:var(--black)">Newcomer tip:</strong> All major Canadian banks (RBC, TD, Scotiabank, BMO, CIBC) have newcomer banking packages that include a secured credit card with no credit history required. Go to a branch — don't apply online for your first card. Bring your passport, SIN, and work permit or PR card.
         </div>
       </div>
     </div>
 
+    <!-- COMMON MISTAKES -->
     <div class="tool-card">
       <div class="tool-card-head" style="background:#b71c1c">Mistakes that set you back months</div>
       <div class="tool-card-body">
-        <div class="mistake-item"><div class="mistake-x">✗</div><div class="mistake-text"><strong>Applying for too many cards at once.</strong> Each application is a hard inquiry. Three applications in one month signals desperation to lenders and drops your score. One card at a time, 6 months apart.</div></div>
-        <div class="mistake-item"><div class="mistake-x">✗</div><div class="mistake-text"><strong>Closing your oldest card.</strong> Length of credit history is 15% of your score. Your oldest card is your most valuable — keep it open and use it occasionally, even after upgrading.</div></div>
-        <div class="mistake-item"><div class="mistake-x">✗</div><div class="mistake-text"><strong>Only paying the minimum.</strong> Minimum payments don't hurt your score directly, but they cost you interest and signal low financial health. Always pay in full.</div></div>
-        <div class="mistake-item"><div class="mistake-x">✗</div><div class="mistake-text"><strong>Using your card as a debit card.</strong> Running your card to the limit then paying it off looks bad — lenders see a snapshot of your balance. Keep it under 30% of your limit at all times.</div></div>
+        <div class="mistake-item">
+          <div class="mistake-x">✗</div>
+          <div class="mistake-text"><strong>Applying for too many cards at once.</strong> Each application is a hard inquiry on your credit report. Three applications in one month signals desperation to lenders and drops your score. One card at a time, 6 months apart.</div>
+        </div>
+        <div class="mistake-item">
+          <div class="mistake-x">✗</div>
+          <div class="mistake-text"><strong>Only paying the minimum balance.</strong> The credit card company loves this — you pay interest on the rest. Your score improves faster if you pay in full. Minimum payments also keep your utilisation high.</div>
+        </div>
+        <div class="mistake-item">
+          <div class="mistake-x">✗</div>
+          <div class="mistake-text"><strong>Closing your first credit card.</strong> Your oldest card is your longest credit history — it matters. Even after you get better cards, keep your first secured card open with occasional small purchases.</div>
+        </div>
+        <div class="mistake-item">
+          <div class="mistake-x">✗</div>
+          <div class="mistake-text"><strong>Thinking rent payments build credit automatically.</strong> In Canada, rent does NOT appear on your credit report by default. Ask your landlord to use a rent reporting service (Landlord Credit Bureau) or use a credit-building app like Borrowell Rent Advantage.</div>
+        </div>
+        <div class="mistake-item">
+          <div class="mistake-x">✗</div>
+          <div class="mistake-text"><strong>Not checking your credit report.</strong> Errors on credit reports are more common than you think. Check your free report at Equifax and TransUnion once a year. Dispute any errors immediately — even small ones affect your score.</div>
+        </div>
       </div>
     </div>
 
+    <!-- FREE TOOLS -->
     <div class="tool-card">
-      <div class="tool-card-head">Your goal: what score you need</div>
-      <div class="tool-card-body" id="goal-advice">—</div>
+      <div class="tool-card-head" style="background:#1a5c2e">Free ways to check your score</div>
+      <div class="tool-card-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+          <div style="background:var(--light);border-radius:8px;padding:1rem">
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;margin-bottom:.3rem">Borrowell</div>
+            <div style="font-size:.8rem;color:var(--grey);line-height:1.5;margin-bottom:.5rem">Free Equifax score updated weekly. Best for newcomers — has specific newcomer resources and credit-building tools.</div>
+            <span style="font-size:.68rem;font-weight:700;background:#e8f5e9;color:#1b5e20;padding:2px 8px;border-radius:10px">Free · Equifax</span>
+          </div>
+          <div style="background:var(--light);border-radius:8px;padding:1rem">
+            <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;margin-bottom:.3rem">Credit Karma Canada</div>
+            <div style="font-size:.8rem;color:var(--grey);line-height:1.5;margin-bottom:.5rem">Free TransUnion score. Good for tracking progress over time and understanding what's affecting your score.</div>
+            <span style="font-size:.68rem;font-weight:700;background:#e8f0fe;color:#1565C0;padding:2px 8px;border-radius:10px">Free · TransUnion</span>
+          </div>
+        </div>
+        <div style="font-size:.82rem;color:var(--grey);margin-top:.8rem;line-height:1.6">
+          <strong style="color:var(--black)">Note:</strong> Canada has two credit bureaus — Equifax and TransUnion. Lenders may check either or both. Check both every 6–12 months. Checking your own score is a "soft inquiry" and does NOT affect your score.
+        </div>
+      </div>
     </div>
 
-    <a class="next-btn" href="buy-vs-rent.html" style="margin-top:.5rem;display:flex;align-items:center;justify-content:center;gap:.6rem;text-decoration:none">
-      Also in the Finance System: Buy vs Rent Decision →
-    </a>
+    <!-- GOAL-SPECIFIC ADVICE -->
+    <div class="tool-card">
+      <div class="tool-card-head" style="background:#1565C0">What score you need for your goal</div>
+      <div class="tool-card-body" id="goal-advice"></div>
+    </div>
 
-    <div class="next-moves" id="credit-next-moves" style="display:none;background:#fff;border:2px solid var(--red);border-radius:12px;padding:1.5rem;margin-bottom:1rem"></div>
-    <div class="disclaimer" style="margin-top:1rem">Not financial advice. Credit scoring is handled by Equifax and TransUnion — check Borrowell (free) and Credit Karma Canada (free) for your actual scores.</div>
+    <!-- CONNECT TO FINANCIAL PLANNER -->
+    <div class="connect-card">
+      <div class="connect-card-text">
+        <strong>← Connect to your Financial Planner</strong>
+        Your income, housing budget, and savings plan work together with your credit score. A strong credit score gets you better rental terms, lower mortgage rates, and better loan conditions.
+      </div>
+      <a href="tools.html" class="connect-btn">Open Financial Planner →</a>
+    </div>
+
+    <div class="disclaimer">⚠️ Credit score estimates are approximate and for guidance only. Actual scores depend on your full credit history and bureau-specific models. Always check your official score at Equifax.ca or TransUnion.ca. Not financial advice.</div>
+
   </div>
 
-
-<div class="finance-hub">
-  <div class="fh-label">Finance System</div>
-  <div class="fh-title">All 5 tools in the Financial Foundation</div>
-  <div class="fh-tools">
-    <a class="fh-tool" href="tools.html"><div class="fh-tool-icon">&#x1F4B0;</div><div><div class="fh-tool-name">Income &amp; Savings</div><div class="fh-tool-status">3-step planner</div></div></a>
-    <a class="fh-tool current" href="credit.html"><div class="fh-tool-icon">&#x1F4B3;</div><div><div class="fh-tool-name">Credit Builder</div><div class="fh-tool-status">You are here</div></div></a>
-    <a class="fh-tool" href="buy-vs-rent.html"><div class="fh-tool-icon">&#x1F3E0;</div><div><div class="fh-tool-name">Buy vs Rent</div><div class="fh-tool-status">Decision tool</div></div></a>
-    <a class="fh-tool" href="finance.html"><div class="fh-tool-icon">&#x1F4DA;</div><div><div class="fh-tool-name">Finance Guide</div><div class="fh-tool-status">TFSA &#xB7; RRSP &#xB7; RESP</div></div></a>
-  </div>
-</div>
 </main>
+
 <footer>
-  <p><strong>Canada Family Guide</strong> &#8212; Built for families across Canada</p>
+  <p><strong>Canada Family Guide</strong> — Built for families across Canada</p>
   <div class="footer-links">
     <a href="index.html">Home</a>
+    <a href="newcomer-start.html">Newcomer Guide</a>
+    <a href="finance.html">Finance</a>
+    <a href="education.html">Education</a>
+    <a href="planner.html">Grade Planner</a>
+    <a href="streams.html">Career Streams</a>
+    <a href="community.html">Community Hours</a>
+    <a href="extracurriculars.html">Extracurriculars</a>
+    <a href="newcomer.html">Education Newcomers</a>
+    <a href="quebec.html">Quebec/CEGEP</a>
+    <a href="recreation.html">Recreation</a>
+    <a href="travel.html">Travel</a>
+    <a href="tech-careers.html">Tech &amp; AI</a>
+    <a href="healthcare.html">Healthcare</a>
+    <a href="india.html">India Guide</a>
+    <a href="news.html">Live Updates</a>
     <a href="tools.html">Financial Planner</a>
     <a href="credit.html">Credit Builder</a>
-    <a href="buy-vs-rent.html">Buy vs Rent</a>
-    <a href="finance.html">Finance Guide</a>
-    <a href="newcomer-start.html">Newcomer Guide</a>
-    <a href="education.html">Education</a>
-    <a href="healthcare.html">Healthcare</a>
     <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
   </div>
-  <p class="footer-disclaimer">Not financial advice. Information is shared for educational purposes only.</p>
+  <p class="footer-disclaimer">Not financial or legal advice. Information is shared for educational purposes only. Always verify with a registered financial advisor or relevant authority.</p>
 </footer>
+
 <script>
-function set(id,v){const el=document.getElementById(id);if(el)el.innerHTML=v;}
-// CREDIT BUILDER
-// ─────────────────────────────────────────────
-// ─────────────────────────────────────────────
-// CFG SHARED PLAN STATE
-// One localStorage key shared across all finance tools
-// Schema: { salary, province, monthly, housing, city, savings, creditStage, children, updated }
-// ─────────────────────────────────────────────
-const CFG = {
-  KEY: 'cfg_plan',
-  get() {
-    try { return JSON.parse(localStorage.getItem(this.KEY) || '{}'); } catch(e) { return {}; }
+function set(id, v) { const el = document.getElementById(id); if (el) el.innerHTML = v; }
+function fmt(n) { return '$' + Math.round(n).toLocaleString('en-CA'); }
+
+const STAGES = {
+  beginner: {
+    name: 'Beginner',
+    bg: 'linear-gradient(135deg,#b71c1c,#C8102E)',
+    score: 'Estimated score: 0 – 560 (No file or thin file)',
+    desc: 'You have little or no Canadian credit history. This is completely normal for newcomers. The good news: with the right steps, you can reach 650+ within 12 months.'
   },
-  set(patch) {
-    try {
-      const current = this.get();
-      const updated = { ...current, ...patch, updated: Date.now() };
-      localStorage.setItem(this.KEY, JSON.stringify(updated));
-      // Also keep legacy keys in sync for backward compat
-      if (patch.salary)   localStorage.setItem('cfg_salary', patch.salary);
-      if (patch.province) localStorage.setItem('cfg_province', patch.province);
-      if (patch.monthly)  localStorage.setItem('cfg_monthly', Math.round(patch.monthly));
-      if (patch.housing)  localStorage.setItem('cfg_housing', Math.round(patch.housing || 0));
-    } catch(e) {}
+  building: {
+    name: 'Building',
+    bg: 'linear-gradient(135deg,#e65100,#f57c00)',
+    score: 'Estimated score: 560 – 660 (Thin to fair file)',
+    desc: 'You\'ve started building credit. You have a card, some history, but not enough yet for the best rates. Focus on consistency — time and good habits will get you to 700+ within a year.'
   },
-  fmt(n) { return '$' + Math.round(n).toLocaleString('en-CA'); },
-  // Returns a human-readable summary banner for pre-fill notice
-  banner(fields) {
-    const p = this.get();
-    const parts = [];
-    if (fields.includes('income') && p.monthly) parts.push(`take-home ${this.fmt(p.monthly)}/mo`);
-    if (fields.includes('city') && p.city)       parts.push(p.city.charAt(0).toUpperCase() + p.city.slice(1));
-    if (fields.includes('savings') && p.savings) parts.push(`savings ${this.fmt(p.savings)}`);
-    if (fields.includes('credit') && p.creditStage) parts.push(`credit: ${p.creditStage}`);
-    return parts.length ? `✓ Pre-filled from your plan — ${parts.join(' · ')}` : null;
+  established: {
+    name: 'Established',
+    bg: 'linear-gradient(135deg,#1b5e20,#2e7d32)',
+    score: 'Estimated score: 660 – 750+ (Good to excellent)',
+    desc: 'You have a solid Canadian credit foundation. You qualify for most products at good rates. Focus now on maintaining habits and diversifying your credit mix.'
   }
 };
 
+function getStage(time, cards, usage, payment) {
+  if (cards === 'none' || time === 'new') return 'beginner';
+  if (cards === 'regular' && payment === 'full' && usage === 'low' && (time === 'years')) return 'established';
+  if (cards === 'secured' && time === 'settling') return 'building';
+  if (cards === 'multiple' || cards === 'regular') return (payment === 'full' && usage === 'low') ? 'established' : 'building';
+  return 'building';
+}
 
 function buildCreditPlan() {
   const time    = document.getElementById('cr-time').value;
@@ -446,47 +404,48 @@ function buildCreditPlan() {
   const bank    = document.getElementById('cr-bank').value;
   const goal    = document.getElementById('cr-goal').value;
 
-  // Determine stage
-  let stage;
-  if (cards === 'none' || time === 'new') stage = 'beginner';
-  else if (cards === 'secured' || (cards === 'multiple' && time !== 'years')) stage = 'building';
-  else stage = 'established';
+  const stage = getStage(time, cards, usage, payment);
+  const S = STAGES[stage];
 
-  const stageData = {
-    beginner:    { name: 'Starting from Zero',   color: '#C8102E', score: 'No Canadian credit history yet', desc: 'Starting from zero is completely normal for newcomers — it\'s not a reflection of your financial history back home. The steps below will get you to 700+ within 18 months. This is one of the most important things you can do in year one.' },
-    building:    { name: 'Building Credit',       color: '#9a6f00', score: 'Estimated score: 560–650 range', desc: 'You\'ve already done the hardest part — starting. Now it\'s about consistency over time. Every month of on-time payments and low utilisation compounds. You\'re on the right track.' },
-    established: { name: 'Established Credit',    color: '#1a7a4a', score: 'Estimated score: 650–750+ range', desc: 'You have a solid Canadian credit foundation. This took real discipline — it shows. Now the focus is protecting it and optimising for mortgage readiness.' }
-  };
-  const sd = stageData[stage];
-
-  document.getElementById('stage-hero').style.background = sd.color;
-  set('stage-name', sd.name); set('stage-score', sd.score); set('stage-desc', sd.desc);
+  // Stage hero
+  document.getElementById('stage-hero').style.background = S.bg;
+  set('stage-name', stage.charAt(0).toUpperCase() + stage.slice(1));
+  set('stage-score', S.score);
+  set('stage-desc', S.desc);
 
   // Factors
-  const payScore = payment === 'full' ? 95 : payment === 'min' ? 50 : payment === 'missed' ? 15 : 0;
-  const useScore = usage === 'low' ? 90 : usage === 'medium' ? 50 : usage === 'high' ? 15 : 0;
-  const ageScore = time === 'years' ? 80 : time === 'year' ? 50 : time === 'settling' ? 20 : 0;
-  const mixScore = cards === 'multiple' || cards === 'regular' ? 70 : cards === 'secured' ? 30 : 0;
-  const inqScore = 85; // assumed good if not mentioned
-
   const factors = [
-    { name: 'Payment History', pct: '35%', score: payScore, color: payScore>70?'#1a7a4a':payScore>40?'#9a6f00':'#C8102E', status: payScore>70?'✓ Strong':'Needs attention', tip: payment==='full'?'Paying in full every month — the single best thing you can do.':payment==='none'?'No card yet — your first priority is getting a secured card.':'Set up autopay for the full balance immediately.' },
-    { name: 'Credit Utilisation', pct: '30%', score: useScore, color: useScore>70?'#1a7a4a':useScore>40?'#9a6f00':'#C8102E', status: useScore>70?'✓ Under 30%':'Reduce usage', tip: usage==='low'?'Under 30% — ideal. Keep it here.':usage==='none'?'No card yet. When you get one, stay under 30% of your limit.':'Pay down your balance now to get under 30% of your limit.' },
-    { name: 'Credit History Length', pct: '15%', score: ageScore, color: ageScore>70?'#1a7a4a':ageScore>40?'#9a6f00':'#C8102E', status: ageScore>70?'✓ Building well':'Still early', tip: time==='years'?'Good history length — don\'t close old cards.':'History length builds automatically with time. Don\'t rush it — just be consistent.' },
-    { name: 'Credit Mix', pct: '10%', score: mixScore, color: mixScore>60?'#1a7a4a':mixScore>25?'#9a6f00':'#C8102E', status: mixScore>60?'✓ Diverse':'Build variety', tip: cards==='none'?'Start with one secured card — diversity comes later.':'Having a mix of card types (secured, rewards, store) helps. Don\'t open accounts just for this.' },
-    { name: 'New Inquiries', pct: '10%', score: inqScore, color: '#1a7a4a', status: '✓ Looks fine', tip: 'Avoid applying for new credit for 6 months after each application. Each application = hard inquiry = small score drop.' },
+    { name: 'Payment history', pct: '35%', score: payment === 'full' ? 95 : payment === 'min' ? 50 : payment === 'missed' ? 20 : 0, color: '#1a7a4a',
+      status: payment === 'full' ? '✓ Good' : payment === 'min' ? '⚠ Fair' : payment === 'missed' ? '✗ Poor' : '— No history yet',
+      statusColor: payment === 'full' ? '#1a7a4a' : payment === 'min' ? '#e65100' : '#b71c1c',
+      tip: payment === 'full' ? 'Keep paying in full — this is your strongest factor.' : payment === 'min' ? 'Try to pay the full balance. Minimum payments cost you interest and keep utilisation high.' : payment === 'missed' ? 'Missed payments stay on your report for 6 years. Set up autopay immediately.' : 'Get a card and pay it in full every month. This is how you start.' },
+    { name: 'Credit utilisation', pct: '30%', score: usage === 'low' ? 90 : usage === 'medium' ? 55 : usage === 'high' ? 20 : 0, color: '#1565C0',
+      status: usage === 'low' ? '✓ Good (under 30%)' : usage === 'medium' ? '⚠ Fair (30–60%)' : usage === 'high' ? '✗ High (over 60%)' : '— No card yet',
+      statusColor: usage === 'low' ? '#1a7a4a' : usage === 'medium' ? '#e65100' : '#b71c1c',
+      tip: usage === 'low' ? 'Ideal. Keep usage under 30% of your limit at all times.' : usage === 'medium' ? 'Aim to get this under 30%. Pay down balance mid-month if needed.' : usage === 'high' ? 'This is hurting your score significantly. Pay down to under 30% this month.' : 'Once you get a card, never use more than 30% of the limit.' },
+    { name: 'Length of history', pct: '15%', score: time === 'new' ? 5 : time === 'settling' ? 25 : time === 'year' ? 50 : 80, color: '#6A1B9A',
+      status: time === 'new' ? 'Just starting' : time === 'settling' ? 'Building (3–12 months)' : time === 'year' ? 'Growing (1+ year)' : 'Established (3+ years)',
+      statusColor: '#6A1B9A',
+      tip: 'This improves automatically over time. Don\'t close old accounts — keeping them open maintains your history length.' },
+    { name: 'Credit mix', pct: '10%', score: cards === 'none' ? 0 : cards === 'secured' ? 20 : cards === 'multiple' ? 70 : 60, color: '#0d1f6b',
+      status: cards === 'none' ? '— No history' : cards === 'secured' ? 'Thin (1 secured card)' : cards === 'multiple' ? 'Good mix' : 'Fair (unsecured only)',
+      statusColor: cards === 'multiple' ? '#1a7a4a' : '#e65100',
+      tip: 'Lenders like to see different types of credit — card + car loan or line of credit. Don\'t rush this — comes naturally after 1–2 years.' },
+    { name: 'New inquiries', pct: '10%', score: 80, color: '#C8102E',
+      status: '✓ Assumed good', statusColor: '#1a7a4a',
+      tip: 'Each credit application creates a hard inquiry that slightly drops your score. Space applications 6 months apart. Checking your own score is a soft inquiry — it does not affect your score.' },
   ];
 
   document.getElementById('factors-grid').innerHTML = factors.map(f => `
     <div class="factor-card">
       <div class="factor-name">${f.name} <span class="factor-pct">${f.pct}</span></div>
       <div class="factor-bar-bg"><div class="factor-bar" style="width:${f.score}%;background:${f.color}"></div></div>
-      <div class="factor-status" style="color:${f.color}">${f.status}</div>
+      <div class="factor-status" style="color:${f.statusColor}">${f.status}</div>
       <div class="factor-tip">${f.tip}</div>
     </div>`).join('');
 
-  // Journey
-  const journeySteps = getCreditJourney(stage, time, cards, bank, goal, usage, payment);
+  // Journey timeline
+  const journeySteps = getJourney(stage, time, cards, bank, goal);
   document.getElementById('journey-timeline').innerHTML = journeySteps.map((s, i) => `
     <div class="journey-item">
       <div class="journey-left">
@@ -501,8 +460,9 @@ function buildCreditPlan() {
       </div>
     </div>`).join('');
 
-  // Card recs
-  document.getElementById('card-recs').innerHTML = getCardRecs(stage, time).map(c => `
+  // Card recommendations
+  const cardRecs = getCardRecs(stage, time);
+  document.getElementById('card-recs').innerHTML = cardRecs.map(c => `
     <div class="card-rec">
       <div class="card-rec-step">${c.step}</div>
       <div class="card-rec-bank">${c.bank}</div>
@@ -513,101 +473,58 @@ function buildCreditPlan() {
 
   // Goal advice
   const goalAdvice = {
-    rent:     `<strong style="color:var(--black);display:block;margin-bottom:.5rem">🏠 Renting: What landlords check</strong><span style="font-size:.88rem;color:var(--grey);line-height:1.8">Most Canadian landlords run a credit check. You need <strong style="color:var(--black)">620–650+</strong> to qualify without extra deposit. If below this, offer 2–3 months rent upfront — most landlords accept this instead. Timeline: reach 620 within 6–9 months of good habits.</span>`,
-    car:      `<strong style="color:var(--black);display:block;margin-bottom:.5rem">🚗 Car loan: What dealers check</strong><span style="font-size:.88rem;color:var(--grey);line-height:1.8">For a reasonable interest rate (under 8%), you need <strong style="color:var(--black)">650+</strong>. Below 600, you may still get approved but at 15–20%+ interest — avoid this. Wait 12–18 months, build first, then finance.</span>`,
-    mortgage: `<strong style="color:var(--black);display:block;margin-bottom:.5rem">🏡 Mortgage: What banks require</strong><span style="font-size:.88rem;color:var(--grey);line-height:1.8">Minimum score for CMHC-insured mortgage: <strong style="color:var(--black)">600</strong>. For the best rates, you want <strong style="color:var(--black)">720+</strong>. Most newcomers realistically target a mortgage after 3–5 years. The score you build in years 1–2 directly determines your mortgage rate in years 3–5.</span>`,
-    general:  `<strong style="color:var(--black);display:block;margin-bottom:.5rem">📈 Credit milestones</strong><span style="font-size:.88rem;color:var(--grey);line-height:1.8"><strong style="color:var(--black)">600</strong> — basic approval · <strong style="color:var(--black)">650</strong> — rentals, basic car loans · <strong style="color:var(--black)">700</strong> — good rates · <strong style="color:var(--black)">740+</strong> — best rates, premium cards. Most newcomers reach 650 within 12 months and 700 within 18–24 months.</span>`
+    rent: `<div style="font-size:.88rem;color:var(--grey);line-height:1.8"><strong style="color:var(--black);display:block;margin-bottom:.5rem">🏠 Renting: What landlords check</strong>Most Ontario landlords run a credit check. You need a score of <strong style="color:var(--black)">620–650+</strong> to qualify without extra deposit requirements. If your score is below this, offer 2–3 months rent upfront — most landlords will accept this instead. Timeline: you can reach 620 within 6–9 months of good habits.</div>`,
+    car: `<div style="font-size:.88rem;color:var(--grey);line-height:1.8"><strong style="color:var(--black);display:block;margin-bottom:.5rem">🚗 Car loan: What dealers check</strong>For a reasonable interest rate (under 8%), you need <strong style="color:var(--black)">650+</strong>. Below 600, you may still get approved but at 15–20%+ interest — avoid this. Wait 12–18 months, build your score first, then finance. Cash or cosigner are alternatives in year 1.</div>`,
+    mortgage: `<div style="font-size:.88rem;color:var(--grey);line-height:1.8"><strong style="color:var(--black);display:block;margin-bottom:.5rem">🏡 Mortgage: What banks require</strong>Minimum score for a CMHC-insured mortgage: <strong style="color:var(--black)">600</strong>. For the best rates, you want <strong style="color:var(--black)">720+</strong>. Most newcomers realistically target a mortgage after 3–5 years in Canada. Focus on building credit now — you have time. The score you build in years 1–2 directly determines your mortgage rate in years 3–5.</div>`,
+    general: `<div style="font-size:.88rem;color:var(--grey);line-height:1.8"><strong style="color:var(--black);display:block;margin-bottom:.5rem">📈 General credit milestones</strong><strong style="color:var(--black)">600</strong> — basic approval for most products<br><strong style="color:var(--black)">650</strong> — rental applications, basic car loans<br><strong style="color:var(--black)">700</strong> — good rates on loans and cards<br><strong style="color:var(--black)">740+</strong> — best rates, premium card eligibility<br><br>Most newcomers reach 650 within 12 months and 700 within 18–24 months of consistent good habits.</div>`
   };
   set('goal-advice', goalAdvice[goal]);
-
-  // Save stage to shared plan
-  CFG.set({creditStage: stage, city: CFG.get().city || null});
-
-  // Next 3 moves
-  const movesEl = document.getElementById('credit-next-moves');
-  if(movesEl){
-    const plan = CFG.get();
-    const moves = [
-      stage === 'beginner'
-        ? { icon:'🏦', text:`<strong>Go to your bank branch today</strong> — ask specifically for a newcomer secured credit card. Bring passport + SIN. Takes 30 min. This is the single most important financial step you can take this week.` }
-        : stage === 'building'
-        ? { icon:'📉', text:`<strong>Reduce your utilisation below 30% this month</strong> — if you're above that, pay down your balance now. This alone can lift your score 20–40 points within one statement cycle.` }
-        : { icon:'📋', text:`<strong>Request your free credit reports</strong> — Borrowell (Equifax) and Credit Karma Canada (TransUnion). Dispute any errors immediately. Errors are more common than people expect and silently drag scores down.` },
-      { icon:'🏠', text:`<strong>Ready to decide on buying?</strong> — Your credit stage directly affects your mortgage rate. See what you can qualify for now.`, link:'buy-vs-rent.html', linkLabel:'Buy vs Rent Tool →' },
-      { icon:'💰', text:`<strong>Check your savings plan</strong> — while building credit, your TFSA and FHSA should be growing simultaneously. Every month both compound.`, link:'tools.html', linkLabel:'Financial Planner →' },
-    ];
-    movesEl.innerHTML = `<div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:1rem">🎯 Your next 3 moves</div>` +
-      moves.map(m=>`<div style="display:flex;gap:.8rem;padding:.85rem 0;border-bottom:1px solid #f0ece4;align-items:flex-start">
-        <div style="font-size:1.1rem;flex-shrink:0;margin-top:.1rem">${m.icon}</div>
-        <div style="font-size:.85rem;color:var(--grey);line-height:1.6;flex:1">${m.text}${m.link?` <a href="${m.link}" style="color:var(--red);font-weight:600">${m.linkLabel}</a>`:''}</div>
-      </div>`).join('');
-    movesEl.style.display='block';
-  }
 
   document.getElementById('credit-results').classList.add('show');
   document.getElementById('credit-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function getCreditJourney(stage, time, cards, bank, goal, usage, payment) {
+function getJourney(stage, time, cards, bank, goal) {
   if (stage === 'beginner') return [
-    { num:'1', month:'Week 1', color:'#C8102E', title:'Open a Canadian bank account', body: bank==='yes'?'Already done ✓. Make sure it\'s a chequing account at a major bank (RBC, TD, Scotiabank, BMO, CIBC).':'Go to any major bank branch with passport, SIN, and immigration doc. Open a chequing account. Most banks have newcomer packages — free for year 1.', score:'Foundation step' },
-    { num:'2', month:'Month 1', color:'#0f0f0f', title:'Apply for a secured credit card', body:'Ask your bank for a secured credit card. You deposit $500–$1,000 as collateral and get a real credit card that builds credit. Apply at a branch, not online.', score:'Score: 0 → building' },
-    { num:'3', month:'Months 1–6', color:'#e65100', title:'Groceries only — pay in full every month', body:'Charge $50–$100/month. Pay the FULL balance before due date every month. Set up autopay. Never use more than 30% of your limit. This one habit is 65% of your score.', score:'Score: 560–600 range' },
-    { num:'4', month:'Month 6', color:'#6A1B9A', title:'Check your score for the first time', body:'Sign up for Borrowell (free, Equifax) and Credit Karma Canada (free, TransUnion). You should see 560–620 if consistent. Normal and healthy. Don\'t apply for anything new yet.', score:'First milestone' },
-    { num:'5', month:'Month 12', color:'#1a7a4a', title:'Request a credit limit increase', body:'Call your bank and ask to increase your secured card limit. If they offer an unsecured card, consider it only if you\'ve been consistent 12 months. Higher limit + same spending = lower utilisation.', score:'Score: 620–660 range' },
-    { num:'6', month:'Month 18', color:'#C8102E', title:'Apply for a second card (rewards)', body: goal==='mortgage'?'Apply for a regular rewards card (Scotia Scene+, RBC Avion). Two cards with long history and low utilisation = the foundation of your future mortgage application.':'Apply for a regular rewards card. Keep both, use each occasionally, pay in full. Score should be 680–720+.', score:'Score: 680–720+' },
+    { num: '1', month: 'Week 1', color: '#1565C0', title: 'Open a Canadian bank account', body: bank === 'yes' ? 'Already done ✓ — good start. Make sure your account is a chequing account at a major bank (RBC, TD, Scotiabank, BMO, CIBC). This is your foundation.' : 'Go to any major bank branch with your passport, SIN, and immigration document. Open a chequing account. Most banks have newcomer packages — ask specifically. Free for 1 year at most banks.', score: 'Foundation step' },
+    { num: '2', month: 'Month 1', color: '#C8102E', title: 'Apply for a secured credit card', body: 'Ask your bank for a secured credit card. You deposit $500–$1,000 as collateral and get a card with that limit. This is NOT a debit card — it\'s a real credit card that builds credit. RBC, TD, and Scotiabank all have newcomer secured cards with no credit history required. Apply at a branch, not online.', score: 'Score: 0 → building' },
+    { num: '3', month: 'Months 1–6', color: '#e65100', title: 'Use it for groceries only — pay in full every month', body: 'Charge $50–$100 per month on the card (groceries, transit). Pay the FULL balance before the due date every single month. Never miss a payment — set up autopay. Never use more than 30% of your limit. This single habit, done consistently, is 65% of your entire credit score.', score: 'Score: 560–600 range' },
+    { num: '4', month: 'Month 6', color: '#6A1B9A', title: 'Check your score for the first time', body: 'Sign up for Borrowell (free, Equifax score) and Credit Karma Canada (free, TransUnion score). Check both. You should see a score between 560–620 if you\'ve been consistent. This is normal and healthy progress. Don\'t apply for anything new yet.', score: 'First milestone' },
+    { num: '5', month: 'Month 12', color: '#1a7a4a', title: 'Request a credit limit increase', body: 'Call your bank and ask to increase your secured card limit. If they offer an unsecured card instead, consider it — but only if you\'ve been consistent for 12 months. Having a higher limit while keeping low usage improves your utilisation ratio automatically.', score: 'Score: 620–660 range' },
+    { num: '6', month: 'Month 18', color: '#0d1f6b', title: 'Apply for a second card (rewards card)', body: goal === 'mortgage' ? 'Apply for a regular rewards card (Scotia Scene+, RBC Avion, or TD Aeroplan). Having two cards with long histories and low utilisation significantly boosts your score. This is the foundation your future mortgage application will be built on.' : 'Apply for a regular rewards card. Keep both cards, use each occasionally, pay in full. Your score should now be 680–720+ and you\'re qualifying for most financial products at good rates.', score: 'Score: 680–720+' },
   ];
+
   if (stage === 'building') return [
-    { num:'✓', month:'Already done', color:'#1a7a4a', title:'You have a card — good start', body:'The focus now is consistency. Credit building is a 12–18 month journey.', score:'Score: 560–620 range' },
-    { num:'1', month:'Now', color:'#C8102E', title:'Audit your current habits', body:`${usage==='high'?'Your utilisation is over 60% — hurting your score. Pay down to under 30% this month. ':usage==='medium'?'Utilisation is 30–60% — aim to get under 30%. ':'Utilisation looks good. '}${payment!=='full'?'Set up autopay for the full balance immediately.':'Paying in full — excellent.'}`, score:'Quick wins' },
-    { num:'2', month:'Months 1–3', color:'#e65100', title:'3 consistent months straight', body:'Three consecutive months of: full payment, under 30% utilisation, no new applications. Credit bureaus reward consistent patterns.', score:'Score: 620–650 range' },
-    { num:'3', month:'Month 6', color:'#6A1B9A', title:'Request limit increase or second card', body:'After 6 months of consistency, ask for a credit limit increase. Higher limit + same spending = lower utilisation ratio automatically.', score:'Score: 650–680 range' },
-    { num:'4', month:'Month 12', color:'#1a7a4a', title:'Diversify credit mix', body:'Consider a car loan or line of credit if you need one naturally. Don\'t take debt just to build credit — but if you need a car, financing it builds your credit mix (10% of score) simultaneously.', score:'Score: 680–720+' },
+    { num: '✓', month: 'Already done', color: '#1a7a4a', title: 'You have a card — good start', body: 'You\'ve taken the first step. The focus now is consistency and patience. Credit building is a 12–18 month journey, not a 30-day fix.', score: 'Score: 560–620 range' },
+    { num: '1', month: 'Now', color: '#C8102E', title: 'Audit your current habits', body: `${cards === 'secured' ? 'You have a secured card. ' : ''}${usage === 'high' ? 'Your utilisation is over 60% — this is hurting your score. Pay down your balance to under 30% this month. ' : usage === 'medium' ? 'Your utilisation is 30–60% — aim to get this under 30%. ' : 'Your utilisation looks good. '}${payment !== 'full' ? 'Set up autopay for the full balance immediately — never miss a payment.' : 'You\'re paying in full — excellent habit.'}`, score: 'Quick wins available' },
+    { num: '2', month: 'Months 1–3', color: '#e65100', title: 'Get consistent for 3 months straight', body: 'Three consecutive months of: full payment, under 30% utilisation, no new applications. This builds a consistent pattern that credit bureaus reward with score increases.', score: 'Score: 620–650 range' },
+    { num: '3', month: 'Month 6', color: '#6A1B9A', title: 'Request limit increase or second card', body: 'After 6 months of consistent habits, call your bank and ask for a credit limit increase. This lowers your utilisation ratio even if your spending stays the same. Alternatively, apply for a second card from a different bank.', score: 'Score: 650–680 range' },
+    { num: '4', month: 'Month 12', color: '#1a7a4a', title: 'Diversify credit mix', body: 'Consider a car loan, line of credit, or installment loan if you need one naturally. Don\'t take debt just to build credit — but if you need a car anyway, financing it now builds your credit mix (10% of score) and your payment history simultaneously.', score: 'Score: 680–720+' },
   ];
-  return [
-    { num:'✓', month:'Strong foundation', color:'#1a7a4a', title:'You have a solid credit profile', body:'Focus on maintenance and optimisation.', score:'Score: 660–750+' },
-    { num:'1', month:'Now', color:'#0f0f0f', title:'Maintain — don\'t disrupt', body:'Keep paying in full, keep utilisation under 30%, avoid unnecessary applications. One missed payment can drop your score 60–100 points.', score:'Protection mode' },
-    { num:'2', month:'Every 6 months', color:'#6A1B9A', title:'Check both credit reports for errors', body:'Request free reports from Equifax and TransUnion. Dispute any errors — they\'re surprisingly common and silently drag scores down.', score:'Score maintenance' },
-    { num:'3', month:'Year 2+', color:'#C8102E', title: goal==='mortgage'?'Prepare for mortgage pre-approval':'Optimise for best rates', body: goal==='mortgage'?'With 720+, you qualify for the best mortgage rates. Get pre-approved before house hunting — locks your rate for 90–120 days.':'Apply for premium rewards cards (Scotiabank Passport, Amex Cobalt) for the best cashback and travel rewards.', score:'Score: 720–780+' },
+
+  return [ // established
+    { num: '✓', month: 'Strong foundation', color: '#1a7a4a', title: 'You have a solid credit profile', body: 'Your habits are working. Focus on maintenance and optimisation rather than major changes.', score: 'Score: 660–750+' },
+    { num: '1', month: 'Now', color: '#1565C0', title: 'Maintain — don\'t disrupt', body: 'Keep paying in full, keep utilisation under 30%, avoid unnecessary applications. The biggest risk at your stage is complacency — one missed payment can drop your score 60–100 points.', score: 'Protection mode' },
+    { num: '2', month: 'Every 6 months', color: '#6A1B9A', title: 'Check both credit reports for errors', body: 'Request your free reports from Equifax and TransUnion. Dispute any errors immediately — errors are surprisingly common and can silently drag your score down. Both bureaus have online dispute processes.', score: 'Score maintenance' },
+    { num: '3', month: 'Year 2+', color: '#0d1f6b', title: goal === 'mortgage' ? 'Prepare for mortgage pre-approval' : 'Optimise for best rates', body: goal === 'mortgage' ? 'With 720+, you qualify for the best mortgage rates. Get pre-approved before house hunting — it locks in your rate for 90–120 days and shows sellers you\'re serious.' : 'Apply for premium rewards cards (Scotiabank Passport, Amex Cobalt, RBC Avion Visa Infinite) for the best cashback and travel rewards. Your score qualifies you for the best products.', score: 'Score: 720–780+' },
   ];
 }
 
 function getCardRecs(stage, time) {
-  if (stage==='beginner'||time==='new'||time==='settling') return [
-    { step:'Step 1 — First card', bank:'RBC', product:'RBC Secured Credit Card', why:'No credit history required. $500 deposit. Reports to both Equifax and TransUnion. Go to any RBC branch with your newcomer documents.', tag:'Newcomer friendly', tagClass:'tag-newcomer' },
-    { step:'Step 1 — Alternative', bank:'Scotiabank', product:'Scotia Passport Secured', why:'Strong newcomer banking package. Often bundled with a free chequing account. Ask specifically about newcomer offers at a branch.', tag:'No history needed', tagClass:'tag-newcomer' },
-    { step:'Step 2 — After 12 months', bank:'Scotiabank', product:'Scene+ Visa Card', why:'Good rewards, low annual fee, widely accepted. Upgrade from secured once approved.', tag:'First rewards card', tagClass:'tag-best' },
-    { step:'Step 2 — Alternative', bank:'TD', product:'TD Cashback Visa', why:'Simple 1–3% cashback. Good second card for building credit mix without high annual fees.', tag:'Simple & reliable', tagClass:'tag-free' },
+  if (stage === 'beginner' || time === 'new' || time === 'settling') return [
+    { step: 'Step 1 — First card', bank: 'RBC', product: 'RBC Secured Credit Card', why: 'No credit history required. $500 deposit. Reports to both Equifax and TransUnion. Go to any RBC branch with your newcomer documents.', tag: 'Newcomer friendly', tagClass: 'tag-newcomer' },
+    { step: 'Step 1 — Alternative', bank: 'Scotiabank', product: 'Scotia Passport Secured', why: 'Strong newcomer banking package. Often bundled with a free chequing account. Ask specifically about newcomer offers at a branch.', tag: 'No history needed', tagClass: 'tag-newcomer' },
+    { step: 'Step 2 — After 12 months', bank: 'Scotiabank', product: 'Scene+ Visa Card', why: 'Once you have 12 months of history. Good rewards, low annual fee, widely accepted. Upgrade from secured to this once approved.', tag: 'First rewards card', tagClass: 'tag-best' },
+    { step: 'Step 2 — Alternative', bank: 'TD', product: 'TD Cashback Visa', why: 'Simple 1–3% cashback. No rewards complexity. Good second card for building credit mix without high annual fees.', tag: 'Simple & reliable', tagClass: 'tag-free' },
   ];
+
   return [
-    { step:'Current — Keep', bank:'Your existing card', product:'Don\'t close it', why:'Your oldest card is most valuable for history length. Keep it active with occasional purchases even after upgrading.', tag:'Keep open', tagClass:'tag-best' },
-    { step:'Next upgrade', bank:'Scotiabank / Amex', product:'Scotiabank Passport Visa Infinite or Amex Cobalt', why:'Your score qualifies you for premium cards with travel or cashback rewards. Scotiabank Passport has no foreign transaction fees — valuable for newcomers sending money home.', tag:'Premium tier', tagClass:'tag-best' },
-    { step:'Credit mix', bank:'Your bank', product:'Line of Credit', why:'A small personal line of credit ($5,000–$10,000) diversifies your credit mix and lowers utilisation impact.', tag:'Score diversification', tagClass:'tag-free' },
-    { step:'Monitoring', bank:'Borrowell + Credit Karma', product:'Free score monitoring', why:'Monitor both Equifax and TransUnion scores monthly. Set alerts for any changes to your report.', tag:'Free', tagClass:'tag-free' },
+    { step: 'Current — Keep', bank: 'Your existing card', product: 'Don\'t close it', why: 'Your oldest card is your most valuable for credit history length. Keep it active with occasional purchases even if you get better cards.', tag: 'Keep open', tagClass: 'tag-best' },
+    { step: 'Next upgrade', bank: 'Scotiabank / Amex', product: 'Scotiabank Passport Visa Infinite or Amex Cobalt', why: 'Your score now qualifies you for premium cards with significant travel or cashback rewards. Scotiabank Passport has no foreign transaction fees — valuable for newcomers sending money home.', tag: 'Premium tier', tagClass: 'tag-best' },
+    { step: 'Credit mix', bank: 'Your bank', product: 'Line of Credit', why: 'A small personal line of credit ($5,000–$10,000) diversifies your credit mix and lowers the impact of any single card\'s utilisation on your score.', tag: 'Score diversification', tagClass: 'tag-free' },
+    { step: 'Score monitoring', bank: 'Borrowell + Credit Karma', product: 'Free score monitoring', why: 'Monitor both Equifax and TransUnion scores monthly. Free accounts at both services. Set alerts for any changes to your report.', tag: 'Free', tagClass: 'tag-free' },
   ];
 }
-
-// ─────────────────────────────────────────────
-
-// Pre-fill and returning user banner
-window.addEventListener('load', function(){
-  try{
-    const plan = CFG.get();
-    if(!plan.updated) return;
-    // Show returning user context
-    const banner = document.createElement('div');
-    banner.style.cssText='background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:.7rem 1rem;font-size:.82rem;color:#1b5e20;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem';
-    const parts=[];
-    if(plan.monthly) parts.push('take-home '+CFG.fmt(plan.monthly)+'/mo');
-    if(plan.city) parts.push(plan.city.charAt(0).toUpperCase()+plan.city.slice(1));
-    if(parts.length){
-      banner.innerHTML='<span>&#x2713;</span><span>From your plan: <strong>'+parts.join(' · ')+'</strong> — <a href="tools.html" style="color:#1a7a4a;font-weight:600">Back to Financial Planner</a></span>';
-      const main=document.querySelector('main');
-      if(main) main.insertBefore(banner, main.firstChild);
-    }
-  }catch(e){}
-});
-
 </script>
 </body>
 </html>
