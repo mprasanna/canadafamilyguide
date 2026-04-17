@@ -10,13 +10,14 @@
   ];
 
   const moreLinks = [
-    { href: 'tools.html',        label: '🧮 Financial Planner' },
-    { href: 'credit.html',       label: '💳 Credit Builder' },
-    { href: 'travel.html',       label: 'Travel' },
-    { href: 'recreation.html',   label: 'Recreation' },
-    { href: 'tech-careers.html', label: 'Tech & AI' },
-    { href: 'about.html',        label: 'About' },
-    { href: 'contact.html',      label: 'Contact' },
+    { href: 'tools.html',          label: '🧮 Financial Planner' },
+    { href: 'cost-of-living.html', label: '💵 Cost of Living' },
+    { href: 'credit.html',         label: '💳 Credit Builder' },
+    { href: 'travel.html',         label: 'Travel' },
+    { href: 'recreation.html',     label: 'Recreation' },
+    { href: 'tech-careers.html',   label: 'Tech & AI' },
+    { href: 'about.html',          label: 'About' },
+    { href: 'contact.html',        label: 'Contact' },
   ];
 
   const allLinks = [...primaryLinks, ...moreLinks];
