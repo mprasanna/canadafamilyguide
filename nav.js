@@ -158,3 +158,19 @@
     });
   }
 })();
+
+// Analytics — GoatCounter
+(function() {
+  // Skip if already loaded (defensive — prevents double-counting)
+  if (document.querySelector('script[data-goatcounter]')) return;
+
+  // Skip localhost / file:// so local testing doesn't pollute real stats
+  const host = window.location.hostname;
+  if (host === 'localhost' || host === '127.0.0.1' || host === '' || window.location.protocol === 'file:') return;
+
+  const s = document.createElement('script');
+  s.async = true;
+  s.src = '//gc.zgo.at/count.js';
+  s.setAttribute('data-goatcounter', 'https://canadafamilyguide.goatcounter.com/count');
+  document.head.appendChild(s);
+})();
