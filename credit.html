@@ -22,11 +22,11 @@
 html{scroll-behavior:smooth}
 body{background:var(--white);color:var(--black);font-family:'DM Sans',sans-serif;overflow-x:hidden}
 
-.page-header{background:linear-gradient(135deg,#0d1f6b,#1565C0);color:#fff;padding:7rem 2rem 3rem}
+.page-header{background:var(--white);color:var(--black);padding:7rem 2rem 3.5rem;border-bottom:1px solid #e0dbd0}
 .page-header-inner{max-width:900px;margin:0 auto}
-.page-label{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#90caf9;margin-bottom:.75rem}
-.page-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;margin-bottom:.8rem}
-.page-sub{color:#bbdefb;font-size:.95rem;line-height:1.7;max-width:600px}
+.page-label{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem}
+.page-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.1;margin-bottom:1rem;color:var(--black)}
+.page-sub{color:var(--grey);font-size:1rem;line-height:1.75;max-width:640px}
 
 main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
 
@@ -75,7 +75,7 @@ main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
 .journey-month{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.78rem;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.3rem}
 .journey-title{font-size:.92rem;font-weight:600;color:var(--black);margin-bottom:.3rem}
 .journey-body{font-size:.82rem;color:var(--grey);line-height:1.6}
-.journey-score{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 10px;border-radius:10px;background:#e8f0fe;color:#1565C0;margin-top:.4rem}
+.journey-score{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 10px;border-radius:10px;background:#fce8ec;color:var(--red);margin-top:.4rem}
 
 /* CARD RECOMMENDATIONS */
 .card-recs{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.2rem}
@@ -86,7 +86,7 @@ main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
 .card-rec-why{font-size:.78rem;color:var(--grey);line-height:1.5}
 .card-rec-tag{display:inline-block;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:.5rem}
 .tag-free{background:#e8f5e9;color:#1b5e20}
-.tag-best{background:#e8f0fe;color:#1565C0}
+.tag-best{background:#fce8ec;color:var(--red)}
 .tag-newcomer{background:#fff3e0;color:#e65100}
 
 /* RULES */
@@ -104,8 +104,8 @@ main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
 .mistake-text strong{color:var(--black)}
 
 /* CONNECT TO TOOLS */
-.connect-card{background:linear-gradient(135deg,#0f2744,#1a3a5c);border-radius:12px;padding:1.5rem;color:#fff;margin-top:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
-.connect-card-text{font-size:.9rem;color:#aac4e8;line-height:1.6}
+.connect-card{background:var(--black);border-radius:12px;padding:1.5rem;color:#fff;margin-top:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.connect-card-text{font-size:.9rem;color:#f5b5bf;line-height:1.6}
 .connect-card-text strong{color:#fff;display:block;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;margin-bottom:.3rem}
 .connect-btn{background:var(--red);color:#fff;padding:.7rem 1.4rem;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.85rem;text-decoration:none;white-space:nowrap;flex-shrink:0;transition:background .2s}
 .connect-btn:hover{background:var(--red-dark)}
@@ -143,7 +143,7 @@ footer strong{color:#888}
 
   <!-- INPUT CARD -->
   <div class="tool-card">
-    <div class="tool-card-head" style="background:#1565C0">Tell us where you are</div>
+    <div class="tool-card-head" style="background:var(--black)">Tell us where you are</div>
     <div class="tool-card-body">
       <div class="input-grid">
         <div class="input-group">
@@ -199,7 +199,7 @@ footer strong{color:#888}
           </select>
         </div>
       </div>
-      <button class="calc-btn" style="background:#1565C0" onclick="buildCreditPlan()">Build my credit plan →</button>
+      <button class="calc-btn" style="background:var(--red)" onclick="buildCreditPlan()">Build my credit plan →</button>
     </div>
   </div>
 
@@ -216,7 +216,7 @@ footer strong{color:#888}
 
     <!-- FACTORS -->
     <div class="tool-card">
-      <div class="tool-card-head" style="background:#1565C0">What builds your score — and where you stand</div>
+      <div class="tool-card-head" style="background:var(--black)">What builds your score — and where you stand</div>
       <div class="tool-card-body">
         <div class="factors-grid" id="factors-grid"></div>
         <div style="font-size:.82rem;color:var(--grey);background:var(--light);border-radius:8px;padding:.9rem 1rem;line-height:1.6">
@@ -227,7 +227,7 @@ footer strong{color:#888}
 
     <!-- JOURNEY -->
     <div class="tool-card">
-      <div class="tool-card-head" style="background:#1565C0">Your month-by-month credit journey</div>
+      <div class="tool-card-head" style="background:var(--black)">Your month-by-month credit journey</div>
       <div class="tool-card-body">
         <div class="journey" id="journey-timeline"></div>
       </div>
@@ -235,7 +235,7 @@ footer strong{color:#888}
 
     <!-- THE 3 RULES -->
     <div class="tool-card">
-      <div class="tool-card-head" style="background:#0d1f6b">The 3 rules that matter most</div>
+      <div class="tool-card-head" style="background:var(--black)">The 3 rules that matter most</div>
       <div class="tool-card-body">
         <div class="rules-grid">
           <div class="rule-card">
@@ -259,7 +259,7 @@ footer strong{color:#888}
 
     <!-- CARD RECOMMENDATIONS -->
     <div class="tool-card">
-      <div class="tool-card-head" style="background:#1565C0">Which cards to get — in order</div>
+      <div class="tool-card-head" style="background:var(--black)">Which cards to get — in order</div>
       <div class="tool-card-body">
         <div class="card-recs" id="card-recs"></div>
         <div style="font-size:.82rem;color:var(--grey);line-height:1.7;margin-top:.5rem">
@@ -308,7 +308,7 @@ footer strong{color:#888}
           <div style="background:var(--light);border-radius:8px;padding:1rem">
             <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;margin-bottom:.3rem">Credit Karma Canada</div>
             <div style="font-size:.8rem;color:var(--grey);line-height:1.5;margin-bottom:.5rem">Free TransUnion score. Good for tracking progress over time and understanding what's affecting your score.</div>
-            <span style="font-size:.68rem;font-weight:700;background:#e8f0fe;color:#1565C0;padding:2px 8px;border-radius:10px">Free · TransUnion</span>
+            <span style="font-size:.68rem;font-weight:700;background:#fce8ec;color:var(--red);padding:2px 8px;border-radius:10px">Free · TransUnion</span>
           </div>
         </div>
         <div style="font-size:.82rem;color:var(--grey);margin-top:.8rem;line-height:1.6">
@@ -319,7 +319,7 @@ footer strong{color:#888}
 
     <!-- GOAL-SPECIFIC ADVICE -->
     <div class="tool-card">
-      <div class="tool-card-head" style="background:#1565C0">What score you need for your goal</div>
+      <div class="tool-card-head" style="background:var(--black)">What score you need for your goal</div>
       <div class="tool-card-body" id="goal-advice"></div>
     </div>
 

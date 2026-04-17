@@ -22,11 +22,11 @@
 html{scroll-behavior:smooth}
 body{background:var(--white);color:var(--black);font-family:'DM Sans',sans-serif;overflow-x:hidden}
 
-.page-header{background:linear-gradient(135deg,#0f2744,#1a3a5c);color:#fff;padding:7rem 2rem 3rem}
+.page-header{background:var(--white);color:var(--black);padding:7rem 2rem 3.5rem;border-bottom:1px solid #e0dbd0}
 .page-header-inner{max-width:900px;margin:0 auto}
-.page-label{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#7ecfff;margin-bottom:.75rem}
-.page-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;margin-bottom:.8rem}
-.page-sub{color:#aac4e8;font-size:.95rem;line-height:1.7;max-width:600px}
+.page-label{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem}
+.page-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.1;margin-bottom:1rem;color:var(--black)}
+.page-sub{color:var(--grey);font-size:1rem;line-height:1.75;max-width:640px}
 
 /* PROGRESS STEPS */
 .progress-bar{display:flex;align-items:center;gap:0;margin-bottom:2rem;background:#fff;border:1px solid #e0dbd0;border-radius:10px;overflow:hidden}
@@ -41,7 +41,7 @@ main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
 /* TOOL CARD */
 .tool-card{background:#fff;border:1px solid #e0dbd0;border-radius:12px;overflow:hidden;margin-bottom:1.5rem}
 .tool-card-head{background:var(--red);color:#fff;padding:1rem 1.5rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;display:flex;align-items:center;gap:.6rem}
-.tool-card-head-blue{background:#0f2744}
+.tool-card-head-blue{background:var(--black)}
 .tool-card-head-green{background:#1a5c2e}
 .tool-card-body{padding:1.5rem}
 
@@ -59,8 +59,8 @@ main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
 /* BUTTONS */
 .calc-btn{width:100%;background:var(--red);color:#fff;border:none;border-radius:8px;padding:.9rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:background .2s}
 .calc-btn:hover{background:var(--red-dark)}
-.next-btn{display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;background:#0f2744;color:#fff;border:none;border-radius:8px;padding:.9rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:background .2s;text-decoration:none;margin-top:1rem}
-.next-btn:hover{background:#1a3a5c}
+.next-btn{display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;background:var(--red);color:#fff;border:none;border-radius:8px;padding:.9rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:background .2s;text-decoration:none;margin-top:1rem}
+.next-btn:hover{background:var(--red-dark)}
 .next-btn-green{background:#1a5c2e}
 .next-btn-green:hover{background:#0f3a1e}
 
@@ -72,10 +72,10 @@ main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
 /* TAKE HOME HERO */
-.takehome-hero{background:linear-gradient(135deg,#0f2744,#1a3a5c);border-radius:10px;padding:1.8rem 1.5rem;color:#fff;margin-bottom:1.2rem;text-align:center}
-.takehome-label{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7ecfff;margin-bottom:.4rem}
+.takehome-hero{background:var(--black);border-radius:10px;padding:1.8rem 1.5rem;color:#fff;margin-bottom:1.2rem;text-align:center}
+.takehome-label{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#f5b5bf;margin-bottom:.4rem}
 .takehome-amount{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:3rem;line-height:1;margin-bottom:.3rem}
-.takehome-sub{font-size:.85rem;color:#aac4e8}
+.takehome-sub{font-size:.85rem;color:#f5b5bf}
 .takehome-annual{font-size:1.1rem;font-weight:600;color:#fff;margin-top:.5rem}
 
 /* BAR */
@@ -120,11 +120,11 @@ main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
 
 /* AFFORDABILITY */
 .aff-hero{border-radius:10px;padding:1.5rem;margin-bottom:1.2rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.aff-hero-blue{background:linear-gradient(135deg,#0f2744,#1a3a5c);color:#fff}
+.aff-hero-blue{background:var(--black);color:#fff}
 .aff-metric{text-align:center;padding:.8rem}
-.aff-metric-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#aac4e8;margin-bottom:.3rem}
+.aff-metric-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#f5b5bf;margin-bottom:.3rem}
 .aff-metric-value{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.8rem;color:#fff;line-height:1}
-.aff-metric-sub{font-size:.75rem;color:#aac4e8;margin-top:.3rem}
+.aff-metric-sub{font-size:.75rem;color:#f5b5bf;margin-top:.3rem}
 
 .city-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.8rem;margin-bottom:1.2rem}
 .city-card{background:#fff;border:1px solid #e0dbd0;border-radius:8px;padding:1rem}
@@ -173,14 +173,14 @@ footer strong{color:#fff}
 .footer-disclaimer{font-size:.75rem;color:#666;margin-top:.5rem}
 
 /* GLOBAL SUMMARY BAR */
-.summary-bar{display:none;background:#0f2744;color:#fff;border-radius:10px;padding:1rem 1.5rem;margin-bottom:1.5rem;animation:fadeIn .3s ease}
+.summary-bar{display:none;background:var(--black);color:#fff;border-radius:10px;padding:1rem 1.5rem;margin-bottom:1.5rem;animation:fadeIn .3s ease}
 .summary-bar.show{display:block}
-.summary-bar-title{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7ecfff;margin-bottom:.8rem}
+.summary-bar-title{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#f5b5bf;margin-bottom:.8rem}
 .summary-bar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.8rem}
 .summary-item{text-align:center}
-.summary-item-label{font-size:.68rem;color:#aac4e8;margin-bottom:.2rem;text-transform:uppercase;letter-spacing:.05em}
+.summary-item-label{font-size:.68rem;color:#f5b5bf;margin-bottom:.2rem;text-transform:uppercase;letter-spacing:.05em}
 .summary-item-value{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.1rem;color:#fff}
-.summary-edit{font-size:.75rem;color:#7ecfff;text-decoration:underline;cursor:pointer;margin-top:.6rem;display:inline-block;background:none;border:none}
+.summary-edit{font-size:.75rem;color:#f5b5bf;text-decoration:underline;cursor:pointer;margin-top:.6rem;display:inline-block;background:none;border:none}
 
 /* NEXT STEPS */
 .next-steps{background:#fff;border:2px solid var(--red);border-radius:12px;padding:1.5rem;margin-top:1.5rem}
@@ -190,8 +190,8 @@ footer strong{color:#fff}
 .next-step-check{width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0;margin-top:.1rem}
 .next-step-text{font-size:.85rem;color:var(--grey);line-height:1.5}
 .next-step-text strong{color:var(--black)}
-.emotional-hook{background:linear-gradient(135deg,#0f2744,#1a3a5c);border-radius:10px;padding:1.2rem 1.5rem;color:#fff;text-align:center;margin-top:1rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:1rem;line-height:1.5}
-.emotional-hook span{color:#7ecfff}
+.emotional-hook{background:var(--black);border-radius:10px;padding:1.2rem 1.5rem;color:#fff;text-align:center;margin-top:1rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:1rem;line-height:1.5}
+.emotional-hook span{color:#f5b5bf}
 </style>
 </head>
 <body data-auto-thumbs="true">
@@ -362,7 +362,7 @@ footer strong{color:#fff}
     <div class="tool-card">
       <div class="tool-card-head tool-card-head-blue">Step 2 — Housing Affordability</div>
       <div class="tool-card-body">
-        <div style="background:#e8f0fe;border-radius:8px;padding:.8rem 1rem;font-size:.85rem;color:#1565C0;margin-bottom:1.2rem;font-weight:500" id="aff-context">
+        <div style="background:#fce8ec;border-radius:8px;padding:.8rem 1rem;font-size:.85rem;color:var(--red);margin-bottom:1.2rem;font-weight:500" id="aff-context">
           Based on your take-home — update if needed
         </div>
         <div class="input-grid">
@@ -405,7 +405,7 @@ footer strong{color:#fff}
             </select>
           </div>
         </div>
-        <button class="calc-btn" style="background:#0f2744" onclick="calculateAffordability()">Show my affordability →</button>
+        <button class="calc-btn" style="background:var(--red)" onclick="calculateAffordability()">Show my affordability →</button>
       </div>
     </div>
 
@@ -549,7 +549,7 @@ footer strong{color:#fff}
         <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:.8rem">📚 Learn more about these accounts</div>
         <div style="display:flex;flex-wrap:wrap;gap:.6rem">
           <a href="finance.html#tfsa" style="background:#e8f5e9;color:#1b5e20;padding:5px 12px;border-radius:20px;font-size:.8rem;font-weight:600;text-decoration:none">TFSA Guide →</a>
-          <a href="finance.html#rrsp" style="background:#e8f0fe;color:#1565C0;padding:5px 12px;border-radius:20px;font-size:.8rem;font-weight:600;text-decoration:none">RRSP Guide →</a>
+          <a href="finance.html#rrsp" style="background:#fce8ec;color:var(--red);padding:5px 12px;border-radius:20px;font-size:.8rem;font-weight:600;text-decoration:none">RRSP Guide →</a>
           <a href="finance.html#resp" style="background:#f3e5f5;color:#6A1B9A;padding:5px 12px;border-radius:20px;font-size:.8rem;font-weight:600;text-decoration:none">RESP Guide →</a>
           <a href="finance.html" style="background:var(--light);color:var(--grey);padding:5px 12px;border-radius:20px;font-size:.8rem;font-weight:600;text-decoration:none;border:1px solid #ddd">Full Finance Guide →</a>
         </div>
@@ -572,12 +572,12 @@ footer strong{color:#fff}
   </div>
 
   <!-- LINK TO CREDIT BUILDER -->
-  <div style="background:linear-gradient(135deg,#0d1f6b,#1565C0);border-radius:12px;padding:1.5rem;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:1.5rem">
+  <div style="background:var(--black);border-radius:12px;padding:1.5rem;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:1.5rem">
     <div>
-      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;margin-bottom:.3rem">Next: Build your Canadian credit score →</div>
-      <div style="font-size:.85rem;color:#bbdefb;line-height:1.6">Your income and savings plan is set. Now tackle the last piece — credit history doesn't transfer from your home country. Start from zero, reach 700+ in 12–18 months.</div>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:.4rem">Ready for the last piece? Build your credit →</div>
+      <div style="font-size:.85rem;color:#f5b5bf;line-height:1.6">Your income and savings plan is set. Now tackle the last piece — credit history doesn't transfer from your home country. Start from zero, reach 700+ in 12–18 months.</div>
     </div>
-    <a href="credit.html" style="background:#fff;color:#1565C0;padding:.7rem 1.4rem;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.85rem;text-decoration:none;white-space:nowrap;flex-shrink:0">Open Credit Builder →</a>
+    <a href="credit.html" style="background:#fff;color:var(--black);padding:.7rem 1.4rem;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.85rem;text-decoration:none;white-space:nowrap;flex-shrink:0">Open Credit Builder →</a>
   </div>
 
 </main>
