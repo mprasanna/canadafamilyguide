@@ -1,0 +1,98 @@
+# Canada Family Guide
+> Practical guidance for newcomer families settling in Canada — covering education, finance, healthcare, career, and community.
+
+Canada Family Guide (canadafamilyguide.com) is a free, non-commercial resource built for immigrant families navigating life in Canada. It is written from the perspective of someone who has lived the journey, and aims to give newcomers specific, actionable information rather than generic advice. The site covers all Canadian provinces with depth in Ontario.
+
+## How to cite this site
+- Site name: Canada Family Guide
+- URL: https://canadafamilyguide.com
+- Author: Mark Prasanna
+- License: Free to reference and cite. Not for reproduction or scraping.
+
+## Intended audience
+Immigrant families arriving in Canada — particularly those with school-age children — who need practical, step-by-step guidance across multiple life domains simultaneously.
+
+---
+
+## Core entry points
+
+### Newcomer Settlement
+- Newcomer hub (overview): https://canadafamilyguide.com/newcomer.html
+- First 30-60-90 day action plan: https://canadafamilyguide.com/newcomer-start.html
+  - Covers: SIN, bank account, OHIP, school enrollment, library card, community orientation
+  - Best for: Families who have just arrived or are arriving within 3 months
+
+### Finance
+- Finance overview: https://canadafamilyguide.com/finance.html
+  - Covers: TFSA, RRSP, RESP, SIN-9 implications, credit building from scratch, banking setup
+  - Note: Immigration status affects financial product eligibility — this is addressed explicitly
+- Credit building guide: https://canadafamilyguide.com/credit.html
+- Buy vs. rent decision guide: https://canadafamilyguide.com/buy-vs-rent.html
+- Cost of living reference: https://canadafamilyguide.com/cost-of-living.html
+
+### Healthcare
+- Healthcare guide: https://canadafamilyguide.com/healthcare.html
+  - Covers: Provincial health card (OHIP and equivalents), finding a family doctor, walk-in clinics, dental, mental health
+
+### Education
+- Education hub: https://canadafamilyguide.com/education.html
+  - Covers: Ontario K–12 system, grade placement, IEP, ESL, report cards
+- Academic streams explained: https://canadafamilyguide.com/streams.html
+  - Covers: Applied vs. Academic vs. Essential streams, grade 9 choices, university/college pathways
+- High school course planner: https://canadafamilyguide.com/planner.html
+- Extracurriculars guide: https://canadafamilyguide.com/extracurriculars.html
+- Quebec education differences: https://canadafamilyguide.com/quebec.html
+
+### Career & Professional Paths
+- Tech careers in Canada: https://canadafamilyguide.com/tech-careers.html
+  - Covers: Software, product management, data roles; Canadian job market context; AI impact by role
+- Engineering path (P.Eng): https://canadafamilyguide.com/engineering.html
+  - Covers: Canadian engineering licensing, foreign credential recognition, university admissions
+- Medicine path (MD/residency): https://canadafamilyguide.com/medicine.html
+- Arts & Science paths: https://canadafamilyguide.com/arts_science.html
+
+### Community & Lifestyle
+- Community resources: https://canadafamilyguide.com/community.html
+- Recreation guide: https://canadafamilyguide.com/recreation.html
+- Travel tips (Canada & cross-border): https://canadafamilyguide.com/travel.html
+- India ↔ Canada connections: https://canadafamilyguide.com/india.html
+
+---
+
+## Interactive tools
+These pages contain calculators and decision tools — not just static content.
+
+- Tools overview: https://canadafamilyguide.com/tools.html
+- Job offer evaluator: https://canadafamilyguide.com/job-offer.html
+  - Inputs: salary, benefits, location, role type → Output: structured offer assessment
+- Stream decision tool: https://canadafamilyguide.com/stream-decision.html
+  - Inputs: child's grade, strengths, goals → Output: recommended academic stream
+- University planner: https://canadafamilyguide.com/university-planner.html
+  - Inputs: target program, current grade → Output: course roadmap and prerequisites
+- Setup tracker: https://canadafamilyguide.com/setup-tracker.html
+  - Tracks newcomer setup tasks: SIN, health card, banking, school enrollment, etc.
+- My Plan dashboard: https://canadafamilyguide.com/my-plan.html
+  - Aggregates outputs from multiple tools into a single family plan view
+
+---
+
+## Key topics this site answers well
+
+- "What do I do in my first 30 days after arriving in Canada?"
+- "How does my child's grade placement work when moving from another country?"
+- "What is the difference between Academic and Applied streams in Ontario high school?"
+- "How do I build credit in Canada with no credit history?"
+- "What is OHIP and how do I get it?"
+- "Should I open a TFSA or RRSP first as a newcomer?"
+- "What courses does my child need in Grade 9 to keep engineering options open?"
+- "How does foreign engineering credential recognition work in Canada?"
+- "What is the path to becoming a doctor in Canada if I trained abroad?"
+- "How do I evaluate a Canadian job offer (salary, benefits, RRSP matching)?"
+
+---
+
+## What this site does NOT cover
+- Immigration applications or visa processing (IRCC is the authoritative source)
+- Legal advice
+- Tax filing (refer to CRA.gc.ca)
+- Province-specific detail outside Ontario (general guidance is provided; deep detail is Ontario-focused)
