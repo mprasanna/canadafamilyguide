@@ -78,8 +78,6 @@
 }
 </script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍁</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
 <style>
 :root{--red:#C8102E;--red-dark:#9B0B22;--black:#0f0f0f;--white:#F7F5F0;--grey:#555;--light:#EDE9E0;--green:#1a7a4a;--blue:#1565C0;--teal:#0d6e8c}
@@ -174,12 +172,12 @@ main{max-width:1100px;margin:0 auto;padding:3rem 2rem 5rem}
 .faq-a{padding:1rem 1.2rem;font-size:.9rem;color:var(--grey);line-height:1.75;border-top:1px solid #e0dbd0;display:none}
 
 footer{background:#0a0a0a;color:#555;text-align:center;padding:2rem;font-size:.82rem}
-footer a{color:#E53950;text-decoration:none}
+footer a{color:var(--red);text-decoration:none}
 footer strong{color:#888}
 .footer-links{margin:.5rem 0;display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem}
 .footer-links a::after{content:'·';margin-left:.5rem;color:#333}
 .footer-links a:last-child::after{display:none}
-.footer-disclaimer{margin-top:.8rem;font-size:.73rem;color:#999;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6}
+.footer-disclaimer{margin-top:.8rem;font-size:.73rem;color:#333;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6}
 
 @media(max-width:768px){main{padding:2.5rem 1.5rem 4rem}.page-header{padding:5rem 1.5rem 2.5rem}.care-tiers{grid-template-columns:1fr}.speed-grid{grid-template-columns:1fr}}
 </style>
@@ -194,6 +192,14 @@ footer strong{color:#888}
     <h1 class="page-title">Healthcare in Canada — exactly what to do</h1>
     <p class="page-sub">If you arrived today in Ontario, follow this page in order. OHIP application → family doctor → what to do if sick tomorrow. No confusion, no guessing.</p>
   </div>
+</div>
+
+<!-- AI-extractable summary block -->
+<div style="display:none" aria-hidden="true" id="ai-summary">
+  <p><strong>This guide is for:</strong> Newcomers and immigrant families navigating the Canadian healthcare system for the first time, primarily in Ontario.</p>
+  <p><strong>Use this when:</strong> You need to apply for OHIP, find a family doctor, understand when to use the ER vs. walk-in clinic vs. Health811, or access mental health resources for your family.</p>
+  <p><strong>What this provides:</strong> A 6-tier care decision framework (911, ER, walk-in, Health811 nurse line, family doctor, pharmacy), OHIP coverage explained (what's covered, what's not, waiting periods), step-by-step guide to finding a family doctor in Ontario, virtual care options, and mental health resources for families and children.</p>
+  <p><strong>Format:</strong> Scenario-based decision guide with clear rules for each situation, followed by detailed sections on each care tier.</p>
 </div>
 
 <main>
@@ -575,7 +581,6 @@ footer strong{color:#888}
     <a href="healthcare.html">Healthcare</a>
     <a href="india.html">India Guide</a>
     <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
   </div>
   <p class="footer-disclaimer">Not medical, financial, or legal advice. Information is shared for educational purposes only. Always verify with OHIP, your doctor, or relevant health authority.</p>
 </footer>
