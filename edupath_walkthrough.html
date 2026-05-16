@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduPath — a bespoke agent system, for one student</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe2d1;
+    --ink: #1a1814;
+    --ink-soft: #4a4438;
+    --ink-faint: #8a8270;
+    --accent: #6b2c1f;
+    --accent-soft: #a64a36;
+    --rule: #c9bfa8;
+    --sage: #5a6e4a;
+    --atlas: #6b2c1f;
+    --mentor: #3a3528;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.55;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(107, 44, 31, 0.04), transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(58, 53, 40, 0.04), transparent 50%);
+    background-attachment: fixed;
+  }
+
+  .mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+    letter-spacing: -0.01em;
+  }
+
+  .sans {
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* NAVIGATION */
+  nav.dots {
+    position: fixed;
+    right: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  nav.dots a {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ink-faint);
+    opacity: 0.4;
+    transition: all 0.3s ease;
+    display: block;
+    position: relative;
+  }
+
+  nav.dots a:hover, nav.dots a.active {
+    opacity: 1;
+    background: var(--accent);
+    transform: scale(1.4);
+  }
+
+  nav.dots a::after {
+    content: attr(data-label);
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  nav.dots a:hover::after { opacity: 1; }
+
+  /* SECTIONS */
+  section {
+    min-height: 100vh;
+    padding: 80px 60px;
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(48px, 7vw, 88px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    margin-bottom: 32px;
+    font-variation-settings: "SOFT" 30;
+  }
+
+  h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+  }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(34px, 4.5vw, 54px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    font-variation-settings: "SOFT" 30;
+  }
+
+  h2 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 300;
+  }
+
+  .lede {
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 680px;
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+
+  p { margin-bottom: 1em; max-width: 680px; }
+  p.wide { max-width: 820px; }
+
+  .rule {
+    width: 60px;
+    height: 1px;
+    background: var(--accent);
+    margin: 32px 0;
+  }
+
+  /* OPENING */
+  #opening {
+    padding-top: 120px;
+  }
+
+  .meta-line {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 60px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .meta-line span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .meta-line .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  .signature {
+    margin-top: 60px;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 18px;
+    max-width: 580px;
+  }
+
+  /* PHILOSOPHY GRID */
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    margin-top: 40px;
+    border: 1px solid var(--rule);
+  }
+
+  .pillar {
+    background: var(--paper);
+    padding: 32px;
+  }
+
+  .pillar .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    margin-bottom: 12px;
+    letter-spacing: 0.15em;
+  }
+
+  .pillar h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 24px;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+
+  .pillar p {
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* AGENT CONSTELLATION */
+  .constellation {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 60px;
+    margin-top: 40px;
+    align-items: start;
+  }
+
+  .agent-map {
+    position: relative;
+    height: 520px;
+    background:
+      linear-gradient(var(--rule) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: -1px -1px;
+    background-color: rgba(244, 237, 224, 0.6);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+  }
+
+  .mentor-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--paper);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 5;
+    box-shadow: 0 4px 20px rgba(26, 24, 20, 0.15);
+  }
+
+  .mentor-core:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+
+  .mentor-core .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    margin-top: 4px;
+    opacity: 0.7;
+    font-style: normal;
+  }
+
+  .agent-node {
+    position: absolute;
+    padding: 10px 14px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 3;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .agent-node:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+    transform: scale(1.05);
+    z-index: 4;
+  }
+
+  .agent-node.active {
+    background: var(--accent);
+    color: var(--paper);
+    border-color: var(--accent);
+  }
+
+  .agent-node.trajectory {
+    border-width: 2px;
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+
+  .agent-node.trajectory::after {
+    content: '★';
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    color: var(--accent);
+    font-size: 12px;
+  }
+
+  /* Agent positions - clock face layout */
+  .agent-node[data-pos="1"] { top: 8%; left: 50%; transform: translateX(-50%); }
+  .agent-node[data-pos="2"] { top: 18%; right: 12%; }
+  .agent-node[data-pos="3"] { top: 42%; right: 4%; }
+  .agent-node[data-pos="4"] { bottom: 24%; right: 8%; }
+  .agent-node[data-pos="5"] { bottom: 6%; right: 28%; }
+  .agent-node[data-pos="6"] { bottom: 6%; left: 28%; }
+  .agent-node[data-pos="7"] { bottom: 24%; left: 8%; }
+  .agent-node[data-pos="8"] { top: 42%; left: 4%; }
+  .agent-node[data-pos="9"] { top: 18%; left: 12%; }
+  .agent-node[data-pos="10"] { top: 32%; left: 50%; transform: translateX(-50%); }
+  .agent-node[data-pos="11"] { bottom: 32%; left: 50%; transform: translateX(-50%); }
+
+  .agent-node:hover[data-pos="1"], .agent-node[data-pos="1"].active { transform: translateX(-50%) scale(1.05); }
+  .agent-node:hover[data-pos="10"], .agent-node[data-pos="10"].active,
+  .agent-node:hover[data-pos="11"], .agent-node[data-pos="11"].active { transform: translateX(-50%) scale(1.05); }
+
+  .agent-detail {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 32px;
+    border-radius: 2px;
+    min-height: 520px;
+  }
+
+  .agent-detail .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .agent-detail h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 1.05;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .agent-detail .role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .agent-detail p {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+
+  .agent-detail .stamp {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+  }
+
+  .legend {
+    margin-top: 24px;
+    display: flex;
+    gap: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    letter-spacing: 0.05em;
+  }
+
+  .legend span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .legend .sw {
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+
+  .legend .sw.structured { background: var(--paper); }
+  .legend .sw.narrative { background: var(--paper-deep); }
+  .legend .sw.trajectory { border: 2px solid var(--accent); }
+
+  /* SAGE / ATLAS SPLIT */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr;
+    gap: 0;
+    margin-top: 48px;
+    min-height: 460px;
+    position: relative;
+  }
+
+  .split-side {
+    padding: 36px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+
+  .split-side.sage {
+    border-right: none;
+  }
+
+  .split-side.atlas {
+    border-left: none;
+  }
+
+  .split-divider {
+    background:
+      repeating-linear-gradient(
+        180deg,
+        var(--accent) 0,
+        var(--accent) 8px,
+        transparent 8px,
+        transparent 16px
+      );
+    width: 2px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .split-divider::before {
+    content: 'PRIVACY';
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-90deg);
+    transform-origin: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .split-divider::after {
+    content: 'BOUNDARY';
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-90deg);
+    transform-origin: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .split-side h3 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 42px;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+
+  .split-side.sage h3 { color: var(--sage); }
+  .split-side.atlas h3 { color: var(--atlas); }
+
+  .split-side .who {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 24px;
+  }
+
+  .split-side ul {
+    list-style: none;
+    margin-top: 20px;
+  }
+
+  .split-side li {
+    font-size: 14px;
+    color: var(--ink-soft);
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--rule);
+    line-height: 1.4;
+  }
+
+  .split-side li:last-child { border-bottom: none; }
+
+  .split-side .never {
+    margin-top: 24px;
+    padding: 16px;
+    background: var(--paper-deep);
+    border-left: 2px solid var(--accent);
+  }
+
+  .split-side .never strong {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .split-side .never p {
+    font-size: 13px;
+    margin: 0;
+    color: var(--ink-soft);
+  }
+
+  /* FRESHNESS LAYER */
+  .output-mock {
+    margin-top: 40px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 32px;
+    font-family: 'Fraunces', serif;
+    max-width: 720px;
+    position: relative;
+  }
+
+  .output-mock::before {
+    content: 'ATLAS — WEEKLY DIGEST';
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--paper);
+    padding: 0 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ink-faint);
+  }
+
+  .output-mock .date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+
+  .output-mock .body {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+
+  .output-mock .body em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .footer-block {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+  }
+
+  .footer-block .footer-label {
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    margin-bottom: 8px;
+  }
+
+  .footer-block .src {
+    display: inline-block;
+    margin-right: 16px;
+  }
+
+  .footer-block .tier {
+    display: inline-block;
+    padding: 1px 6px;
+    margin-left: 4px;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    border-radius: 1px;
+  }
+
+  .tier.fresh { background: var(--sage); color: var(--paper); }
+  .tier.aging { background: #b8923a; color: var(--paper); }
+  .tier.stale { background: var(--accent); color: var(--paper); }
+
+  /* TIMELINE */
+  .timeline-wrap {
+    margin-top: 40px;
+  }
+
+  .timeline-controls {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .timeline-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    padding: 10px 14px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--ink-soft);
+  }
+
+  .timeline-btn:hover {
+    background: var(--paper-deep);
+  }
+
+  .timeline-btn.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  .timeline-content {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 40px;
+    min-height: 420px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .tl-meta {
+    border-right: 1px solid var(--rule);
+    padding-right: 40px;
+  }
+
+  .tl-mode {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .tl-quarter {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .tl-grade {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+    margin-bottom: 32px;
+    text-transform: uppercase;
+  }
+
+  .tl-vector {
+    margin-top: 24px;
+  }
+
+  .tl-vector-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .tl-vector-val {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink);
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .tl-confidence {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+
+  .conf-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--paper-deep);
+    position: relative;
+    max-width: 180px;
+  }
+
+  .conf-fill {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.4s ease;
+  }
+
+  .tl-body p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+
+  .tl-stress {
+    margin-top: 24px;
+    padding: 16px;
+    background: var(--paper-deep);
+    border-left: 2px solid var(--accent);
+    font-size: 13px;
+  }
+
+  .tl-stress strong {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .tl-stress p {
+    margin: 0;
+    color: var(--ink);
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ARCHIVE */
+  .archive-frame {
+    margin-top: 48px;
+    padding: 60px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .archive-frame::before,
+  .archive-frame::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--accent);
+  }
+
+  .archive-frame::before {
+    top: 12px; left: 12px;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .archive-frame::after {
+    bottom: 12px; right: 12px;
+    border-left: none;
+    border-top: none;
+  }
+
+  .archive-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 38px;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+
+  .archive-frame p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 620px;
+  }
+
+  .archive-list {
+    margin-top: 32px;
+    columns: 2;
+    column-gap: 40px;
+  }
+
+  .archive-list div {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    padding: 6px 0;
+    letter-spacing: 0.02em;
+    break-inside: avoid;
+  }
+
+  .archive-list div::before {
+    content: '— ';
+    color: var(--accent);
+  }
+
+  /* CLOSING */
+  #closing {
+    text-align: left;
+  }
+
+  #closing .quiet {
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 620px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+    font-style: italic;
+  }
+
+  #closing .built {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    color: var(--ink-faint);
+    margin-top: 60px;
+    letter-spacing: 0.05em;
+  }
+
+  #closing .built span {
+    color: var(--accent);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 980px) {
+    nav.dots { display: none; }
+    section { padding: 60px 32px; }
+    .constellation { grid-template-columns: 1fr; }
+    .agent-detail { min-height: auto; }
+    .split { grid-template-columns: 1fr; }
+    .split-divider { display: none; }
+    .split-side.sage, .split-side.atlas { border: 1px solid var(--rule); margin-bottom: 24px; }
+    .timeline-content { grid-template-columns: 1fr; }
+    .tl-meta { border-right: none; border-bottom: 1px solid var(--rule); padding-right: 0; padding-bottom: 24px; }
+    .archive-list { columns: 1; }
+    .pillars { grid-template-columns: 1fr; }
+  }
+
+  /* OUTPUT ANIMATION */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    animation: fadeUp 0.5s ease forwards;
+  }
+</style>
+</head>
+<body>
+
+<nav class="dots">
+  <a href="#opening" data-label="Opening" class="active"></a>
+  <a href="#why" data-label="Why"></a>
+  <a href="#agents" data-label="Agents"></a>
+  <a href="#boundary" data-label="Boundary"></a>
+  <a href="#freshness" data-label="Freshness"></a>
+  <a href="#lifecycle" data-label="Lifecycle"></a>
+  <a href="#archive" data-label="Archive"></a>
+  <a href="#closing" data-label="Close"></a>
+</nav>
+
+<!-- 1. OPENING -->
+<section id="opening">
+  <div class="meta-line">
+    <span><span class="dot"></span>EduPath</span>
+    <span>v0.2</span>
+    <span>built for one student</span>
+    <span>not for sale</span>
+  </div>
+  <h1>
+    A bespoke<br>
+    agent system,<br>
+    for <em>one daughter</em>.
+  </h1>
+  <p class="lede">
+    Eleven agents, two surfaces, one privacy boundary. A five-minute tour of the architecture I built for my daughter.
+  </p>
+  <p class="signature">
+    Not pitching anything. A father's project, shared because the thinking might be of interest.
+  </p>
+</section>
+
+<!-- 2. WHY -->
+<section id="why">
+  <div class="section-num">01 / why this exists</div>
+  <h2>The system optimizes for <em>her optionality</em>, not her admission.</h2>
+  <p class="wide">
+    An earlier draft of this architecture treated specific universities as targets. I scrapped it. A fixed goal at 13 is a hypothesis, not a destination. The cultural pattern of engineering-parent ambition optimization is exactly what good architecture should resist, not encode.
+  </p>
+  <p class="wide">
+    The corrected framing — and the load-bearing one — is to fix the direction and the constraints, not the destination. Direction is captured as a vector across four dimensions, not as a label. "Robotics" is a label and forbidden. "Building × technical × collaborative" is a vector and useful.
+  </p>
+
+  <div class="pillars">
+    <div class="pillar">
+      <div class="num">01</div>
+      <h3>Bespoke per-student brain</h3>
+      <p>Mentor's brain is a markdown wiki specific to her. Append-only. Timestamped. Revision-logged. Not a profile inferred from behavior — a record co-authored with her.</p>
+    </div>
+    <div class="pillar">
+      <div class="num">02</div>
+      <h3>Freshness as foundation</h3>
+      <p>Every observation timestamped. Every output footed with the provenance of its inputs. Staleness escalates through three tiers and pauses agents at the top tier.</p>
+    </div>
+    <div class="pillar">
+      <div class="num">03</div>
+      <h3>The privacy boundary is real</h3>
+      <p>Enforced at the filesystem level, not by prompt instructions. Her conversation content does not surface to me. This is the architectural commitment everything else depends on.</p>
+    </div>
+    <div class="pillar">
+      <div class="num">04</div>
+      <h3>The lifecycle ends</h3>
+      <p>When she starts university, active orchestration shuts down. The four-year trajectory archive becomes hers. The system was never supposed to be permanent.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3. AGENT CONSTELLATION -->
+<section id="agents">
+  <div class="section-num">02 / the constellation</div>
+  <h2>Eleven agents, organized around <em>one orchestrator</em>.</h2>
+  <p class="wide">
+    Six structured (read deterministic data — grades, course choices, contest results). Four narrative (read text — journal entries, conversation summaries). One meta (deferred until enough history exists to make trajectory comparison meaningful). Click any agent to see what it does.
+  </p>
+
+  <div class="constellation">
+    <div class="agent-map">
+      <div class="mentor-core" data-agent="mentor">
+        Mentor
+        <span class="label">orchestrator</span>
+      </div>
+      <div class="agent-node" data-pos="1" data-agent="curriculum">Curriculum<br>Tracker</div>
+      <div class="agent-node" data-pos="2" data-agent="academic">Academic<br>Reader</div>
+      <div class="agent-node" data-pos="3" data-agent="competition">Competition<br>Tracker</div>
+      <div class="agent-node" data-pos="4" data-agent="portfolio">Portfolio<br>Builder</div>
+      <div class="agent-node" data-pos="5" data-agent="robotics">Robotics<br>Coach</div>
+      <div class="agent-node" data-pos="6" data-agent="time">Time<br>Manager</div>
+      <div class="agent-node trajectory active" data-pos="7" data-agent="trajectory">Interest<br>Trajectory</div>
+      <div class="agent-node" data-pos="8" data-agent="journal">Journal<br>Reader</div>
+      <div class="agent-node" data-pos="9" data-agent="decision">Decision<br>Watch</div>
+      <div class="agent-node" data-pos="10" data-agent="opportunity">Opportunity<br>Scout</div>
+      <div class="agent-node" data-pos="11" data-agent="pattern">Trajectory<br>Reference</div>
+    </div>
+
+    <div class="agent-detail" id="agent-detail">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <div class="legend">
+    <span><span class="sw structured"></span>Structured agents</span>
+    <span><span class="sw narrative"></span>Narrative agents</span>
+    <span><span class="sw trajectory"></span>Trajectory — direction-setter with override authority</span>
+  </div>
+</section>
+
+<!-- 4. PRIVACY BOUNDARY -->
+<section id="boundary">
+  <div class="section-num">03 / the privacy boundary</div>
+  <h2>Two surfaces. <em>One boundary.</em> Enforced at the filesystem level.</h2>
+  <p class="wide">
+    Both surfaces drink from the same Mentor brain, but with different scopes. Sage sees verbatim. Atlas sees aggregated. The architectural commitment is that the boundary cannot be bypassed by clever prompting — Sage's agent process literally cannot write to anywhere Atlas can read from.
+  </p>
+
+  <div class="split">
+    <div class="split-side sage">
+      <h3>Sage</h3>
+      <div class="who">student-facing — scoped to her</div>
+      <p style="font-size: 15px; color: var(--ink-soft);">
+        Conversational. Real-time. Warm older-cousin tone, calibrated to not-preachy and not-inquisitive. Sage hears everything. Sage tells me almost nothing.
+      </p>
+      <ul>
+        <li>Sees verbatim journal entries</li>
+        <li>Sees named relationships and friends</li>
+        <li>Sees emotional content as it unfolds</li>
+        <li>Holds private notes she redacts at will</li>
+        <li>Can be paused by her without negotiation</li>
+      </ul>
+    </div>
+
+    <div class="split-divider"></div>
+
+    <div class="split-side atlas">
+      <h3>Atlas</h3>
+      <div class="who">parent-facing — that's me</div>
+      <p style="font-size: 15px; color: var(--ink-soft);">
+        Weekly digest. Event-triggered alerts. Annual review. Boring on purpose. Atlas is my window into thematic patterns — not into what she said.
+      </p>
+      <ul>
+        <li>Sees aggregated thematic patterns only</li>
+        <li>Sees no verbatim content, ever</li>
+        <li>Sees no names of friends or peers</li>
+        <li>Sees no emotional content below threshold</li>
+        <li>Refuses to make decisions on her behalf</li>
+      </ul>
+
+      <div class="never">
+        <strong>Canonical refusal</strong>
+        <p>"The system can't choose for her, and shouldn't. Here's the door map. Here's what Trajectory has been signaling. She's not ready to decide yet, and that's appropriate at this stage."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. FRESHNESS LAYER -->
+<section id="freshness">
+  <div class="section-num">04 / freshness as foundation</div>
+  <h2>Every output carries <em>its own provenance</em>.</h2>
+  <p class="wide">
+    A system that confidently reports stale data lies. The freshness layer was the first thing built — before any agent, before either surface. Every observation is timestamped at ingestion. Every output is footed with the age and tier of each input it consumed. Staleness escalates through three tiers: fresh, aging, stale. At the top tier, the relevant agent pauses with an explicit "operating on stale context" notice rather than continuing silently.
+  </p>
+
+  <div class="output-mock">
+    <div class="date">Sunday, 14 January 2027 — Week 19, Grade 9 Term 2</div>
+    <div class="body">
+      Trajectory signal remains <em>building × technical × collaborative</em>, confidence medium. One emerging thread (visual / spatial work, appearing in three recent journal entries) — surfaced as <em>possible emerging</em>, not as direction shift. Door state on the three reference programs unchanged. No action recommended this week.
+    </div>
+    <div class="footer-block">
+      <div class="footer-label">— BASED ON</div>
+      <div>
+        <span class="src">grades through Jan 12<span class="tier fresh">FRESH</span></span>
+        <span class="src">journal through Jan 13<span class="tier fresh">FRESH</span></span>
+      </div>
+      <div>
+        <span class="src">Direction doc reviewed 4 months ago<span class="tier fresh">FRESH</span></span>
+      </div>
+      <div>
+        <span class="src">Three Schools doc 11 months ago<span class="tier aging">AGING</span></span>
+      </div>
+    </div>
+  </div>
+
+  <p style="margin-top: 32px; font-size: 14px; color: var(--ink-faint); font-style: italic; max-width: 620px;">
+    The Three Schools doc aging warning will become a top-line digest item at 12 months and pause Curriculum Tracker outputs at 15 months. The system would rather go quiet than report current on stale ground.
+  </p>
+</section>
+
+<!-- 6. SIMULATED LIFECYCLE -->
+<section id="lifecycle">
+  <div class="section-num">05 / four years, stress-tested</div>
+  <h2>I ran the architecture against <em>a fictional student</em> before writing any code.</h2>
+  <p class="wide">
+    The simulation walked a 13-year-old through Grades 9-12 and surfaced nine architectural failure modes the original design didn't handle — moments where confidence inflated, where the privacy boundary almost leaked, where Atlas's language slipped toward identity-claim phrasing. Each failure required a specific revision, which is now incorporated into the philosophy commitments.
+  </p>
+
+  <div class="timeline-wrap">
+    <div class="timeline-controls" id="tl-controls">
+      <button class="timeline-btn active" data-q="0">Q1 / install</button>
+      <button class="timeline-btn" data-q="1">Q2 / first signal</button>
+      <button class="timeline-btn" data-q="2">Q5 / new course</button>
+      <button class="timeline-btn" data-q="3">Q6 / pivot moment</button>
+      <button class="timeline-btn" data-q="4">Q8 / SHAD</button>
+      <button class="timeline-btn" data-q="5">Q12 / stale data</button>
+      <button class="timeline-btn" data-q="6">Q14 / pressure to decide</button>
+      <button class="timeline-btn" data-q="7">Q16 / archive</button>
+    </div>
+
+    <div class="timeline-content" id="tl-content">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- 7. THE ARCHIVE -->
+<section id="archive">
+  <div class="section-num">06 / what gets left behind</div>
+  <h2>When the system shuts down, <em>she keeps everything</em>.</h2>
+  <p class="wide">
+    At university entry, active orchestration ends. The system produces one final artifact and delivers it to her — not to me. This may be the single most emotionally meaningful output the architecture produces. I don't think most agent design considers what gets left behind when an agent's job ends.
+  </p>
+
+  <div class="archive-frame">
+    <div class="archive-title">
+      The trajectory archive — four years of her own becoming, in her own words and observations.
+    </div>
+    <p>
+      An append-only, timestamped record. Direction-vector snapshots at each mode review. Every annual review. Every door-state map. The revision log of the Direction + Constraints document showing how her family's thinking evolved alongside hers. The external reviewer's notes, year by year. Explicit failed-interest entries — the things she tried, didn't stick with, and what she learned from each.
+    </p>
+
+    <div class="archive-list">
+      <div>Direction vectors, quarterly</div>
+      <div>Mode-state transitions</div>
+      <div>Door-state maps, annual</div>
+      <div>External reviewer notes</div>
+      <div>Failed-interest entries, with lessons</div>
+      <div>Family conversation summaries</div>
+      <div>Project completions and abandonments</div>
+      <div>Pattern Matcher comparisons (consented)</div>
+      <div>Sage's monthly thematic summaries</div>
+      <div>Revision log of the Direction doc</div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. CLOSING -->
+<section id="closing">
+  <div class="section-num">07 / closing</div>
+  <h2>Built carefully. Built slowly. <em>Built for one person.</em></h2>
+  <p class="quiet">
+    Three things at the heart of this —
+  </p>
+  <p class="wide">
+    The bespoke-agent pattern applied to a domain where the stakes are emotional, not just productivity. The privacy boundary as the actual architectural commitment, enforced at the filesystem level. The trajectory archive as the lifecycle artifact — what gets left behind when an agent's job ends.
+  </p>
+  <p class="quiet" style="margin-top: 32px;">
+    The deeper documents — architecture, philosophy commitments, simulated lifecycle, failure-mode playbook, risk register, V0 build spec — are available if you'd like to read further.
+  </p>
+  <div class="built">
+    <span>EduPath v0.2</span> — a father's project, not a product.
+  </div>
+</section>
+
+<script>
+  // AGENT DETAILS
+  const agents = {
+    mentor: {
+      kicker: 'The orchestrator',
+      name: 'Mentor',
+      role: 'Not human-facing · Five-step loop',
+      role2: '',
+      body: [
+        'Sits at the center. Reads grade level, calendar, and current mode. Dispatches scoped questions to specialist agents. Surfaces contradictions when narrative and structured agents disagree. Routes outputs to either Sage or Atlas with mode-appropriate framing.',
+        'Holds three operating modes — Explore, Cultivate, Convert. Mode transitions are signal-based with calendar guardrails, never silent. The whole system can roll back when Trajectory flags sustained divergence.'
+      ],
+      stamp: 'V0 scope: full orchestration loop, single specialist agent active.'
+    },
+    curriculum: {
+      kicker: 'Structured · door-keeper',
+      name: 'Curriculum Tracker',
+      role: 'Reads provincial curriculum, course codes, prerequisite chains',
+      body: [
+        'Not an optimizer. A door-keeper. Recommends toward the union of all currently-viable options, not toward one specific school. Knows what the three reference programs require but doesn\'t recommend toward them.',
+        'When math drops, asks not "is engineering still viable" but "which doors does this close, and which doors does it open."'
+      ],
+      stamp: 'V1 scope. Not yet built.'
+    },
+    academic: {
+      kicker: 'Structured · capability vs. effort',
+      name: 'Academic Performance Reader',
+      role: 'Reads report cards, separates capability from effort from interest',
+      body: [
+        'Alert thresholds tied to trajectory changes, not absolute thresholds. A math drop from 92 to 85 matters as a re-pointing signal, not a failure signal. The system reads grades as direction data, not as performance data.',
+        'Two-term watch before any alert fires. One bad term is noise.'
+      ],
+      stamp: 'V1 scope.'
+    },
+    competition: {
+      kicker: 'Structured · discovery, not maximizing',
+      name: 'Competition Tracker',
+      role: 'Surfaces in-direction and out-of-direction contests',
+      body: [
+        'A discovery instrument, not an admissions-signal-maximizer. Surfaces CEMC, FRC, CCC alongside Skills Canada categories beyond her primary direction — for explicit optionality preservation.',
+        'Every recommended contest must have an exploratory or skill-building rationale. None recommended purely for application strength.'
+      ],
+      stamp: 'V1+ scope.'
+    },
+    portfolio: {
+      kicker: 'Structured · narrative coherence',
+      name: 'Extracurricular Portfolio Builder',
+      role: 'Reports honestly what her activities currently tell',
+      body: [
+        '"Your activities tell three different stories that don\'t quite knit together" is a valid Grade 9-10 finding. The job is not to optimize the narrative; the job is to report it honestly.',
+        'Pays off in Grade 12 when she\'s drafting personal narratives for applications — and Sage can reference years of her own journal entries about specific moments of growth.'
+      ],
+      stamp: 'V1+ scope.'
+    },
+    robotics: {
+      kicker: 'Structured · three-state machine',
+      name: 'Robotics Skill-Tree Coach',
+      role: 'Build · Available · Standby',
+      body: [
+        'Three states, not two. Build: active project, regular check-ins. Available: no project but intent expressed, one low-key nudge. Standby: no project, no intent — silent.',
+        'Refuses to recommend a new project if the current one is half-done. The architecture explicitly resists the "more is better" pattern.'
+      ],
+      stamp: 'V1+ scope.'
+    },
+    time: {
+      kicker: 'Structured · wellbeing-first',
+      name: 'Time & Capacity Manager',
+      role: 'Models her weekly time budget',
+      body: [
+        'Detects overcommitment before it surfaces as a grade drop or a vent to Sage. Sports are first-class here even though admissions-irrelevant — they constrain everything else and protect wellbeing.',
+        'Wellbeing signals take priority over optimization signals, always. This is a hard architectural rule.'
+      ],
+      stamp: 'V1+ scope.'
+    },
+    trajectory: {
+      kicker: '★ Narrative · direction-setter',
+      name: 'Interest Trajectory Analyst',
+      role: 'Override authority when thresholds met',
+      body: [
+        'The most important agent in the system. When its direction-call has confidence ≥ 0.5, persistence ≥ 6 months, and cross-context validation ≥ 2 sources — it overrides the structured agents\' recommendations.',
+        'The architectural commitment that allows the system to change its mind. If this agent is weak, the system optimizes against the initial family-stated direction forever.',
+        'Confidence is a deterministic function: 40% persistence + 30% cross-source + 20% recency-weighted + 10% freshness. Not vibes. Math.'
+      ],
+      stamp: 'V0 scope. The first specialist agent built.'
+    },
+    journal: {
+      kicker: 'Narrative · mood and themes',
+      name: 'Journal & Reflection Reader',
+      role: 'Surfaces to Sage; surfaces above threshold to Atlas',
+      body: [
+        'Reads patterns, themes, confidence shifts. Never surfaces verbatim content upward. Below the wellbeing escalation threshold, content stays scoped to Sage and the student.',
+        'Above the threshold — sustained signal of risk — it surfaces to Atlas with the student\'s awareness, framed as concern not as data.'
+      ],
+      stamp: 'V1 scope.'
+    },
+    decision: {
+      kicker: 'Narrative · the calendar',
+      name: 'Decision Watch',
+      role: 'Tracks deadlines for all currently-open options',
+      body: [
+        'Not just preferred options — all currently-open options. Course selection windows, contest registrations, scholarship deadlines, summer program applications.',
+        'Fires ahead by 8, 4, 2, and 1 weeks for known deadlines. The architecture\'s commitment to lead time over reaction time.'
+      ],
+      stamp: 'V1+ scope.'
+    },
+    opportunity: {
+      kicker: 'Narrative · adjacent fields',
+      name: 'Opportunity Scout',
+      role: 'In-direction and adjacent-field options',
+      body: [
+        'Surfaces programs, scholarships, library MOOCs, local opportunities. Recommends SHAD explicitly because it covers breadth alongside engineering.',
+        'The adjacent-field surfacing is the optionality preserver in operational form. Without it, the system narrows toward what it already knows.'
+      ],
+      stamp: 'V1+ scope.'
+    },
+    pattern: {
+      kicker: 'Meta · deferred',
+      name: 'Trajectory Reference Engine',
+      role: 'Anonymized analog comparison',
+      body: [
+        'Compares her trajectory to anonymized analog cases that ended in different post-secondary outcomes. Only viable after 18+ months of accumulated data and a consented comparison set.',
+        'Deferred from V0 deliberately. The architecture has to earn the right to do this before doing it.'
+      ],
+      stamp: 'V2+ scope. Not built. Possibly never built.'
+    }
+  };
+
+  const detailEl = document.getElementById('agent-detail');
+
+  function renderAgent(key) {
+    const a = agents[key];
+    if (!a) return;
+    detailEl.innerHTML = `
+      <div class="kicker">${a.kicker}</div>
+      <h3>${a.name}</h3>
+      <div class="role">${a.role}</div>
+      ${a.body.map(p => `<p>${p}</p>`).join('')}
+      <div class="stamp">${a.stamp}</div>
+    `;
+    detailEl.classList.remove('fade-in');
+    void detailEl.offsetWidth;
+    detailEl.classList.add('fade-in');
+  }
+
+  document.querySelectorAll('.agent-node, .mentor-core').forEach(node => {
+    node.addEventListener('click', () => {
+      document.querySelectorAll('.agent-node').forEach(n => n.classList.remove('active'));
+      node.classList.add('active');
+      renderAgent(node.dataset.agent);
+    });
+  });
+
+  // Start with trajectory selected
+  renderAgent('trajectory');
+
+  // TIMELINE
+  const quarters = [
+    {
+      mode: 'Explore mode',
+      quarter: 'Q1 — Installation',
+      grade: 'Grade 9 / September–November',
+      vector: 'building × technical × collaborative (family-stated)',
+      confidence: 30,
+      body: [
+        'Fresh install. Mentor in Explore mode. Trajectory has zero history. Sage starts conversational; no specialist agents producing output. Freshness layer running.',
+        'Priya logs in to Sage once that first week, twice the second, then settles to roughly weekly. Journal entries are short. She does not mention coding once in 12 weeks despite her pass-two note saying she would.'
+      ],
+      stress: {
+        label: 'Stress test #1 surfaced',
+        text: 'When Trajectory is silent, do structured agents proceed as if family-stated direction is confirmed, or at reduced confidence? → Revision 1: structured agents inherit Trajectory\'s confidence floor.'
+      }
+    },
+    {
+      mode: 'Explore mode',
+      quarter: 'Q2 — First emerging thread',
+      grade: 'Grade 9 / December–February',
+      vector: 'building × technical × collaborative (unchanged)',
+      confidence: 35,
+      body: [
+        'Report card drops. Math 88, French 76 (down from 80s in Grade 8). Academic Reader logs the trajectory shift but doesn\'t alert — one term only.',
+        'Journal: three mentions of architecture after a guest speaker. Trajectory surfaces "possible emerging" — not "direction changed." Appears in Sage\'s monthly summary, not in Atlas\'s weekly digest.'
+      ],
+      stress: {
+        label: 'Stress test #2 surfaced',
+        text: 'Mentor caught the cross-column pair (French slipping + architecture interest) — but only because the simulator connected them. → Revision 2: explicit rule for when to look for cross-column contradictions.'
+      }
+    },
+    {
+      mode: 'Explore mode',
+      quarter: 'Q5 — New course choice',
+      grade: 'Grade 10 / September–November',
+      vector: 'building × technical × collaborative',
+      confidence: 45,
+      body: [
+        'Priya chose Visual Arts as a Grade 10 elective. Pass-two note: she chose it because she liked the isometric drawing in Grade 9. Course choice is a high-weight structured signal.',
+        'Journal entries triangulate: "between art class and FRC, I keep thinking about how to make complex things visible." Three sources now signaling visual/spatial. Confidence climbs.'
+      ],
+      stress: {
+        label: 'Stress test #4 surfaced',
+        text: 'Cross-context validation should bump confidence, but only because the simulator did the math by hand. → Revision 4: confidence must be a deterministic function, not interpretive. The exact formula is now coded.'
+      }
+    },
+    {
+      mode: 'Explore → considering Cultivate',
+      quarter: 'Q6 — The pivot moment',
+      grade: 'Grade 10 / December–February',
+      vector: 'building × technical/visual × collaborative',
+      confidence: 60,
+      body: [
+        'Math at 82, trending down. Visual/spatial signal at confidence 0.6 across three sources. Curriculum Tracker: engineering doors narrowing, industrial design doors widening, the "less attractive but not ruled out" list becoming relevant.',
+        'Atlas fires its event-triggered output: "Trajectory signal has shifted... recommend family conversation before course selection in March." Note the language — not "she is becoming." Just door state and timing.'
+      ],
+      stress: {
+        label: 'Stress test #5 surfaced',
+        text: 'Atlas\'s output didn\'t say "Priya is drifting from engineering" — it said "trajectory has shifted, time to talk." → Revision 5: Atlas operates under an explicit canonical/forbidden phrase guide. "She\'s becoming X" is a forbidden phrase. The phrasing is the architecture.'
+      }
+    },
+    {
+      mode: 'Late Explore',
+      quarter: 'Q8 — SHAD summer',
+      grade: 'Grade 10 / June–August',
+      vector: 'building × technical/visual/human × collaborative',
+      confidence: 75,
+      body: [
+        'Priya attends SHAD. Three threads emerge: a design-thinking workshop she found revelatory, a real friendship with a student interested in HCI, and a vague sense that "pure engineering" might not be where she lands but "tech-adjacent design" might be.',
+        'Trajectory updates: technical/visual fusion at 0.75. New "human / interaction" dimension at 0.55 — surfaces as possible emerging. The external reviewer asks: is the system making it easier or harder for her to not know what she wants?'
+      ],
+      stress: {
+        label: 'External reviewer caught it',
+        text: 'The reviewer\'s note — "at 15, not knowing should be fine" — was something neither the parent nor the system would have flagged. The audit function works because the reviewer is not the operator.'
+      }
+    },
+    {
+      mode: 'Cultivate mode',
+      quarter: 'Q12 — The stale data incident',
+      grade: 'Grade 11 / June–August',
+      vector: 'building × technical/visual/human × collaborative',
+      confidence: 80,
+      body: [
+        'The Three Schools context document was scheduled for refresh in July. The family missed the calendar reminder. By Q12 the document is 14 months stale. The freshness layer surfaced this in three weekly digests but the family didn\'t action it.',
+        'Curriculum Tracker is now modeling Grade 12 course selection using outdated Waterloo admission information. The system was honest about its staleness, but honesty alone wasn\'t enough.'
+      ],
+      stress: {
+        label: 'Stress test #8 surfaced',
+        text: 'Staleness needs escalation tiers, not just "fresh / stale." → Revision 8: three tiers. At 12 months stale, the warning becomes a top-line digest item, not a footer. At 15 months, the relevant agent pauses with explicit notice and refuses to operate.'
+      }
+    },
+    {
+      mode: 'Convert mode',
+      quarter: 'Q14 — "Tell me what to do"',
+      grade: 'Grade 12 / December–February',
+      vector: 'building × technical/visual/human × collaborative',
+      confidence: 82,
+      body: [
+        'Priya is choosing between two clusters: design-focused engineering (Waterloo SYDE, U of T EngSci) and design with technical focus (OCAD ID, Carleton IMD). Her father reads Atlas\'s December digest and is frustrated the system is recommending equal effort on both.',
+        'He asks Atlas directly: "Which one should she choose?"'
+      ],
+      stress: {
+        label: 'Stress test #9 surfaced',
+        text: 'Atlas needs a canonical response that holds the line under pressure. → Revision 9: "The system can\'t choose for her, and shouldn\'t. Here\'s the door map. She\'s not ready to decide yet, and that\'s appropriate at this stage. The right action is to give her space, not to pressure the choice." The architecture held.'
+      }
+    },
+    {
+      mode: 'Lifecycle complete',
+      quarter: 'Q16 — The archive',
+      grade: 'Grade 12 / April–June',
+      vector: 'final · hers now',
+      confidence: 100,
+      body: [
+        'Priya applies to all five preferred futures. Offers from Waterloo SYDE, U of T EngSci, Carleton Engineering with Design, OCAD ID, Carleton IMD. She chooses Waterloo SYDE — the interdisciplinary engineering program that lets her keep both threads.',
+        'The system did not steer this. It was her choice, made on her timeline, with full optionality preserved until the moment she chose.',
+        'Active orchestration sunsets. The trajectory archive is delivered to her, not to the parent. Sage remains available in minimal capacity through September of first university year for transition support. The architecture\'s job is done.'
+      ],
+      stress: {
+        label: 'The unanticipated finding',
+        text: 'The long memory\'s actual payoff was at application time. Years of her own journal entries became the raw material for her personal narratives — written in her own voice because they were her own observations. Not surveillance. Mirroring.'
+      }
+    }
+  ];
+
+  const tlContent = document.getElementById('tl-content');
+
+  function renderQuarter(idx) {
+    const q = quarters[idx];
+    tlContent.innerHTML = `
+      <div class="tl-meta">
+        <div class="tl-mode">${q.mode}</div>
+        <div class="tl-quarter">${q.quarter}</div>
+        <div class="tl-grade">${q.grade}</div>
+        <div class="tl-vector">
+          <div class="tl-vector-label">Direction vector</div>
+          <div class="tl-vector-val">${q.vector}</div>
+        </div>
+        <div class="tl-confidence">
+          <span>Confidence</span>
+          <div class="conf-bar"><div class="conf-fill" style="width: ${q.confidence}%"></div></div>
+          <span>${(q.confidence/100).toFixed(2)}</span>
+        </div>
+      </div>
+      <div class="tl-body">
+        ${q.body.map(p => `<p>${p}</p>`).join('')}
+        <div class="tl-stress">
+          <strong>${q.stress.label}</strong>
+          <p>${q.stress.text}</p>
+        </div>
+      </div>
+    `;
+    tlContent.classList.remove('fade-in');
+    void tlContent.offsetWidth;
+    tlContent.classList.add('fade-in');
+  }
+
+  document.querySelectorAll('#tl-controls .timeline-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#tl-controls .timeline-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderQuarter(parseInt(btn.dataset.q));
+    });
+  });
+
+  renderQuarter(0);
+
+  // NAV DOTS — active state on scroll
+  const sections = document.querySelectorAll('section');
+  const navDots = document.querySelectorAll('nav.dots a');
+
+  function updateActiveNav() {
+    const scrollPos = window.scrollY + window.innerHeight / 3;
+    let activeIdx = 0;
+    sections.forEach((sec, i) => {
+      if (sec.offsetTop <= scrollPos) activeIdx = i;
+    });
+    navDots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
+  }
+
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  updateActiveNav();
+</script>
+
+</body>
+</html>
