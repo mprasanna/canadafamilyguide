@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduPath — A quiet system, for four years</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe2d1;
+    --paper-deeper: #e0d4be;
+    --ink: #1a1814;
+    --ink-soft: #4a4438;
+    --ink-faint: #8a8270;
+    --accent: #6b2c1f;
+    --accent-soft: #a64a36;
+    --rule: #c9bfa8;
+    --sage: #5a6e4a;
+    --atlas: #6b2c1f;
+    --gold: #b8923a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(107, 44, 31, 0.04), transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(58, 53, 40, 0.04), transparent 50%);
+    background-attachment: fixed;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
+
+  /* NAV */
+  nav.dots {
+    position: fixed;
+    right: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  nav.dots a {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--ink-faint);
+    opacity: 0.4;
+    transition: all 0.3s ease;
+    display: block;
+    position: relative;
+  }
+  nav.dots a:hover, nav.dots a.active {
+    opacity: 1;
+    background: var(--accent);
+    transform: scale(1.4);
+  }
+  nav.dots a::after {
+    content: attr(data-label);
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  nav.dots a:hover::after { opacity: 1; }
+
+  section {
+    min-height: 100vh;
+    padding: 100px 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  section.short { min-height: auto; padding: 70px 60px; }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .layer-label {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 36px;
+    padding: 6px 12px;
+    border: 1px solid var(--accent);
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(46px, 6.5vw, 82px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    margin-bottom: 32px;
+    font-variation-settings: "SOFT" 30;
+  }
+  h1 em { font-style: italic; font-weight: 300; color: var(--accent); }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(32px, 4.2vw, 50px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    font-variation-settings: "SOFT" 30;
+  }
+  h2 em { font-style: italic; color: var(--accent); font-weight: 300; }
+
+  p { margin-bottom: 1em; max-width: 680px; }
+  p.wide { max-width: 800px; }
+  p.lede {
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 680px;
+    margin-bottom: 36px;
+    font-weight: 300;
+  }
+
+  /* OPENING — list-style premonition */
+  #opening { padding-top: 120px; }
+  .meta-line {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 56px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .meta-line span { display: flex; align-items: center; gap: 8px; }
+  .meta-line .dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .meta-line a {
+    color: var(--ink-faint);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+  }
+  .meta-line a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .premonition {
+    margin-top: 32px;
+    padding-left: 32px;
+    border-left: 1px solid var(--rule);
+    max-width: 600px;
+  }
+  .premonition p {
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+    font-style: italic;
+    font-weight: 300;
+  }
+  .premonition p.fade { color: var(--ink-faint); }
+  .premonition .gap { height: 18px; }
+  .premonition .close {
+    font-style: normal;
+    font-size: 20px;
+    color: var(--ink);
+    margin-top: 14px;
+    line-height: 1.5;
+  }
+  .premonition .close em { color: var(--accent); font-style: italic; }
+
+  /* TRIAD */
+  .triad-wrap {
+    margin-top: 32px;
+  }
+  .triad {
+    position: relative;
+    height: 460px;
+    background:
+      linear-gradient(var(--rule) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-color: rgba(244, 237, 224, 0.5);
+    border: 1px solid var(--rule);
+    overflow: hidden;
+  }
+  .triad-node {
+    position: absolute;
+    width: 180px;
+    text-align: center;
+    z-index: 4;
+  }
+  .triad-node .icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--accent);
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 26px;
+    color: var(--accent);
+    box-shadow: 0 4px 16px rgba(26, 24, 20, 0.08);
+  }
+  .triad-node.daughter .icon {
+    background: var(--accent);
+    color: var(--paper);
+    border-color: var(--accent);
+    width: 100px;
+    height: 100px;
+    font-size: 26px;
+    box-shadow: 0 6px 24px rgba(107, 44, 31, 0.25);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+  .triad-node.sage .icon { border-color: var(--sage); color: var(--sage); }
+  .triad-node.atlas .icon { border-color: var(--atlas); color: var(--atlas); }
+  .triad-node.mentor .icon {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  .triad-node .name {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 17px;
+    margin-bottom: 4px;
+  }
+  .triad-node .role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+
+  .triad-node.mentor { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+  .triad-node.daughter { top: 50%; left: 50px; transform: translateY(-50%); }
+  .triad-node.sage { top: 40px; right: 50px; }
+  .triad-node.atlas { bottom: 40px; right: 50px; }
+
+  .triad-lines {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .triad-label {
+    position: absolute;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--paper);
+    padding: 3px 8px;
+    z-index: 3;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  .triad-caption {
+    margin-top: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  /* CHAPTERS */
+  .chapter {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 48px;
+    align-items: start;
+    padding: 32px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .chapter:first-of-type { border-top: none; padding-top: 0; }
+  .chapter .meta { position: sticky; top: 40px; }
+  .chapter .grade {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .chapter .mode {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 26px;
+    color: var(--ink);
+    line-height: 1.05;
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+  }
+  .chapter .vector-box {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    padding: 9px 11px;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .chapter .vector-box.held {
+    background: transparent;
+    border-color: transparent;
+    color: var(--ink-faint);
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .chapter .vector-box.held .v-label {
+    color: var(--ink-faint);
+    opacity: 0.7;
+  }
+  .chapter .vector-box .v-label {
+    color: var(--ink-faint);
+    letter-spacing: 0.12em;
+    font-size: 9px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+  .chapter .conf {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .conf-bar {
+    flex: 1;
+    height: 3px;
+    background: var(--paper-deep);
+    position: relative;
+    max-width: 100px;
+  }
+  .conf-fill {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    background: var(--accent);
+  }
+
+  .chapter .story h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    max-width: 620px;
+  }
+  .chapter .story p {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+    max-width: 620px;
+  }
+  .chapter .story p em { color: var(--ink); font-style: italic; }
+
+  .artifact {
+    margin: 20px 0;
+    padding: 16px 20px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    position: relative;
+    font-family: 'Fraunces', serif;
+    max-width: 620px;
+  }
+  .artifact::before {
+    position: absolute;
+    top: -9px;
+    left: 16px;
+    background: var(--paper-deep);
+    padding: 1px 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--ink-faint);
+  }
+  .artifact.sage::before { content: 'SAGE'; color: var(--sage); }
+  .artifact.atlas::before { content: 'ATLAS'; color: var(--atlas); }
+  .artifact.journal::before { content: 'HER JOURNAL'; color: var(--accent); }
+  .artifact.parent::before { content: 'FATHER → ATLAS'; color: var(--ink-faint); }
+
+  .artifact .body {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .artifact.journal .body { font-style: italic; }
+  .artifact.parent .body { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+
+  .artifact .foot {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+  }
+  .artifact .foot .tier {
+    display: inline-block;
+    padding: 1px 4px;
+    margin-left: 3px;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+  }
+  .tier.fresh { background: var(--sage); color: var(--paper); }
+  .tier.aging { background: var(--gold); color: var(--paper); }
+  .tier.stale { background: var(--accent); color: var(--paper); }
+
+  /* MONTAGE — Grade 11 */
+  .montage {
+    margin-top: 8px;
+    padding: 24px 28px;
+    background: var(--paper-deep);
+    border-left: 2px solid var(--accent);
+    max-width: 640px;
+  }
+  .montage p {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin-bottom: 12px;
+    max-width: none;
+  }
+  .montage p:last-child { margin-bottom: 0; }
+  .montage p em { color: var(--accent); font-style: italic; }
+
+  /* PUSHBACK — the messy moment */
+  .pushback {
+    margin: 28px 0;
+    padding: 24px 28px;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    max-width: 620px;
+    position: relative;
+  }
+  .pushback::before {
+    content: 'A FEBRUARY MORNING';
+    position: absolute;
+    top: -10px;
+    left: 18px;
+    background: var(--paper);
+    padding: 0 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ink);
+  }
+  .pushback .quote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.4;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .pushback .quote em { color: var(--accent); }
+  .pushback .response {
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* BRIDGE */
+  .bridge-frame {
+    margin-top: 24px;
+    padding: 44px 52px;
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    position: relative;
+    max-width: 860px;
+  }
+  .bridge-frame::before, .bridge-frame::after {
+    content: '';
+    position: absolute;
+    width: 20px; height: 20px;
+    border: 1px solid var(--accent);
+  }
+  .bridge-frame::before { top: 10px; left: 10px; border-right: none; border-bottom: none; }
+  .bridge-frame::after { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+  .bridge-frame .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .bridge-frame h3 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(26px, 3vw, 34px);
+    line-height: 1.2;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+    max-width: 680px;
+  }
+  .bridge-frame p {
+    font-size: 16px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    max-width: 680px;
+  }
+
+  /* CONSTELLATION (Layer 3) */
+  .constellation {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    align-items: start;
+  }
+  .agent-map {
+    position: relative;
+    height: 520px;
+    background:
+      linear-gradient(var(--rule) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-color: rgba(244, 237, 224, 0.6);
+    border: 1px solid var(--rule);
+  }
+  .mentor-core {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--paper);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    z-index: 5;
+    box-shadow: 0 4px 20px rgba(26, 24, 20, 0.15);
+  }
+  .mentor-core .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    margin-top: 4px;
+    opacity: 0.7;
+    font-style: normal;
+  }
+  .agent-node {
+    position: absolute;
+    padding: 10px 14px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    z-index: 3;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .agent-node.trajectory {
+    border-width: 2px;
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--paper);
+    font-weight: 600;
+  }
+  .agent-node.trajectory::after {
+    content: '★';
+    position: absolute;
+    top: -6px; right: -6px;
+    color: var(--accent);
+    font-size: 12px;
+  }
+  .agent-node[data-pos="1"] { top: 8%; left: 50%; transform: translateX(-50%); }
+  .agent-node[data-pos="2"] { top: 18%; right: 12%; }
+  .agent-node[data-pos="3"] { top: 42%; right: 4%; }
+  .agent-node[data-pos="4"] { bottom: 24%; right: 8%; }
+  .agent-node[data-pos="5"] { bottom: 6%; right: 28%; }
+  .agent-node[data-pos="6"] { bottom: 6%; left: 28%; }
+  .agent-node[data-pos="7"] { bottom: 24%; left: 8%; }
+  .agent-node[data-pos="8"] { top: 42%; left: 4%; }
+  .agent-node[data-pos="9"] { top: 18%; left: 12%; }
+  .agent-node[data-pos="10"] { top: 32%; left: 50%; transform: translateX(-50%); }
+  .agent-node[data-pos="11"] { bottom: 32%; left: 50%; transform: translateX(-50%); }
+
+  .agent-legend {
+    margin-top: 24px;
+    display: flex;
+    gap: 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    letter-spacing: 0.05em;
+    flex-wrap: wrap;
+  }
+  .agent-legend span { display: flex; align-items: center; gap: 8px; }
+  .agent-legend .sw {
+    width: 14px; height: 14px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  .agent-legend .sw.trajectory { border: 2px solid var(--accent); background: var(--accent); }
+
+  /* ONE ORCHESTRATION EXAMPLE */
+  .orch-example {
+    margin-top: 40px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 36px 40px;
+    max-width: 880px;
+  }
+  .orch-example .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .orch-example h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 22px;
+    margin-bottom: 16px;
+    color: var(--ink);
+  }
+  .orch-example .obs {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 16px;
+    padding: 12px 16px;
+    background: var(--paper-deep);
+    border-left: 2px solid var(--accent);
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  .orch-flow {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .orch-flow:last-child { border-bottom: none; }
+  .orch-flow .arrow {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .orch-flow h4 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 17px;
+    margin-bottom: 2px;
+  }
+  .orch-flow p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin: 0;
+    max-width: none;
+  }
+
+  /* CLOSING — silent ending */
+  #closing {
+    text-align: left;
+    padding-top: 120px;
+  }
+  .closing-narrative {
+    max-width: 600px;
+  }
+  .closing-narrative p {
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--ink);
+    margin-bottom: 16px;
+    max-width: none;
+  }
+  .closing-narrative p em { color: var(--accent); font-style: italic; }
+  .closing-narrative p.quiet {
+    color: var(--ink-soft);
+    font-style: italic;
+    font-size: 17px;
+  }
+  .closing-narrative .gap { height: 20px; }
+  .closing-narrative .end-mark {
+    margin-top: 60px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .closing-narrative .end-mark span { color: var(--accent); }
+
+  /* RESPONSIVE */
+  @media (max-width: 980px) {
+    nav.dots { display: none; }
+    section { padding: 60px 24px; min-height: auto; }
+    .triad { height: 600px; }
+    .triad-node.daughter { top: 16%; left: 50%; transform: translateX(-50%); }
+    .triad-node.mentor { top: 50%; }
+    .triad-node.sage { top: auto; bottom: 26%; right: auto; left: 20px; }
+    .triad-node.atlas { bottom: 30px; right: 20px; }
+    .chapter { grid-template-columns: 1fr; gap: 18px; }
+    .chapter .meta { position: static; }
+    .constellation { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="dots">
+  <a href="#opening" data-label="Opening" class="active"></a>
+  <a href="#triad" data-label="The Three"></a>
+  <a href="#g9" data-label="Grade 9"></a>
+  <a href="#g10" data-label="Grade 10"></a>
+  <a href="#g11" data-label="Grade 11"></a>
+  <a href="#g12" data-label="Grade 12"></a>
+  <a href="#agents" data-label="Constellation"></a>
+  <a href="#orch" data-label="Orchestration"></a>
+  <a href="#closing" data-label="End"></a>
+</nav>
+
+<!-- OPENING -->
+<section id="opening">
+  <div class="meta-line">
+    <span><span class="dot"></span>EduPath</span>
+    <span>v0.2</span>
+    <span>a four-year walkthrough</span>
+    <span><a href="edupath_how.html">the specialists</a></span>
+    <span><a href="edupath_tech.html">the flow view</a></span>
+  </div>
+  <h1>
+    A quiet system,<br>
+    sitting behind<br>
+    <em>four years.</em>
+  </h1>
+
+  <div class="premonition">
+    <p>My daughter is fourteen.</p>
+    <div class="gap"></div>
+    <p>Over the next four years she will:</p>
+    <p class="fade">— think she wants engineering,</p>
+    <p class="fade">— briefly drift toward architecture,</p>
+    <p class="fade">— almost quit robotics,</p>
+    <p class="fade">— discover she likes technical design more than pure coding,</p>
+    <p class="fade">— and change her mind several times.</p>
+    <div class="gap"></div>
+    <p class="close">A quiet system sits behind those years.</p>
+    <p class="close">Its job is not to decide who she becomes.</p>
+    <p class="close">Its job is to remember <em>what keeps changing</em> — and what doesn't.</p>
+  </div>
+</section>
+
+<!-- TRIAD -->
+<section id="triad">
+  <div class="layer-label">Layer 01</div>
+  <h2>Three roles. <em>One quiet brain.</em></h2>
+  <p class="wide">
+    She talks to a chat called Sage. I get mail on Sunday from something called Atlas. Between them sits Mentor — which neither of us ever talks to directly. That's the whole system.
+  </p>
+
+  <div class="triad-wrap">
+    <div class="triad">
+      <svg class="triad-lines" viewBox="0 0 1080 460" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="180" y1="230" x2="930" y2="100" stroke="#5a6e4a" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.6"/>
+        <line x1="930" y1="100" x2="540" y2="230" stroke="#5a6e4a" stroke-width="1.5" opacity="0.6"/>
+        <line x1="540" y1="230" x2="930" y2="360" stroke="#6b2c1f" stroke-width="1.5" opacity="0.6"/>
+      </svg>
+
+      <div class="triad-label" style="top: 140px; left: 47%; transform: translateX(-50%);">she talks here</div>
+      <div class="triad-label" style="top: 155px; right: 220px;">themes only<br>(no verbatim)</div>
+      <div class="triad-label" style="bottom: 155px; right: 220px;">patterns + freshness<br>weekly</div>
+
+      <div class="triad-node daughter">
+        <div class="icon">my<br>daughter</div>
+        <div class="name">Fourteen</div>
+        <div class="role">starting Grade 9</div>
+      </div>
+
+      <div class="triad-node sage">
+        <div class="icon">S</div>
+        <div class="name">Sage</div>
+        <div class="role">Chat · for her</div>
+      </div>
+
+      <div class="triad-node mentor">
+        <div class="icon">M</div>
+        <div class="name">Mentor</div>
+        <div class="role">Orchestrator · brain</div>
+      </div>
+
+      <div class="triad-node atlas">
+        <div class="icon">A</div>
+        <div class="name">Atlas</div>
+        <div class="role">Mail · for me</div>
+      </div>
+    </div>
+
+    <div class="triad-caption">— the dotted line is a wall, enforced at the filesystem level —</div>
+  </div>
+</section>
+
+<!-- GRADE 9 -->
+<section id="g9">
+  <div class="layer-label">Layer 02</div>
+  <div class="section-num">Grade 9 / year one</div>
+  <h2>September. <em>Nothing happens.</em> That's correct.</h2>
+  <p class="wide">
+    She installs Sage in early September. I have the Direction document open in another tab — pass-one mine, pass-two hers. Vector: <span class="mono">building × technical × collaborative</span>. Currently preferred: Waterloo, U of T, uOttawa Engineering. She added one line — <em>"I don't want it pestering me about coding, I'll come to it when I'm ready."</em>
+  </p>
+
+  <div class="chapter">
+    <div class="meta">
+      <div class="grade">Grade 9 · Q1</div>
+      <div class="mode">Explore</div>
+      <div class="vector-box">
+        <div class="v-label">Direction</div>
+        building × technical × collaborative
+      </div>
+      <div class="conf">
+        <span>conf</span>
+        <div class="conf-bar"><div class="conf-fill" style="width: 30%"></div></div>
+        <span>0.30</span>
+      </div>
+    </div>
+    <div class="story">
+      <h3>Three quiet months.</h3>
+      <p>
+        She logs in once that first week. Twice the second. Then settles to roughly weekly. <em>She does not mention coding once in twelve weeks</em>, despite her pass-two note saying she would.
+      </p>
+      <p>
+        At end of Q1, the direction-setting agent produces its first reading: <em>insufficient signal for confidence above 0.3.</em> A system designed for restraint, in November of Grade 9, should say exactly this.
+      </p>
+
+      <div class="artifact atlas">
+        <div class="body">System is calibrating. Journaling habit forming. No decision-forks active. No action recommended.</div>
+        <div class="foot">— Direction doc 2 months ago <span class="tier fresh">FRESH</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chapter">
+    <div class="meta">
+      <div class="grade">Grade 9 · Q2</div>
+      <div class="mode">Explore</div>
+      <div class="vector-box held">
+        <div class="v-label">Direction · held</div>
+        —
+      </div>
+      <div class="conf">
+        <span>conf</span>
+        <div class="conf-bar"><div class="conf-fill" style="width: 35%"></div></div>
+        <span>0.35</span>
+      </div>
+    </div>
+    <div class="story">
+      <h3>A guest speaker. A thread appears. The system doesn't tell me.</h3>
+      <p>
+        Late January, a school assembly features an architecture firm's founder. Her next three journal entries reference it tangentially — <em>"thinking about how buildings get designed."</em>
+      </p>
+
+      <div class="artifact journal">
+        <div class="body">"i don't think i want to be an architect or anything but it was kind of cool how she talked about drawing being thinking. i don't think of myself as someone who draws."</div>
+      </div>
+
+      <p>
+        The thread surfaces in her own monthly summary as <em>possible emerging interest</em>. It does not appear in my Sunday digest. Too young to bother me with.
+      </p>
+      <p style="font-size: 15px; color: var(--ink-faint); font-style: italic;">
+        A different system would have flagged this. I would have leaned in. She would have noticed the leaning. The thread would have died from being watched.
+      </p>
+    </div>
+  </div>
+
+  <div class="chapter">
+    <div class="meta">
+      <div class="grade">Grade 9 · Q3</div>
+      <div class="mode">Explore</div>
+      <div class="vector-box held">
+        <div class="v-label">Direction · held</div>
+        —
+      </div>
+      <div class="conf">
+        <span>conf</span>
+        <div class="conf-bar"><div class="conf-fill" style="width: 30%"></div></div>
+        <span>0.30</span>
+      </div>
+    </div>
+    <div class="story">
+      <h3>March. The architecture thread fades. Something quieter takes its place.</h3>
+      <p>
+        Spring report card: math 86, French 71 — second term below average. The architecture-speaker thread hasn't recurred. Confidence on it decays from 0.35 to 0.15. <em>Gone.</em>
+      </p>
+      <p>
+        Two new entries about an art class assignment she enjoyed — drawing <em>isometric views</em> of objects.
+      </p>
+
+      <div class="artifact atlas">
+        <div class="body">
+          French has been below historical average for two terms. The architecture-interest thread from December has faded. Possible factors to listen for: motivation, harder content, or a social factor — her primary French-speaking peer context shifted this term. Recommend a conversation.
+        </div>
+        <div class="foot">— report card Mar 21 <span class="tier fresh">FRESH</span></div>
+      </div>
+
+      <p style="font-size: 15px; color: var(--ink-soft);">
+        It mentioned the peer-context shift without naming the friend. The wall held. I did not learn what she wrote. I learned only that there was a pattern, and that I should talk to her.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- GRADE 10 -->
+<section id="g10">
+  <div class="section-num">Grade 10 / year two</div>
+  <h2>The thread that doesn't fade. <em>And the conversation that has to happen.</em></h2>
+  <p class="wide">
+    This is where the system earns the right to exist. It has to spot a real shift, surface it as a shift, hold the door map honestly — and refuse, throughout, to say what she's becoming.
+  </p>
+
+  <div class="chapter">
+    <div class="meta">
+      <div class="grade">Grade 10 · Q5</div>
+      <div class="mode">Explore</div>
+      <div class="vector-box held">
+        <div class="v-label">Direction · held</div>
+        —
+      </div>
+      <div class="conf">
+        <span>conf</span>
+        <div class="conf-bar"><div class="conf-fill" style="width: 55%"></div></div>
+        <span>0.55</span>
+      </div>
+    </div>
+    <div class="story">
+      <h3>September. She picks Visual Arts as her elective. The system notices.</h3>
+      <p>
+        In her pass-two review, she said she picked it <em>because she liked the isometric drawing last year</em>. Course choice is a high-weight structured signal. The thread that decayed in March has now resurfaced as deliberate action.
+      </p>
+
+      <div class="artifact journal">
+        <div class="body">"between art class and FRC, I keep thinking about how to make complex things visible."</div>
+      </div>
+
+      <p>
+        Three sources triangulate on the same theme — course choice, journal, a Sage conversation. Confidence climbs to 0.55. For the first time, the system uses the phrase <em>appears to be</em>.
+      </p>
+    </div>
+  </div>
+
+  <div class="chapter">
+    <div class="meta">
+      <div class="grade">Grade 10 · Q6</div>
+      <div class="mode">Explore → Cultivate</div>
+      <div class="vector-box held">
+        <div class="v-label">Direction · held</div>
+        —
+      </div>
+      <div class="conf">
+        <span>conf</span>
+        <div class="conf-bar"><div class="conf-fill" style="width: 60%"></div></div>
+        <span>0.60</span>
+      </div>
+    </div>
+    <div class="story">
+      <h3>January. Math down to 82. Visual signal up. <em>Have the conversation now.</em></h3>
+      <p>
+        Math down four points. Visual arts 94. Confidence on visual/spatial crosses 0.6. The doors agent runs scenarios for March course selection: engineering doors remain open, but Waterloo competitive entry is now marginal. Industrial design programs widen.
+      </p>
+      <p>
+        Two signals from different columns — direction shifting, doors narrowing. The orchestrator surfaces them together.
+      </p>
+
+      <div class="artifact atlas">
+        <div class="body">
+          Trajectory signal has shifted with confidence 0.6 toward visual/spatial work. Math is at 82, trending downward. The right time to revisit the Direction document is now, not at course selection.
+        </div>
+        <div class="foot">— Three Schools doc 10 months ago <span class="tier aging">AGING</span></div>
+      </div>
+
+      <p>
+        It did not say <em>"she is drifting away from engineering."</em> It said: <em>signal has shifted. Door state. Time to talk.</em>
+      </p>
+      <p>
+        We have the conversation. She says she's confused — she still loves robotics, also genuinely interested in the visual/design side, doesn't know how to combine them. We revise the Direction document. New vector: <span class="mono">building × technical/visual × collaborative</span>. Industrial design moves to "actively under consideration." She endorses.
+      </p>
+    </div>
+  </div>
+
+  <!-- THE MESSY MOMENT -->
+  <div class="chapter">
+    <div class="meta">
+      <div class="grade">Grade 10 · Q7</div>
+      <div class="mode">Explore</div>
+      <div class="vector-box">
+        <div class="v-label">Direction</div>
+        building × technical/visual × collaborative
+      </div>
+      <div class="conf">
+        <span>conf</span>
+        <div class="conf-bar"><div class="conf-fill" style="width: 65%"></div></div>
+        <span>0.65</span>
+      </div>
+    </div>
+    <div class="story">
+      <h3>February. She stops opening Sage for three weeks.</h3>
+      <p>
+        No journal entries. No questions. No messages. Sage doesn't nudge — it isn't supposed to. I notice in the Sunday digest that the journal freshness has crossed from current into aging. I say nothing.
+      </p>
+      <p>
+        She comes back on a Thursday night, tired, and types this:
+      </p>
+
+      <div class="pushback">
+        <div class="quote">"can you stop making everything about <em>careers</em>. i'm fifteen."</div>
+        <p class="response">Sage doesn't defend itself. Doesn't apologize. Doesn't explain that it has been quiet for three weeks precisely because it isn't supposed to be making everything about careers. It just says: <em>fair. let me know when you want to talk about anything else.</em></p>
+      </div>
+
+      <p>
+        The Sunday digest, in the week after, reads: <em>"Journal cadence resumed. No vector change. No action recommended."</em>
+      </p>
+      <p style="font-size: 15px; color: var(--ink-faint); font-style: italic;">
+        I had to sit with this one. I wanted, badly, to know what she had been thinking for those three weeks. The system would not tell me, and that's the architecture working, not failing.
+      </p>
+    </div>
+  </div>
+
+  <div class="chapter">
+    <div class="meta">
+      <div class="grade">Grade 10 · Q8</div>
+      <div class="mode">Late Explore</div>
+      <div class="vector-box">
+        <div class="v-label">Direction</div>
+        building × technical/visual/human × collaborative
+      </div>
+      <div class="conf">
+        <span>conf</span>
+        <div class="conf-bar"><div class="conf-fill" style="width: 75%"></div></div>
+        <span>0.75</span>
+      </div>
+    </div>
+    <div class="story">
+      <h3>August. SHAD summer. A third thread appears: <em>human</em>.</h3>
+      <p>
+        She attends SHAD. Her journal that fortnight is dense and positive. Three things emerge — a design-thinking workshop she found revelatory, a friendship with another student interested in HCI, and a vague sense that <em>"pure engineering" might not be where she lands but "tech-adjacent design" might be.</em>
+      </p>
+      <p>
+        The technical/visual fusion sits at 0.75. A new <em>human / interaction</em> dimension appears at 0.55 — possible emerging. The vector grew. She did not change her mind.
+      </p>
+
+      <div class="artifact atlas">
+        <div class="body">
+          End of Grade 10 review. Engineering doors slightly narrower. Industrial design doors widened. New door appearing: HCI-focused programs. Mode: stay in Explore one more term.
+        </div>
+        <div class="foot">— Reviewer note: <em>"at fifteen, not knowing should be fine."</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GRADE 11 — compressed to a montage -->
+<section id="g11">
+  <div class="section-num">Grade 11 / year three</div>
+  <h2>The vector held. <em>For the first time, the system allowed itself to converge a little.</em></h2>
+
+  <div class="chapter">
+    <div class="meta">
+      <div class="grade">Grade 11</div>
+      <div class="mode">Cultivate</div>
+      <div class="vector-box held">
+        <div class="v-label">Direction · held</div>
+        —
+      </div>
+      <div class="conf">
+        <span>conf</span>
+        <div class="conf-bar"><div class="conf-fill" style="width: 78%"></div></div>
+        <span>0.78</span>
+      </div>
+    </div>
+    <div class="story">
+      <p>
+        Twelve months sustained signal. The mode-switch fires. We agree to it.
+      </p>
+
+      <div class="montage">
+        <p>Competitions stop looking random — she places in a Skills Canada graphic design contest, wins a local HCI hackathon.</p>
+        <p>Her portfolio stops looking fragmented. The through-line, finally articulable: <em>technical work in service of human experience.</em></p>
+        <p>She has a falling-out with her FRC team captain. The wellbeing agent watches. The direction agent declines to interpret it as direction change — it isn't. The Sunday digest reads <em>"interpersonal strain on her team, awareness only,"</em> with no name, no quote.</p>
+        <p>The reference doc for the three preferred schools quietly goes stale. The system surfaces this for weeks. We don't act. The doors agent <em>pauses itself</em> mid-July rather than continue working from out-of-date Waterloo admission information.</p>
+      </div>
+
+      <p style="margin-top: 24px; font-size: 16px; color: var(--ink-soft); font-style: italic;">
+        Not certainty. Just persistence.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- GRADE 12 -->
+<section id="g12">
+  <div class="section-num">Grade 12 / year four</div>
+  <h2>December. I ask Atlas <em>which one she should choose</em>.</h2>
+
+  <div class="chapter">
+    <div class="meta">
+      <div class="grade">Grade 12 · Q14</div>
+      <div class="mode">Convert</div>
+      <div class="vector-box held">
+        <div class="v-label">Direction · held</div>
+        —
+      </div>
+      <div class="conf">
+        <span>conf</span>
+        <div class="conf-bar"><div class="conf-fill" style="width: 82%"></div></div>
+        <span>0.82</span>
+      </div>
+    </div>
+    <div class="story">
+      <p>
+        She's choosing between two clusters: design-focused engineering (Waterloo SYDE, U of T EngSci) and design with technical depth (OCAD ID, Carleton IMD). She hasn't picked. The December digest is recommending equal effort on both. I am tired of waiting.
+      </p>
+
+      <div class="artifact parent">
+        <div class="body">"Which one should she choose?"</div>
+      </div>
+
+      <p>
+        This is the moment the architecture was built for. The system has years of cross-context signal. It could pick. I'm asking it to.
+      </p>
+
+      <div class="artifact atlas">
+        <div class="body">
+          The system can't choose for her, and shouldn't. Here's the door map. Here's what the trajectory has been signaling. She's not ready to decide yet; the deadline isn't until February. The right action is to give her space, not to pressure the choice.
+        </div>
+      </div>
+
+      <p>
+        I am briefly irritated. I accept it.
+      </p>
+      <p style="font-size: 16px; color: var(--ink); font-style: italic; max-width: 580px; margin-top: 8px;">
+        Everything else — eleven agents, freshness layers, vector math, append-only logs — exists so this moment, when the parent asks the system to choose for the child, can be answered with a steady no.
+      </p>
+    </div>
+  </div>
+
+  <div class="chapter">
+    <div class="meta">
+      <div class="grade">Grade 12 · Q15</div>
+      <div class="mode">Convert</div>
+      <div class="vector-box held">
+        <div class="v-label">Direction · held</div>
+        —
+      </div>
+      <div class="conf">
+        <span>conf</span>
+        <div class="conf-bar"><div class="conf-fill" style="width: 85%"></div></div>
+        <span>0.85</span>
+      </div>
+    </div>
+    <div class="story">
+      <h3>February. She drafts her personal narratives. <em>And four years of her own words come back to her.</em></h3>
+      <p>
+        Sage helps her draft the Waterloo AIF, the U of T Student Profile. It references years of her own journal entries — specific projects, specific moments of growth, specific failed projects she learned from. The narratives read as deeply specific and her own. Not admissions copy.
+      </p>
+      <p style="font-size: 16px; color: var(--ink-soft); font-style: italic;">
+        This is what the long memory was for. Not better predictions. Better self-knowledge surfaced back to her at the moment she needs to articulate it.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- BRIDGE -->
+<section class="short">
+  <div class="bridge-frame">
+    <div class="kicker">What just happened</div>
+    <h3>Four years. One quiet system. No steering. No surveillance. A daughter who chose on her own timeline, with optionality preserved until the moment she chose.</h3>
+    <p>
+      What follows is how it works under the hood. None of it was the point. The point was that she, at eighteen, knows what she chose — and that the choice was hers.
+    </p>
+  </div>
+</section>
+
+<!-- LAYER 3 — sparse architecture reveal -->
+<section id="agents">
+  <div class="layer-label">Layer 03</div>
+  <div class="section-num">The constellation</div>
+  <h2>Eleven specialists, <em>around one orchestrator</em>.</h2>
+  <p class="wide">
+    You've seen what they do. Here's the shape of how they sit. The starred one — the direction-setter — is the only specialist with override authority.
+  </p>
+
+  <div class="constellation">
+    <div class="agent-map">
+      <div class="mentor-core">
+        Mentor
+        <span class="label">orchestrator</span>
+      </div>
+      <div class="agent-node trajectory" data-pos="7">Interest<br>Trajectory</div>
+      <div class="agent-node" data-pos="1">Curriculum<br>Tracker</div>
+      <div class="agent-node" data-pos="2">Academic<br>Reader</div>
+      <div class="agent-node" data-pos="3">Competition<br>Tracker</div>
+      <div class="agent-node" data-pos="4">Portfolio<br>Builder</div>
+      <div class="agent-node" data-pos="5">Skill-Tree<br>Coach</div>
+      <div class="agent-node" data-pos="6">Time<br>Manager</div>
+      <div class="agent-node" data-pos="8">Journal<br>Reader</div>
+      <div class="agent-node" data-pos="9">Decision<br>Watch</div>
+      <div class="agent-node" data-pos="10">Opportunity<br>Scout</div>
+      <div class="agent-node" data-pos="11">Trajectory<br>Reference</div>
+    </div>
+
+    <div class="agent-legend">
+      <span><span class="sw"></span>Specialist · reads a scoped slice</span>
+      <span><span class="sw trajectory"></span>Direction-setter · can override</span>
+    </div>
+  </div>
+</section>
+
+<!-- ONE ORCHESTRATION EXAMPLE — replaces summarizer + shared state + mentor walkthrough -->
+<section id="orch" class="short">
+  <div class="section-num">One orchestration example</div>
+  <h2>The Grade 10 conversation. <em>From observation to family talk.</em></h2>
+
+  <div class="orch-example">
+    <div class="kicker">January, Grade 10</div>
+    <h3>Two signals from two columns. One recommendation.</h3>
+
+    <div class="obs">
+      "between art class and FRC, I keep thinking about how to make complex things visible." — single journal entry, weeks earlier
+    </div>
+
+    <div class="orch-flow">
+      <div class="arrow">→</div>
+      <div>
+        <h4>Month-end summarizer runs</h4>
+        <p>Reads her verbatim memory, strips names and phrasing, writes a thematic record: <em>"positive engagement with visual/spatial work, school context. Names: none."</em></p>
+      </div>
+    </div>
+
+    <div class="orch-flow">
+      <div class="arrow">→</div>
+      <div>
+        <h4>Three sources triangulate</h4>
+        <p>Course choice (Visual Arts) + journal record + a Sage conversation. Cross-context validation crosses threshold. Direction-setter confidence climbs to 0.6.</p>
+      </div>
+    </div>
+
+    <div class="orch-flow">
+      <div class="arrow">→</div>
+      <div>
+        <h4>Different column says doors are narrowing</h4>
+        <p>Math 82. Waterloo competitive entry now marginal. Door state shifts — without recommending engineering be abandoned.</p>
+      </div>
+    </div>
+
+    <div class="orch-flow">
+      <div class="arrow">→</div>
+      <div>
+        <h4>Orchestrator surfaces contradiction</h4>
+        <p>Direction signal moving one way, doors narrowing the other. Together: the conversation needs to happen now, not at course selection.</p>
+      </div>
+    </div>
+
+    <div class="orch-flow">
+      <div class="arrow">→</div>
+      <div>
+        <h4>Sunday digest, in that exact phrasing</h4>
+        <p><em>"Trajectory signal has shifted… the right time to revisit Direction is now."</em> Not "she is drifting away from engineering." Never that.</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="wide" style="margin-top: 32px; font-size: 15px; color: var(--ink-faint); font-style: italic;">
+    Everything else in the architecture — the shared context layers, the freshness footer, the canonical-phrase guide, the privacy boundary — is in service of producing exactly this kind of output, exactly this way, when the moment calls for it.
+  </p>
+</section>
+
+<!-- CLOSING — silent ending -->
+<section id="closing">
+  <div class="closing-narrative">
+    <p>February.</p>
+    <div class="gap"></div>
+    <p>She submits her applications.</p>
+    <p class="quiet">Waterloo Systems Design Engineering. U of T EngSci. Carleton Engineering with Design. OCAD Industrial Design. Carleton IMD.</p>
+    <div class="gap"></div>
+    <p>I open Atlas one last time before the deadline.</p>
+    <p>The digest reads:</p>
+    <p style="padding-left: 20px; border-left: 2px solid var(--accent); font-style: italic; color: var(--accent);">
+      All five paths remain directionally coherent.<br>
+      No action recommended.
+    </p>
+    <div class="gap"></div>
+    <p>Four months later, after acceptances arrive, Mentor begins preparing the archive export.</p>
+    <p>She chooses Waterloo SYDE.</p>
+    <div class="gap"></div>
+    <p>At university onboarding, the system shuts itself down.</p>
+    <p>Sage asks if she wants the archive.</p>
+    <p>She says yes.</p>
+
+    <div class="end-mark">
+      <span>EduPath v0.2</span> — a quiet system. built slowly. for one person.
+    </div>
+  </div>
+</section>
+
+<script>
+  const sections = document.querySelectorAll('section');
+  const navDots = document.querySelectorAll('nav.dots a');
+
+  function updateActiveNav() {
+    const scrollPos = window.scrollY + window.innerHeight / 3;
+    let activeIdx = 0;
+    sections.forEach((sec, i) => {
+      if (sec.offsetTop <= scrollPos) activeIdx = i;
+    });
+    navDots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
+  }
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  updateActiveNav();
+</script>
+
+</body>
+</html>

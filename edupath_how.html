@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduPath — Eleven bounded specialists</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe2d1;
+    --paper-deeper: #e0d4be;
+    --ink: #1a1814;
+    --ink-soft: #4a4438;
+    --ink-faint: #8a8270;
+    --accent: #6b2c1f;
+    --accent-soft: #a64a36;
+    --rule: #c9bfa8;
+    --sage: #5a6e4a;
+    --atlas: #6b2c1f;
+    --gold: #b8923a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(107, 44, 31, 0.04), transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(58, 53, 40, 0.04), transparent 50%);
+    background-attachment: fixed;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
+
+  /* NAV */
+  nav.dots {
+    position: fixed;
+    right: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  nav.dots a {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--ink-faint);
+    opacity: 0.4;
+    transition: all 0.3s ease;
+    display: block;
+    position: relative;
+  }
+  nav.dots a:hover, nav.dots a.active {
+    opacity: 1;
+    background: var(--accent);
+    transform: scale(1.4);
+  }
+  nav.dots a::after {
+    content: attr(data-label);
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  nav.dots a:hover::after { opacity: 1; }
+
+  section {
+    min-height: 100vh;
+    padding: 100px 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  section.short { min-height: auto; padding: 80px 60px; }
+  section.flow { min-height: auto; padding: 70px 60px; }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(46px, 6.5vw, 80px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    margin-bottom: 32px;
+    font-variation-settings: "SOFT" 30;
+  }
+  h1 em { font-style: italic; font-weight: 300; color: var(--accent); }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(32px, 4.2vw, 50px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    font-variation-settings: "SOFT" 30;
+  }
+  h2 em { font-style: italic; color: var(--accent); font-weight: 300; }
+
+  p { margin-bottom: 1em; max-width: 680px; }
+  p.wide { max-width: 800px; }
+  p.lede {
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 680px;
+    margin-bottom: 36px;
+    font-weight: 300;
+  }
+
+  /* OPENING */
+  #opening { padding-top: 120px; }
+  .meta-line {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 56px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .meta-line span { display: flex; align-items: center; gap: 8px; }
+  .meta-line .dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .meta-line a {
+    color: var(--ink-faint);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+  }
+  .meta-line a:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* CHATBOT VS AGENT — the opening contrast */
+  .contrast {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr;
+    gap: 0;
+    min-height: 420px;
+  }
+  .contrast-side {
+    padding: 36px 32px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  .contrast-side.chatbot {
+    border-right: none;
+    background: var(--paper);
+  }
+  .contrast-side.agent {
+    border-left: none;
+    background: var(--paper-deep);
+  }
+  .contrast-divider {
+    position: relative;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .contrast-divider::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: repeating-linear-gradient(
+      180deg,
+      var(--accent) 0,
+      var(--accent) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+  }
+  .contrast-divider .vs {
+    position: relative;
+    background: var(--paper);
+    padding: 8px 0;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--accent);
+    z-index: 2;
+  }
+
+  .contrast-side h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 12px;
+  }
+  .contrast-side .name {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 32px;
+    margin-bottom: 18px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .contrast-side.agent .name { color: var(--accent); }
+
+  .contrast-side ul {
+    list-style: none;
+    margin: 0;
+  }
+  .contrast-side li {
+    font-size: 14px;
+    color: var(--ink-soft);
+    padding: 9px 0;
+    border-bottom: 1px dashed var(--rule);
+    line-height: 1.45;
+  }
+  .contrast-side li:last-child { border-bottom: none; }
+  .contrast-side li::before {
+    content: '— ';
+    color: var(--ink-faint);
+  }
+  .contrast-side.agent li::before { color: var(--accent); }
+
+  /* THE FOUR PROPERTIES */
+  .properties {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+  .property {
+    background: var(--paper);
+    padding: 28px 24px;
+  }
+  .property .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .property h4 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 19px;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .property p {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* AGENT TABLE */
+  .agents-block {
+    margin-top: 40px;
+  }
+  .agent-row {
+    display: grid;
+    grid-template-columns: 240px 80px 1fr;
+    gap: 28px;
+    align-items: start;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .agent-row:first-child { border-top: 1px solid var(--rule); }
+  .agent-row.mentor {
+    background: var(--paper-deep);
+    padding: 26px 24px;
+    margin: 0 -24px 8px;
+  }
+
+  .agent-row .left {
+    text-align: left;
+  }
+  .agent-row .name {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 21px;
+    margin-bottom: 4px;
+    line-height: 1.15;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .agent-row.starred .name {
+    color: var(--accent);
+  }
+  .agent-row.starred .name::after {
+    content: ' ★';
+    color: var(--accent);
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+  }
+  .agent-row .kind {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.13em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+
+  .agent-row .marker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    padding-top: 6px;
+    text-transform: uppercase;
+    line-height: 1.4;
+    text-align: right;
+  }
+  .agent-row .marker .label {
+    color: var(--ink-faint);
+    display: block;
+    margin-bottom: 3px;
+    font-size: 9px;
+  }
+
+  .agent-row .agentic {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink);
+    max-width: 640px;
+  }
+  .agent-row .agentic em {
+    color: var(--accent);
+    font-style: italic;
+  }
+  .agent-row .agentic .sub {
+    margin-top: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+    line-height: 1.55;
+  }
+
+  /* HEAD ROW */
+  .agents-head {
+    display: grid;
+    grid-template-columns: 240px 80px 1fr;
+    gap: 28px;
+    padding-bottom: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+  .agents-head .h-right { text-align: right; }
+
+  /* CONSTRAINT NOTE */
+  .constraint-note {
+    margin-top: 48px;
+    padding: 32px 36px;
+    background: var(--paper-deep);
+    border-left: 3px solid var(--accent);
+    max-width: 880px;
+  }
+  .constraint-note .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .constraint-note h3 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 24px;
+    color: var(--ink);
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+  }
+  .constraint-note p {
+    font-size: 16px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    margin: 0;
+    max-width: none;
+  }
+  .constraint-note p em { color: var(--accent); font-style: italic; }
+
+  /* CONSTELLATION */
+  .agent-map {
+    margin-top: 24px;
+    position: relative;
+    height: 520px;
+    background:
+      linear-gradient(var(--rule) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-color: rgba(244, 237, 224, 0.6);
+    border: 1px solid var(--rule);
+  }
+  .mentor-core {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--paper);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    z-index: 5;
+    box-shadow: 0 4px 20px rgba(26, 24, 20, 0.15);
+  }
+  .mentor-core .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    margin-top: 4px;
+    opacity: 0.7;
+    font-style: normal;
+  }
+  .agent-node {
+    position: absolute;
+    padding: 10px 14px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    z-index: 3;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .agent-node.trajectory {
+    border-width: 2px;
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--paper);
+    font-weight: 600;
+  }
+  .agent-node.trajectory::after {
+    content: '★';
+    position: absolute;
+    top: -6px; right: -6px;
+    color: var(--accent);
+    font-size: 12px;
+  }
+  .agent-node[data-pos="1"] { top: 8%; left: 50%; transform: translateX(-50%); }
+  .agent-node[data-pos="2"] { top: 18%; right: 12%; }
+  .agent-node[data-pos="3"] { top: 42%; right: 4%; }
+  .agent-node[data-pos="4"] { bottom: 24%; right: 8%; }
+  .agent-node[data-pos="5"] { bottom: 6%; right: 28%; }
+  .agent-node[data-pos="6"] { bottom: 6%; left: 28%; }
+  .agent-node[data-pos="7"] { bottom: 24%; left: 8%; }
+  .agent-node[data-pos="8"] { top: 42%; left: 4%; }
+  .agent-node[data-pos="9"] { top: 18%; left: 12%; }
+  .agent-node[data-pos="10"] { top: 32%; left: 50%; transform: translateX(-50%); }
+  .agent-node[data-pos="11"] { bottom: 32%; left: 50%; transform: translateX(-50%); }
+
+  /* MOAT LINE */
+  .moat-line {
+    margin-top: 56px;
+    padding: 32px 36px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    max-width: 880px;
+  }
+  .moat-line .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .moat-line .quote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(24px, 3.2vw, 34px);
+    line-height: 1.25;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+    max-width: 760px;
+  }
+  .moat-line .quote em { color: var(--accent); }
+
+  /* CLOSING */
+  #closing { padding-top: 100px; }
+  #closing .links {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    max-width: 980px;
+  }
+  #closing .link-card {
+    padding: 28px 32px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+  }
+  #closing .link-card:hover {
+    background: var(--paper-deep);
+  }
+  #closing .link-card .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  #closing .link-card .title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  #closing .link-card .desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  #closing .end-mark {
+    margin-top: 60px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  #closing .end-mark span { color: var(--accent); }
+
+  /* RESPONSIVE */
+  @media (max-width: 980px) {
+    nav.dots { display: none; }
+    section { padding: 60px 24px; min-height: auto; }
+    .contrast { grid-template-columns: 1fr; min-height: auto; }
+    .contrast-side.chatbot { border-right: 1px solid var(--rule); }
+    .contrast-side.agent { border-left: 1px solid var(--rule); }
+    .contrast-divider { padding: 16px 0; }
+    .contrast-divider::before { display: none; }
+    .properties { grid-template-columns: 1fr 1fr; }
+    .agent-row { grid-template-columns: 1fr; gap: 8px; }
+    .agent-row .marker { text-align: left; padding-top: 0; }
+    .agents-head { display: none; }
+    #closing .links { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="dots">
+  <a href="#opening" data-label="Opening" class="active"></a>
+  <a href="#contrast" data-label="Chatbot vs Agent"></a>
+  <a href="#properties" data-label="Four Properties"></a>
+  <a href="#specialists" data-label="The Eleven"></a>
+  <a href="#constraints" data-label="Constraints"></a>
+  <a href="#constellation" data-label="Constellation"></a>
+  <a href="#closing" data-label="End"></a>
+</nav>
+
+<!-- OPENING -->
+<section id="opening">
+  <div class="meta-line">
+    <span><span class="dot"></span>EduPath</span>
+    <span>v0.2</span>
+    <span>the architecture behind the quiet system</span>
+    <span><a href="edupath_why.html">the quiet version</a></span>
+    <span><a href="edupath_tech.html">the flow view</a></span>
+  </div>
+  <h1>
+    Eleven<br>
+    <em>bounded specialists.</em><br>
+    Four years.
+  </h1>
+  <p class="lede">
+    Behind the four-year story sit eleven specialists. One watches her trajectory. One watches overload. One holds the privacy wall between Sage and Atlas. Each owns a scoped responsibility, remembers over time, operates under explicit authority rules, and knows when to pause itself.
+  </p>
+  <p class="wide" style="color: var(--ink-soft); font-style: italic; font-size: 18px; max-width: 640px;">
+    The language model is only the substrate. The architecture is everything around it.
+  </p>
+</section>
+
+<!-- CHATBOT VS AGENT -->
+<section id="contrast">
+  <div class="section-num">01 / the distinction</div>
+  <h2>A chatbot answers questions. <em>An agent watches one responsibility — and acts on it over time.</em></h2>
+  <p class="wide">
+    Most software calling itself "AI" today is a prompt wrapped around a language model. It reacts. It generates. It forgets. The architecture below is structurally different — not because the underlying language model is different, but because of what sits around it.
+  </p>
+
+  <div class="contrast">
+    <div class="contrast-side chatbot">
+      <h3>Generative AI</h3>
+      <div class="name">a smart responder</div>
+      <ul>
+        <li>Reacts to whatever prompt arrives</li>
+        <li>Generates fluent text</li>
+        <li>No scoped responsibility</li>
+        <li>No persistent operating role</li>
+        <li>No state ownership over time</li>
+        <li>No authority boundaries with other components</li>
+        <li>No lifecycle — runs while called, then forgets</li>
+        <li>Can describe. Cannot hold operational responsibility.</li>
+      </ul>
+    </div>
+
+    <div class="contrast-divider">
+      <div class="vs">vs.</div>
+    </div>
+
+    <div class="contrast-side agent">
+      <h3>An agent in this system</h3>
+      <div class="name">a bounded specialist</div>
+      <ul>
+        <li>Owns one scoped responsibility</li>
+        <li>Reads specific state — not everything</li>
+        <li>Operates continuously over months and years</li>
+        <li>Tracks freshness and decays confidence</li>
+        <li>Holds thresholds and rules of authority</li>
+        <li>Can override, defer to, or be overridden by other agents</li>
+        <li>Has lifecycle: it knows when to start, pause, and shut down</li>
+        <li>Produces decisions, not just language</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FOUR PROPERTIES -->
+<section id="properties">
+  <div class="section-num">02 / the four properties</div>
+  <h2>One job. Specific state. <em>Over years. With authority to act.</em></h2>
+  <p class="wide">
+    Each specialist below has all four of these. Strip any one of them away and the component collapses back into a prompt-and-response wrapper.
+  </p>
+
+  <div class="properties">
+    <div class="property">
+      <div class="num">01</div>
+      <h4>Bounded responsibility</h4>
+      <p>One job. The Curriculum agent does not read journal entries. The Journal agent does not compute admission door state. Each specialist owns its slice and only its slice.</p>
+    </div>
+    <div class="property">
+      <div class="num">02</div>
+      <h4>Scoped state</h4>
+      <p>Specific files. Specific memory. Specific timestamps. Not "all available context." The architecture defines what each agent can read and what it explicitly cannot — and enforces it.</p>
+    </div>
+    <div class="property">
+      <div class="num">03</div>
+      <h4>Longitudinal operation</h4>
+      <p>The agents persist for four years. They revisit, compare, decay confidence on stale signals, watch persistence thresholds. That isn't chat completion. That's a continuously-running responsibility.</p>
+    </div>
+    <div class="property">
+      <div class="num">04</div>
+      <h4>Decision authority</h4>
+      <p>Each agent produces an operational output — not just text. Thresholds fire alerts. Confidence triggers overrides. Wellbeing signals suppress other agents. The system <em>acts</em>, in bounded ways.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE SPECIALISTS — one-liner per agent -->
+<section id="specialists">
+  <div class="section-num">03 / the eleven</div>
+  <h2>What each one owns, <em>and the decision it gets to make</em>.</h2>
+  <p class="wide">
+    Each specialist has a name, a kind (structured / narrative / meta / orchestrator), and one line that names the move it makes — the move a prompt-wrapper couldn't. The starred one is the only specialist with override authority.
+  </p>
+
+  <div class="agents-block">
+
+    <div class="agents-head">
+      <div>Specialist</div>
+      <div class="h-right">Authority</div>
+      <div>What it owns. What it decides. What it refuses.</div>
+    </div>
+
+    <!-- MENTOR — orchestrator, highlighted -->
+    <div class="agent-row mentor">
+      <div class="left">
+        <div class="name">Mentor</div>
+        <div class="kind">Orchestrator · not human-facing</div>
+      </div>
+      <div class="marker">
+        <span class="label">Authority</span>
+        Routes &<br>schedules
+      </div>
+      <div class="agentic">
+        Classifies life-stage, dispatches scoped questions, surfaces contradictions between agents in different columns, routes outputs to either Sage or Atlas with mode-appropriate framing. <em>A chatbot doesn't decide which specialist to ask; it just answers whoever asked it.</em>
+        <div class="sub">5-step operating loop. Holds the canonical brain. Manages cadence calendar across four years.</div>
+      </div>
+    </div>
+
+    <!-- TRAJECTORY -->
+    <div class="agent-row starred">
+      <div class="left">
+        <div class="name">Interest Trajectory</div>
+        <div class="kind">Narrative · direction-setter</div>
+      </div>
+      <div class="marker">
+        <span class="label">Authority</span>
+        Override
+      </div>
+      <div class="agentic">
+        Owns the direction read. Decides when an emerging thread has crossed from <em>noise</em> to <em>signal</em>. <em>When its confidence crosses 0.5 with persistence ≥ 6 months across ≥ 2 sources, it overrides the structured agents.</em>
+        <div class="sub">The architectural commitment that lets the system change its mind about her direction without parent permission. <span style="opacity: 0.65;">Confidence is deterministic — 40% persistence, 30% cross-source, 20% recency, 10% freshness.</span></div>
+      </div>
+    </div>
+
+    <!-- CURRICULUM -->
+    <div class="agent-row">
+      <div class="left">
+        <div class="name">Curriculum Tracker</div>
+        <div class="kind">Structured · door-keeper</div>
+      </div>
+      <div class="marker">
+        <span class="label">Authority</span>
+        Self-pause
+      </div>
+      <div class="agentic">
+        Owns the door-state read. Computes which post-secondary futures remain viable as course choices accumulate. <em>Pauses itself rather than continue producing recommendations when its reference data goes past 15 months stale.</em>
+        <div class="sub">Recommends toward the union of viable options, not toward any specific school.</div>
+      </div>
+    </div>
+
+    <!-- ACADEMIC READER -->
+    <div class="agent-row">
+      <div class="left">
+        <div class="name">Academic Reader</div>
+        <div class="kind">Structured · capability vs effort vs interest</div>
+      </div>
+      <div class="marker">
+        <span class="label">Authority</span>
+        Alert
+      </div>
+      <div class="agentic">
+        Owns the grade-signal read. Separates a drop into its three possible meanings: capability, effort, or interest. <em>Refuses to alert on a single term — two-term watch before any signal fires.</em>
+        <div class="sub">Alert thresholds tied to trajectory changes, not absolute thresholds.</div>
+      </div>
+    </div>
+
+    <!-- JOURNAL -->
+    <div class="agent-row">
+      <div class="left">
+        <div class="name">Journal Reader</div>
+        <div class="kind">Narrative · holder of verbatim</div>
+      </div>
+      <div class="marker">
+        <span class="label">Authority</span>
+        Boundary keeper
+      </div>
+      <div class="agentic">
+        Owns her verbatim conversation memory. Decides what counts as theme vs. one-off vent. <em>Controls what crosses the privacy wall — and what does not, regardless of who asks.</em>
+        <div class="sub">Surfaces themes to Atlas; never surfaces words or names. Above the wellbeing threshold, escalates with her awareness.</div>
+      </div>
+    </div>
+
+    <!-- DECISION WATCH -->
+    <div class="agent-row">
+      <div class="left">
+        <div class="name">Decision Watch</div>
+        <div class="kind">Narrative · the calendar</div>
+      </div>
+      <div class="marker">
+        <span class="label">Authority</span>
+        Fire-ahead
+      </div>
+      <div class="agentic">
+        Owns the deadline calendar for <em>all currently-open options</em> — not just preferred ones. <em>Fires ahead at 8 / 4 / 2 / 1 weeks. Chooses Sage vs. Atlas vs. both based on what level of lead time the deadline needs.</em>
+        <div class="sub">Optionality fails by missed deadline more often than by wrong choice.</div>
+      </div>
+    </div>
+
+    <!-- OPPORTUNITY -->
+    <div class="agent-row">
+      <div class="left">
+        <div class="name">Opportunity Scout</div>
+        <div class="kind">Narrative · adjacent fields</div>
+      </div>
+      <div class="marker">
+        <span class="label">Authority</span>
+        Surface
+      </div>
+      <div class="agentic">
+        Owns the adjacent-field surfacing. <em>Decides what counts as adjacent. Refuses recommendations that have no exploratory or skill-building rationale.</em>
+        <div class="sub">Without it, the system narrows toward what it already knows. With it, optionality stays alive in operational form.</div>
+      </div>
+    </div>
+
+    <!-- COMPETITION -->
+    <div class="agent-row">
+      <div class="left">
+        <div class="name">Competition Tracker</div>
+        <div class="kind">Structured · discovery instrument</div>
+      </div>
+      <div class="marker">
+        <span class="label">Authority</span>
+        Surface
+      </div>
+      <div class="agentic">
+        Owns the contest discovery surface. Surfaces in-direction <em>and</em> out-of-direction contests deliberately. <em>Refuses anything pitched purely as admissions signal.</em>
+        <div class="sub">A discovery instrument, not an admissions-signal-maximizer.</div>
+      </div>
+    </div>
+
+    <!-- PORTFOLIO -->
+    <div class="agent-row">
+      <div class="left">
+        <div class="name">Portfolio Builder</div>
+        <div class="kind">Structured · narrative coherence</div>
+      </div>
+      <div class="marker">
+        <span class="label">Authority</span>
+        Honest report
+      </div>
+      <div class="agentic">
+        Owns the coherence read across her extracurriculars. <em>Refuses to lie about coherence that isn't there. "Your activities tell three different stories" is a valid Grade 9–10 finding.</em>
+        <div class="sub">Pays off years later when she drafts her own personal narratives from years of her own observations.</div>
+      </div>
+    </div>
+
+    <!-- SKILL-TREE -->
+    <div class="agent-row">
+      <div class="left">
+        <div class="name">Skill-Tree Coach</div>
+        <div class="kind">Structured · three-state machine</div>
+      </div>
+      <div class="marker">
+        <span class="label">Authority</span>
+        Silence
+      </div>
+      <div class="agentic">
+        Owns the buildable-progression read in her primary domain. Three states: Build, Available, Standby. <em>Chooses silence as a valid output. Refuses to recommend a new project if the current one is half-done.</em>
+        <div class="sub">Explicitly resists the "more is better" pattern.</div>
+      </div>
+    </div>
+
+    <!-- TIME -->
+    <div class="agent-row">
+      <div class="left">
+        <div class="name">Time Manager</div>
+        <div class="kind">Structured · wellbeing-first</div>
+      </div>
+      <div class="marker">
+        <span class="label">Authority</span>
+        Suppress
+      </div>
+      <div class="agentic">
+        Owns the weekly capacity read. <em>Holds priority authority — when it fires, it can suppress other agents' optimization outputs. Wellbeing signals always outrank achievement signals. Hard architectural rule.</em>
+        <div class="sub">Detects overcommitment before it shows up as a grade drop or a vent to Sage.</div>
+      </div>
+    </div>
+
+    <!-- TRAJECTORY REFERENCE -->
+    <div class="agent-row">
+      <div class="left">
+        <div class="name">Trajectory Reference</div>
+        <div class="kind">Meta · deferred to V2+</div>
+      </div>
+      <div class="marker">
+        <span class="label">Authority</span>
+        Not granted
+      </div>
+      <div class="agentic">
+        Would compare her trajectory to anonymized analog cases that ended in different post-secondary outcomes. <em>Deliberately not built. The architecture has to earn the right to do this before doing it.</em>
+        <div class="sub">Requires 18+ months of accumulated data and a consented comparison set. The decision to defer it is itself an agentic decision.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONSTRAINTS MAKE IT BELIEVABLE -->
+<section id="constraints" class="short">
+  <div class="section-num">04 / the unexpected part</div>
+  <h2>Constraints are <em>what makes this credible</em>.</h2>
+  <p class="wide">
+    Most agent demonstrations make their agents seem more powerful by making them less constrained. This architecture does the opposite. Every agent above operates under explicit bounds: what it can read, what it can decide, what it must defer on, when it must pause itself.
+  </p>
+
+  <div class="constraint-note">
+    <div class="kicker">The inversion</div>
+    <h3>It is the boundaries — not the capabilities — that make this system feel engineered rather than imagined.</h3>
+    <p>
+      Trajectory <em>can</em> override, but only under three specific thresholds. Time Manager <em>can</em> suppress, but only for wellbeing. Atlas <em>cannot</em> access verbatim logs, ever. Curriculum Tracker <em>cannot</em> recommend a specific school. The Trajectory Reference engine <em>is not yet built</em>. Every authority in this system has a matching refusal. <em>That's the difference between agents and prompt chains.</em>
+    </p>
+  </div>
+</section>
+
+<!-- CONSTELLATION -->
+<section id="constellation" class="short">
+  <div class="section-num">05 / the shape</div>
+  <h2>Eleven specialists. <em>One orchestrator at the centre.</em></h2>
+  <p class="wide">
+    The starred specialist is the only one with override authority. Everything else operates inside its own scope, deferring to Mentor for routing and to Time Manager for wellbeing priority.
+  </p>
+
+  <div class="agent-map">
+    <div class="mentor-core">
+      Mentor
+      <span class="label">orchestrator</span>
+    </div>
+    <div class="agent-node trajectory" data-pos="7">Interest<br>Trajectory</div>
+    <div class="agent-node" data-pos="1">Curriculum<br>Tracker</div>
+    <div class="agent-node" data-pos="2">Academic<br>Reader</div>
+    <div class="agent-node" data-pos="3">Competition<br>Tracker</div>
+    <div class="agent-node" data-pos="4">Portfolio<br>Builder</div>
+    <div class="agent-node" data-pos="5">Skill-Tree<br>Coach</div>
+    <div class="agent-node" data-pos="6">Time<br>Manager</div>
+    <div class="agent-node" data-pos="8">Journal<br>Reader</div>
+    <div class="agent-node" data-pos="9">Decision<br>Watch</div>
+    <div class="agent-node" data-pos="10">Opportunity<br>Scout</div>
+    <div class="agent-node" data-pos="11">Trajectory<br>Reference</div>
+  </div>
+
+  <div class="moat-line">
+    <div class="kicker">The actual moat</div>
+    <div class="quote">
+      The moat isn't agents, memory, or orchestration. It is <em>governed longitudinal cognition</em> — a system that remembers carefully, updates cautiously, decays stale information, preserves optionality, refuses overreach, and operates for years.
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section id="closing" class="short">
+  <div class="section-num">06 / three surfaces, one architecture</div>
+  <h2>This page answered <em>what each specialist does</em>.</h2>
+  <p class="wide">
+    Three surfaces, three questions, one architecture.
+  </p>
+
+  <div class="links">
+    <a class="link-card" href="edupath_why.html">
+      <div class="label">The quiet version</div>
+      <div class="title">A quiet system, sitting behind four years</div>
+      <div class="desc">Why this exists. Told as a father watching his daughter find her own way.</div>
+    </a>
+    <div class="link-card" style="cursor: default; background: var(--paper-deep);">
+      <div class="label">You are here</div>
+      <div class="title">Eleven bounded specialists</div>
+      <div class="desc">What each one owns, decides, and refuses. One-liner per agent.</div>
+    </div>
+    <a class="link-card" href="edupath_tech.html">
+      <div class="label">The flow view</div>
+      <div class="title">How the data actually moves</div>
+      <div class="desc">The wiring. Inputs, relay, summarizer, brain, parallel specialists, reconciliation.</div>
+    </a>
+  </div>
+
+  <div class="end-mark">
+    <span>EduPath v0.2</span> — a quiet system. built slowly. for one person.
+  </div>
+</section>
+
+<script>
+  const sections = document.querySelectorAll('section');
+  const navDots = document.querySelectorAll('nav.dots a');
+
+  function updateActiveNav() {
+    const scrollPos = window.scrollY + window.innerHeight / 3;
+    let activeIdx = 0;
+    sections.forEach((sec, i) => {
+      if (sec.offsetTop <= scrollPos) activeIdx = i;
+    });
+    navDots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
+  }
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  updateActiveNav();
+</script>
+
+</body>
+</html>
