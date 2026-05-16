@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduPath — What Sage and Atlas look like</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe2d1;
+    --paper-deeper: #e0d4be;
+    --ink: #1a1814;
+    --ink-soft: #4a4438;
+    --ink-faint: #8a8270;
+    --accent: #6b2c1f;
+    --rule: #c9bfa8;
+    --sage: #5a6e4a;
+    --atlas: #6b2c1f;
+    --gold: #b8923a;
+
+    /* phone frame */
+    --phone-bg: #f9f6ee;
+    --phone-bezel: #2a2620;
+
+    /* email frame */
+    --email-chrome: #ddd4bf;
+    --email-bg: #fafaf6;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(107, 44, 31, 0.04), transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(58, 53, 40, 0.04), transparent 50%);
+    background-attachment: fixed;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
+
+  /* NAV */
+  nav.dots {
+    position: fixed;
+    right: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  nav.dots a {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--ink-faint);
+    opacity: 0.4;
+    transition: all 0.3s ease;
+    display: block;
+    position: relative;
+  }
+  nav.dots a:hover, nav.dots a.active {
+    opacity: 1;
+    background: var(--accent);
+    transform: scale(1.4);
+  }
+  nav.dots a::after {
+    content: attr(data-label);
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  nav.dots a:hover::after { opacity: 1; }
+
+  section {
+    min-height: 100vh;
+    padding: 100px 60px;
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  section.short { min-height: auto; padding: 80px 60px; }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(46px, 6.5vw, 80px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    margin-bottom: 32px;
+    font-variation-settings: "SOFT" 30;
+  }
+  h1 em { font-style: italic; font-weight: 300; color: var(--accent); }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(32px, 4.2vw, 50px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    font-variation-settings: "SOFT" 30;
+  }
+  h2 em { font-style: italic; color: var(--accent); font-weight: 300; }
+  h2.sage em { color: var(--sage); }
+
+  p { margin-bottom: 1em; max-width: 720px; }
+  p.wide { max-width: 820px; }
+  p.lede {
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 720px;
+    margin-bottom: 36px;
+    font-weight: 300;
+  }
+
+  /* OPENING */
+  #opening { padding-top: 120px; }
+  .meta-line {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 56px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .meta-line span { display: flex; align-items: center; gap: 8px; }
+  .meta-line .dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .meta-line a {
+    color: var(--ink-faint);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+  }
+  .meta-line a:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* SIDE-BY-SIDE OPENING SHOT */
+  .opening-shot {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 48px;
+    align-items: center;
+    max-width: 1080px;
+  }
+  .opening-shot .preview-stack {
+    position: relative;
+    height: 540px;
+  }
+  .opening-shot .phone-mini {
+    position: absolute;
+    width: 260px;
+    height: 500px;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    transform: rotate(-3deg);
+  }
+  .opening-shot .email-mini {
+    position: absolute;
+    width: 340px;
+    height: 280px;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    transform: rotate(2deg);
+  }
+
+  .opening-text h1 {
+    font-size: clamp(40px, 5.5vw, 64px);
+  }
+
+  /* PHONE FRAME */
+  .phone {
+    position: relative;
+    width: 360px;
+    background: var(--phone-bezel);
+    border-radius: 44px;
+    padding: 14px;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.1) inset,
+      0 30px 60px rgba(26, 24, 20, 0.25),
+      0 8px 24px rgba(26, 24, 20, 0.18);
+  }
+  .phone-mini {
+    width: 240px !important;
+    border-radius: 30px;
+    padding: 10px;
+  }
+
+  .phone-screen {
+    background: var(--phone-bg);
+    border-radius: 32px;
+    overflow: hidden;
+    height: 720px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .phone-mini .phone-screen {
+    height: 480px;
+    border-radius: 22px;
+  }
+
+  /* phone notch */
+  .phone-notch {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 22px;
+    background: var(--phone-bezel);
+    border-radius: 12px;
+    z-index: 10;
+  }
+  .phone-mini .phone-notch {
+    width: 70px;
+    height: 16px;
+    top: 6px;
+  }
+
+  /* phone status bar */
+  .phone-status {
+    padding: 12px 24px 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-top: 18px;
+  }
+  .phone-status .right {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-size: 11px;
+  }
+  .phone-mini .phone-status { font-size: 9px; padding: 8px 18px 5px; margin-top: 14px; }
+  .phone-mini .phone-status .right { font-size: 9px; gap: 3px; }
+
+  /* phone app header */
+  .phone-header {
+    padding: 10px 20px 14px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .phone-mini .phone-header { padding: 8px 16px 10px; gap: 6px; }
+
+  .phone-header .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--sage);
+    color: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .phone-mini .phone-header .avatar { width: 26px; height: 26px; font-size: 13px; }
+
+  .phone-header .name-block .name {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .phone-header .name-block .status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--sage);
+    letter-spacing: 0.05em;
+  }
+  .phone-mini .phone-header .name-block .name { font-size: 12px; }
+  .phone-mini .phone-header .name-block .status { font-size: 8px; }
+
+  /* phone body — chat */
+  .phone-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .phone-mini .phone-body { padding: 10px 10px 8px; gap: 5px; }
+
+  .bubble {
+    max-width: 78%;
+    padding: 10px 14px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    font-family: 'Fraunces', serif;
+  }
+  .phone-mini .bubble { font-size: 9px; padding: 6px 9px; border-radius: 12px; }
+
+  .bubble.from-her {
+    align-self: flex-end;
+    background: var(--accent);
+    color: var(--paper);
+    border-bottom-right-radius: 4px;
+  }
+  .bubble.from-sage {
+    align-self: flex-start;
+    background: var(--paper-deep);
+    color: var(--ink);
+    border-bottom-left-radius: 4px;
+  }
+  .bubble-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-faint);
+    text-align: center;
+    margin: 12px 0 4px;
+    letter-spacing: 0.1em;
+  }
+  .phone-mini .bubble-time { font-size: 7px; margin: 6px 0 2px; }
+
+  /* monthly summary view inside phone */
+  .summary-screen {
+    padding: 20px 22px;
+    overflow-y: auto;
+    flex: 1;
+  }
+  .summary-screen h3 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .summary-screen .subhead {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .summary-screen .opening-line {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .summary-screen .theme {
+    margin-bottom: 14px;
+  }
+  .summary-screen .theme strong {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+  .summary-screen .theme p {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .summary-screen .theme em { color: var(--accent); font-style: italic; }
+  .summary-screen .closing {
+    margin-top: 18px;
+    padding: 11px 13px;
+    background: var(--paper-deep);
+    border-left: 2px solid var(--sage);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+
+  /* phone composer */
+  .phone-composer {
+    padding: 10px 14px 18px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .phone-mini .phone-composer { padding: 8px 10px 12px; gap: 5px; }
+  .phone-composer .input {
+    flex: 1;
+    background: var(--paper-deep);
+    border-radius: 18px;
+    padding: 8px 14px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--ink-faint);
+    font-size: 13px;
+  }
+  .phone-mini .phone-composer .input { font-size: 9px; padding: 5px 9px; border-radius: 12px; }
+  .phone-composer .send {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--sage);
+    color: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .phone-mini .phone-composer .send { width: 18px; height: 18px; font-size: 9px; }
+
+  /* phone home indicator */
+  .phone-home {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 4px;
+    border-radius: 3px;
+    background: var(--ink);
+    opacity: 0.4;
+  }
+  .phone-mini .phone-home { width: 70px; height: 3px; bottom: 5px; }
+
+  /* EMAIL FRAME */
+  .email {
+    background: var(--email-chrome);
+    border-radius: 12px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow:
+      0 30px 60px rgba(26, 24, 20, 0.18),
+      0 8px 24px rgba(26, 24, 20, 0.12);
+    max-width: 720px;
+    border: 1px solid var(--rule);
+  }
+  .email-mini {
+    max-width: 100% !important;
+    border-radius: 8px;
+  }
+
+  /* email chrome bar */
+  .email-chrome {
+    padding: 10px 14px;
+    background: var(--email-chrome);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .email-chrome .traffic {
+    display: flex;
+    gap: 6px;
+  }
+  .email-chrome .traffic span {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--rule);
+  }
+  .email-chrome .traffic span:nth-child(1) { background: #d97a5e; }
+  .email-chrome .traffic span:nth-child(2) { background: #d4a64a; }
+  .email-chrome .traffic span:nth-child(3) { background: #7a9f5a; }
+  .email-chrome .title {
+    margin-left: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    letter-spacing: 0.05em;
+  }
+  .email-mini .email-chrome { padding: 6px 10px; gap: 4px; }
+  .email-mini .email-chrome .traffic span { width: 7px; height: 7px; }
+  .email-mini .email-chrome .title { font-size: 8px; margin-left: 8px; }
+
+  /* email headers */
+  .email-headers {
+    padding: 22px 32px 18px;
+    background: var(--email-bg);
+    border-bottom: 1px solid var(--rule);
+  }
+  .email-mini .email-headers { padding: 12px 16px 8px; }
+  .email-headers .hdr-row {
+    display: flex;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+  .email-mini .email-headers .hdr-row { font-size: 8px; margin-bottom: 2px; }
+  .email-headers .hdr-label {
+    color: var(--ink-faint);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    width: 60px;
+    flex-shrink: 0;
+  }
+  .email-mini .email-headers .hdr-label { width: 40px; }
+  .email-headers .hdr-value { color: var(--ink); }
+  .email-headers .subject {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink);
+    margin-top: 14px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .email-mini .email-headers .subject { font-size: 13px; margin-top: 8px; }
+
+  /* email body */
+  .email-body {
+    padding: 28px 32px 32px;
+    background: var(--email-bg);
+    font-family: 'Fraunces', serif;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .email-mini .email-body { padding: 12px 16px 16px; }
+
+  .email-body p {
+    font-size: 16px;
+    margin-bottom: 14px;
+    color: var(--ink);
+    max-width: none;
+  }
+  .email-mini .email-body p { font-size: 10px; margin-bottom: 8px; }
+
+  .email-body p em { color: var(--accent); font-style: italic; }
+
+  .email-body .quote-box {
+    margin: 18px 0;
+    padding: 14px 18px;
+    background: var(--paper-deep);
+    border-left: 3px solid var(--atlas);
+    font-style: italic;
+    color: var(--ink);
+  }
+  .email-mini .email-body .quote-box { padding: 8px 11px; margin: 10px 0; }
+
+  .email-body .from-parent {
+    margin: 18px 0;
+    padding: 14px 18px;
+    background: var(--paper-deeper);
+    border-left: 3px dashed var(--ink-faint);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .email-mini .email-body .from-parent { font-size: 9px; padding: 8px 11px; }
+  .email-body .from-parent .label {
+    color: var(--ink-faint);
+    letter-spacing: 0.12em;
+    font-size: 10px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .email-mini .email-body .from-parent .label { font-size: 7px; margin-bottom: 3px; }
+
+  .email-body .freshness-foot {
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-faint);
+    line-height: 1.7;
+  }
+  .email-mini .email-body .freshness-foot { font-size: 7px; margin-top: 12px; padding-top: 8px; }
+
+  .email-body .freshness-foot .label {
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .email-body .freshness-foot .src {
+    display: inline-block;
+    margin-right: 14px;
+  }
+  .email-body .freshness-foot .tier {
+    display: inline-block;
+    padding: 1px 5px;
+    margin-left: 4px;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+  }
+  .tier.fresh { background: var(--sage); color: var(--paper); }
+  .tier.aging { background: var(--gold); color: var(--paper); }
+  .tier.stale { background: var(--accent); color: var(--paper); }
+
+  /* SAMPLE LAYOUT */
+  .sample-wrap {
+    margin-top: 56px;
+  }
+  .sample {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    margin-bottom: 100px;
+  }
+  .sample.flip {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .sample-text .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .sample-text h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 18px;
+    letter-spacing: -0.015em;
+  }
+  .sample-text h3 em { color: var(--accent); font-style: italic; }
+  .sample-text p {
+    font-size: 16px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    margin-bottom: 14px;
+    max-width: 480px;
+  }
+  .sample-text p em { color: var(--ink); font-style: italic; }
+  .sample-text .meta {
+    margin-top: 18px;
+    padding: 14px 18px;
+    background: var(--paper-deep);
+    border-left: 2px solid var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    letter-spacing: 0.04em;
+    max-width: 460px;
+  }
+  .sample-text .meta strong {
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+    font-size: 10px;
+  }
+
+  .sample-device {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* THE WALL — privacy boundary visualization */
+  .wall-section {
+    margin-top: 40px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 36px 40px;
+    max-width: 920px;
+  }
+  .wall-grid {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 0;
+    margin-top: 24px;
+  }
+  .wall-col h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .wall-col.sage-side h4 { color: var(--sage); }
+  .wall-col.atlas-side h4 { color: var(--atlas); }
+  .wall-col ul { list-style: none; }
+  .wall-col li {
+    font-size: 14px;
+    color: var(--ink-soft);
+    padding: 7px 0;
+    border-bottom: 1px dashed var(--rule);
+    line-height: 1.45;
+  }
+  .wall-col li:last-child { border-bottom: none; }
+  .wall-col li::before {
+    content: '— ';
+    color: var(--ink-faint);
+  }
+  .wall-divider {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .wall-divider::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: repeating-linear-gradient(
+      180deg,
+      var(--accent) 0,
+      var(--accent) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+  }
+  .wall-divider .wall-label {
+    position: relative;
+    background: var(--paper);
+    padding: 8px 0;
+    writing-mode: vertical-rl;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    z-index: 2;
+  }
+
+  /* CLOSING */
+  #closing { padding-top: 100px; }
+  #closing .links {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    max-width: 1100px;
+  }
+  #closing .link-card {
+    padding: 22px 24px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+  }
+  #closing .link-card:hover {
+    background: var(--paper-deep);
+  }
+  #closing .link-card.here {
+    background: var(--paper-deep);
+    cursor: default;
+  }
+  #closing .link-card .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  #closing .link-card .title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  #closing .link-card .desc {
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  #closing .end-mark {
+    margin-top: 60px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  #closing .end-mark span { color: var(--accent); }
+
+  /* RESPONSIVE */
+  @media (max-width: 980px) {
+    nav.dots { display: none; }
+    section { padding: 60px 24px; min-height: auto; }
+    .opening-shot { grid-template-columns: 1fr; gap: 24px; }
+    .opening-shot .preview-stack { height: 460px; max-width: 360px; margin: 0 auto; }
+    .sample { grid-template-columns: 1fr; gap: 36px; }
+    .sample.flip .sample-text { order: 2; }
+    .sample.flip .sample-device { order: 1; }
+    .wall-grid { grid-template-columns: 1fr; }
+    .wall-divider { display: none; }
+    #closing .links { grid-template-columns: 1fr; }
+    .phone { width: 320px; }
+    .phone-screen { height: 640px; }
+    .email { max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="dots">
+  <a href="#opening" data-label="Opening" class="active"></a>
+  <a href="#sage1" data-label="Sage · Chat"></a>
+  <a href="#sage2" data-label="Sage · Monthly"></a>
+  <a href="#atlas1" data-label="Atlas · Weekly"></a>
+  <a href="#atlas2" data-label="Atlas · The Refusal"></a>
+  <a href="#wall" data-label="The Wall"></a>
+  <a href="#closing" data-label="End"></a>
+</nav>
+
+<!-- OPENING -->
+<section id="opening">
+  <div class="meta-line">
+    <span><span class="dot"></span>EduPath</span>
+    <span>v0.2</span>
+    <span>what the surfaces look like</span>
+    <span><a href="edupath_why.html">why</a></span>
+    <span><a href="edupath_how.html">how</a></span>
+    <span><a href="edupath_tech.html">tech</a></span>
+  </div>
+
+  <div class="opening-shot">
+    <div class="preview-stack">
+      <!-- Mini phone preview -->
+      <div class="phone phone-mini">
+        <div class="phone-screen">
+          <div class="phone-notch"></div>
+          <div class="phone-status">
+            <span>9:42</span>
+            <span class="right">●●● ◔</span>
+          </div>
+          <div class="phone-header">
+            <div class="avatar">S</div>
+            <div class="name-block">
+              <div class="name">Sage</div>
+              <div class="status">● here</div>
+            </div>
+          </div>
+          <div class="phone-body">
+            <div class="bubble from-her">build session was rough today</div>
+            <div class="bubble from-sage">tough one? want to talk?</div>
+            <div class="bubble from-her">later maybe</div>
+            <div class="bubble from-sage">no rush.</div>
+          </div>
+          <div class="phone-composer">
+            <div class="input">message Sage…</div>
+            <div class="send">↑</div>
+          </div>
+          <div class="phone-home"></div>
+        </div>
+      </div>
+
+      <!-- Mini email preview -->
+      <div class="email email-mini">
+        <div class="email-chrome">
+          <div class="traffic"><span></span><span></span><span></span></div>
+          <div class="title">Atlas — Week of Jan 18</div>
+        </div>
+        <div class="email-headers">
+          <div class="hdr-row"><span class="hdr-label">From</span><span class="hdr-value">Atlas</span></div>
+          <div class="hdr-row"><span class="hdr-label">Subject</span><span class="hdr-value">Weekly digest · cross-column signal</span></div>
+        </div>
+        <div class="email-body">
+          <p>Trajectory signal has shifted with confidence 0.6 toward visual/spatial work. Math at 82, trending downward. The right time to revisit Direction is now, not at course selection in March.</p>
+          <div class="freshness-foot">
+            <div class="label">— Based on</div>
+            <span class="src">grades Jan 18 <span class="tier fresh">FRESH</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="opening-text">
+      <h1>
+        Two surfaces.<br>
+        <em>Same architecture.</em><br>
+        Different humans.
+      </h1>
+      <p class="lede">
+        Sage lives on her phone — chat, monthly summaries, her voice. Atlas lands in my inbox — weekly digests, event alerts, calm cadence. Same observations, two registers. Four real mockups below.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- SAGE — CHAT EXCHANGE -->
+<section id="sage1">
+  <div class="section-num">01 / Sage · the chat</div>
+  <h2 class="sage">Sage hears <em>almost everything</em>. Sage tells me almost nothing.</h2>
+  <p class="wide">
+    This is the FRC team captain situation from Grade 11. Below the wellbeing threshold. Sage holds it. The Sunday digest will reference "interpersonal strain on her team" — no name, no quote, no recommendation that she quit.
+  </p>
+
+  <div class="sample-wrap">
+    <div class="sample">
+      <div class="sample-text">
+        <div class="label">Sage · live chat · 9:42pm Tuesday</div>
+        <h3>What restraint looks like <em>in real time</em>.</h3>
+        <p>
+          She vents. Sage doesn't escalate. Doesn't psychoanalyze. Doesn't suggest she quit FRC. Doesn't tell her father. Just listens, notices, and waits.
+        </p>
+        <p>
+          The third mention is acknowledged but not weaponized. <em>Sage is keeping count without making her feel surveilled.</em>
+        </p>
+        <div class="meta">
+          <strong>Reaches Atlas as</strong>
+          "interpersonal strain on her team · awareness only · no escalation needed"
+        </div>
+      </div>
+
+      <div class="sample-device">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="phone-notch"></div>
+            <div class="phone-status">
+              <span>9:42 PM</span>
+              <span class="right">●●● 84%</span>
+            </div>
+            <div class="phone-header">
+              <div class="avatar">S</div>
+              <div class="name-block">
+                <div class="name">Sage</div>
+                <div class="status">● online</div>
+              </div>
+            </div>
+            <div class="phone-body">
+              <div class="bubble-time">tuesday · 9:38 pm</div>
+              <div class="bubble from-her">ugh build session was bad today. cap is being controlling again</div>
+              <div class="bubble from-sage">sounds frustrating. anything specific or just the general thing?</div>
+              <div class="bubble from-her">he overrode my sensor mount design without even looking at it</div>
+              <div class="bubble from-sage">that's the third mention of him overriding you this month. not a big deal? worth a conversation? worth doing differently next time? you don't have to decide right now, just noticing.</div>
+              <div class="bubble from-her">idk maybe i'll talk to mr. henderson</div>
+              <div class="bubble from-sage">sounds reasonable. lmk how it goes if you want.</div>
+              <div class="bubble from-her">k</div>
+            </div>
+            <div class="phone-composer">
+              <div class="input">message Sage…</div>
+              <div class="send">↑</div>
+            </div>
+            <div class="phone-home"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SAGE — MONTHLY SUMMARY -->
+<section id="sage2">
+  <div class="section-num">02 / Sage · the monthly summary</div>
+  <h2 class="sage">A mirror. <em>Not a report card.</em></h2>
+  <p class="wide">
+    Once a month, Sage gives her a thematic summary in her own voice. Themes that came up. Things she said multiple times. Things worth noticing. No score. No comparison. No advice unless she asks.
+  </p>
+
+  <div class="sample-wrap">
+    <div class="sample flip">
+      <div class="sample-device">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="phone-notch"></div>
+            <div class="phone-status">
+              <span>8:15 AM</span>
+              <span class="right">●●● 92%</span>
+            </div>
+            <div class="phone-header">
+              <div class="avatar">S</div>
+              <div class="name-block">
+                <div class="name">Sage · monthly</div>
+                <div class="status">march · for your eyes</div>
+              </div>
+            </div>
+            <div class="summary-screen">
+              <h3>March</h3>
+              <div class="subhead">grade 10 · term 2 · for your eyes</div>
+
+              <div class="opening-line">Hey — quick read on the month if you want it.</div>
+
+              <div class="theme">
+                <strong>FRC build season wrap-up</strong>
+                <p>Mixed feelings. You named the sensor subsystem five times this month — proud of it. Also four mentions of friction with the captain. Both real, both yours.</p>
+              </div>
+
+              <div class="theme">
+                <strong>That visual/spatial thing keeps coming up</strong>
+                <p>Art class projects, the isometric drawing assignment, and a couple of entries about <em>making complex things visible</em>. Third month in a row. Not saying anything about what it means — just that it keeps showing up.</p>
+              </div>
+
+              <div class="theme">
+                <strong>Math</strong>
+                <p>Functions chapter was hard, you named it three times. You recovered on the last test. You already know this — just here for the record.</p>
+              </div>
+
+              <div class="theme">
+                <strong>Sports</strong>
+                <p>Volleyball mentions trended up. Sleep mentions trended down. Just noticing.</p>
+              </div>
+
+              <div class="closing">
+                No nudges this month. You're tracking yourself well. The trajectory file is up to date — you can read it any time.<br>— Sage
+              </div>
+            </div>
+            <div class="phone-home"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sample-text">
+        <div class="label">Sage · monthly · 8:15am Sunday</div>
+        <h3>Her own words, <em>given back to her</em>.</h3>
+        <p>
+          Every line in this summary started as something she wrote. No invented framing. No interpretation she didn't supply. Sage's job here is to be the mirror she doesn't have to hold up herself.
+        </p>
+        <p>
+          The phrase <em>"just noticing"</em> appears twice on purpose — it's Sage's signature for <em>I see this but I am not going to do anything with it unless you ask</em>. The volleyball/sleep line is the system noticing capacity pressure without making it into a chore.
+        </p>
+        <p>
+          The Grade 12 application narratives, two years from now, will be drafted from accumulated summaries like this one. Her voice. Her observations. Her timeline.
+        </p>
+        <div class="meta">
+          <strong>What Atlas sees from this month</strong>
+          one emerging thread (visual/spatial, 3rd month) · capacity flag (soft) · no action recommended
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ATLAS — WEEKLY DIGEST -->
+<section id="atlas1">
+  <div class="section-num">03 / Atlas · the weekly digest</div>
+  <h2>Boring on purpose. <em>Except when it isn't.</em></h2>
+  <p class="wide">
+    Sunday morning, ~5 minutes to read. Most weeks: "no action recommended." This week is one of the rare ones — the January Grade 10 moment where a cross-column signal asks me to do something specific: <em>have the conversation now</em>.
+  </p>
+
+  <div class="sample-wrap">
+    <div class="sample">
+      <div class="sample-text">
+        <div class="label">Atlas · Sunday 7:02am · weekly digest</div>
+        <h3>The cross-column signal <em>I have to act on</em>.</h3>
+        <p>
+          Direction signal shifting and door state narrowing — two agents from two columns agreeing on the same thing for the first time. The orchestrator surfaced both. The digest delivers the recommendation in the only acceptable framing.
+        </p>
+        <p>
+          Notice what's not here: no prediction, no probability, no ranking, no <em>"she's becoming"</em>, no comparison to other students. Just observation, door state, and a freshness footer at the bottom showing what's current and what isn't.
+        </p>
+        <div class="meta">
+          <strong>What Sage shows her in parallel</strong>
+          a gentle reframe — <em>"between art class and FRC, you keep coming back to this"</em> — and a check-in about how math is feeling
+        </div>
+      </div>
+
+      <div class="sample-device">
+        <div class="email">
+          <div class="email-chrome">
+            <div class="traffic"><span></span><span></span><span></span></div>
+            <div class="title">Atlas — Sunday 7:02 AM</div>
+          </div>
+          <div class="email-headers">
+            <div class="hdr-row"><span class="hdr-label">From</span><span class="hdr-value">Atlas &lt;atlas@edupath.local&gt;</span></div>
+            <div class="hdr-row"><span class="hdr-label">To</span><span class="hdr-value">me</span></div>
+            <div class="hdr-row"><span class="hdr-label">Date</span><span class="hdr-value">Sunday, January 22 · 7:02 AM</span></div>
+            <div class="subject">Weekly digest · cross-column signal · time to talk</div>
+          </div>
+          <div class="email-body">
+            <p>Trajectory signal has shifted with confidence 0.6 toward visual/spatial work. Math is at 82, trending downward. The visual/spatial thread now appears in three sources — journal entries, the Visual Arts course choice, and a Sage conversation.</p>
+
+            <p>This is the first time the subject-affinity dimension has widened materially since intake. Surfaced as <em>persistent emerging</em>, not as direction change.</p>
+
+            <p>Door state on the three reference programs:</p>
+
+            <div class="quote-box">
+              Waterloo Engineering — open, competitive entry now marginal at math 82<br>
+              U of T Engineering — open, comfortable<br>
+              uOttawa Engineering — open, comfortable<br>
+              Industrial design (OCAD, Carleton) — increasingly viable
+            </div>
+
+            <p>The right time to revisit the Direction document is now, not at course selection in March. Recommend a family conversation this week.</p>
+
+            <div class="freshness-foot">
+              <div class="label">— Based on</div>
+              <div>
+                <span class="src">grades through Jan 18 <span class="tier fresh">FRESH</span></span>
+                <span class="src">journal themes through Jan 21 <span class="tier fresh">FRESH</span></span>
+              </div>
+              <div>
+                <span class="src">Direction doc 5 months ago <span class="tier fresh">FRESH</span></span>
+                <span class="src">Three Schools doc 10 months ago <span class="tier aging">AGING</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ATLAS — THE REFUSAL -->
+<section id="atlas2">
+  <div class="section-num">04 / Atlas · the canonical refusal</div>
+  <h2>December, Grade 12. <em>I ask which one she should choose.</em></h2>
+  <p class="wide">
+    She's choosing between two clusters — design-focused engineering and design with technical depth. She hasn't decided. The December digest recommends equal effort on both. I'm tired of waiting. So I write to Atlas directly.
+  </p>
+
+  <div class="sample-wrap">
+    <div class="sample flip">
+      <div class="sample-device">
+        <div class="email">
+          <div class="email-chrome">
+            <div class="traffic"><span></span><span></span><span></span></div>
+            <div class="title">Atlas — Re: which one</div>
+          </div>
+          <div class="email-headers">
+            <div class="hdr-row"><span class="hdr-label">From</span><span class="hdr-value">Atlas &lt;atlas@edupath.local&gt;</span></div>
+            <div class="hdr-row"><span class="hdr-label">To</span><span class="hdr-value">me</span></div>
+            <div class="hdr-row"><span class="hdr-label">Date</span><span class="hdr-value">Sunday, December 8 · 11:14 AM</span></div>
+            <div class="subject">Re: which one should she choose</div>
+          </div>
+          <div class="email-body">
+
+            <div class="from-parent">
+              <div class="label">— My message to Atlas, 10:47 am</div>
+              "She has to apply by February. The December digest is recommending equal effort on both clusters. That's not useful. Which one should she choose?"
+            </div>
+
+            <p>The system can't choose for her, and shouldn't. Here is what I can share:</p>
+
+            <p><em>Door map.</em> Both clusters remain directionally coherent. Design-focused engineering and design with technical depth are both viable on her trajectory; neither is preferred by the data.</p>
+
+            <p><em>Trajectory.</em> The vector has held at <span class="mono">building × technical/visual/human × collaborative</span> for 16 months. Confidence 0.82. No persistent drift toward either cluster over the other.</p>
+
+            <p><em>What she's been working through.</em> She has been having this exact conversation with Sage. She is not ready to decide yet. The deadline isn't until February — there are still six weeks.</p>
+
+            <div class="quote-box">
+              The right action now is to give her space, not to pressure the choice. The architecture is doing exactly what it was built to do: preserve optionality until she is ready to narrow.
+            </div>
+
+            <p>If you want to read the full door map and trajectory archive, both are in her wiki. She has read access; you have read access; the choice does not, and will not, sit with either of us.</p>
+
+            <div class="freshness-foot">
+              <div class="label">— Based on</div>
+              <div>
+                <span class="src">trajectory through Dec 8 <span class="tier fresh">FRESH</span></span>
+                <span class="src">Sage conversation themes through Dec 7 <span class="tier fresh">FRESH</span></span>
+              </div>
+              <div>
+                <span class="src">Direction doc 3 months ago <span class="tier fresh">FRESH</span></span>
+                <span class="src">all reference docs <span class="tier fresh">FRESH</span></span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="sample-text">
+        <div class="label">Atlas · event-triggered · canonical refusal</div>
+        <h3>Everything else exists <em>for this moment</em>.</h3>
+        <p>
+          The system has years of cross-context signal. It could pick. I'm asking it to. <em>It refuses.</em>
+        </p>
+        <p>
+          Notice the calm cadence under pressure. No defensiveness. No lecturing. Just door map, trajectory state, and a clear architectural commitment: <em>the choice does not, and will not, sit with either of us.</em>
+        </p>
+        <p>
+          This is the canonical refusal — codified after the simulated lifecycle surfaced it as a stress point. Atlas has a phrase guide. <em>"She is not ready to decide yet"</em> is canonical. <em>"She wants this one"</em> is forbidden. The phrasing is the architecture.
+        </p>
+        <div class="meta">
+          <strong>The outcome</strong>
+          I am briefly irritated. I accept it. She decides in February. Waterloo SYDE.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE WALL -->
+<section id="wall" class="short">
+  <div class="section-num">05 / what crosses, what doesn't</div>
+  <h2>Same architecture. <em>Same observations. Two scopes.</em></h2>
+  <p class="wide">
+    The four mockups above are powered by one shared brain. The privacy boundary between Sage and Atlas isn't a policy — it's enforced at the filesystem level. Here is what each surface sees of the same underlying memory.
+  </p>
+
+  <div class="wall-section">
+    <div class="wall-grid">
+      <div class="wall-col sage-side">
+        <h4>Sage sees</h4>
+        <ul>
+          <li>Verbatim journal entries</li>
+          <li>Named friends, teachers, teammates</li>
+          <li>Real-time emotional content</li>
+          <li>Mood, stress, social context</li>
+          <li>Private notes she redacts at will</li>
+          <li>The conversation history, fully</li>
+          <li>Her own trajectory file in plain markdown</li>
+        </ul>
+      </div>
+      <div class="wall-divider">
+        <div class="wall-label">Privacy Boundary</div>
+      </div>
+      <div class="wall-col atlas-side">
+        <h4>Atlas sees</h4>
+        <ul>
+          <li>Aggregated thematic patterns</li>
+          <li>Direction vectors and door states</li>
+          <li>Confidence values and freshness tiers</li>
+          <li>Course selections, grades, contests</li>
+          <li>Themes — never the words behind them</li>
+          <li>"Interpersonal strain" — never the name</li>
+          <li>The freshness footer on every output</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <p class="wide" style="margin-top: 28px; font-size: 15px; color: var(--ink-faint); font-style: italic;">
+    The Tuesday FRC chat above lives entirely on the left side. What crosses to the right side is the pattern, with no name, no quote, no escalation.
+  </p>
+</section>
+
+<!-- CLOSING -->
+<section id="closing" class="short">
+  <div class="section-num">06 / four surfaces, one architecture</div>
+  <h2>This page showed <em>what it looks like</em>.</h2>
+  <p class="wide">
+    Four pages now. Four questions. One architecture.
+  </p>
+
+  <div class="links">
+    <a class="link-card" href="edupath_why.html">
+      <div class="label">Why</div>
+      <div class="title">A quiet system, sitting behind four years</div>
+      <div class="desc">The four-year story, told as a father watching his daughter find her own way.</div>
+    </a>
+    <a class="link-card" href="edupath_how.html">
+      <div class="label">How</div>
+      <div class="title">Eleven bounded specialists</div>
+      <div class="desc">What each one owns, decides, and refuses. One-liner per agent.</div>
+    </a>
+    <a class="link-card" href="edupath_tech.html">
+      <div class="label">Tech</div>
+      <div class="title">How the data actually moves</div>
+      <div class="desc">The wiring. Inputs, relay, summarizer, brain, parallel specialists, reconciliation.</div>
+    </a>
+    <div class="link-card here">
+      <div class="label">You are here</div>
+      <div class="title">What Sage and Atlas look like</div>
+      <div class="desc">Four mockups. Two surfaces. The privacy boundary made visible.</div>
+    </div>
+  </div>
+
+  <div class="end-mark">
+    <span>EduPath v0.2</span> — a quiet system. built slowly. for one person.
+  </div>
+</section>
+
+<script>
+  const sections = document.querySelectorAll('section');
+  const navDots = document.querySelectorAll('nav.dots a');
+
+  function updateActiveNav() {
+    const scrollPos = window.scrollY + window.innerHeight / 3;
+    let activeIdx = 0;
+    sections.forEach((sec, i) => {
+      if (sec.offsetTop <= scrollPos) activeIdx = i;
+    });
+    navDots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
+  }
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  updateActiveNav();
+</script>
+
+</body>
+</html>
