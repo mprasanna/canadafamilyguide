@@ -578,6 +578,28 @@
     position: relative;
   }
 
+  .shape-diagram {
+    margin-top: 40px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 32px;
+    max-width: 980px;
+    position: relative;
+  }
+
+  .shape-diagram::before {
+    content: 'ARCHITECTURE OVERVIEW';
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--paper);
+    padding: 0 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ink-faint);
+  }
+
   .output-mock::before {
     content: 'ATLAS — WEEKLY DIGEST';
     position: absolute;
@@ -925,6 +947,7 @@
 <nav class="dots">
   <a href="#opening" data-label="Opening" class="active"></a>
   <a href="#why" data-label="Why"></a>
+  <a href="#shape" data-label="Shape"></a>
   <a href="#agents" data-label="Agents"></a>
   <a href="#boundary" data-label="Boundary"></a>
   <a href="#freshness" data-label="Freshness"></a>
@@ -989,12 +1012,169 @@
   </div>
 </section>
 
-<!-- 3. AGENT CONSTELLATION -->
+<!-- 3. THE SHAPE - architecture overview diagram -->
+<section id="shape">
+  <div class="section-num">02 / the shape</div>
+  <h2>Inputs become observations. <em>Observations become decisions.</em> Decisions become surfaces.</h2>
+  <p class="wide">
+    Three tiers. Two inputs flow in — her writing on her phone, my inputs on a form. A summarizer translates verbatim conversation into thematic observations, the only thing that crosses the privacy boundary. Below the boundary, five agents read the shared observation file in parallel. Mentor integrates their outputs, surfaces contradictions, applies override and wellbeing priorities, and routes back to two surfaces. Six more agents are designed but deferred.
+  </p>
+
+  <div class="shape-diagram">
+    <svg width="100%" viewBox="0 0 860 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="EduPath architecture: inputs flow through cloud relay, into Sage-scoped conversation log and summarizer, across the privacy boundary into shared observations, then through five agents to Mentor, then out to two surfaces.">
+      <defs>
+        <marker id="shape-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1 L8 5 L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+
+      <!-- Tier 1: Inputs -->
+      <text x="40" y="30" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="0.15em" fill="#8a8270" text-transform="uppercase">INPUTS</text>
+
+      <g>
+        <rect x="40" y="44" width="370" height="64" rx="8" fill="#f4ede0" stroke="#5a6e4a" stroke-width="1"/>
+        <text x="225" y="72" text-anchor="middle" font-family="Fraunces, serif" font-size="16" font-weight="500" fill="#1a1814">Her phone (PWA)</text>
+        <text x="225" y="92" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="#4a4438">offline writes, encrypted locally</text>
+      </g>
+
+      <g>
+        <rect x="450" y="44" width="370" height="64" rx="8" fill="#f4ede0" stroke="#6b2c1f" stroke-width="1"/>
+        <text x="635" y="72" text-anchor="middle" font-family="Fraunces, serif" font-size="16" font-weight="500" fill="#1a1814">Atlas form (the parent)</text>
+        <text x="635" y="92" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="#4a4438">grades, activities, events</text>
+      </g>
+
+      <line x1="225" y1="108" x2="225" y2="138" stroke="#8a8270" stroke-width="1" marker-end="url(#shape-arrow)"/>
+      <line x1="635" y1="108" x2="635" y2="138" stroke="#8a8270" stroke-width="1" marker-end="url(#shape-arrow)"/>
+
+      <!-- Cloud relay band -->
+      <g>
+        <rect x="40" y="140" width="780" height="40" rx="6" fill="#ebe2d1" stroke="#c9bfa8" stroke-width="0.5"/>
+        <text x="430" y="165" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" fill="#4a4438">cloud relay — ephemeral buffer, deletes after home machine confirms</text>
+      </g>
+
+      <line x1="225" y1="180" x2="225" y2="210" stroke="#8a8270" stroke-width="1" marker-end="url(#shape-arrow)"/>
+      <line x1="635" y1="180" x2="635" y2="210" stroke="#8a8270" stroke-width="1" marker-end="url(#shape-arrow)"/>
+
+      <!-- Tier 2: Sage-scoped (private) -->
+      <text x="40" y="225" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="0.15em" fill="#8a8270" text-transform="uppercase">SAGE-SCOPED (PRIVATE)</text>
+
+      <g>
+        <rect x="40" y="238" width="370" height="48" rx="8" fill="#f4ede0" stroke="#5a6e4a" stroke-width="1"/>
+        <text x="225" y="260" text-anchor="middle" font-family="Fraunces, serif" font-size="14" font-weight="500" fill="#1a1814">conversation log + Sage replies</text>
+        <text x="225" y="276" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#4a4438">verbatim, both sides, never crosses</text>
+      </g>
+
+      <g>
+        <rect x="40" y="298" width="370" height="48" rx="8" fill="#f4ede0" stroke="#5a6e4a" stroke-width="1"/>
+        <text x="225" y="320" text-anchor="middle" font-family="Fraunces, serif" font-size="14" font-weight="500" fill="#1a1814">thematic summarizer (monthly)</text>
+        <text x="225" y="336" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#4a4438">extracts themes, drops names &amp; verbatim</text>
+      </g>
+
+      <line x1="225" y1="286" x2="225" y2="298" stroke="#8a8270" stroke-width="1" marker-end="url(#shape-arrow)"/>
+
+      <!-- Privacy boundary -->
+      <line x1="40" y1="370" x2="820" y2="370" stroke="#6b2c1f" stroke-width="1" stroke-dasharray="5 4"/>
+      <text x="820" y="364" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="0.1em" fill="#6b2c1f">PRIVACY BOUNDARY — verbatim never crosses</text>
+
+      <!-- Tier 3: Shared state -->
+      <text x="40" y="392" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="0.15em" fill="#8a8270" text-transform="uppercase">SHARED STATE (READ BY ALL AGENTS)</text>
+
+      <g>
+        <rect x="40" y="404" width="780" height="44" rx="8" fill="#ebe2d1" stroke="#3a3528" stroke-width="1"/>
+        <text x="430" y="426" text-anchor="middle" font-family="Fraunces, serif" font-size="15" font-weight="500" fill="#1a1814">trajectory file + direction vector + context docs</text>
+        <text x="430" y="440" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#4a4438">append-only, observations from both input paths</text>
+      </g>
+
+      <line x1="225" y1="346" x2="225" y2="404" stroke="#8a8270" stroke-width="1" marker-end="url(#shape-arrow)"/>
+      <line x1="635" y1="180" x2="635" y2="404" stroke="#8a8270" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#shape-arrow)"/>
+
+      <!-- 5 agents in V0 -->
+      <text x="40" y="478" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="0.15em" fill="#8a8270" text-transform="uppercase">FIVE AGENTS — V0 SCOPE (6 MORE DEFERRED)</text>
+
+      <g>
+        <rect x="40" y="492" width="140" height="64" rx="8" fill="#f4ede0" stroke="#3a3528" stroke-width="1.2"/>
+        <text x="110" y="514" text-anchor="middle" font-family="Fraunces, serif" font-size="13" font-weight="500" fill="#1a1814">Trajectory</text>
+        <text x="110" y="530" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#4a4438">narrative</text>
+        <text x="110" y="544" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#6b2c1f">★ override authority</text>
+      </g>
+
+      <g>
+        <rect x="200" y="492" width="140" height="64" rx="8" fill="#f4ede0" stroke="#3a3528" stroke-width="1"/>
+        <text x="270" y="514" text-anchor="middle" font-family="Fraunces, serif" font-size="13" font-weight="500" fill="#1a1814">Academic Reader</text>
+        <text x="270" y="530" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#4a4438">structured</text>
+        <text x="270" y="544" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#4a4438">grade trajectories</text>
+      </g>
+
+      <g>
+        <rect x="360" y="492" width="140" height="64" rx="8" fill="#f4ede0" stroke="#3a3528" stroke-width="1"/>
+        <text x="430" y="514" text-anchor="middle" font-family="Fraunces, serif" font-size="13" font-weight="500" fill="#1a1814">Time Manager</text>
+        <text x="430" y="530" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#4a4438">structured</text>
+        <text x="430" y="544" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#6b2c1f">★ wellbeing priority</text>
+      </g>
+
+      <g>
+        <rect x="520" y="492" width="140" height="64" rx="8" fill="#f4ede0" stroke="#3a3528" stroke-width="1"/>
+        <text x="590" y="514" text-anchor="middle" font-family="Fraunces, serif" font-size="13" font-weight="500" fill="#1a1814">Curriculum Tracker</text>
+        <text x="590" y="530" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#4a4438">structured</text>
+        <text x="590" y="544" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#4a4438">door-keeper</text>
+      </g>
+
+      <g>
+        <rect x="680" y="492" width="140" height="64" rx="8" fill="#f4ede0" stroke="#3a3528" stroke-width="1"/>
+        <text x="750" y="514" text-anchor="middle" font-family="Fraunces, serif" font-size="13" font-weight="500" fill="#1a1814">Portfolio Builder</text>
+        <text x="750" y="530" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#4a4438">narrative</text>
+        <text x="750" y="544" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#4a4438">coherence check</text>
+      </g>
+
+      <!-- Arrows from shared state to each agent -->
+      <line x1="110" y1="448" x2="110" y2="492" stroke="#8a8270" stroke-width="1" marker-end="url(#shape-arrow)"/>
+      <line x1="270" y1="448" x2="270" y2="492" stroke="#8a8270" stroke-width="1" marker-end="url(#shape-arrow)"/>
+      <line x1="430" y1="448" x2="430" y2="492" stroke="#8a8270" stroke-width="1" marker-end="url(#shape-arrow)"/>
+      <line x1="590" y1="448" x2="590" y2="492" stroke="#8a8270" stroke-width="1" marker-end="url(#shape-arrow)"/>
+      <line x1="750" y1="448" x2="750" y2="492" stroke="#8a8270" stroke-width="1" marker-end="url(#shape-arrow)"/>
+
+      <!-- Arrows from agents to Mentor -->
+      <line x1="110" y1="556" x2="110" y2="588" stroke="#8a8270" stroke-width="1" marker-end="url(#shape-arrow)"/>
+      <line x1="270" y1="556" x2="270" y2="588" stroke="#8a8270" stroke-width="1" marker-end="url(#shape-arrow)"/>
+      <line x1="430" y1="556" x2="430" y2="588" stroke="#8a8270" stroke-width="1" marker-end="url(#shape-arrow)"/>
+      <line x1="590" y1="556" x2="590" y2="588" stroke="#8a8270" stroke-width="1" marker-end="url(#shape-arrow)"/>
+      <line x1="750" y1="556" x2="750" y2="588" stroke="#8a8270" stroke-width="1" marker-end="url(#shape-arrow)"/>
+
+      <!-- Mentor -->
+      <g>
+        <rect x="40" y="588" width="780" height="56" rx="8" fill="#ebe2d1" stroke="#3a3528" stroke-width="1.2"/>
+        <text x="430" y="610" text-anchor="middle" font-family="Fraunces, serif" font-size="16" font-weight="500" fill="#1a1814">Mentor — orchestrator</text>
+        <text x="430" y="628" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#4a4438">reads agent outputs · surfaces contradictions · applies overrides · composes per Atlas style guide</text>
+      </g>
+
+      <!-- Output arrows -->
+      <line x1="225" y1="644" x2="225" y2="674" stroke="#8a8270" stroke-width="1" marker-end="url(#shape-arrow)"/>
+      <line x1="635" y1="644" x2="635" y2="674" stroke="#8a8270" stroke-width="1" marker-end="url(#shape-arrow)"/>
+
+      <!-- Output surfaces -->
+      <g>
+        <rect x="40" y="674" width="370" height="38" rx="8" fill="#f4ede0" stroke="#5a6e4a" stroke-width="1"/>
+        <text x="225" y="697" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" fill="#1a1814">Sage — monthly summary to her phone</text>
+      </g>
+
+      <g>
+        <rect x="450" y="674" width="370" height="38" rx="8" fill="#f4ede0" stroke="#6b2c1f" stroke-width="1"/>
+        <text x="635" y="697" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" fill="#1a1814">Atlas — weekly digest to my email</text>
+      </g>
+    </svg>
+  </div>
+
+  <p class="quiet" style="margin-top: 36px; max-width: 720px;">
+    The pattern is the architecture. Six more agents fit into the same shape — Decision Watch, Opportunity Scout, Journal Reader, Robotics Coach, Competition Tracker, and the deferred Trajectory Reference Engine. Adding agents is incremental complexity, not architectural redesign. The five chosen for V0 test the orchestration patterns most thoroughly — two narrative, two structured, one with override authority, one with wellbeing priority.
+  </p>
+</section>
+
+<!-- 4. AGENT CONSTELLATION -->
 <section id="agents">
-  <div class="section-num">02 / the constellation</div>
+  <div class="section-num">03 / the constellation</div>
   <h2>Eleven agents, organized around <em>one orchestrator</em>.</h2>
   <p class="wide">
-    Six structured (read deterministic data — grades, course choices, contest results). Four narrative (read text — journal entries, conversation summaries). One meta (deferred until enough history exists to make trajectory comparison meaningful). Click any agent to see what it does.
+    Six structured (read deterministic data — grades, course choices, contest results). Four narrative (read text — journal entries, conversation summaries). One meta (deferred until enough history exists to make trajectory comparison meaningful). Five of these are V0 scope, marked below. Click any agent to see what it does.
   </p>
 
   <div class="constellation">
@@ -1030,7 +1210,7 @@
 
 <!-- 4. PRIVACY BOUNDARY -->
 <section id="boundary">
-  <div class="section-num">03 / the privacy boundary</div>
+  <div class="section-num">04 / the privacy boundary</div>
   <h2>Two surfaces. <em>One boundary.</em> Enforced at the filesystem level.</h2>
   <p class="wide">
     Both surfaces drink from the same Mentor brain, but with different scopes. Sage sees verbatim. Atlas sees aggregated. The architectural commitment is that the boundary cannot be bypassed by clever prompting — Sage's agent process literally cannot write to anywhere Atlas can read from.
@@ -1078,7 +1258,7 @@
 
 <!-- 5. FRESHNESS LAYER -->
 <section id="freshness">
-  <div class="section-num">04 / freshness as foundation</div>
+  <div class="section-num">05 / freshness as foundation</div>
   <h2>Every output carries <em>its own provenance</em>.</h2>
   <p class="wide">
     A system that confidently reports stale data lies. The freshness layer was the first thing built — before any agent, before either surface. Every observation is timestamped at ingestion. Every output is footed with the age and tier of each input it consumed. Staleness escalates through three tiers: fresh, aging, stale. At the top tier, the relevant agent pauses with an explicit "operating on stale context" notice rather than continuing silently.
@@ -1111,7 +1291,7 @@
 
 <!-- 6. SIMULATED LIFECYCLE -->
 <section id="lifecycle">
-  <div class="section-num">05 / four years, stress-tested</div>
+  <div class="section-num">06 / four years, stress-tested</div>
   <h2>I ran the architecture against <em>a fictional student</em> before writing any code.</h2>
   <p class="wide">
     The simulation walked a 13-year-old through Grades 9-12 and surfaced nine architectural failure modes the original design didn't handle — moments where confidence inflated, where the privacy boundary almost leaked, where Atlas's language slipped toward identity-claim phrasing. Each failure required a specific revision, which is now incorporated into the philosophy commitments.
@@ -1137,7 +1317,7 @@
 
 <!-- 7. THE ARCHIVE -->
 <section id="archive">
-  <div class="section-num">06 / what gets left behind</div>
+  <div class="section-num">07 / what gets left behind</div>
   <h2>When the system shuts down, <em>she keeps everything</em>.</h2>
   <p class="wide">
     At university entry, active orchestration ends. The system produces one final artifact and delivers it to her — not to me. This may be the single most emotionally meaningful output the architecture produces. I don't think most agent design considers what gets left behind when an agent's job ends.
@@ -1168,7 +1348,7 @@
 
 <!-- 8. CLOSING -->
 <section id="closing">
-  <div class="section-num">07 / closing</div>
+  <div class="section-num">08 / closing</div>
   <h2>Built carefully. Built slowly. <em>Built for one person.</em></h2>
   <p class="quiet">
     Three things at the heart of this —
@@ -1196,7 +1376,7 @@
         'Sits at the center. Reads grade level, calendar, and current mode. Dispatches scoped questions to specialist agents. Surfaces contradictions when narrative and structured agents disagree. Routes outputs to either Sage or Atlas with mode-appropriate framing.',
         'Holds three operating modes — Explore, Cultivate, Convert. Mode transitions are signal-based with calendar guardrails, never silent. The whole system can roll back when Trajectory flags sustained divergence.'
       ],
-      stamp: 'V0 scope: full orchestration loop, single specialist agent active.'
+      stamp: 'V0 scope: full orchestration loop, five specialist agents active.'
     },
     curriculum: {
       kicker: 'Structured · door-keeper',
@@ -1206,7 +1386,7 @@
         'Not an optimizer. A door-keeper. Recommends toward the union of all currently-viable options, not toward one specific school. Knows what the three reference programs require but doesn\'t recommend toward them.',
         'When math drops, asks not "is engineering still viable" but "which doors does this close, and which doors does it open."'
       ],
-      stamp: 'V1 scope. Not yet built.'
+      stamp: 'V0 scope. The door-keeper.'
     },
     academic: {
       kicker: 'Structured · capability vs. effort',
@@ -1216,7 +1396,7 @@
         'Alert thresholds tied to trajectory changes, not absolute thresholds. A math drop from 92 to 85 matters as a re-pointing signal, not a failure signal. The system reads grades as direction data, not as performance data.',
         'Two-term watch before any alert fires. One bad term is noise.'
       ],
-      stamp: 'V1 scope.'
+      stamp: 'V0 scope. Seeded from Grade 8 finals.'
     },
     competition: {
       kicker: 'Structured · discovery, not maximizing',
@@ -1226,7 +1406,7 @@
         'A discovery instrument, not an admissions-signal-maximizer. Surfaces CEMC, FRC, CCC alongside Skills Canada categories beyond her primary direction — for explicit optionality preservation.',
         'Every recommended contest must have an exploratory or skill-building rationale. None recommended purely for application strength.'
       ],
-      stamp: 'V1+ scope.'
+      stamp: 'Deferred. Designed, not built.'
     },
     portfolio: {
       kicker: 'Structured · narrative coherence',
@@ -1236,7 +1416,7 @@
         '"Your activities tell three different stories that don\'t quite knit together" is a valid Grade 9-10 finding. The job is not to optimize the narrative; the job is to report it honestly.',
         'Pays off in Grade 12 when she\'s drafting personal narratives for applications — and Sage can reference years of her own journal entries about specific moments of growth.'
       ],
-      stamp: 'V1+ scope.'
+      stamp: 'V0 scope. Second narrative agent.'
     },
     robotics: {
       kicker: 'Structured · three-state machine',
@@ -1246,7 +1426,7 @@
         'Three states, not two. Build: active project, regular check-ins. Available: no project but intent expressed, one low-key nudge. Standby: no project, no intent — silent.',
         'Refuses to recommend a new project if the current one is half-done. The architecture explicitly resists the "more is better" pattern.'
       ],
-      stamp: 'V1+ scope.'
+      stamp: 'Deferred. Designed, not built.'
     },
     time: {
       kicker: 'Structured · wellbeing-first',
@@ -1256,7 +1436,7 @@
         'Detects overcommitment before it surfaces as a grade drop or a vent to Sage. Sports are first-class here even though admissions-irrelevant — they constrain everything else and protect wellbeing.',
         'Wellbeing signals take priority over optimization signals, always. This is a hard architectural rule.'
       ],
-      stamp: 'V1+ scope.'
+      stamp: 'V0 scope. Wellbeing priority over all others.'
     },
     trajectory: {
       kicker: '★ Narrative · direction-setter',
@@ -1267,7 +1447,7 @@
         'The architectural commitment that allows the system to change its mind. If this agent is weak, the system optimizes against the initial family-stated direction forever.',
         'Confidence is a deterministic function: 40% persistence + 30% cross-source + 20% recency-weighted + 10% freshness. Not vibes. Math.'
       ],
-      stamp: 'V0 scope. The first specialist agent built.'
+      stamp: 'V0 scope. Built first; foundation for the other four.'
     },
     journal: {
       kicker: 'Narrative · mood and themes',
@@ -1277,7 +1457,7 @@
         'Reads patterns, themes, confidence shifts. Never surfaces verbatim content upward. Below the wellbeing escalation threshold, content stays scoped to Sage and the student.',
         'Above the threshold — sustained signal of risk — it surfaces to Atlas with the student\'s awareness, framed as concern not as data.'
       ],
-      stamp: 'V1 scope.'
+      stamp: 'Deferred. Designed, not built.'
     },
     decision: {
       kicker: 'Narrative · the calendar',
@@ -1287,7 +1467,7 @@
         'Not just preferred options — all currently-open options. Course selection windows, contest registrations, scholarship deadlines, summer program applications.',
         'Fires ahead by 8, 4, 2, and 1 weeks for known deadlines. The architecture\'s commitment to lead time over reaction time.'
       ],
-      stamp: 'V1+ scope.'
+      stamp: 'Deferred. Designed, not built.'
     },
     opportunity: {
       kicker: 'Narrative · adjacent fields',
@@ -1297,7 +1477,7 @@
         'Surfaces programs, scholarships, library MOOCs, local opportunities. Recommends SHAD explicitly because it covers breadth alongside engineering.',
         'The adjacent-field surfacing is the optionality preserver in operational form. Without it, the system narrows toward what it already knows.'
       ],
-      stamp: 'V1+ scope.'
+      stamp: 'Deferred. Designed, not built.'
     },
     pattern: {
       kicker: 'Meta · deferred',
@@ -1348,7 +1528,7 @@
       vector: 'building × technical × collaborative (family-stated)',
       confidence: 30,
       body: [
-        'Fresh install. Mentor in Explore mode. Trajectory has zero history. Sage starts conversational; no specialist agents producing output. Freshness layer running.',
+        'Fresh install. Mentor in Explore mode. Trajectory has zero history. Sage starts conversational. Five specialist agents online — Trajectory, Academic Reader, Time Manager, Curriculum Tracker, Portfolio Builder — most reporting "insufficient signal" honestly. Freshness layer running.',
         'Priya logs in to Sage once that first week, twice the second, then settles to roughly weekly. Journal entries are short. She does not mention coding once in 12 weeks despite her pass-two note saying she would.'
       ],
       stress: {
