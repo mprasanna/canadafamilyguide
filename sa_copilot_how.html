@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solution Architect Copilot — Seven bounded specialists</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe2d1;
+    --paper-deeper: #e2d8c4;
+    --ink: #1a1814;
+    --ink-soft: #4a4438;
+    --ink-faint: #8a8270;
+    --accent: #2c4a6b;
+    --accent-soft: #4a6e96;
+    --rule: #c9bfa8;
+    --architect: #2c4a6b;
+    --orchestrator: #3a3528;
+    --customer: #6b4a2c;
+    --warn: #6b2c1f;
+    --ok: #4a6e4a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 17px; line-height: 1.55;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at 15% 8%, rgba(44, 74, 107, 0.04), transparent 50%),
+      radial-gradient(ellipse at 85% 92%, rgba(58, 53, 40, 0.04), transparent 50%);
+    background-attachment: fixed;
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; letter-spacing: -0.01em; }
+  .sans { font-family: 'Inter', sans-serif; }
+
+  /* TOP NAV */
+  .topnav {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding: 18px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: linear-gradient(to bottom, rgba(244,237,224,0.95), rgba(244,237,224,0.85) 70%, transparent);
+    z-index: 90; backdrop-filter: blur(6px);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--ink-soft);
+  }
+  .topnav .brand { color: var(--ink); font-weight: 500; }
+  .topnav .links a { color: var(--ink-soft); text-decoration: none; margin-left: 24px; }
+  .topnav .links a:hover { color: var(--accent); }
+
+  /* DOTS NAV */
+  nav.dots {
+    position: fixed; right: 32px; top: 50%; transform: translateY(-50%);
+    z-index: 100; display: flex; flex-direction: column; gap: 18px;
+  }
+  nav.dots a {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--ink-faint); opacity: 0.4;
+    transition: all 0.3s ease; display: block; position: relative;
+  }
+  nav.dots a:hover, nav.dots a.active {
+    opacity: 1; background: var(--accent); transform: scale(1.4);
+  }
+  nav.dots a::after {
+    content: attr(data-label);
+    position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--ink-soft); white-space: nowrap;
+    opacity: 0; transition: opacity 0.2s;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  nav.dots a:hover::after { opacity: 1; }
+
+  /* SECTIONS */
+  section {
+    min-height: 100vh; padding: 80px 60px;
+    max-width: 1180px; margin: 0 auto;
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--ink-faint);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  h1 {
+    font-family: 'Fraunces', serif; font-weight: 400;
+    font-size: clamp(48px, 7vw, 92px);
+    line-height: 1.02; letter-spacing: -0.035em;
+    margin-bottom: 32px;
+    font-variation-settings: "opsz" 144, "SOFT" 50;
+  }
+  h1 em { font-style: italic; font-weight: 300; color: var(--accent); }
+  h2 {
+    font-family: 'Fraunces', serif; font-weight: 500;
+    font-size: clamp(34px, 4.5vw, 56px);
+    line-height: 1.08; letter-spacing: -0.025em;
+    margin-bottom: 28px;
+    font-variation-settings: "opsz" 96, "SOFT" 30;
+  }
+  h2 em { font-style: italic; font-weight: 300; color: var(--accent); }
+  h3 {
+    font-family: 'Fraunces', serif; font-weight: 500;
+    font-size: 24px; line-height: 1.2; margin-bottom: 14px;
+  }
+  p { margin-bottom: 18px; max-width: 740px; }
+  p.lead {
+    font-size: 21px; line-height: 1.5;
+    color: var(--ink-soft); font-weight: 400;
+    max-width: 780px;
+  }
+
+  /* OPENING */
+  #opening p { font-size: 19px; color: var(--ink-soft); line-height: 1.6; }
+  #opening .substrate {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; line-height: 1.7;
+    padding: 18px 24px;
+    background: var(--paper-deep);
+    border-left: 3px solid var(--accent);
+    color: var(--ink-soft);
+    max-width: 700px;
+    margin-top: 28px;
+    font-style: italic;
+  }
+
+  /* COMPARISON / DISTINCTION */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 56px 1fr;
+    gap: 24px;
+    align-items: stretch;
+    margin: 40px 0;
+  }
+  .compare-col {
+    background: var(--paper-deep);
+    padding: 32px 28px;
+    border-radius: 4px;
+    border-top: 4px solid var(--rule);
+  }
+  .compare-col.agent { border-top-color: var(--accent); }
+  .compare-col .clabel {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--ink-faint);
+    letter-spacing: 0.16em; text-transform: uppercase;
+    margin-bottom: 10px; font-weight: 500;
+  }
+  .compare-col h3 {
+    font-family: 'Fraunces', serif; font-size: 28px;
+    font-weight: 500; letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .compare-col .tagline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--ink-soft);
+    font-style: italic; margin-bottom: 22px;
+    padding-bottom: 18px; border-bottom: 1px solid var(--rule);
+  }
+  .compare-col ul { list-style: none; padding: 0; }
+  .compare-col ul li {
+    font-size: 15px; color: var(--ink-soft);
+    padding: 6px 0 6px 18px; position: relative;
+    line-height: 1.45;
+  }
+  .compare-col ul li::before {
+    content: '—'; position: absolute; left: 0;
+    color: var(--ink-faint);
+  }
+  .compare-col.agent ul li { color: var(--ink); }
+  .compare-col.agent ul li::before { color: var(--accent); }
+  .compare-vs {
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 28px; color: var(--accent);
+  }
+
+  /* FOUR PROPERTIES */
+  .props {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 36px 0;
+  }
+  .prop {
+    background: var(--paper-deep);
+    padding: 26px 22px;
+    border-radius: 4px;
+    border-left: 3px solid var(--accent-soft);
+  }
+  .prop .pnum {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px; color: var(--accent);
+    font-weight: 500; letter-spacing: 0.04em;
+    margin-bottom: 14px;
+  }
+  .prop h4 {
+    font-family: 'Fraunces', serif; font-size: 17px;
+    font-weight: 500; letter-spacing: -0.01em;
+    margin-bottom: 10px; line-height: 1.2;
+  }
+  .prop p {
+    font-size: 13.5px; color: var(--ink-soft);
+    line-height: 1.5; margin: 0;
+  }
+
+  /* SPECIALISTS TABLE */
+  .specialists-intro {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--ink-faint);
+    text-transform: uppercase; letter-spacing: 0.16em;
+    display: grid;
+    grid-template-columns: 200px 140px 1fr;
+    gap: 24px;
+    padding: 14px 0;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 8px;
+  }
+  .spec {
+    display: grid;
+    grid-template-columns: 200px 140px 1fr;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+  .spec .name {
+    font-family: 'Fraunces', serif;
+    font-size: 22px; font-weight: 500;
+    letter-spacing: -0.015em; line-height: 1.15;
+  }
+  .spec .name .kind {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; color: var(--ink-faint);
+    font-weight: 400; letter-spacing: 0.08em;
+    text-transform: uppercase; margin-top: 6px;
+  }
+  .spec .auth {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; padding: 4px 0;
+  }
+  .spec .auth-label {
+    color: var(--ink-faint); font-size: 9.5px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .spec .auth-val {
+    font-weight: 500; font-size: 13px;
+    letter-spacing: 0.02em; color: var(--ink);
+  }
+  .spec.starred .auth-val { color: var(--accent); }
+  .spec.starred .name::after {
+    content: ' ★';
+    color: var(--accent);
+    font-size: 18px;
+  }
+  .spec .desc {
+    font-size: 15px; color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .spec .desc em {
+    font-style: italic; color: var(--ink);
+    font-weight: 500;
+  }
+  .spec .desc .footnote {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px; color: var(--ink-faint);
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1px dashed var(--rule);
+    line-height: 1.55;
+    font-style: italic;
+  }
+  .spec.orch {
+    background: var(--paper-deeper);
+    padding-left: 18px; padding-right: 18px;
+    border-radius: 4px;
+    border-bottom: 1px solid var(--orchestrator);
+  }
+  .spec.deferred .name { color: var(--ink-faint); }
+  .spec.deferred .desc { color: var(--ink-faint); }
+
+  /* THE INVERSION CALLOUT */
+  .inversion {
+    margin: 40px 0;
+    padding: 40px 36px;
+    background: var(--orchestrator);
+    color: var(--paper);
+    border-radius: 4px;
+    position: relative;
+  }
+  .inversion .ilabel {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 16px;
+  }
+  .inversion h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 30px; font-weight: 400;
+    color: var(--paper);
+    line-height: 1.2; letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    font-variation-settings: "opsz" 96, "SOFT" 30;
+  }
+  .inversion h3 em { font-style: italic; color: var(--accent-soft); }
+  .inversion p {
+    color: rgba(244, 237, 224, 0.85);
+    font-size: 17px; line-height: 1.6;
+    margin-bottom: 0; max-width: 880px;
+  }
+  .inversion p em {
+    font-style: italic; color: var(--paper);
+    font-weight: 500;
+  }
+
+  /* CONSTELLATION (radial layout) */
+  .constellation {
+    margin: 48px auto 24px;
+    width: 100%;
+    max-width: 760px;
+    aspect-ratio: 1;
+    position: relative;
+  }
+  .const-mentor {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 130px; height: 130px;
+    background: var(--orchestrator);
+    color: var(--paper);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    font-family: 'Fraunces', serif;
+    font-size: 18px; font-weight: 500;
+    text-align: center;
+    z-index: 5;
+    box-shadow: 0 4px 18px rgba(58, 53, 40, 0.18);
+  }
+  .const-mentor span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--accent-soft);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .const-agent {
+    position: absolute;
+    width: 110px; height: 110px;
+    background: var(--paper);
+    border: 1.5px solid var(--rule);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--ink-soft);
+    padding: 12px;
+    transition: all 0.3s ease;
+  }
+  .const-agent.starred {
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(44, 74, 107, 0.08);
+  }
+  .const-agent::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 1px;
+    height: 200px;
+    background: linear-gradient(to top, var(--rule), transparent 70%);
+    transform-origin: top center;
+    z-index: -1;
+    opacity: 0.5;
+  }
+  /* Position 7 around circle (every ~51 deg, but distributed for visual balance) */
+  .const-agent.a1 { top: 5%; left: 50%; transform: translateX(-50%); }
+  .const-agent.a2 { top: 18%; right: 5%; }
+  .const-agent.a3 { bottom: 18%; right: 5%; }
+  .const-agent.a4 { bottom: 5%; left: 50%; transform: translateX(-50%); }
+  .const-agent.a5 { bottom: 18%; left: 5%; }
+  .const-agent.a6 { top: 18%; left: 5%; }
+  .const-agent.a7 { top: 50%; right: 0; transform: translateY(-50%); }
+
+  /* connection lines via SVG layer */
+  .const-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .const-svg line {
+    stroke: var(--rule);
+    stroke-width: 1;
+    opacity: 0.6;
+  }
+  .const-svg line.starred {
+    stroke: var(--accent);
+    stroke-width: 1.5;
+    opacity: 0.5;
+    stroke-dasharray: 4 3;
+  }
+
+  .moat-callout {
+    margin: 36px auto 0;
+    padding: 28px 32px;
+    background: var(--paper-deep);
+    border-left: 3px solid var(--accent);
+    max-width: 880px;
+    font-size: 17px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .moat-callout strong { color: var(--ink); font-weight: 500; }
+  .moat-callout .mlabel {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--ink-faint);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 12px; font-weight: 500;
+  }
+  .moat-callout em {
+    font-style: italic; color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* CLOSING GRID */
+  .closing-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 40px;
+  }
+  .closing-card {
+    background: var(--paper-deep);
+    padding: 24px 22px;
+    border-radius: 4px;
+    border: 1px solid var(--rule);
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.2s;
+    display: block;
+  }
+  .closing-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .closing-card.current {
+    background: var(--paper-deeper);
+    border-color: var(--accent);
+  }
+  .closing-card .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; color: var(--ink-faint);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .closing-card.current .label { color: var(--accent); }
+  .closing-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 18px; font-weight: 500;
+    margin-bottom: 8px; line-height: 1.2;
+  }
+  .closing-card p {
+    font-size: 13.5px; color: var(--ink-soft);
+    line-height: 1.5; margin-bottom: 0;
+  }
+
+  .closing-footer {
+    text-align: center;
+    padding: 60px 20px 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--ink-faint);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    border-top: 1px solid var(--rule);
+    margin-top: 60px;
+  }
+
+  @media (max-width: 880px) {
+    section { padding: 60px 24px; }
+    nav.dots { display: none; }
+    .topnav { padding: 14px 18px; font-size: 10px; }
+    .topnav .links a { margin-left: 12px; }
+    .compare { grid-template-columns: 1fr; }
+    .compare-vs { padding: 16px 0; }
+    .props { grid-template-columns: 1fr 1fr; }
+    .spec, .specialists-intro { grid-template-columns: 1fr; gap: 8px; }
+    .spec .name { font-size: 19px; }
+    .closing-grid { grid-template-columns: 1fr 1fr; }
+    .constellation { max-width: 100%; }
+    .const-agent { width: 80px; height: 80px; font-size: 11px; padding: 6px; }
+    .const-mentor { width: 100px; height: 100px; font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <span class="brand">Solution Architect Copilot v0.1</span>
+  <span class="links">
+    <a href="sa_copilot_why.html">why</a>
+    <a href="#" class="active" style="color: var(--accent);">how</a>
+    <a href="sa_copilot_tech.html">tech</a>
+    <a href="sa_copilot_demo.html">demo</a>
+  </span>
+</div>
+
+<nav class="dots">
+  <a href="#opening" data-label="opening"></a>
+  <a href="#contrast" data-label="the distinction"></a>
+  <a href="#properties" data-label="four properties"></a>
+  <a href="#specialists" data-label="the seven"></a>
+  <a href="#constraints" data-label="the inversion"></a>
+  <a href="#constellation" data-label="the shape"></a>
+  <a href="#closing" data-label="four surfaces"></a>
+</nav>
+
+<section id="opening">
+  <div class="section-num">Solution Architect Copilot v0.1 the architecture behind the copilot</div>
+  <h1>Seven <em>bounded specialists.</em><br>One engagement.</h1>
+  <p>Behind the four-week story sit seven specialists. One reads the RFP. One reads the room. One holds the promotion gate between the architect's draft and the customer's brief. Each owns a scoped responsibility, remembers across engagements, operates under explicit authority rules, and knows when to halt itself.</p>
+  <div class="substrate">
+    The language model is only the substrate. The architecture is everything around it.
+  </div>
+</section>
+
+<section id="contrast">
+  <div class="section-num">01 / the distinction</div>
+  <h2>A chatbot drafts an RFP response. <em>An agent watches one slice of the engagement — and acts on it over weeks.</em></h2>
+  <p class="lead">Most "AI for presales" today is a prompt wrapped around a language model, plus retrieval. It autocompletes. It generates. It forgets. The architecture below is structurally different — not because the underlying model is different, but because of what sits around it.</p>
+
+  <div class="compare">
+    <div class="compare-col chatbot">
+      <div class="clabel">Generative AI</div>
+      <h3>RFP autocomplete</h3>
+      <div class="tagline">a fluent responder</div>
+      <ul>
+        <li>Reacts to whatever section is selected</li>
+        <li>Generates plausible boilerplate</li>
+        <li>No scoped responsibility</li>
+        <li>No persistent operating role</li>
+        <li>No state across engagements</li>
+        <li>No authority boundaries</li>
+        <li>No lifecycle — runs when called, then forgets</li>
+        <li>Can draft. Cannot hold a stance.</li>
+      </ul>
+    </div>
+    <div class="compare-vs">vs.</div>
+    <div class="compare-col agent">
+      <div class="clabel">An agent in this system</div>
+      <h3>A bounded specialist</h3>
+      <div class="tagline">scoped responsibility, over weeks</div>
+      <ul>
+        <li>Owns one slice of the engagement</li>
+        <li>Reads specific state — not everything</li>
+        <li>Persists across the engagement and into the library</li>
+        <li>Tracks freshness and decays confidence</li>
+        <li>Holds thresholds and authority rules</li>
+        <li>Can halt, defer, or be promoted</li>
+        <li>Has lifecycle — starts, pauses, archives</li>
+        <li>Produces decisions, not just language</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="properties">
+  <div class="section-num">02 / the four properties</div>
+  <h2>One job. Specific state. <em>Over an engagement. With authority to act.</em></h2>
+  <p class="lead">Each specialist below has all four of these. Strip any one of them away and the component collapses back into a prompt-and-response wrapper.</p>
+
+  <div class="props">
+    <div class="prop">
+      <div class="pnum">01</div>
+      <h4>Bounded responsibility</h4>
+      <p>One job. The Pricing Translator does not read transcripts. The Stakeholder Reader does not size SKUs. Each specialist owns its slice and only its slice.</p>
+    </div>
+    <div class="prop">
+      <div class="pnum">02</div>
+      <h4>Scoped state</h4>
+      <p>Specific files. Specific memory. Specific timestamps. Not "all available context." The architecture defines what each agent can read — and what it explicitly cannot — and enforces it.</p>
+    </div>
+    <div class="prop">
+      <div class="pnum">03</div>
+      <h4>Longitudinal operation</h4>
+      <p>Agents persist across the engagement and into the library. They revisit, compare to prior engagements, decay confidence on stale signals. That isn't completion. That's a continuously-running responsibility.</p>
+    </div>
+    <div class="prop">
+      <div class="pnum">04</div>
+      <h4>Decision authority</h4>
+      <p>Each agent produces an operational output — not just text. Halts block promotion. Confidence triggers promotion. Hazard flags suppress near-twin re-use. The system <em>acts</em>, in bounded ways.</p>
+    </div>
+  </div>
+</section>
+
+<section id="specialists">
+  <div class="section-num">03 / the seven</div>
+  <h2>What each one owns, <em>and the decision it gets to make.</em></h2>
+  <p class="lead">Each specialist has a name, a kind (structured / narrative / orchestrator), and one line that names the move it makes — the move a prompt-wrapper couldn't. The starred one is the only specialist with the authority to halt a draft.</p>
+
+  <div class="specialists-intro">
+    <span>Specialist</span>
+    <span>Authority</span>
+    <span>What it owns. What it decides. What it refuses.</span>
+  </div>
+
+  <div class="spec orch">
+    <div class="name">Mentor<span class="kind">Orchestrator · not customer-facing</span></div>
+    <div class="auth">
+      <div class="auth-label">Authority</div>
+      <div class="auth-val">Routes & schedules</div>
+    </div>
+    <div class="desc">
+      Classifies engagement phase, dispatches scoped questions, surfaces contradictions between specialists, routes outputs to either Drafter or the Brief promotion gate. <em>A chatbot doesn't decide which specialist to ask; it just answers whoever asked it.</em>
+      <span class="footnote">Six-step operating loop: <strong>classify engagement phase</strong> → <strong>dispatch scoped questions</strong> → <strong>run specialists in parallel</strong> → <strong>surface contradictions</strong> → <strong>route to gates</strong> → <strong>schedule next checkpoint</strong>. Holds the canonical engagement memory. Manages the cadence calendar across an engagement and into the archive.</span>
+    </div>
+  </div>
+
+  <div class="spec starred">
+    <div class="name">Assumption Tracker<span class="kind">Narrative · the integrity layer</span></div>
+    <div class="auth">
+      <div class="auth-label">Authority</div>
+      <div class="auth-val">Halt</div>
+    </div>
+    <div class="desc">
+      Owns the live assumption log. Decides when an inference rests on something the customer has not confirmed. <em>When unconfirmed assumptions block a section, it halts promotion — even if every other specialist is confident.</em>
+      <span class="footnote">The architectural commitment that prevents the system from bluffing. Every halt becomes a footnote in the customer-facing brief, published, not buried.</span>
+    </div>
+  </div>
+
+  <div class="spec">
+    <div class="name">Requirement Reader<span class="kind">Structured · the RFP parser</span></div>
+    <div class="auth">
+      <div class="auth-label">Authority</div>
+      <div class="auth-val">Demote</div>
+    </div>
+    <div class="desc">
+      Reads the RFP verbatim. Separates requirement clauses from scoring criteria, customer success metrics, and implicit assumptions. <em>Refuses to treat boilerplate as a requirement. Refuses to invent requirements the RFP didn't make.</em>
+      <span class="footnote">The first agent to run on every engagement. Everything downstream reads from its output.</span>
+    </div>
+  </div>
+
+  <div class="spec">
+    <div class="name">Engagement Library<span class="kind">Narrative · prior work</span></div>
+    <div class="auth">
+      <div class="auth-label">Authority</div>
+      <div class="auth-val">Hazard flag</div>
+    </div>
+    <div class="desc">
+      Owns the near-twin lookup against prior engagements. Surfaces matches with explicit caveats — what carries over, what doesn't. <em>Flags hazard precedents — engagements that look similar but mislead — as do-not-copy, not as templates.</em>
+      <span class="footnote">A library, not a template store. Reuse with caveats is the move; reuse without caveats is the failure mode it exists to prevent.</span>
+    </div>
+  </div>
+
+  <div class="spec">
+    <div class="name">Stakeholder Reader<span class="kind">Narrative · the room</span></div>
+    <div class="auth">
+      <div class="auth-label">Authority</div>
+      <div class="auth-val">Surface</div>
+    </div>
+    <div class="desc">
+      Owns the transcript read. Attributes word-choice patterns to speakers. <em>Surfaces unspoken disagreements between stakeholders — refusing to resolve them on the customer's behalf.</em>
+      <span class="footnote">The IT director's phased / ops director's cutover moment lives here. The agent names the gap; the customer's exec sponsor closes it.</span>
+    </div>
+  </div>
+
+  <div class="spec">
+    <div class="name">Integration Mapper<span class="kind">Structured · systems of record</span></div>
+    <div class="auth">
+      <div class="auth-label">Authority</div>
+      <div class="auth-val">Self-pause</div>
+    </div>
+    <div class="desc">
+      Owns the integration topology. Computes per-edge confidence — what's confirmed, what's inferred, what's unknown. <em>Pauses itself when it cannot confidently distinguish between two integration platforms; refuses to assume one.</em>
+      <span class="footnote">EWM vs. legacy WM is six weeks of implementation work. The agent doesn't guess; it asks.</span>
+    </div>
+  </div>
+
+  <div class="spec">
+    <div class="name">Constraint Engine<span class="kind">Structured · trade-off math</span></div>
+    <div class="auth">
+      <div class="auth-label">Authority</div>
+      <div class="auth-val">Door state</div>
+    </div>
+    <div class="desc">
+      Owns the trade-off computation across competing paths. Phased vs. cutover. Build vs. buy. In-region vs. multi-region. <em>Refuses to recommend a path when both are legitimate; presents trade-offs with named costs.</em>
+      <span class="footnote">The architectural commitment to let the customer's exec sponsor make the call that's actually theirs to make.</span>
+    </div>
+  </div>
+
+  <div class="spec">
+    <div class="name">Pricing Translator<span class="kind">Structured · scope to SKU</span></div>
+    <div class="auth">
+      <div class="auth-label">Authority</div>
+      <div class="auth-val">Uncertainty bands</div>
+    </div>
+    <div class="desc">
+      Owns the scope-to-pricing translation. Maps requirement clauses to product SKUs and editions. <em>Refuses to produce single-number quotes when scope is undefined; emits uncertainty bands and the assumptions that would close them.</em>
+      <span class="footnote">A range with named assumptions is more useful than a number with hidden ones. The customer learns more from the bands than from the midpoint.</span>
+    </div>
+  </div>
+
+  <div class="spec deferred">
+    <div class="name">Outcome Reference<span class="kind">Meta · deferred to V2+</span></div>
+    <div class="auth">
+      <div class="auth-label">Authority</div>
+      <div class="auth-val">Not granted</div>
+    </div>
+    <div class="desc">
+      Would compare the current engagement to anonymized prior engagements that ended in different outcomes — won / lost / re-scoped / abandoned. <em>Deliberately not built. The architecture has to earn the right to do this before doing it.</em>
+      <span class="footnote">Requires 12+ engagements of accumulated data with consented comparison. The decision to defer it is itself an agentic decision.</span>
+    </div>
+  </div>
+</section>
+
+<section id="constraints">
+  <div class="section-num">04 / the unexpected part</div>
+  <h2>Constraints are <em>what makes this credible.</em></h2>
+  <p class="lead">Most agent demonstrations make their agents seem more powerful by making them less constrained. This architecture does the opposite. Every agent above operates under explicit bounds: what it can read, what it can decide, what it must defer on, when it must pause itself.</p>
+
+  <div class="inversion">
+    <div class="ilabel">The inversion</div>
+    <h3>It is the boundaries — <em>not the capabilities</em> — that make this system feel engineered rather than imagined.</h3>
+    <p>Assumption Tracker <em>can</em> halt, but only when an unconfirmed assumption blocks a claim. Integration Mapper <em>can</em> pause itself, but only when platform identity is unconfirmed. Brief <em>cannot</em> receive a draft without the promotion gate firing, ever. Pricing Translator <em>cannot</em> emit a single number when scope is undefined. The Outcome Reference engine <em>is not yet built</em>. Every authority in this system has a matching refusal. <em>That's the difference between agents and prompt chains.</em></p>
+  </div>
+</section>
+
+<section id="constellation">
+  <div class="section-num">05 / the shape</div>
+  <h2>Seven specialists. <em>One orchestrator at the centre.</em></h2>
+  <p class="lead">The starred specialist is the only one with halt authority. Everything else operates inside its own scope, deferring to Mentor for routing and to the Assumption Tracker for integrity.</p>
+
+  <div class="constellation">
+    <svg class="const-svg" viewBox="0 0 760 760" preserveAspectRatio="none">
+      <!-- Lines from Mentor (center) to each agent. Center: 380, 380. Agents at ~ radius positions. -->
+      <line x1="380" y1="380" x2="380" y2="60" class="starred"/>
+      <line x1="380" y1="380" x2="660" y2="160"/>
+      <line x1="380" y1="380" x2="700" y2="380"/>
+      <line x1="380" y1="380" x2="660" y2="600"/>
+      <line x1="380" y1="380" x2="380" y2="700"/>
+      <line x1="380" y1="380" x2="100" y2="600"/>
+      <line x1="380" y1="380" x2="100" y2="160"/>
+    </svg>
+    <div class="const-mentor">Mentor<span>orchestrator</span></div>
+    <div class="const-agent starred a1">Assumption<br>Tracker</div>
+    <div class="const-agent a2">Requirement<br>Reader</div>
+    <div class="const-agent a7">Stakeholder<br>Reader</div>
+    <div class="const-agent a3">Engagement<br>Library</div>
+    <div class="const-agent a4">Integration<br>Mapper</div>
+    <div class="const-agent a5">Constraint<br>Engine</div>
+    <div class="const-agent a6">Pricing<br>Translator</div>
+  </div>
+
+  <div class="moat-callout">
+    <div class="mlabel">The actual moat</div>
+    The moat isn't agents, retrieval, or orchestration. It is <em>governed engagement cognition</em> — a system that reads carefully, drafts cautiously, footnotes its assumptions, refuses to choose where the customer must, and accumulates honest reusable precedent across engagements.
+  </div>
+</section>
+
+<section id="closing">
+  <div class="section-num">06 / four surfaces, one architecture</div>
+  <h2>This page answered <em>what each specialist does.</em></h2>
+  <p class="lead">Four pages now. Four questions. One architecture.</p>
+
+  <div class="closing-grid">
+    <a href="sa_copilot_why.html" class="closing-card">
+      <div class="label">Why</div>
+      <h4>A quiet system, behind one engagement</h4>
+      <p>The four-week story. An architect with eight working days and an honest assumption log.</p>
+    </a>
+    <div class="closing-card current">
+      <div class="label">How · you are here</div>
+      <h4>Seven bounded specialists</h4>
+      <p>What each one owns, decides, and refuses. One-liner per agent.</p>
+    </div>
+    <a href="sa_copilot_tech.html" class="closing-card">
+      <div class="label">Tech</div>
+      <h4>How the data actually moves</h4>
+      <p>The wiring. Inputs, relay, ingestion, brain, parallel specialists, reconciliation.</p>
+    </a>
+    <a href="sa_copilot_demo.html" class="closing-card">
+      <div class="label">Demo</div>
+      <h4>What Drafter and Brief look like</h4>
+      <p>Four laptop mockups. Two surfaces. The promotion gate made visible.</p>
+    </a>
+  </div>
+</section>
+
+<div class="closing-footer">
+  Solution Architect Copilot v0.1 — a quiet system. built deliberately. for one architect.
+</div>
+
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const dots = document.querySelectorAll('nav.dots a');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        dots.forEach(d => d.classList.remove('active'));
+        const active = document.querySelector(`nav.dots a[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -40% 0px' });
+  sections.forEach(s => obs.observe(s));
+</script>
+
+</body>
+</html>

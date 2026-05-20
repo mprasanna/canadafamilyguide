@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solution Architecture Copilot — A quiet system, behind one engagement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe2d1;
+    --ink: #1a1814;
+    --ink-soft: #4a4438;
+    --ink-faint: #8a8270;
+    --accent: #2c4a6b;        /* deep blue — the architect's blue */
+    --accent-soft: #4a6e96;
+    --rule: #c9bfa8;
+    --architect: #2c4a6b;
+    --orchestrator: #3a3528;
+    --customer: #6b4a2c;       /* warm brown — customer side */
+    --warn: #6b2c1f;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.55;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(44, 74, 107, 0.04), transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(58, 53, 40, 0.04), transparent 50%);
+    background-attachment: fixed;
+  }
+
+  .mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+    letter-spacing: -0.01em;
+  }
+
+  .sans { font-family: 'Inter', sans-serif; }
+
+  /* NAVIGATION */
+  nav.dots {
+    position: fixed;
+    right: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  nav.dots a {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ink-faint);
+    opacity: 0.4;
+    transition: all 0.3s ease;
+    display: block;
+    position: relative;
+  }
+
+  nav.dots a:hover, nav.dots a.active {
+    opacity: 1;
+    background: var(--accent);
+    transform: scale(1.4);
+  }
+
+  nav.dots a::after {
+    content: attr(data-label);
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  nav.dots a:hover::after { opacity: 1; }
+
+  /* SECTIONS */
+  section {
+    min-height: 100vh;
+    padding: 80px 60px;
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    margin-bottom: 32px;
+    font-variation-settings: "opsz" 144, "SOFT" 50;
+  }
+  h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+  }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(34px, 4.5vw, 56px);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    margin-bottom: 28px;
+    font-variation-settings: "opsz" 96, "SOFT" 30;
+  }
+  h2 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+  }
+
+  h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+
+  p { margin-bottom: 18px; max-width: 720px; }
+  p.lead {
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    font-weight: 400;
+    max-width: 760px;
+  }
+
+  /* TOP NAV STRIP */
+  .topnav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(244,237,224,0.95), rgba(244,237,224,0.85) 70%, transparent);
+    z-index: 90;
+    backdrop-filter: blur(6px);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
+  }
+  .topnav .brand { color: var(--ink); font-weight: 500; }
+  .topnav .links a { color: var(--ink-soft); text-decoration: none; margin-left: 24px; }
+  .topnav .links a:hover { color: var(--accent); }
+
+  /* HERO */
+  #opening h1 .signoff {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: 36px;
+    font-weight: 500;
+  }
+  .opening-text {
+    max-width: 720px;
+    margin-top: 32px;
+  }
+  .opening-text p {
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+  }
+  .opening-text p.shift { padding-left: 32px; }
+
+  /* THREE-ROLE DIAGRAM */
+  .triad {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr 1fr;
+    gap: 32px;
+    align-items: center;
+    margin: 60px 0 40px;
+    padding: 50px 36px;
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+  }
+  .triad-role {
+    text-align: center;
+    padding: 22px 14px;
+  }
+  .triad-role .badge {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 500;
+    background: var(--paper);
+    border: 2px solid var(--rule);
+  }
+  .triad-role.architect .badge { border-color: var(--architect); color: var(--architect); }
+  .triad-role.orch .badge { border-color: var(--orchestrator); color: var(--orchestrator); background: var(--orchestrator); color: var(--paper); }
+  .triad-role.customer .badge { border-color: var(--customer); color: var(--customer); }
+  .triad-role h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .triad-role .sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .triad-role .desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+  .triad-arrow {
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    position: relative;
+  }
+  .triad-arrow::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0; right: 0;
+    height: 1px;
+    background: var(--rule);
+    z-index: 0;
+  }
+  .triad-arrow span {
+    position: relative;
+    z-index: 1;
+    background: var(--paper-deep);
+    padding: 4px 10px;
+    display: inline-block;
+  }
+  .triad-caption {
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    margin-top: 16px;
+    font-style: italic;
+  }
+
+  /* TIMELINE / QUARTERS */
+  .phase-block {
+    margin: 56px 0;
+    padding: 36px 40px;
+    background: rgba(255, 252, 245, 0.5);
+    border-left: 3px solid var(--rule);
+    border-radius: 0 4px 4px 0;
+    position: relative;
+  }
+  .phase-meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .phase-meta .cell .label {
+    color: var(--ink-faint);
+    margin-bottom: 4px;
+    font-size: 9.5px;
+  }
+  .phase-meta .cell .val {
+    color: var(--ink);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+  .phase-meta .cell .val.mode-discover { color: var(--accent-soft); }
+  .phase-meta .cell .val.mode-shape { color: var(--accent); }
+  .phase-meta .cell .val.mode-defend { color: var(--warn); }
+
+  .phase-block h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.15;
+    margin-bottom: 18px;
+    letter-spacing: -0.015em;
+  }
+  .phase-block p { font-size: 16.5px; }
+
+  .quote-card {
+    background: var(--paper-deep);
+    padding: 18px 22px;
+    margin: 22px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    border-left: 2px solid var(--accent-soft);
+    border-radius: 0 3px 3px 0;
+  }
+  .digest-card {
+    background: var(--paper-deep);
+    padding: 20px 24px;
+    margin: 22px 0;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    position: relative;
+  }
+  .digest-card::before {
+    content: 'V0 BRIEF · DRAFT';
+    position: absolute;
+    top: -9px; left: 18px;
+    background: var(--paper);
+    padding: 0 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    color: var(--ink-faint);
+  }
+  .digest-card p {
+    font-size: 15.5px;
+    margin-bottom: 8px;
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+  .digest-card .stamp {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--rule);
+  }
+  .digest-card .stamp .freshness { color: var(--accent); font-weight: 500; }
+
+  .reviewer-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+    font-style: italic;
+    margin-top: 18px;
+    padding-left: 16px;
+    border-left: 2px solid var(--rule);
+  }
+
+  /* CONSTELLATION */
+  .constellation {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    margin: 40px 0;
+    padding: 50px 32px;
+    background: var(--paper-deep);
+    border-radius: 4px;
+  }
+  .agent-pill {
+    padding: 11px 18px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+    transition: all 0.2s ease;
+  }
+  .agent-pill.starred {
+    border-color: var(--accent);
+    color: var(--accent);
+    font-weight: 500;
+    background: rgba(44, 74, 107, 0.06);
+  }
+  .agent-pill.orch {
+    border-color: var(--orchestrator);
+    color: var(--paper);
+    background: var(--orchestrator);
+    font-weight: 500;
+  }
+  .constellation-legend {
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    margin-top: 16px;
+    letter-spacing: 0.06em;
+  }
+  .constellation-legend .dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin: 0 6px 0 14px;
+    vertical-align: middle;
+  }
+
+  /* ORCHESTRATION EXAMPLE */
+  .orch-flow {
+    display: grid;
+    gap: 18px;
+    margin: 32px 0;
+  }
+  .orch-step {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 18px;
+    padding: 22px 24px;
+    background: var(--paper-deep);
+    border-radius: 4px;
+    border-left: 3px solid var(--accent-soft);
+  }
+  .orch-step .arrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    color: var(--accent);
+    align-self: start;
+  }
+  .orch-step h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .orch-step p {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    margin-bottom: 0;
+    line-height: 1.55;
+  }
+
+  /* CLOSING */
+  .closing-block {
+    border-top: 1px solid var(--rule);
+    padding-top: 40px;
+    margin-top: 30px;
+  }
+  .closing-block p {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 680px;
+    margin-bottom: 14px;
+  }
+  .closing-block p.line { margin-bottom: 6px; }
+  .closing-block p.signoff {
+    margin-top: 36px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* DIVIDER */
+  .divider {
+    text-align: center;
+    margin: 60px 0 30px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    display: inline-block;
+    width: 80px;
+    height: 1px;
+    background: var(--rule);
+    vertical-align: middle;
+    margin: 0 18px;
+  }
+
+  /* CHAPTER HEADER */
+  .chapter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+
+  /* footnote inside paragraph */
+  .wall-note {
+    display: block;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    font-style: italic;
+    margin-top: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  /* CLOSING GRID — same as tech/how/demo */
+  .closing-nav-section {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 60px 60px 80px;
+  }
+  .closing-nav-section .section-num-small {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--ink-faint);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .closing-nav-section h2.small {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 1.1; letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+  .closing-nav-section h2.small em { font-style: italic; color: var(--accent); }
+  .closing-nav-section p.lead-small {
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+    max-width: 720px;
+  }
+  .closing-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+  .closing-card {
+    background: var(--paper-deep);
+    padding: 24px 22px;
+    border-radius: 4px;
+    border: 1px solid var(--rule);
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.2s;
+    display: block;
+  }
+  .closing-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .closing-card.current {
+    background: var(--paper-deeper);
+    border-color: var(--accent);
+  }
+  .closing-card .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; color: var(--ink-faint);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .closing-card.current .label { color: var(--accent); }
+  .closing-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 18px; font-weight: 500;
+    margin-bottom: 8px; line-height: 1.2;
+  }
+  .closing-card p {
+    font-size: 13.5px; color: var(--ink-soft);
+    line-height: 1.5; margin-bottom: 0;
+  }
+  @media (max-width: 880px) {
+    .closing-nav-section { padding: 40px 24px 60px; }
+    .closing-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 880px) {
+    section { padding: 60px 28px; }
+    nav.dots { display: none; }
+    .topnav { padding: 14px 20px; font-size: 10px; }
+    .topnav .links a { margin-left: 14px; }
+    .triad { grid-template-columns: 1fr; gap: 24px; padding: 30px 20px; }
+    .triad-arrow { display: none; }
+    .phase-meta { grid-template-columns: repeat(2, 1fr); }
+    .phase-block { padding: 24px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <span class="brand">Solution Architect Copilot v0.1</span>
+  <span class="links">
+    <a href="#" class="active" style="color: var(--accent);">why</a>
+    <a href="sa_copilot_how.html">how</a>
+    <a href="sa_copilot_tech.html">tech</a>
+    <a href="sa_copilot_demo.html">demo</a>
+  </span>
+</div>
+
+<nav class="dots">
+  <a href="#opening" data-label="opening"></a>
+  <a href="#triad" data-label="three roles"></a>
+  <a href="#w1" data-label="week 1"></a>
+  <a href="#w2" data-label="week 2"></a>
+  <a href="#w3" data-label="week 3"></a>
+  <a href="#w4" data-label="week 4"></a>
+  <a href="#agents" data-label="agents"></a>
+  <a href="#orch" data-label="orchestration"></a>
+  <a href="#closing" data-label="closing"></a>
+</nav>
+
+<section id="opening">
+  <div class="section-num">Solution Architect Copilot v0.1 · a four-week walkthrough</div>
+  <h1>A quiet system,<br>sitting behind <em>one engagement.</em></h1>
+  <div class="opening-text">
+    <p>The RFP arrives on a Monday.</p>
+    <p class="shift">— the architect has eight working days,</p>
+    <p class="shift">— three product lines to scope,</p>
+    <p class="shift">— two competing customer departments who disagree about scope,</p>
+    <p class="shift">— and four prior engagements that almost answer the question.</p>
+    <p style="margin-top: 28px;">A quiet system sits behind those eight days.</p>
+    <p>Its job is not to write the architecture.</p>
+    <p>Its job is to remember <em>what's been answered before</em> — and to refuse, honestly, when it hasn't.</p>
+  </div>
+</section>
+
+<section id="triad">
+  <div class="section-num">Layer 01</div>
+  <h2>Three roles. <em>One quiet brain.</em></h2>
+  <p class="lead">The architect drafts in a tool called Drafter. The customer-facing materials route through something called Brief. Between them sits Mentor — which neither party ever talks to directly. That's the whole system.</p>
+
+  <div class="triad">
+    <div class="triad-role architect">
+      <div class="badge">D</div>
+      <h4>Drafter</h4>
+      <div class="sub">Workbench · for the architect</div>
+      <div class="desc">Working canvas. Reads everything. Drafts the architecture, the integration map, the assumptions log.</div>
+    </div>
+    <div class="triad-arrow"><span>scoped · drafts only</span></div>
+    <div class="triad-role orch">
+      <div class="badge">M</div>
+      <h4>Mentor</h4>
+      <div class="sub">Orchestrator · the brain</div>
+      <div class="desc">Reads RFP, prior engagements, product capability docs, pricing. Dispatches scoped questions to specialists. Never customer-facing.</div>
+    </div>
+    <div class="triad-arrow"><span>vetted · then issued</span></div>
+    <div class="triad-role customer">
+      <div class="badge">B</div>
+      <h4>Brief</h4>
+      <div class="sub">Outbound · for the customer</div>
+      <div class="desc">Solution brief, integration diagrams, RFP response sections. Only the architect can promote a draft from Drafter into Brief.</div>
+    </div>
+  </div>
+  <div class="triad-caption">— the dotted line is a wall, enforced at the promotion gate —</div>
+</section>
+
+<section id="w1">
+  <div class="chapter">Week 1 / discovery</div>
+  <h2>Monday. <em>The RFP lands.</em> Nothing is committed yet.</h2>
+  <p>A 38-page RFP from a mid-market manufacturer arrives in the architect's inbox. CRM, Field Service, Inventory, Analytics, and "AI-assisted everything." The pre-sales lead has scheduled three internal touchpoints and one customer discovery call inside the next eight working days.</p>
+
+  <div class="phase-block">
+    <div class="phase-meta">
+      <div class="cell"><div class="label">Mode</div><div class="val mode-discover">Discover</div></div>
+      <div class="cell"><div class="label">Scope</div><div class="val">unbounded</div></div>
+      <div class="cell"><div class="label">Confidence</div><div class="val">0.20</div></div>
+      <div class="cell"><div class="label">Stance</div><div class="val">listening</div></div>
+    </div>
+
+    <h3>Week 1 · Monday. The RFP is read, not interpreted.</h3>
+    <p>Mentor ingests the RFP. Strips it into requirement clauses, scoring criteria, the customer's stated success metrics, and — separately — the things the RFP <em>doesn't</em> say. Implicit assumptions get tagged. Boilerplate gets demoted.</p>
+
+    <div class="quote-card">
+      "the RFP says <em>real-time inventory visibility</em> three times but never defines the latency. that's not a requirement yet. that's a conversation."
+    </div>
+
+    <p>Mentor produces nothing for the architect on day one. No draft, no recommendation, no "here's how we'd approach this." A system designed for restraint, on the day an RFP lands, should say exactly: <em>we don't know enough yet.</em></p>
+
+    <p class="reviewer-note">— the RFP is fresh · prior engagements not yet retrieved · all four customer departments unspoken to</p>
+  </div>
+
+  <div class="phase-block">
+    <div class="phase-meta">
+      <div class="cell"><div class="label">Mode</div><div class="val mode-discover">Discover</div></div>
+      <div class="cell"><div class="label">Scope</div><div class="val">3 product lines</div></div>
+      <div class="cell"><div class="label">Confidence</div><div class="val">0.35</div></div>
+      <div class="cell"><div class="label">Posture</div><div class="val">questions, not answers</div></div>
+    </div>
+
+    <h3>Week 1 · Tuesday. The Library agent surfaces three near-twins.</h3>
+    <p>Overnight, the Engagement Library agent has run. It found four prior engagements with overlapping product mix and a similar customer profile. Three are useful. One is misleading — same industry, very different scale — and Mentor flags it as a hazard, not a precedent.</p>
+    <p>The architect opens Drafter for the first time. Mentor has pre-loaded the three near-twins as <em>reference</em>, not template. Each one has a one-paragraph note explaining what carries over and what doesn't.</p>
+
+    <div class="quote-card">
+      "engagement #2117 looks closest on paper. but their integration was sandboxed; this customer is asking for production-grade real-time. don't copy the integration layer."
+    </div>
+
+    <p>This is the first moment where the system has earned a small amount of confidence — and it is careful, immediately, to bound it.</p>
+  </div>
+</section>
+
+<section id="w2">
+  <div class="chapter">Week 2 / shaping</div>
+  <h2>The customer call. <em>And the assumption that has to be made explicit.</em></h2>
+  <p>This is where the system earns the right to exist. It has to read the conversation between four customer stakeholders who don't fully agree — and refuse, throughout, to declare what the solution <em>is</em>.</p>
+
+  <div class="phase-block">
+    <div class="phase-meta">
+      <div class="cell"><div class="label">Mode</div><div class="val mode-shape">Shape</div></div>
+      <div class="cell"><div class="label">Scope</div><div class="val">narrowed to 2</div></div>
+      <div class="cell"><div class="label">Confidence</div><div class="val">0.55</div></div>
+      <div class="cell"><div class="label">Watching for</div><div class="val">stakeholder split</div></div>
+    </div>
+
+    <h3>Week 2 · Monday. Discovery call. The IT director and the ops director want different things.</h3>
+    <p>Transcript lands in Mentor's intake an hour after the call. The Stakeholder agent reads it and flags a quiet disagreement: IT wants a phased rollout with strict change control. Ops wants a single cutover so warehouse staff don't run two systems in parallel. <em>Neither said this explicitly.</em> The architect would have noticed eventually. Mentor noticed in twenty minutes.</p>
+
+    <div class="quote-card">
+      "the IT director used the word <em>phased</em> four times. the ops director used <em>cutover</em> twice and asked about parallel-run cost. that's a real disagreement underneath a polite call."
+    </div>
+
+    <p>Mentor doesn't try to resolve it. The Constraint agent runs the door state: if we propose phased, ops will resist scope and complain about parallel cost. If we propose cutover, IT will push back on risk. <em>Either is defensible. They are not equivalent.</em></p>
+
+    <p>The architect adds a single line to the Assumptions Log: <em>customer has not aligned internally on phased vs. cutover.</em> Mentor footnotes every section of the draft that depends on that assumption.</p>
+  </div>
+
+  <div class="phase-block">
+    <div class="phase-meta">
+      <div class="cell"><div class="label">Mode</div><div class="val mode-shape">Shape</div></div>
+      <div class="cell"><div class="label">Scope</div><div class="val">integration map drafting</div></div>
+      <div class="cell"><div class="label">Confidence</div><div class="val">0.60</div></div>
+      <div class="cell"><div class="label">Refusing to</div><div class="val">name a vendor yet</div></div>
+    </div>
+
+    <h3>Week 2 · Tuesday. The integration map draft. With three open questions, not closed answers.</h3>
+    <p>The Integration agent produces a first draft of the systems-of-record map. ERP, WMS, e-commerce, payment gateway. Three integration points are confident. Three are open — and the agent says so, by name.</p>
+    <p>The architect, used to working alone, expects to find these gaps in week 3 during peer review. Mentor surfaces them on Tuesday of week 2. Earlier surfacing is the architectural commitment.</p>
+
+    <div class="quote-card">
+      "WMS integration: confidence 0.4. customer says <em>SAP-based</em> but didn't specify EWM vs. legacy WM. the difference is six weeks of implementation work. ask before you scope."
+    </div>
+
+    <p>Drafter shows the integration map with three highlighted question marks. Not as a deficiency — as an honest reading of what's known. The architect lifts the three questions into the customer follow-up email verbatim.</p>
+
+    <p class="reviewer-note">— RFP fresh · discovery call fresh · prior engagements aging · pricing model not yet retrieved</p>
+  </div>
+</section>
+
+<section id="w3">
+  <div class="chapter">Week 3 / pressure</div>
+  <h2>Friday morning. <em>The pre-sales lead asks Mentor what to recommend.</em></h2>
+
+  <div class="phase-block">
+    <div class="phase-meta">
+      <div class="cell"><div class="label">Mode</div><div class="val mode-shape">Shape → Defend</div></div>
+      <div class="cell"><div class="label">Scope</div><div class="val">final draft</div></div>
+      <div class="cell"><div class="label">Confidence</div><div class="val">0.72</div></div>
+      <div class="cell"><div class="label">Resisting</div><div class="val">premature certainty</div></div>
+    </div>
+
+    <h3>The architect is tired. The deadline is Monday. He asks the question.</h3>
+    <p>"Mentor, just tell me — phased or cutover. Which one wins?"</p>
+    <p>This is the moment the architecture was built for. The system has read the RFP, the transcript, three prior engagements, the customer's IT and ops priorities, and the integration constraints. It could pick. The architect is asking it to.</p>
+
+    <div class="digest-card">
+      <p>The system can't choose for the customer, and shouldn't. Here's what we know: IT will resist cutover on risk grounds. Ops will resist phased on cost grounds. Both have evidence in their favor and both are reasonable. The honest brief presents both, with the trade-offs named, and lets the customer's exec sponsor break the tie. That's the call they're paid to make.</p>
+      <div class="stamp">RFP <span class="freshness">FRESH</span> · transcript <span class="freshness">FRESH</span> · prior engagements AGING · stance: refuse to pick</div>
+    </div>
+
+    <p>The architect is briefly irritated. He accepts it.</p>
+    <p>Everything else — the agents, the freshness footers, the assumption log, the door-state tracking — exists so this moment, when the architect asks the system to decide on behalf of the customer, can be answered with a steady no.</p>
+  </div>
+</section>
+
+<section id="w4">
+  <div class="chapter">Week 4 / delivery</div>
+  <h2>Monday. <em>The brief goes out.</em> And a year of prior work sits underneath it.</h2>
+
+  <div class="phase-block">
+    <div class="phase-meta">
+      <div class="cell"><div class="label">Mode</div><div class="val mode-defend">Defend</div></div>
+      <div class="cell"><div class="label">Scope</div><div class="val">issued</div></div>
+      <div class="cell"><div class="label">Confidence</div><div class="val">0.78</div></div>
+      <div class="cell"><div class="label">Posture</div><div class="val">defensible, not certain</div></div>
+    </div>
+
+    <h3>The architect issues the response. It reads as deeply specific and his own.</h3>
+    <p>Drafter assembled the response from three prior engagements, the customer's own RFP language, the transcript of the discovery call, the assumptions log, and the architect's annotations. Mentor footnoted every claim that depends on an unconfirmed assumption.</p>
+    <p>The response is twenty-two pages. Six of them are appendices the customer didn't ask for but that anticipate the questions they will ask in week five. Three of them are the assumptions log itself — published, not buried — because the architect believes in showing the work.</p>
+
+    <p>The customer's exec sponsor calls on Wednesday. She asks two questions. Both are about the assumptions, not the architecture. The architect answers both in three minutes because the answers are already written down.</p>
+
+    <p class="reviewer-note">— this is what the system was built for · not better predictions · clearer questions surfaced back to the customer at the moment they need to answer them</p>
+  </div>
+</section>
+
+<section id="post">
+  <div class="divider">what just happened</div>
+  <h2 style="text-align: center; max-width: 900px; margin: 0 auto;">Four weeks. One quiet system. <em>No bluffing. No premature certainty. An RFP response that names what it doesn't know.</em></h2>
+  <p style="text-align: center; max-width: 720px; margin: 32px auto 0; color: var(--ink-soft); font-size: 18px; line-height: 1.6;">What follows is how it works under the hood. None of it was the point. The point was that on Monday, the architect issued a response he could defend — and that the parts he couldn't defend, the response said so.</p>
+</section>
+
+<section id="agents">
+  <div class="section-num">Layer 03 · the constellation</div>
+  <h2>Seven specialists, <em>around one orchestrator.</em></h2>
+  <p class="lead">You've seen what they do. Here's the shape of how they sit. The starred one — the assumption tracker — is the only specialist with the authority to halt a draft.</p>
+
+  <div class="constellation">
+    <div class="agent-pill orch">Mentor · orchestrator</div>
+    <div class="agent-pill starred">★ Assumption Tracker</div>
+    <div class="agent-pill">Requirement Reader</div>
+    <div class="agent-pill">Engagement Library</div>
+    <div class="agent-pill">Stakeholder Reader</div>
+    <div class="agent-pill">Integration Mapper</div>
+    <div class="agent-pill">Constraint Engine</div>
+    <div class="agent-pill">Pricing Translator</div>
+  </div>
+  <div class="constellation-legend">
+    <span class="dot" style="background: var(--rule);"></span>Specialist · reads a scoped slice
+    <span class="dot" style="background: var(--accent);"></span>Assumption tracker · can halt a draft
+  </div>
+</section>
+
+<section id="orch">
+  <div class="section-num">One orchestration example</div>
+  <h2>The discovery call. <em>From transcript to surfaced disagreement.</em></h2>
+
+  <div class="orch-flow">
+    <div class="orch-step">
+      <div class="arrow">→</div>
+      <div>
+        <h4>The transcript lands</h4>
+        <p>Mentor's intake reads the 47-minute call transcript. Speaker turns separated. Decisions logged. Open questions tagged.</p>
+      </div>
+    </div>
+    <div class="orch-step">
+      <div class="arrow">→</div>
+      <div>
+        <h4>Stakeholder agent runs</h4>
+        <p>Reads word choice patterns by speaker. IT director's recurring word: <em>phased</em>. Ops director's recurring word: <em>cutover</em>. Asks one question of the data: are these compatible?</p>
+      </div>
+    </div>
+    <div class="orch-step">
+      <div class="arrow">→</div>
+      <div>
+        <h4>Constraint engine runs in parallel</h4>
+        <p>Door state: phased rollout = $X parallel-run cost + 3-month overlap. Cutover = high cumulative risk in one weekend. Both legitimate. Different trade-offs.</p>
+      </div>
+    </div>
+    <div class="orch-step">
+      <div class="arrow">→</div>
+      <div>
+        <h4>Mentor surfaces the disagreement</h4>
+        <p>Not as a problem to solve. As a real decision the customer has to make. The architect's draft shows both paths with the trade-offs named.</p>
+      </div>
+    </div>
+    <div class="orch-step">
+      <div class="arrow">→</div>
+      <div>
+        <h4>Assumption tracker logs it</h4>
+        <p>"customer has not aligned internally on phased vs. cutover" enters the assumptions log. Every downstream section that depends on this gets footnoted.</p>
+      </div>
+    </div>
+    <div class="orch-step">
+      <div class="arrow">→</div>
+      <div>
+        <h4>The brief, in that exact phrasing</h4>
+        <p><em>"This solution can be delivered as a phased rollout or as a single cutover. Trade-offs are below. We recommend that the customer's exec sponsor make this call before we finalize the implementation plan."</em> Not "we recommend phased." Never that.</p>
+      </div>
+    </div>
+  </div>
+
+  <p style="margin-top: 32px;">Everything else in the architecture — the engagement library, the freshness layer, the assumption tracker, the promotion gate between Drafter and Brief — is in service of producing exactly this kind of output, exactly this way, when the moment calls for it.</p>
+</section>
+
+<section id="closing">
+  <div class="closing-block">
+    <p class="line">Monday morning.</p>
+    <p class="line">The brief is issued.</p>
+    <p class="line">The customer's exec sponsor reads it.</p>
+    <p class="line">She picks phased rollout.</p>
+    <p class="line">The architect is not surprised — but he is glad he did not pick for her.</p>
+    <p style="margin-top: 28px;">A week later, the customer sends a single-line email back:</p>
+    <p style="font-style: italic; padding-left: 24px; border-left: 2px solid var(--accent-soft);">
+      "Thank you for surfacing the phased / cutover question early. We hadn't realized we disagreed internally."
+    </p>
+    <p style="margin-top: 28px;">Four months later, the engagement closes.</p>
+    <p>Mentor begins preparing the engagement archive.</p>
+    <p>The artifacts feed the Engagement Library. The next architect's RFP cycle will start one near-twin richer.</p>
+    <p class="signoff">Solution Architect Copilot v0.1 — a quiet system. built deliberately. for one architect.</p>
+  </div>
+</section>
+
+<div class="closing-nav-section">
+  <div class="section-num-small">four surfaces, one architecture</div>
+  <h2 class="small">This page answered <em>why it exists.</em></h2>
+  <p class="lead-small">Four pages now. Four questions. One architecture.</p>
+
+  <div class="closing-grid">
+    <div class="closing-card current">
+      <div class="label">Why · you are here</div>
+      <h4>A quiet system, behind one engagement</h4>
+      <p>The four-week story. An architect with eight working days and an honest assumption log.</p>
+    </div>
+    <a href="sa_copilot_how.html" class="closing-card">
+      <div class="label">How</div>
+      <h4>Seven bounded specialists</h4>
+      <p>What each one owns, decides, and refuses. One-liner per agent.</p>
+    </a>
+    <a href="sa_copilot_tech.html" class="closing-card">
+      <div class="label">Tech</div>
+      <h4>How the data actually moves</h4>
+      <p>The wiring. Inputs, relay, ingestion, brain, parallel specialists, reconciliation.</p>
+    </a>
+    <a href="sa_copilot_demo.html" class="closing-card">
+      <div class="label">Demo</div>
+      <h4>What Drafter and Brief look like</h4>
+      <p>Four laptop mockups. Two surfaces. The promotion gate made visible.</p>
+    </a>
+  </div>
+</div>
+
+<script>
+  // dot nav active-state on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const dots = document.querySelectorAll('nav.dots a');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        dots.forEach(d => d.classList.remove('active'));
+        const active = document.querySelector(`nav.dots a[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -40% 0px' });
+  sections.forEach(s => obs.observe(s));
+</script>
+
+</body>
+</html>

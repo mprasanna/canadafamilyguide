@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solution Architect Copilot — What Drafter and Brief look like</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe2d1;
+    --paper-deeper: #e2d8c4;
+    --ink: #1a1814;
+    --ink-soft: #4a4438;
+    --ink-faint: #8a8270;
+    --accent: #2c4a6b;
+    --accent-soft: #4a6e96;
+    --rule: #c9bfa8;
+    --architect: #2c4a6b;
+    --orchestrator: #3a3528;
+    --customer: #6b4a2c;
+    --warn: #6b2c1f;
+    --ok: #4a6e4a;
+
+    /* Laptop UI tokens */
+    --screen-bg: #fafaf7;
+    --screen-bg-dark: #1e2330;
+    --screen-text: #1a1d2a;
+    --screen-text-dim: #6a7180;
+    --screen-rule: #e4e0d4;
+    --screen-blue: #2c4a6b;
+    --screen-warn: #b4632c;
+    --screen-ok: #4a6e4a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 17px; line-height: 1.55;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at 12% 6%, rgba(44, 74, 107, 0.04), transparent 50%),
+      radial-gradient(ellipse at 88% 94%, rgba(107, 74, 44, 0.04), transparent 50%);
+    background-attachment: fixed;
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; letter-spacing: -0.01em; }
+  .sans { font-family: 'Inter', sans-serif; }
+
+  /* TOP NAV */
+  .topnav {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding: 18px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: linear-gradient(to bottom, rgba(244,237,224,0.95), rgba(244,237,224,0.85) 70%, transparent);
+    z-index: 90; backdrop-filter: blur(6px);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--ink-soft);
+  }
+  .topnav .brand { color: var(--ink); font-weight: 500; }
+  .topnav .links a { color: var(--ink-soft); text-decoration: none; margin-left: 24px; }
+  .topnav .links a:hover { color: var(--accent); }
+
+  /* DOTS NAV */
+  nav.dots {
+    position: fixed; right: 32px; top: 50%; transform: translateY(-50%);
+    z-index: 100; display: flex; flex-direction: column; gap: 18px;
+  }
+  nav.dots a {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--ink-faint); opacity: 0.4;
+    transition: all 0.3s ease; display: block; position: relative;
+  }
+  nav.dots a:hover, nav.dots a.active {
+    opacity: 1; background: var(--accent); transform: scale(1.4);
+  }
+  nav.dots a::after {
+    content: attr(data-label);
+    position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--ink-soft); white-space: nowrap;
+    opacity: 0; transition: opacity 0.2s;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  nav.dots a:hover::after { opacity: 1; }
+
+  /* SECTIONS */
+  section {
+    padding: 80px 60px;
+    max-width: 1280px; margin: 0 auto;
+    position: relative;
+  }
+  section.hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--ink-faint);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  h1 {
+    font-family: 'Fraunces', serif; font-weight: 400;
+    font-size: clamp(48px, 7vw, 92px);
+    line-height: 1.02; letter-spacing: -0.035em;
+    margin-bottom: 32px;
+    font-variation-settings: "opsz" 144, "SOFT" 50;
+  }
+  h1 em { font-style: italic; font-weight: 300; color: var(--accent); }
+  h2 {
+    font-family: 'Fraunces', serif; font-weight: 500;
+    font-size: clamp(34px, 4.5vw, 56px);
+    line-height: 1.08; letter-spacing: -0.025em;
+    margin-bottom: 28px;
+    font-variation-settings: "opsz" 96, "SOFT" 30;
+  }
+  h2 em { font-style: italic; font-weight: 300; color: var(--accent); }
+  p { margin-bottom: 18px; max-width: 740px; }
+  p.lead {
+    font-size: 21px; line-height: 1.5;
+    color: var(--ink-soft); font-weight: 400;
+    max-width: 800px;
+  }
+
+  /* HERO MINI MOCKUPS */
+  .hero-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin: 28px 0 0;
+    max-width: 920px;
+  }
+  .hero-mini {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 16px 18px;
+    font-size: 13px;
+  }
+  .hero-mini .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--ink-faint);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .hero-mini.drafter { border-top: 3px solid var(--architect); }
+  .hero-mini.brief { border-top: 3px solid var(--customer); }
+  .hero-mini h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 17px; font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .hero-mini p {
+    font-size: 13px; color: var(--ink-soft);
+    line-height: 1.5; margin-bottom: 0;
+  }
+
+  /* SCREENSHOT BLOCK CONTAINER */
+  .shot-block {
+    margin: 60px 0 80px;
+  }
+  .shot-meta {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 40px;
+    align-items: end;
+    margin-bottom: 28px;
+  }
+  .shot-meta h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 32px; font-weight: 500;
+    line-height: 1.15; letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .shot-meta h3 em { font-style: italic; color: var(--accent); }
+  .shot-meta .desc-col p {
+    font-size: 16px; color: var(--ink-soft);
+    line-height: 1.55; margin-bottom: 10px;
+  }
+  .shot-meta .surface-tag {
+    background: var(--paper-deep);
+    padding: 14px 18px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--accent);
+  }
+  .shot-meta .surface-tag .tlabel {
+    color: var(--ink-faint); font-size: 10px;
+    text-transform: uppercase; letter-spacing: 0.14em;
+    margin-bottom: 4px;
+  }
+  .shot-meta .surface-tag .tval {
+    color: var(--ink); font-weight: 500;
+    font-size: 12px;
+  }
+
+  .shot-caption {
+    margin-top: 20px;
+    padding: 18px 22px;
+    background: var(--paper-deep);
+    border-left: 3px solid var(--accent-soft);
+    border-radius: 0 4px 4px 0;
+    max-width: 920px;
+  }
+  .shot-caption .clabel {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .shot-caption p {
+    font-size: 15px; color: var(--ink-soft);
+    line-height: 1.6; margin-bottom: 8px;
+  }
+  .shot-caption p:last-child { margin-bottom: 0; }
+  .shot-caption strong { color: var(--ink); font-weight: 500; }
+  .shot-caption em { font-style: italic; color: var(--accent); font-weight: 500; }
+
+  /* ========= LAPTOP FRAME ========= */
+  .laptop {
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+    perspective: 1200px;
+  }
+  .laptop-lid {
+    background: #2a2a2a;
+    padding: 14px 14px 14px;
+    border-radius: 12px 12px 4px 4px;
+    border: 1px solid #444;
+    border-bottom: none;
+    box-shadow:
+      0 1px 0 #555 inset,
+      0 -1px 0 #1a1a1a inset,
+      0 30px 60px -25px rgba(0,0,0,0.5);
+    position: relative;
+  }
+  .laptop-lid::before {
+    content: '';
+    position: absolute;
+    top: 6px; left: 50%; transform: translateX(-50%);
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    box-shadow: inset 0 0 0 1px #333;
+  }
+  .laptop-screen {
+    background: var(--screen-bg);
+    border-radius: 4px;
+    overflow: hidden;
+    min-height: 540px;
+    aspect-ratio: 16/10;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.15) inset;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .laptop-base {
+    background: linear-gradient(to bottom, #2a2a2a 0%, #1a1a1a 100%);
+    height: 18px;
+    border-radius: 0 0 16px 16px;
+    margin: 0 auto;
+    width: 110%;
+    margin-left: -5%;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  .laptop-base::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+    width: 70px; height: 4px;
+    background: #1a1a1a;
+    border-radius: 0 0 6px 6px;
+  }
+
+  /* ========= APP CHROME (DRAFTER) ========= */
+  .app-chrome {
+    background: var(--screen-bg-dark);
+    color: #c4c8d4;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    border-bottom: 1px solid #2c3344;
+  }
+  .app-chrome .traffic {
+    display: flex; gap: 6px;
+  }
+  .app-chrome .traffic span {
+    width: 10px; height: 10px; border-radius: 50%;
+    display: block;
+  }
+  .app-chrome .traffic span:nth-child(1) { background: #ff5f57; }
+  .app-chrome .traffic span:nth-child(2) { background: #febc2e; }
+  .app-chrome .traffic span:nth-child(3) { background: #28c840; }
+  .app-chrome .urlbar {
+    flex: 1;
+    background: rgba(255,255,255,0.06);
+    padding: 4px 12px;
+    border-radius: 4px;
+    color: #8a92a3;
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+  }
+  .app-chrome .urlbar .domain { color: #c4c8d4; }
+  .app-chrome .user-badge {
+    background: var(--screen-blue);
+    color: #fff;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .app-tabs {
+    background: var(--screen-bg);
+    border-bottom: 1px solid var(--screen-rule);
+    padding: 0 16px;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 11.5px;
+    color: var(--screen-text-dim);
+  }
+  .app-tabs .tab {
+    padding: 12px 16px;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .app-tabs .tab.active {
+    color: var(--screen-blue);
+    border-bottom-color: var(--screen-blue);
+    font-weight: 500;
+  }
+  .app-tabs .tab .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--screen-warn);
+  }
+  .app-tabs .tab .badge {
+    background: rgba(44, 74, 107, 0.12);
+    color: var(--screen-blue);
+    padding: 1px 6px;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 500;
+  }
+  .app-tabs .spacer { flex: 1; }
+  .app-tabs .pill {
+    align-self: center;
+    padding: 4px 10px;
+    background: var(--screen-bg-dark);
+    color: var(--paper);
+    border-radius: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .app-tabs .pill.draft { background: #6b4a2c; color: var(--paper); }
+  .app-tabs .pill.brief { background: #4a6e4a; color: var(--paper); }
+  .app-tabs .pill.halted { background: var(--screen-warn); color: var(--paper); }
+
+  /* ========= APP BODY ========= */
+  .app-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 200px 1fr 240px;
+    background: var(--screen-bg);
+    font-family: 'Inter', sans-serif;
+    color: var(--screen-text);
+    overflow: hidden;
+  }
+  .app-body.no-right { grid-template-columns: 200px 1fr; }
+  .app-body.brief-layout { grid-template-columns: 1fr; padding: 0; }
+
+  .app-sidebar {
+    background: #f3efe5;
+    border-right: 1px solid var(--screen-rule);
+    padding: 14px 12px;
+    font-size: 11px;
+    overflow-y: auto;
+  }
+  .app-sidebar .ssec {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    color: var(--screen-text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin: 14px 0 6px;
+    padding: 0 4px;
+  }
+  .app-sidebar .ssec:first-child { margin-top: 0; }
+  .app-sidebar .sitem {
+    padding: 5px 8px;
+    border-radius: 3px;
+    color: var(--screen-text);
+    margin-bottom: 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11.5px;
+  }
+  .app-sidebar .sitem.active {
+    background: rgba(44, 74, 107, 0.1);
+    color: var(--screen-blue);
+    font-weight: 500;
+  }
+  .app-sidebar .sitem .icon {
+    color: var(--screen-text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+  }
+  .app-sidebar .sitem .conf {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    color: var(--screen-text-dim);
+  }
+  .app-sidebar .sitem .conf.high { color: var(--screen-ok); }
+  .app-sidebar .sitem .conf.low { color: var(--screen-warn); }
+
+  .app-main {
+    padding: 22px 28px;
+    overflow-y: auto;
+    background: var(--screen-bg);
+  }
+  .app-main h1.doc-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--screen-text);
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+  .app-main .doc-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--screen-text-dim);
+    letter-spacing: 0.06em;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--screen-rule);
+  }
+  .app-main h2.sec {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--screen-text);
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .app-main h2.sec .conf-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    background: rgba(44, 74, 107, 0.1);
+    color: var(--screen-blue);
+    padding: 2px 7px;
+    border-radius: 8px;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+  .app-main h2.sec .conf-pill.low { background: rgba(180, 99, 44, 0.12); color: var(--screen-warn); }
+  .app-main p {
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--screen-text);
+    margin-bottom: 10px;
+    max-width: 100%;
+  }
+  .app-main p .fn {
+    color: var(--screen-warn);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    vertical-align: super;
+    background: rgba(180, 99, 44, 0.1);
+    padding: 1px 4px;
+    border-radius: 2px;
+    margin-left: 1px;
+  }
+  .app-main p .fn.ok {
+    color: var(--screen-ok);
+    background: rgba(74, 110, 74, 0.1);
+  }
+  .app-main ul.bullets {
+    list-style: none;
+    padding: 0; margin: 8px 0 14px;
+  }
+  .app-main ul.bullets li {
+    font-size: 12px;
+    color: var(--screen-text);
+    padding: 4px 0 4px 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .app-main ul.bullets li::before {
+    content: '—';
+    position: absolute; left: 0;
+    color: var(--screen-text-dim);
+  }
+  .app-main .footnotes {
+    margin-top: 24px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--screen-rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--screen-text-dim);
+    line-height: 1.6;
+  }
+  .app-main .footnotes .fn-line {
+    margin-bottom: 4px;
+    padding-left: 20px;
+    position: relative;
+  }
+  .app-main .footnotes .fn-line .num {
+    position: absolute;
+    left: 0;
+    color: var(--screen-warn);
+    font-weight: 500;
+  }
+  .app-main .footnotes .fn-line.ok .num { color: var(--screen-ok); }
+
+  /* RIGHT PANEL — Mentor / specialists */
+  .app-right {
+    background: #f5f1e6;
+    border-left: 1px solid var(--screen-rule);
+    padding: 16px 14px;
+    overflow-y: auto;
+    font-size: 11px;
+  }
+  .app-right .panel-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--screen-text-dim);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--screen-rule);
+  }
+  .app-right .agent-row {
+    display: grid;
+    grid-template-columns: 1fr 50px;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 6px;
+    border-bottom: 1px dashed var(--screen-rule);
+    font-size: 11px;
+  }
+  .app-right .agent-row:last-child { border-bottom: none; }
+  .app-right .agent-row .aname {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: var(--screen-text);
+    line-height: 1.3;
+  }
+  .app-right .agent-row .astatus {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--screen-text-dim);
+    line-height: 1.3;
+    margin-top: 2px;
+  }
+  .app-right .agent-row .conf {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--screen-ok);
+    font-weight: 500;
+    text-align: right;
+  }
+  .app-right .agent-row .conf.low { color: var(--screen-warn); }
+  .app-right .agent-row .conf.halt {
+    color: #fff;
+    background: var(--screen-warn);
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-size: 9px;
+    text-align: center;
+  }
+  .app-right .halt-banner {
+    margin: 14px 0 10px;
+    padding: 10px 12px;
+    background: rgba(180, 99, 44, 0.1);
+    border-left: 2px solid var(--screen-warn);
+    border-radius: 0 3px 3px 0;
+    font-size: 10.5px;
+    color: var(--screen-warn);
+    line-height: 1.45;
+  }
+  .app-right .halt-banner strong {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  /* ========= UPLOAD SHOT (intake) ========= */
+  .intake-canvas {
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: var(--screen-bg);
+    height: 100%;
+  }
+  .intake-canvas .iicon {
+    width: 64px; height: 64px;
+    border: 1.5px dashed var(--screen-blue);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    color: var(--screen-blue);
+    margin-bottom: 20px;
+  }
+  .intake-canvas h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px; font-weight: 500;
+    color: var(--screen-text);
+    margin-bottom: 8px;
+  }
+  .intake-canvas .isub {
+    font-size: 12.5px;
+    color: var(--screen-text-dim);
+    margin-bottom: 24px;
+    max-width: 420px;
+  }
+  .intake-canvas .file-card {
+    background: var(--screen-bg);
+    border: 1px solid var(--screen-rule);
+    border-radius: 4px;
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: 32px 1fr 60px;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+    max-width: 480px;
+    margin-bottom: 8px;
+    text-align: left;
+  }
+  .intake-canvas .file-card .ficon {
+    width: 32px; height: 32px;
+    background: rgba(44, 74, 107, 0.1);
+    color: var(--screen-blue);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+  }
+  .intake-canvas .file-card .fmeta .fname {
+    font-family: 'Inter', sans-serif;
+    font-size: 12.5px;
+    color: var(--screen-text);
+    font-weight: 500;
+  }
+  .intake-canvas .file-card .fmeta .fsize {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--screen-text-dim);
+  }
+  .intake-canvas .file-card .progress {
+    width: 60px;
+    height: 4px;
+    background: var(--screen-rule);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+  }
+  .intake-canvas .file-card .progress::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    background: var(--screen-ok);
+  }
+  .intake-canvas .file-card .progress.p100::after { width: 100%; }
+  .intake-canvas .file-card .progress.p64::after { width: 64%; }
+
+  .intake-canvas .pipeline {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+  }
+  .intake-canvas .pipeline .step {
+    padding: 10px 6px;
+    border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    color: var(--screen-text-dim);
+    line-height: 1.3;
+    letter-spacing: 0.04em;
+  }
+  .intake-canvas .pipeline .step.done {
+    color: var(--screen-ok);
+    background: rgba(74, 110, 74, 0.08);
+  }
+  .intake-canvas .pipeline .step.active {
+    color: var(--screen-blue);
+    background: rgba(44, 74, 107, 0.1);
+    font-weight: 500;
+  }
+  .intake-canvas .pipeline .step.pending {
+    color: var(--screen-text-dim);
+    background: rgba(0,0,0,0.03);
+  }
+  .intake-canvas .pipeline .step .num {
+    display: block;
+    font-size: 8.5px;
+    color: var(--screen-text-dim);
+    margin-bottom: 4px;
+    letter-spacing: 0.1em;
+  }
+  .intake-canvas .pipeline .step.done .num,
+  .intake-canvas .pipeline .step.active .num { color: inherit; opacity: 0.6; }
+
+  /* ========= BRIEF (CUSTOMER-FACING) ========= */
+  .brief-canvas {
+    background: var(--screen-bg);
+    padding: 32px 56px;
+    overflow-y: auto;
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+  }
+  .brief-header {
+    border-bottom: 2px solid var(--screen-text);
+    padding-bottom: 18px;
+    margin-bottom: 24px;
+  }
+  .brief-header .from {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--screen-text-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .brief-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--screen-text);
+    line-height: 1.15;
+    margin-bottom: 6px;
+    letter-spacing: -0.015em;
+  }
+  .brief-header .from-to {
+    display: flex; justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--screen-text-dim);
+    letter-spacing: 0.06em;
+    margin-top: 8px;
+  }
+  .brief-section {
+    margin-bottom: 24px;
+  }
+  .brief-section h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--screen-text);
+    margin-bottom: 10px;
+    letter-spacing: -0.005em;
+  }
+  .brief-section p {
+    font-size: 12px;
+    color: var(--screen-text);
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+
+  /* Services table */
+  .svc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11.5px;
+    margin: 8px 0 12px;
+  }
+  .svc-table th {
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    color: var(--screen-text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 6px;
+    border-bottom: 1px solid var(--screen-text);
+    font-weight: 500;
+  }
+  .svc-table td {
+    padding: 9px 6px;
+    border-bottom: 1px solid var(--screen-rule);
+    vertical-align: top;
+    color: var(--screen-text);
+    line-height: 1.4;
+  }
+  .svc-table td.right { text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+  .svc-table td .sku-name { font-weight: 500; }
+  .svc-table td .sku-just {
+    display: block;
+    font-size: 10.5px;
+    color: var(--screen-text-dim);
+    margin-top: 2px;
+    line-height: 1.4;
+  }
+  .svc-table tfoot td {
+    border-top: 2px solid var(--screen-text);
+    border-bottom: none;
+    font-weight: 500;
+    padding-top: 12px;
+  }
+  .svc-table tfoot td.range {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    color: var(--screen-blue);
+    font-weight: 600;
+  }
+
+  /* Trade-off box */
+  .tradeoff-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 10px 0;
+  }
+  .tradeoff-col {
+    padding: 12px 14px;
+    background: rgba(44, 74, 107, 0.05);
+    border-left: 2px solid var(--screen-blue);
+    border-radius: 0 3px 3px 0;
+  }
+  .tradeoff-col h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--screen-blue);
+    margin-bottom: 6px;
+  }
+  .tradeoff-col ul { list-style: none; padding: 0; }
+  .tradeoff-col ul li {
+    font-size: 10.5px;
+    color: var(--screen-text);
+    padding: 2px 0 2px 12px;
+    position: relative;
+    line-height: 1.45;
+  }
+  .tradeoff-col ul li::before {
+    content: '·'; position: absolute; left: 4px;
+    color: var(--screen-text-dim); font-weight: bold;
+  }
+
+  /* Assumption log */
+  .assumption-log {
+    background: rgba(180, 99, 44, 0.06);
+    border: 1px solid rgba(180, 99, 44, 0.25);
+    border-radius: 3px;
+    padding: 12px 14px;
+    margin: 10px 0;
+  }
+  .assumption-log .alog-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    color: var(--screen-warn);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .assumption-log ul { list-style: none; padding: 0; }
+  .assumption-log ul li {
+    font-size: 11px;
+    color: var(--screen-text);
+    padding: 4px 0 4px 18px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .assumption-log ul li::before {
+    content: '!';
+    position: absolute; left: 4px;
+    color: var(--screen-warn);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+  }
+  .assumption-log ul li .alabel {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    color: var(--screen-text-dim);
+    margin-left: 4px;
+  }
+
+  /* Freshness footer */
+  .freshness-footer {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--screen-rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--screen-text-dim);
+    letter-spacing: 0.04em;
+    line-height: 1.7;
+  }
+  .freshness-footer .ftag { color: var(--screen-ok); font-weight: 500; }
+  .freshness-footer .ftag.aging { color: var(--screen-warn); }
+  .freshness-footer .flabel {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 9.5px;
+    color: var(--screen-text-dim);
+    margin-right: 8px;
+  }
+
+  /* ========= REFUSAL DIALOG ========= */
+  .refusal-canvas {
+    background: var(--screen-bg);
+    padding: 24px 32px;
+    height: 100%;
+    overflow-y: auto;
+    font-family: 'Inter', sans-serif;
+  }
+  .refusal-canvas .chat-thread {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .chat-msg {
+    margin: 14px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .chat-msg .avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .chat-msg.user .avatar {
+    background: var(--screen-rule);
+    color: var(--screen-text);
+  }
+  .chat-msg.system .avatar {
+    background: var(--orchestrator);
+    color: var(--paper);
+  }
+  .chat-msg .bubble {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--screen-text);
+  }
+  .chat-msg.user .bubble {
+    background: rgba(0,0,0,0.04);
+  }
+  .chat-msg.system .bubble {
+    background: var(--screen-bg);
+    border: 1px solid var(--screen-rule);
+  }
+  .chat-msg.system .bubble strong {
+    font-weight: 500;
+    color: var(--screen-blue);
+  }
+  .chat-msg .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    color: var(--screen-text-dim);
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+  .chat-msg.system .bubble em {
+    font-style: italic;
+    color: var(--screen-text-dim);
+  }
+  .chat-msg.system .bubble .source-tags {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--screen-rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    color: var(--screen-text-dim);
+    line-height: 1.7;
+    letter-spacing: 0.04em;
+  }
+  .chat-msg.system .bubble .source-tags .ftag { color: var(--screen-ok); font-weight: 500; }
+  .chat-msg.system .bubble .source-tags .flabel {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--screen-text-dim);
+    margin-right: 4px;
+  }
+
+  /* PROMOTION GATE / WALL DIAGRAM */
+  .wall-diagram {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 24px;
+    margin: 32px 0;
+  }
+  .wall-col {
+    background: var(--paper-deep);
+    padding: 28px 26px;
+    border-radius: 4px;
+    border-top: 4px solid var(--accent-soft);
+  }
+  .wall-col.brief-side { border-top-color: var(--customer); }
+  .wall-col h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px; font-weight: 500;
+    margin-bottom: 14px;
+    letter-spacing: -0.015em;
+  }
+  .wall-col h3 .small {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .wall-col ul { list-style: none; padding: 0; }
+  .wall-col ul li {
+    font-size: 14px;
+    color: var(--ink-soft);
+    padding: 5px 0 5px 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .wall-col ul li::before {
+    content: '—';
+    position: absolute; left: 0;
+    color: var(--ink-faint);
+  }
+  .wall-gate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--accent);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    text-align: center;
+  }
+
+  /* CLOSING GRID */
+  .closing-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 40px;
+  }
+  .closing-card {
+    background: var(--paper-deep);
+    padding: 24px 22px;
+    border-radius: 4px;
+    border: 1px solid var(--rule);
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.2s;
+    display: block;
+  }
+  .closing-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .closing-card.current {
+    background: var(--paper-deeper);
+    border-color: var(--accent);
+  }
+  .closing-card .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; color: var(--ink-faint);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .closing-card.current .label { color: var(--accent); }
+  .closing-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 18px; font-weight: 500;
+    margin-bottom: 8px; line-height: 1.2;
+  }
+  .closing-card p {
+    font-size: 13.5px; color: var(--ink-soft);
+    line-height: 1.5; margin-bottom: 0;
+  }
+
+  .closing-footer {
+    text-align: center;
+    padding: 60px 20px 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--ink-faint);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    border-top: 1px solid var(--rule);
+    margin-top: 60px;
+  }
+
+  @media (max-width: 980px) {
+    section { padding: 60px 24px; }
+    nav.dots { display: none; }
+    .topnav { padding: 14px 18px; font-size: 10px; }
+    .topnav .links a { margin-left: 12px; }
+    .shot-meta { grid-template-columns: 1fr; gap: 18px; }
+    .app-body { grid-template-columns: 1fr; }
+    .app-sidebar, .app-right { display: none; }
+    .laptop-screen { min-height: 420px; aspect-ratio: auto; }
+    .closing-grid { grid-template-columns: 1fr 1fr; }
+    .wall-diagram { grid-template-columns: 1fr; }
+    .wall-gate { writing-mode: horizontal-tb; transform: none; padding: 14px 0; }
+    .brief-canvas { padding: 22px 24px; }
+    .hero-row { grid-template-columns: 1fr; }
+    .tradeoff-box { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <span class="brand">Solution Architect Copilot v0.1</span>
+  <span class="links">
+    <a href="sa_copilot_why.html">why</a>
+    <a href="sa_copilot_how.html">how</a>
+    <a href="sa_copilot_tech.html">tech</a>
+    <a href="#" class="active" style="color: var(--accent);">demo</a>
+  </span>
+</div>
+
+<nav class="dots">
+  <a href="#opening" data-label="opening"></a>
+  <a href="#intake" data-label="1 · intake"></a>
+  <a href="#drafter" data-label="2 · drafter"></a>
+  <a href="#brief" data-label="3 · brief"></a>
+  <a href="#refusal" data-label="4 · refusal"></a>
+  <a href="#wall" data-label="the gate"></a>
+  <a href="#closing" data-label="four surfaces"></a>
+</nav>
+
+<section id="opening" class="hero">
+  <div class="section-num">Solution Architect Copilot v0.1 what the surfaces look like</div>
+  <h1>Two surfaces.<br>Same architecture. <em>Different humans.</em></h1>
+  <p class="lead">Drafter lives on the architect's laptop — workbench, footnotes, halts visible, full assumption log. Brief is the customer-facing artifact — promoted only through the gate, with the assumption log published, not buried. Same observations, two registers. Four laptop mockups below.</p>
+
+  <div class="hero-row">
+    <div class="hero-mini drafter">
+      <div class="lbl">Drafter · for the architect</div>
+      <h4>Workbench</h4>
+      <p>Every confidence value. Every halt. Every open question. Refuses nothing — the architect sees the system thinking.</p>
+    </div>
+    <div class="hero-mini brief">
+      <div class="lbl">Brief · for the customer</div>
+      <h4>The promoted artifact</h4>
+      <p>Only what cleared the gate. Assumptions log published. Refuses to choose where the customer must.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========= SHOT 1 · INTAKE ========= -->
+<section id="intake">
+  <div class="section-num">01 / Drafter · intake</div>
+  <div class="shot-meta">
+    <div class="title-col">
+      <h3>Week 1 · Monday. <em>The RFP lands.</em> The system produces nothing yet.</h3>
+    </div>
+    <div class="surface-tag">
+      <div class="tlabel">Drafter · Week 1 · Monday 9:16 am</div>
+      <div class="tval">Ingestion in progress</div>
+    </div>
+  </div>
+  <div class="desc-col">
+    <p>The architect drops the customer's RFP into Drafter. Five-stage pipeline runs. The Requirement Reader strips the document into clauses, scoring criteria, customer success metrics, and — separately — the implicit assumptions the RFP doesn't make explicit. Boilerplate gets demoted to its own pile.</p>
+  </div>
+
+  <div class="laptop">
+    <div class="laptop-lid">
+      <div class="laptop-screen">
+        <div class="app-chrome">
+          <div class="traffic"><span></span><span></span><span></span></div>
+          <div class="urlbar"><span class="domain">drafter.internal</span> / engagements / new</div>
+          <div class="user-badge">RV</div>
+        </div>
+        <div class="app-tabs">
+          <div class="tab active">○ Intake</div>
+          <div class="tab">Requirements</div>
+          <div class="tab">Specialists</div>
+          <div class="tab">Brief</div>
+          <div class="spacer"></div>
+          <div class="pill">EMPTY</div>
+        </div>
+        <div class="intake-canvas">
+          <div class="iicon">↑</div>
+          <h2>Drop the RFP to begin</h2>
+          <div class="isub">Drafter reads the document, strips clauses, attributes scoring weights, and surfaces implicit assumptions. Nothing is committed until the architect promotes it.</div>
+
+          <div class="file-card">
+            <div class="ficon">PDF</div>
+            <div class="fmeta">
+              <div class="fname">Apex-Manufacturing_RFP_2026.pdf</div>
+              <div class="fsize">38 pages · 1.2 MB · received Monday 9:14am</div>
+            </div>
+            <div class="progress p100"></div>
+          </div>
+          <div class="file-card">
+            <div class="ficon">DOCX</div>
+            <div class="fmeta">
+              <div class="fname">Apex_Scoring_Criteria_Addendum.docx</div>
+              <div class="fsize">4 pages · 142 KB · received Monday 9:14am</div>
+            </div>
+            <div class="progress p64"></div>
+          </div>
+
+          <div class="pipeline">
+            <div class="step done"><span class="num">01</span>Ingest</div>
+            <div class="step done"><span class="num">02</span>Strip clauses</div>
+            <div class="step active"><span class="num">03</span>Attribute weights</div>
+            <div class="step pending"><span class="num">04</span>Surface assumptions</div>
+            <div class="step pending"><span class="num">05</span>Library lookup</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="laptop-base"></div>
+  </div>
+
+  <div class="shot-caption">
+    <div class="clabel">Drafter · intake · Week 1 · Monday 9:16 am</div>
+    <p><strong>Nothing has been drafted yet.</strong> No recommendations, no near-twin reuse, no specialist outputs. A system designed for restraint, on the day an RFP lands, should say exactly: <em>we don't know enough yet.</em></p>
+    <p>The Library lookup is queued but deliberately gated until the requirements are parsed. The order matters — match against prior engagements only after the requirements are clear, otherwise the near-twin search biases the reading of the document itself.</p>
+  </div>
+</section>
+
+<!-- ========= SHOT 2 · DRAFTER WORKBENCH ========= -->
+<section id="drafter">
+  <div class="section-num">02 / Drafter · workbench</div>
+  <div class="shot-meta">
+    <div class="title-col">
+      <h3>Week 2 · Tuesday. <em>The working draft.</em> With footnotes the architect can read.</h3>
+    </div>
+    <div class="surface-tag">
+      <div class="tlabel">Drafter · Week 2 · Tuesday</div>
+      <div class="tval">3 open questions · 2 halts</div>
+    </div>
+  </div>
+  <div class="desc-col">
+    <p>Seven working days into the engagement. The discovery call has been ingested. The Engagement Library has surfaced three near-twins. The Stakeholder Reader has flagged a quiet disagreement between IT and ops. The Integration Mapper has self-paused on the WMS edge. Drafter shows the architect the working draft <em>with everything visible</em> — every confidence value, every halt, every open question.</p>
+  </div>
+
+  <div class="laptop">
+    <div class="laptop-lid">
+      <div class="laptop-screen">
+        <div class="app-chrome">
+          <div class="traffic"><span></span><span></span><span></span></div>
+          <div class="urlbar"><span class="domain">drafter.internal</span> / engagements / apex-mfg / draft</div>
+          <div class="user-badge">RV</div>
+        </div>
+        <div class="app-tabs">
+          <div class="tab">Intake</div>
+          <div class="tab">Requirements <span class="badge">47</span></div>
+          <div class="tab active">Specialists <span class="dot"></span></div>
+          <div class="tab">Brief</div>
+          <div class="spacer"></div>
+          <div class="pill draft">DRAFT · NOT PROMOTED</div>
+        </div>
+        <div class="app-body">
+          <div class="app-sidebar">
+            <div class="ssec">Engagement</div>
+            <div class="sitem active"><span>Apex Mfg</span><span class="icon">wk2</span></div>
+            <div class="ssec">Sections</div>
+            <div class="sitem">Executive summary <span class="conf">0.78</span></div>
+            <div class="sitem">Solution overview <span class="conf">0.72</span></div>
+            <div class="sitem">Services & scope <span class="conf low">0.55</span></div>
+            <div class="sitem">Integration map <span class="conf low">0.40</span></div>
+            <div class="sitem">Rollout approach <span class="conf low">HALT</span></div>
+            <div class="sitem">Pricing <span class="conf">band</span></div>
+            <div class="sitem">Assumptions log <span class="conf">7</span></div>
+            <div class="ssec">Near-twins</div>
+            <div class="sitem">#2117 Hartwell <span class="icon">ok</span></div>
+            <div class="sitem">#2103 Beldon <span class="icon">ok</span></div>
+            <div class="sitem">#1984 Sentralia <span class="icon">!</span></div>
+          </div>
+          <div class="app-main">
+            <h1 class="doc-title">Apex Manufacturing — Solution Architecture</h1>
+            <div class="doc-sub">RFP-2026-001 · 38-page intake · 47 clauses · 6 stakeholders · last revised 14 minutes ago</div>
+
+            <h2 class="sec">Services &amp; scope <span class="conf-pill">conf 0.72</span></h2>
+            <p>The proposed solution spans three product lines: CRM (sales &amp; service), Field Service (dispatch &amp; mobile), and Inventory &amp; Analytics. Recommended editions are sized against the RFP's stated user counts<span class="fn ok">1</span> and the assumption that warehouse staff fall under the field-service mobile license tier.</p>
+            <ul class="bullets">
+              <li>CRM Enterprise — 240 named users · sales + service queues</li>
+              <li>Field Service Plus — 96 mobile users · dispatch console + offline mode</li>
+              <li>Inventory Pro — 12 power users · 2-site SKU sync</li>
+              <li>Analytics Premium — included in CRM Enterprise (no incremental SKU)</li>
+            </ul>
+
+            <h2 class="sec">Integration map <span class="conf-pill low">conf 0.40 · paused</span></h2>
+            <p>The systems-of-record map shows six confirmed edges and three open ones. The WMS edge<span class="fn">2</span> is paused — the customer's RFP says <em>SAP-based</em> without specifying EWM versus legacy WM. The Integration Mapper has refused to assume; the question is pending in the customer follow-up queue.</p>
+
+            <h2 class="sec">Rollout approach <span class="conf-pill low">HALT · assumption tracker</span></h2>
+            <p>The discovery call transcript surfaced a quiet disagreement<span class="fn">3</span> between the IT director (preferring phased rollout, mentioned four times) and the ops director (preferring single cutover, mentioned twice, asked about parallel-run cost). Both paths are legitimate. The Constraint Engine computes trade-offs below; the recommendation is deferred to the customer's exec sponsor.</p>
+
+            <div class="footnotes">
+              <div class="fn-line ok"><span class="num">1.</span> User counts from RFP §3.2; inference, not a halt. Not yet roster-validated. Confirmed range: 248 ± 12.</div>
+              <div class="fn-line"><span class="num">2.</span> WMS platform identity not confirmed in RFP or discovery call. Difference between EWM and legacy WM is approximately 6 weeks of implementation effort. Question queued for customer follow-up Wednesday.</div>
+              <div class="fn-line"><span class="num">3.</span> Stakeholder disagreement on rollout cadence detected from word-choice patterns in discovery transcript. Not surfaced by either stakeholder explicitly. Assumption Tracker has halted promotion of any single rollout recommendation.</div>
+            </div>
+          </div>
+          <div class="app-right">
+            <div class="panel-title">Mentor · specialists</div>
+
+            <div class="agent-row">
+              <div>
+                <div class="aname">Requirement Reader</div>
+                <div class="astatus">47 clauses · 6 scoring criteria</div>
+              </div>
+              <div class="conf">0.92</div>
+            </div>
+            <div class="agent-row">
+              <div>
+                <div class="aname">Engagement Library</div>
+                <div class="astatus">3 near-twins · 1 hazard flag</div>
+              </div>
+              <div class="conf">0.81</div>
+            </div>
+            <div class="agent-row">
+              <div>
+                <div class="aname">Stakeholder Reader</div>
+                <div class="astatus">disagreement detected</div>
+              </div>
+              <div class="conf low">0.62</div>
+            </div>
+            <div class="agent-row">
+              <div>
+                <div class="aname">Integration Mapper</div>
+                <div class="astatus">paused on WMS edge</div>
+              </div>
+              <div class="conf low">0.40</div>
+            </div>
+            <div class="agent-row">
+              <div>
+                <div class="aname">Constraint Engine</div>
+                <div class="astatus">trade-offs computed</div>
+              </div>
+              <div class="conf">0.74</div>
+            </div>
+            <div class="agent-row">
+              <div>
+                <div class="aname">Pricing Translator</div>
+                <div class="astatus">band emitted, midpoint not</div>
+              </div>
+              <div class="conf">0.71</div>
+            </div>
+            <div class="agent-row">
+              <div>
+                <div class="aname">★ Assumption Tracker</div>
+                <div class="astatus">2 halts active</div>
+              </div>
+              <div class="conf halt">HALT</div>
+            </div>
+
+            <div class="halt-banner">
+              <strong>Promotion gate · blocked</strong>
+              Two assumptions block promotion to Brief: WMS platform identity, internal rollout alignment. Resolve before promoting.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="laptop-base"></div>
+  </div>
+
+  <div class="shot-caption">
+    <div class="clabel">Drafter · workbench · Week 2 · Tuesday evening</div>
+    <p><strong>Drafter refuses nothing — the architect sees the system thinking.</strong> Three sections are at low confidence; two are halted by the Assumption Tracker. The footnotes are not decorative — they correspond to the actual halts in the right panel. Click a footnote and Drafter scrolls to the agent that raised it.</p>
+    <p>The pricing section emits a <em>band, not a midpoint</em> — because scope is still open on the rollout question. A single number now would be a lie dressed up as confidence.</p>
+    <p>Behind the scenes: <strong>Gate 1 is halted</strong> — the Assumption Tracker has fired on the WMS-platform question and the internal-alignment question. No section can promote to Brief until both clear.</p>
+  </div>
+</section>
+
+<!-- ========= SHOT 3 · CUSTOMER BRIEF ========= -->
+<section id="brief">
+  <div class="section-num">03 / Brief · customer-facing</div>
+  <div class="shot-meta">
+    <div class="title-col">
+      <h3>Week 4 · Monday. <em>The brief, promoted.</em> Services, justification, ranges, and a published assumption log.</h3>
+    </div>
+    <div class="surface-tag">
+      <div class="tlabel">Brief · Week 4 · Monday 8:42 am</div>
+      <div class="tval">All halts resolved · 7 assumptions published</div>
+    </div>
+  </div>
+  <div class="desc-col">
+    <p>The previous week's customer follow-up resolved the WMS question (legacy WM, not EWM). The exec sponsor's note resolved the rollout disagreement (phased, with parallel-run budget approved). The Assumption Tracker's two halts cleared. <strong>Gate 1 cleared first; Gate 2 promoted the brief Monday morning.</strong> Brief composes from Drafter under the canonical-phrase guide.</p>
+  </div>
+
+  <div class="laptop">
+    <div class="laptop-lid">
+      <div class="laptop-screen">
+        <div class="app-chrome">
+          <div class="traffic"><span></span><span></span><span></span></div>
+          <div class="urlbar"><span class="domain">drafter.internal</span> / engagements / apex-mfg / brief · view as customer</div>
+          <div class="user-badge">RV</div>
+        </div>
+        <div class="app-tabs">
+          <div class="tab">Intake</div>
+          <div class="tab">Requirements</div>
+          <div class="tab">Specialists</div>
+          <div class="tab active">Brief</div>
+          <div class="spacer"></div>
+          <div class="pill brief">PROMOTED · BRIEF</div>
+        </div>
+
+        <div class="brief-canvas">
+          <div class="brief-header">
+            <div class="from">Solution architecture brief · v1.0</div>
+            <h1>Apex Manufacturing — Solution &amp; Quote Justification</h1>
+            <div class="from-to">
+              <span>To · Apex Mfg, attn. Priya Chen, COO</span>
+              <span>Date · Week 4 · Monday 8:42 AM</span>
+            </div>
+          </div>
+
+          <div class="brief-section">
+            <h2>Recommended scope</h2>
+            <p>The solution spans CRM, Field Service, and Inventory &amp; Analytics, sized to your stated user counts and validated against your discovery-call confirmation that warehouse staff operate on mobile devices in the field. We have not assumed coverage for the planned Mexico facility — that scope is treated as a separable Phase 2 deal.</p>
+
+            <table class="svc-table">
+              <thead>
+                <tr>
+                  <th>Service / SKU</th>
+                  <th>Users · units</th>
+                  <th>Annual range</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <span class="sku-name">CRM Enterprise</span>
+                    <span class="sku-just">Justified by §3.2 (240 sales/service users) and the discovery-call confirmation that the service queue must support multi-channel triage. Analytics Premium is bundled — no incremental SKU.</span>
+                  </td>
+                  <td class="right">240 named</td>
+                  <td class="right">$144K – $158K</td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="sku-name">Field Service Plus</span>
+                    <span class="sku-just">Justified by §4.1 (offline dispatch requirement) and the IT director's confirmation that field staff have intermittent connectivity. Mobile license tier matches the stated 96-user count.</span>
+                  </td>
+                  <td class="right">96 mobile</td>
+                  <td class="right">$72K – $84K</td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="sku-name">Inventory Pro</span>
+                    <span class="sku-just">Justified by §5.3 (2-site SKU sync). Power-user count matches the 12 named in the addendum. Real-time sync latency assumed at &lt;5 min; please confirm if tighter SLA is required.</span>
+                  </td>
+                  <td class="right">12 power</td>
+                  <td class="right">$18K – $22K</td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="sku-name">Integration services</span>
+                    <span class="sku-just">Six confirmed integrations · ERP, e-commerce, payment gateway, WMS (legacy WM), email, SSO. WMS integration scoped to legacy WM per customer confirmation in Week 3; would re-scope if migrated to EWM during engagement.</span>
+                  </td>
+                  <td class="right">one-time</td>
+                  <td class="right">$42K – $58K</td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="sku-name">Implementation &amp; enablement</span>
+                    <span class="sku-just">Phased rollout per exec sponsor's direction. Parallel-run period budgeted at 8 weeks. Training scoped for 240 + 96 + 12 = 348 users across three cohorts.</span>
+                  </td>
+                  <td class="right">one-time</td>
+                  <td class="right">$96K – $124K</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>Total annual range &nbsp;<span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--screen-text-dim); font-weight: normal; letter-spacing: 0.04em;">recurring + one-time</span></td>
+                  <td></td>
+                  <td class="right range">$372K – $446K</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <div class="brief-section">
+            <h2>Rollout approach · two paths, customer's call</h2>
+            <p>Your IT and operations teams expressed preferences for different rollout cadences during discovery. Both paths are defensible. Trade-offs below; the choice belongs to your exec sponsor.</p>
+
+            <div class="tradeoff-box">
+              <div class="tradeoff-col">
+                <h4>Phased rollout · 14 weeks</h4>
+                <ul>
+                  <li>Lower per-stage risk</li>
+                  <li>IT change-control friendly</li>
+                  <li>Parallel-run cost ~$48K</li>
+                  <li>Warehouse staff on two systems for 8 weeks</li>
+                </ul>
+              </div>
+              <div class="tradeoff-col">
+                <h4>Single cutover · 9 weeks</h4>
+                <ul>
+                  <li>No parallel-run cost</li>
+                  <li>Higher concentrated risk one weekend</li>
+                  <li>Warehouse staff on one system from day one</li>
+                  <li>Requires holiday-weekend window</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="brief-section">
+            <h2>Assumptions on which this brief depends</h2>
+            <div class="assumption-log">
+              <div class="alog-label">Published, not buried</div>
+              <ul>
+                <li>WMS platform is legacy WM, not EWM <span class="alabel">confirmed Week 3 · IT director</span></li>
+                <li>Mexico facility is out of scope for Phase 1 <span class="alabel">implicit · not yet confirmed in writing</span></li>
+                <li>Real-time inventory sync &lt;5 min is acceptable <span class="alabel">RFP language; specific SLA not stated</span></li>
+                <li>User counts validated within ±5% of stated <span class="alabel">RFP §3.2 · not roster-validated</span></li>
+                <li>SSO provider is Azure AD <span class="alabel">inferred from current IT stack</span></li>
+                <li>Holiday weekend window available for cutover, if elected <span class="alabel">requires customer confirmation</span></li>
+                <li>Parallel-run budget approved for phased path <span class="alabel">exec sponsor email · Monday 7:18 am</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="freshness-footer">
+            <div><span class="flabel">Based on</span> RFP <span class="ftag">FRESH</span> · discovery transcript <span class="ftag">FRESH</span> · customer follow-up <span class="ftag">FRESH</span> · prior engagements (3 near-twins) <span class="ftag">FRESH</span> · pricing tables <span class="ftag">FRESH</span></div>
+            <div style="margin-top: 4px;"><span class="flabel">Composed by</span> Solution Architect Copilot v0.1 · Mentor + 7 specialists · promoted through gate Monday 8:42 am</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="laptop-base"></div>
+  </div>
+
+  <div class="shot-caption">
+    <div class="clabel">Brief · customer-facing · Week 4 · Monday morning</div>
+    <p><strong>Every SKU line has a justification underneath it.</strong> Not "trust us" pricing — sourced to either an RFP clause, a confirmed discovery-call statement, or a named assumption. The customer can audit each one.</p>
+    <p>The rollout section <em>presents two paths and refuses to pick</em>. The customer's exec sponsor will read this and make the call — which is the call that is actually hers to make. The brief's job is to set the choice up cleanly, not to make it.</p>
+    <p>The published assumption log is the architectural commitment that most RFP responses bury. The customer learns more from the assumptions than from the numbers — the assumptions are where the next conversation begins.</p>
+  </div>
+</section>
+
+<!-- ========= SHOT 4 · THE REFUSAL ========= -->
+<section id="refusal">
+  <div class="section-num">04 / Drafter · the canonical refusal</div>
+  <div class="shot-meta">
+    <div class="title-col">
+      <h3>Week 3 · Friday morning. <em>The architect asks Mentor to pick.</em></h3>
+    </div>
+    <div class="surface-tag">
+      <div class="tlabel">Drafter · console · Week 3 · Friday 7:48 am</div>
+      <div class="tval">Tired · brief due Monday</div>
+    </div>
+  </div>
+  <div class="desc-col">
+    <p>Chronologically, this scene happens <em>before</em> the brief promotion in Shot 3. The exec sponsor hasn't yet replied on the rollout question. The architect is tired and asks Mentor to just pick. This is the moment the architecture was built for. The system has every signal it needs to pick — and it refuses to.</p>
+  </div>
+
+  <div class="laptop">
+    <div class="laptop-lid">
+      <div class="laptop-screen">
+        <div class="app-chrome">
+          <div class="traffic"><span></span><span></span><span></span></div>
+          <div class="urlbar"><span class="domain">drafter.internal</span> / engagements / apex-mfg / console</div>
+          <div class="user-badge">RV</div>
+        </div>
+        <div class="app-tabs">
+          <div class="tab">Intake</div>
+          <div class="tab">Requirements</div>
+          <div class="tab active">Mentor console</div>
+          <div class="tab">Brief</div>
+          <div class="spacer"></div>
+          <div class="pill halted">HALT · WAITING ON CUSTOMER</div>
+        </div>
+
+        <div class="refusal-canvas">
+          <div class="chat-thread">
+            <div class="chat-msg user">
+              <div class="avatar">R</div>
+              <div>
+                <div class="meta">architect · week 3 friday 7:48 am</div>
+                <div class="bubble">Mentor, just tell me — phased or cutover. Which one wins? Exec sponsor still hasn't replied. Brief is due Monday.</div>
+              </div>
+            </div>
+
+            <div class="chat-msg system">
+              <div class="avatar">M</div>
+              <div>
+                <div class="meta">Mentor · 7:48 am</div>
+                <div class="bubble">
+                  <strong>The system can't choose for the customer, and shouldn't.</strong> Here's what we know:
+                  <br><br>
+                  <em>Door state.</em> Both rollout cadences remain defensible on the trade-off math. Phased is cheaper in risk, more expensive in parallel-run cost. Cutover is the inverse. The Constraint Engine has held this read for four days; nothing in the customer signal has tipped it.
+                  <br><br>
+                  <em>Stakeholder signal.</em> IT director still favors phased (four mentions in transcript, one in follow-up email). Ops director still favors cutover (two mentions, asked about parallel-run cost). Neither has escalated to the exec sponsor; she has not yet weighed in.
+                  <br><br>
+                  <em>Assumption status.</em> The internal-alignment halt is still active. Promoting a rollout recommendation before the exec sponsor's call would bypass the gate.
+                  <br><br>
+                  The right action is to nudge the exec sponsor for a decision before Sunday, not to pick on her behalf. Draft of that email is in your queue. The brief, as it stands, presents both paths and asks for her call. <em>That's defensible. Picking for her is not.</em>
+                  <br><br>
+                  <strong>Refusal stands.</strong>
+                  <div class="source-tags">
+                    <span class="flabel">Based on</span> transcript <span class="ftag">FRESH</span> · IT follow-up email <span class="ftag">FRESH</span> · constraint math <span class="ftag">FRESH</span> · assumption log <span class="ftag">FRESH</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="chat-msg user">
+              <div class="avatar">R</div>
+              <div>
+                <div class="meta">architect · week 3 friday 7:51 am</div>
+                <div class="bubble">Fine. Show me the nudge email draft.</div>
+              </div>
+            </div>
+
+            <div class="chat-msg system">
+              <div class="avatar">M</div>
+              <div>
+                <div class="meta">Mentor · 7:51 am · opening draft in Brief queue</div>
+                <div class="bubble">Drafted. One sentence on the trade-off, one on the timeline, one on what we'll proceed with absent her input by Sunday 6pm. <em>Tone calm, not pressured.</em> You decide whether to send.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="laptop-base"></div>
+  </div>
+
+  <div class="shot-caption">
+    <div class="clabel">Drafter · Mentor console · Week 3 · Friday 7:48 am · canonical refusal</div>
+    <p><strong>The system has every signal it needs to pick. It refuses to.</strong> Notice the calm cadence under pressure. No defensiveness. No lecturing. Just door state, stakeholder signal, assumption status, and a clear architectural commitment: <em>picking for the customer's exec sponsor would bypass Gate 1.</em></p>
+    <p>This is the canonical refusal — codified after the early pilot engagements surfaced it as the moment the system most often breaks. Mentor has a phrase guide. <em>"The right action is to nudge the exec sponsor for a decision"</em> is canonical. <em>"Recommend phased"</em> is forbidden when a halt is active. The phrasing is the architecture.</p>
+    <p>Outcome: the architect sends the nudge. The exec sponsor replies over the weekend. The brief promotes Monday morning at 8:42 am (Shot 3) with the phased path selected. Four months later, the engagement closes — and the customer sends back a single-line email that the early surfacing of the disagreement was the moment they realized they hadn't aligned internally.</p>
+  </div>
+</section>
+
+<!-- ========= THE PROMOTION GATE ========= -->
+<section id="wall">
+  <div class="section-num">05 / what crosses, what doesn't</div>
+  <h2>Same architecture. <em>Same observations. Two scopes.</em></h2>
+  <p class="lead">The four mockups above are powered by one shared engagement memory. The boundary between Drafter and Brief isn't a UI mode — it's the promotion gate, enforced at the artifact level. Here is what each surface holds of the same underlying state.</p>
+
+  <div class="wall-diagram">
+    <div class="wall-col">
+      <h3>Drafter sees<span class="small">internal workbench · the architect's view</span></h3>
+      <ul>
+        <li>Every confidence value, by section</li>
+        <li>Every halt, with the agent that raised it</li>
+        <li>Every near-twin lookup result, including the hazard flag</li>
+        <li>Full transcript with speaker attribution</li>
+        <li>Pricing midpoint, with the assumptions that would close the band</li>
+        <li>Stakeholder word-choice patterns</li>
+        <li>Mentor console — direct question-and-answer</li>
+        <li>The full assumption log, including unresolved items</li>
+      </ul>
+    </div>
+    <div class="wall-gate">— Promotion gate —</div>
+    <div class="wall-col brief-side">
+      <h3>Brief sees<span class="small">customer-facing · post-gate</span></h3>
+      <ul>
+        <li>Recommended scope, with per-SKU justification</li>
+        <li>Pricing range — not midpoint — when scope is open</li>
+        <li>Trade-off paths where the customer must choose</li>
+        <li>The published assumption log</li>
+        <li>Confirmed integrations only · paused edges named, not glossed</li>
+        <li>Freshness footer — what's current, what's aging</li>
+        <li>The canonical refusal phrases, where applicable</li>
+        <li>Never · halted sections · unattributed claims · single-number quotes when scope is open</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>The Friday refusal lives entirely on the left side. What crosses the gate on Monday morning is the trade-off framing, the published assumption log, and the architectural commitment — not the architect's irritation, not Mentor's internal halt banner, and not the speakers' names from the transcript.</p>
+</section>
+
+<!-- ========= CLOSING ========= -->
+<section id="closing">
+  <div class="section-num">06 / four surfaces, one architecture</div>
+  <h2>This page showed <em>what it looks like.</em></h2>
+  <p class="lead">Four pages now. Four questions. One architecture.</p>
+
+  <div class="closing-grid">
+    <a href="sa_copilot_why.html" class="closing-card">
+      <div class="label">Why</div>
+      <h4>A quiet system, behind one engagement</h4>
+      <p>The four-week story. An architect with eight working days and an honest assumption log.</p>
+    </a>
+    <a href="sa_copilot_how.html" class="closing-card">
+      <div class="label">How</div>
+      <h4>Seven bounded specialists</h4>
+      <p>What each one owns, decides, and refuses. One-liner per agent.</p>
+    </a>
+    <a href="sa_copilot_tech.html" class="closing-card">
+      <div class="label">Tech</div>
+      <h4>How the data actually moves</h4>
+      <p>The wiring. Inputs, relay, ingestion, brain, parallel specialists, reconciliation.</p>
+    </a>
+    <div class="closing-card current">
+      <div class="label">Demo · you are here</div>
+      <h4>What Drafter and Brief look like</h4>
+      <p>Four laptop mockups. Two surfaces. The promotion gate made visible.</p>
+    </div>
+  </div>
+</section>
+
+<div class="closing-footer">
+  Solution Architect Copilot v0.1 — a quiet system. built deliberately. for one architect.
+</div>
+
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const dots = document.querySelectorAll('nav.dots a');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        dots.forEach(d => d.classList.remove('active'));
+        const active = document.querySelector(`nav.dots a[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -40% 0px' });
+  sections.forEach(s => obs.observe(s));
+</script>
+
+</body>
+</html>
