@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PIP · Signal Detail Reference</title>
+<meta name="viewport" content="width=900">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #F4F2EC;
+  --surface:  #FFFFFF;
+  --s2:       #FAFAF7;
+  --border:   #E5E2D8;
+  --border2:  #D0CEC2;
+  --ink:      #181613;
+  --ink2:     #4A4844;
+  --ink3:     #87857C;
+  --ink4:     #B5B2A9;
+  --green:    #14653A;
+  --green-s:  #E2EEE6;
+  --green-bd: #A8CEAF;
+  --violet:   #4E1F9D;
+  --violet-s: #EAE4F7;
+  --violet-bd:#C0B1E4;
+  --blue:     #1B3E94;
+  --blue-s:   #DDE5F6;
+  --blue-bd:  #A8BCE2;
+  --amber:    #9A5209;
+  --amber-s:  #F5EACF;
+  --amber-bd: #D9C090;
+  --red:      #B0231C;
+  --red-s:    #FAE8E6;
+  --red-bd:   #E0ABA7;
+  --f-sans:   "IBM Plex Sans", sans-serif;
+  --f-mono:   "IBM Plex Mono", monospace;
+  --f-serif:  "IBM Plex Serif", Georgia, serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--f-sans);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Sticky header ── */
+.chrome {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 0 40px; height: 48px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.chrome-left { display: flex; align-items: center; gap: 10px; }
+.brand-mark {
+  width: 24px; height: 24px; border-radius: 4px;
+  background: var(--ink); color: var(--bg);
+  display: grid; place-items: center;
+  font-family: var(--f-mono); font-size: 10px; font-weight: 600;
+}
+.brand-name { font-size: 12px; font-weight: 600; }
+.brand-sep  { color: var(--ink4); font-size: 12px; }
+.brand-doc  { font-size: 12px; color: var(--ink3); }
+
+/* Anchor nav pills */
+.nav-pills {
+  display: flex; gap: 4px; flex-wrap: wrap;
+}
+.nav-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 10px; border-radius: 100px;
+  font-size: 11px; font-weight: 500;
+  border: 1px solid var(--border); background: var(--s2);
+  color: var(--ink3); text-decoration: none;
+  transition: .12s;
+  cursor: pointer;
+}
+.nav-pill:hover { border-color: var(--border2); color: var(--ink); }
+.nav-pill .count {
+  font-family: var(--f-mono); font-size: 10px; font-weight: 600;
+}
+
+/* ── Layout ── */
+.page { max-width: 860px; margin: 0 auto; padding: 48px 40px 96px; }
+
+/* ── Doc header ── */
+.doc-eyebrow {
+  font-family: var(--f-mono); font-size: 10px; font-weight: 500;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink4);
+  margin-bottom: 10px;
+}
+.doc-title {
+  font-size: 26px; font-weight: 600; letter-spacing: -.02em;
+  color: var(--ink); line-height: 1.2; margin-bottom: 8px;
+}
+.doc-subtitle {
+  font-family: var(--f-serif); font-size: 14px; color: var(--ink3);
+  font-style: italic; line-height: 1.6;
+  padding-bottom: 24px; border-bottom: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+
+/* ── System section ── */
+.system-section {
+  margin-bottom: 64px; scroll-margin-top: 64px;
+}
+.system-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px; padding-bottom: 12px;
+  border-bottom: 2px solid var(--border);
+}
+.system-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+.system-name {
+  font-size: 17px; font-weight: 600; letter-spacing: -.01em; color: var(--ink);
+}
+.system-count {
+  font-family: var(--f-mono); font-size: 12px; font-weight: 600;
+  padding: 2px 9px; border-radius: 100px;
+  margin-left: auto;
+}
+.system-role {
+  font-size: 12px; color: var(--ink3); margin-left: 4px;
+}
+
+/* Signal table */
+.sig-table {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+  table-layout: fixed;
+}
+.sig-table thead th {
+  background: var(--s2); padding: 9px 16px;
+  text-align: left; font-size: 10px; font-weight: 600;
+  letter-spacing: .07em; text-transform: uppercase;
+  color: var(--ink4); font-family: var(--f-mono);
+  border-bottom: 1px solid var(--border);
+}
+/* Column widths: Signal name/desc | Trigger | Freq | Feeds */
+.sig-table colgroup col:nth-child(1) { width: 42%; }
+.sig-table colgroup col:nth-child(2) { width: 24%; }
+.sig-table colgroup col:nth-child(3) { width: 12%; }
+.sig-table colgroup col:nth-child(4) { width: 22%; }
+.sig-table tbody td {
+  padding: 13px 16px; border-bottom: 1px solid var(--border);
+  vertical-align: top; color: var(--ink2); line-height: 1.5;
+}
+.sig-table tbody tr:last-child td { border-bottom: none; }
+.sig-table tbody tr:nth-child(even) td { background: var(--s2); }
+.sig-name { font-weight: 600; color: var(--ink); font-size: 13.5px; margin-bottom: 3px; }
+.sig-freq { font-family: var(--f-mono); font-size: 12px; color: var(--ink2); white-space: nowrap; }
+.tag {
+  display: inline-block; font-family: var(--f-mono); font-size: 10.5px;
+  padding: 2px 7px; border-radius: 3px; letter-spacing: .02em; white-space: nowrap;
+}
+.tag.health  { background: var(--blue-s);   color: var(--blue);   border: 1px solid var(--blue-bd); }
+.tag.traj    { background: var(--green-s);  color: var(--green);  border: 1px solid var(--green-bd); }
+.tag.risk    { background: var(--red-s);    color: var(--red);    border: 1px solid var(--red-bd); }
+.tag.bench   { background: var(--amber-s);  color: var(--amber);  border: 1px solid var(--amber-bd); }
+.tag.zia     { background: var(--violet-s); color: var(--violet); border: 1px solid var(--violet-bd); }
+.tag.alert   { background: var(--amber-s);  color: var(--amber);  border: 1px solid var(--amber-bd); }
+
+.system-note {
+  margin-top: 12px; padding: 12px 16px;
+  background: var(--s2); border: 1px solid var(--border); border-radius: 6px;
+  font-size: 13px; color: var(--ink2); line-height: 1.6;
+}
+
+/* Total bar */
+.total-bar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px; background: var(--ink); border-radius: 8px;
+  margin-bottom: 40px; color: #F4F2EC;
+}
+.total-num {
+  font-family: var(--f-mono); font-size: 24px; font-weight: 500;
+  letter-spacing: -.02em;
+}
+.total-label { font-size: 12px; color: rgba(244,242,236,.5); }
+.total-breakdown {
+  margin-left: auto; display: flex; gap: 12px; font-size: 11px;
+  color: rgba(244,242,236,.45); font-family: var(--f-mono);
+}
+
+/* Sep */
+.sep { height: 1px; background: var(--border); margin: 40px 0; }
+
+/* Back link */
+.back-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--ink4); text-decoration: none;
+  margin-bottom: 28px;
+}
+.back-link:hover { color: var(--ink2); }
+</style>
+</head>
+<body>
+
+<!-- CHROME -->
+<header class="chrome">
+  <div class="chrome-left">
+    <div class="brand-mark">PIP</div>
+    <span class="brand-name">Partner Intelligence Platform</span>
+    <span class="brand-sep">·</span>
+    <span class="brand-doc">Signal Detail Reference</span>
+  </div>
+  <nav class="nav-pills">
+    <a class="nav-pill" href="#crm">CRM <span class="count">47</span></a>
+    <a class="nav-pill" href="#desk">Desk <span class="count">31</span></a>
+    <a class="nav-pill" href="#catalyst">Catalyst <span class="count">28</span></a>
+    <a class="nav-pill" href="#store-renewals">Store <span class="count">23</span></a>
+    <a class="nav-pill" href="#cert">Cert <span class="count">18</span></a>
+    <a class="nav-pill" href="#store">Store+CRM <span class="count">14</span></a>
+    <a class="nav-pill" href="#billing">Billing <span class="count">12</span></a>
+    <a class="nav-pill" href="#analytics">Analytics <span class="count">daily</span></a>
+  </nav>
+</header>
+
+<main class="page">
+
+  <div class="doc-eyebrow">PIP · Stage 01 · Signal Collection</div>
+  <h1 class="doc-title">Signal Detail Reference</h1>
+  <p class="doc-subtitle">Every signal PIP ingests, broken down by source system — what it is, how often it fires, and which part of the intelligence pipeline it feeds.</p>
+
+  <!-- Total bar -->
+  <div class="total-bar">
+    <div>
+      <div class="total-num">182</div>
+      <div class="total-label">signals per 24 hours</div>
+    </div>
+    <div style="width:1px;height:36px;background:rgba(255,255,255,.1);"></div>
+    <div class="total-breakdown">
+      <span>CRM 47</span><span>·</span>
+      <span>Desk 31</span><span>·</span>
+      <span>Catalyst 28</span><span>·</span>
+      <span>Renewals 23</span><span>·</span>
+      <span>Cert 18</span><span>·</span>
+      <span>Store 14</span><span>·</span>
+      <span>Billing 12</span><span>·</span>
+      <span>Analytics daily</span>
+    </div>
+  </div>
+
+  <!-- ── CRM — 47 ── -->
+  <section class="system-section" id="crm">
+    <div class="system-header">
+      <div class="system-dot" style="background:var(--blue);"></div>
+      <div class="system-name">Zoho CRM</div>
+      <div class="system-role">Partner records · deals · scoring · certifications · renewals · campaigns</div>
+      <div class="system-count" style="background:var(--blue-s);color:var(--blue);border:1px solid var(--blue-bd);">47 signals / 24h</div>
+    </div>
+    <table class="sig-table">
+      <colgroup><col/><col/><col/><col/></colgroup>
+      <thead>
+        <tr><th>Signal</th><th>Trigger</th><th>Frequency</th><th>Feeds</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><div class="sig-name">Partner record updated</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Any field change on the partner object — tier, region, practices, PAM assignment</div></td><td>Field edit in CRM</td><td class="sig-freq">~8 / day</td><td><span class="tag health">Health</span> <span class="tag zia">Zia</span></td></tr>
+        <tr><td><div class="sig-name">Deal registered</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">New opportunity or deal registration submitted by partner</div></td><td>Deal create event</td><td class="sig-freq">~4 / day</td><td><span class="tag health">Health</span> <span class="tag traj">Trajectory</span></td></tr>
+        <tr><td><div class="sig-name">Deal stage changed</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Opportunity moved through pipeline stages — tracks conversion momentum</div></td><td>Stage update</td><td class="sig-freq">~6 / day</td><td><span class="tag health">Health</span> <span class="tag traj">Trajectory</span></td></tr>
+        <tr><td><div class="sig-name">New customer added</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Net new logo added to partner's customer book — feeds New Customers YTD counter in Partner Score</div></td><td>Account create linked to partner</td><td class="sig-freq">~3 / day</td><td><span class="tag health">Health</span> <span class="tag bench">Partner Score</span></td></tr>
+        <tr><td><div class="sig-name">Customer marked at-risk</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">CRM health flag set on a customer account — triggers portfolio risk recalculation</div></td><td>At-risk flag set</td><td class="sig-freq">~2 / day</td><td><span class="tag risk">Risk</span> <span class="tag alert">Alert</span></td></tr>
+        <tr><td><div class="sig-name">PAM activity logged</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Call, email, or meeting logged against a partner record — indicates PAM engagement cadence</div></td><td>Activity create</td><td class="sig-freq">~10 / day</td><td><span class="tag zia">Zia</span></td></tr>
+        <tr><td><div class="sig-name">Partner Score fields synced</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Official Zoho Partner Score component values written back from the scoring engine — Revenue Growth, New Customers, CRR, CSAT, Certifications, Projects, Case Studies, Practice Size, Branding</div></td><td>Score sync job</td><td class="sig-freq">Daily</td><td><span class="tag bench">Partner Score</span> <span class="tag zia">Zia</span></td></tr>
+        <tr><td><div class="sig-name">Override recorded</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">PAM adjustment to a scoring weight or threshold — logged with actor, timestamp, and reason</div></td><td>Override workflow</td><td class="sig-freq">~4 / day</td><td><span class="tag health">Health</span></td></tr>
+        <tr><td><div class="sig-name">Expansion opportunity flagged</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Cross-sell or upsell affinity flag set on a customer account. Catalyst picks it up → Zia converts it into a coaching recommendation ("X customers eligible for Books cross-sell — est. +12% ARR") → surfaces in Partner 360 coaching section and Partner Console weekly actions. Does not directly affect Health Score — it informs the recommendation layer only.</div></td><td>Affinity model output</td><td class="sig-freq">~6 / day</td><td><span class="tag zia">Zia</span></td></tr>
+        <tr><td><div class="sig-name">Case study submitted</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Partner submits a new case study for review — feeds Market Readiness component of Partner Score</div></td><td>Record create in case study module</td><td class="sig-freq">~4 / week</td><td><span class="tag bench">Partner Score</span></td></tr>
+      </tbody>
+    </table>
+    <div class="system-note">47 = sum of above event types across all partners in the portfolio during a 24h window. PAM activity logging is the highest-frequency source.</div>
+  </section>
+
+  <!-- ── Desk — 31 ── -->
+  <section class="system-section" id="desk">
+    <div class="system-header">
+      <div class="system-dot" style="background:var(--amber);"></div>
+      <div class="system-name">Zoho Desk</div>
+      <div class="system-role">Tickets · escalations · SLA · CSAT</div>
+      <div class="system-count" style="background:var(--amber-s);color:var(--amber);border:1px solid var(--amber-bd);">31 signals / 24h</div>
+    </div>
+    <table class="sig-table">
+      <colgroup><col/><col/><col/><col/></colgroup>
+      <thead>
+        <tr><th>Signal</th><th>Trigger</th><th>Frequency</th><th>Feeds</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><div class="sig-name">Ticket opened</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">New support ticket submitted by partner or on behalf of a customer — sets ticket clock</div></td><td>Ticket create</td><td class="sig-freq">~10 / day</td><td><span class="tag health">Health</span> <span class="tag traj">Trajectory</span></td></tr>
+        <tr><td><div class="sig-name">Ticket escalated</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Ticket severity raised to Sev-1 or Sev-2 — triggers Catalyst escalation routing</div></td><td>Severity field change</td><td class="sig-freq">~3 / day</td><td><span class="tag risk">Risk</span> <span class="tag alert">Alert</span></td></tr>
+        <tr><td><div class="sig-name">SLA threshold crossed</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Response or resolution SLA missed — feeds escalation penalty in Partner Score Customer Success component</div></td><td>SLA timer breach</td><td class="sig-freq">~4 / day</td><td><span class="tag risk">Risk</span> <span class="tag bench">Partner Score</span> <span class="tag alert">Alert</span></td></tr>
+        <tr><td><div class="sig-name">Ticket resolved</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Ticket closed — resolution time recorded, feeds Operational Reliability sub-score</div></td><td>Status → Resolved</td><td class="sig-freq">~8 / day</td><td><span class="tag health">Health</span></td></tr>
+        <tr><td><div class="sig-name">CSAT score submitted</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Customer satisfaction rating submitted post-resolution — feeds CSAT component of Partner Score (max 100pts)</div></td><td>CSAT form submission</td><td class="sig-freq">~4 / day</td><td><span class="tag bench">Partner Score</span> <span class="tag zia">Zia</span></td></tr>
+        <tr><td><div class="sig-name">Ticket volume spike</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Rolling 7-day ticket count exceeds 130% of prior 30-day average — early stress signal</div></td><td>Catalyst volume monitor</td><td class="sig-freq">~2 / day</td><td><span class="tag risk">Risk</span> <span class="tag traj">Trajectory</span></td></tr>
+      </tbody>
+    </table>
+    <div class="system-note">SLA breaches are the highest-weight Desk signal — each open SLA breach deducts points from the Partner Score Customer Success component and fires a Catalyst routing event.</div>
+  </section>
+
+  <!-- ── Catalyst — 28 ── -->
+  <section class="system-section" id="catalyst">
+    <div class="system-header">
+      <div class="system-dot" style="background:var(--violet);"></div>
+      <div class="system-name">Catalyst</div>
+      <div class="system-role">Threshold events · routing decisions · audit entries</div>
+      <div class="system-count" style="background:var(--violet-s);color:var(--violet);border:1px solid var(--violet-bd);">28 signals / 24h</div>
+    </div>
+    <table class="sig-table">
+      <colgroup><col/><col/><col/><col/></colgroup>
+      <thead>
+        <tr><th>Signal</th><th>Trigger</th><th>Frequency</th><th>Feeds</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><div class="sig-name">Health score threshold crossed</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Partner health score crosses a configured band boundary — e.g. drops below 50 (Critical) or rises above 70 (Healthy)</div></td><td>Score recomputation</td><td class="sig-freq">~6 / day</td><td><span class="tag alert">Alert</span> <span class="tag traj">Trajectory</span></td></tr>
+        <tr><td><div class="sig-name">Escalation routed</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Catalyst assigns escalation owner via RBAC — creates Cliq channel, starts SLA clock, notifies PAM</div></td><td>Escalation routing rule</td><td class="sig-freq">~4 / day</td><td><span class="tag alert">Alert</span></td></tr>
+        <tr><td><div class="sig-name">Override logged</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">PAM or admin adjusts a score weight or threshold — written to the immutable audit ledger with actor and reason</div></td><td>Override workflow completion</td><td class="sig-freq">~4 / day</td><td><span class="tag health">Health</span></td></tr>
+        <tr><td><div class="sig-name">Trajectory urgency recalculated</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">trajectoryUrgency() output changes — reorders PAM portfolio sort and may trigger attention flag</div></td><td>Score + trajectory change</td><td class="sig-freq">~8 / day</td><td><span class="tag traj">Trajectory</span></td></tr>
+        <tr><td><div class="sig-name">Renewal proximity alert</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Partner has renewals due within 30 or 90 days — fires into the PAM action queue</div></td><td>Renewal date proximity rule</td><td class="sig-freq">~3 / day</td><td><span class="tag alert">Alert</span> <span class="tag risk">Risk</span></td></tr>
+        <tr><td><div class="sig-name">Audit entry written</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Every system decision that affects a score, routing, or alert is appended to the immutable audit log</div></td><td>Any governed action</td><td class="sig-freq">~3 / day</td><td><span class="tag health">Health</span></td></tr>
+      </tbody>
+    </table>
+    <div class="system-note">Catalyst is PIP's orchestration engine — it does not generate raw events itself, but transforms and routes events from other systems. Its 28 signals are the output of threshold rules applied to the other 154 incoming signals.</div>
+  </section>
+
+  <!-- ── Renewals — 23 ── -->
+  <section class="system-section" id="store-renewals">
+    <div class="system-header">
+      <div class="system-dot" style="background:var(--violet);"></div>
+      <div class="system-name">Zoho Store</div>
+      <div class="system-role">Auto-renew rate · review-stage · CRR · renewal exposure</div>
+      <div class="system-count" style="background:var(--violet-s);color:var(--violet);border:1px solid var(--violet-bd);">23 signals / 24h</div>
+    </div>
+    <table class="sig-table">
+      <colgroup><col/><col/><col/><col/></colgroup>
+      <thead>
+        <tr><th>Signal</th><th>Trigger</th><th>Frequency</th><th>Feeds</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><div class="sig-name">Renewal entered review-stage</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Customer renewal flagged for manual review — signals potential churn risk, feeds ARR at Risk calculation</div></td><td>Review-stage flag set</td><td class="sig-freq">~5 / day</td><td><span class="tag risk">Risk</span> <span class="tag health">Health</span></td></tr>
+        <tr><td><div class="sig-name">Renewal review-stage overdue</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Review-stage renewal has passed its expected decision date without action — escalates ARR exposure</div></td><td>Date threshold crossed</td><td class="sig-freq">~3 / day</td><td><span class="tag risk">Risk</span> <span class="tag alert">Alert</span></td></tr>
+        <tr><td><div class="sig-name">Auto-renewal completed</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Customer renewed without manual intervention — positive signal for Renewal Continuity sub-score</div></td><td>Auto-renew event</td><td class="sig-freq">~6 / day</td><td><span class="tag health">Health</span> <span class="tag bench">Partner Score</span></td></tr>
+        <tr><td><div class="sig-name">Customer cancelled</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Subscription cancelled — updates CRR calculation and net cancel count</div></td><td>Cancellation event</td><td class="sig-freq">~2 / day</td><td><span class="tag health">Health</span> <span class="tag bench">Partner Score</span> <span class="tag traj">Trajectory</span></td></tr>
+        <tr><td><div class="sig-name">Customer reactivated</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Previously cancelled customer restarts subscription — positive recovery signal</div></td><td>Reactivation event</td><td class="sig-freq">~1 / day</td><td><span class="tag traj">Trajectory</span> <span class="tag zia">Zia</span></td></tr>
+        <tr><td><div class="sig-name">CRR recalculated</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Rolling Customer Retention Rate updated — feeds CRR component of Partner Score (max 100pts) and Operational Health</div></td><td>Daily batch</td><td class="sig-freq">Daily</td><td><span class="tag health">Health</span> <span class="tag bench">Partner Score</span></td></tr>
+        <tr><td><div class="sig-name">90-day renewal window opened</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Customer enters the 90-day upcoming renewal window — adds to the PAM renewal count and portfolio exposure</div></td><td>Date-based rule</td><td class="sig-freq">~6 / day</td><td><span class="tag alert">Alert</span> <span class="tag risk">Risk</span></td></tr>
+      </tbody>
+    </table>
+    <div class="system-note">CRR is the single highest-weight signal from this source. In Zoho, renewal data lives in the Store module — partners manage renewals through their Store dashboard. CRM also holds renewal registration records. A 1% drop in CRR for a Premium partner with 400+ customers can move the Partner Score by 1pt and shift the PIP Health Score by 2–3pts.</div>
+  </section>
+
+  <!-- ── Cert — 18 ── -->
+  <section class="system-section" id="cert">
+    <div class="system-header">
+      <div class="system-dot" style="background:var(--green);"></div>
+      <div class="system-name">Certifications <span style="font-size:11px;font-weight:400;color:var(--ink3);">· sourced via CRM</span></div>
+      <div class="system-role">Active certs · expiry within 45 days · cert ratio by practice area</div>
+      <div class="system-count" style="background:var(--green-s);color:var(--green);border:1px solid var(--green-bd);">18 signals / 24h</div>
+    </div>
+    <table class="sig-table">
+      <colgroup><col/><col/><col/><col/></colgroup>
+      <thead>
+        <tr><th>Signal</th><th>Trigger</th><th>Frequency</th><th>Feeds</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><div class="sig-name">Certification passed</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Team member completes a Zoho certification — increments active cert count, improves Delivery Capability sub-score</div></td><td>Exam completion</td><td class="sig-freq">~4 / day</td><td><span class="tag health">Health</span> <span class="tag bench">Partner Score</span></td></tr>
+        <tr><td><div class="sig-name">Certification expiry flagged</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Certification enters the 45-day expiry window — triggers coaching recommendation and PAM action item</div></td><td>45-day date rule</td><td class="sig-freq">~6 / day</td><td><span class="tag risk">Risk</span> <span class="tag alert">Alert</span> <span class="tag zia">Zia</span></td></tr>
+        <tr><td><div class="sig-name">Certification expired</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Cert lapsed without renewal — reduces active count, directly reduces Partner Score Customer Success component</div></td><td>Expiry date passed</td><td class="sig-freq">~2 / day</td><td><span class="tag health">Health</span> <span class="tag bench">Partner Score</span> <span class="tag traj">Trajectory</span></td></tr>
+        <tr><td><div class="sig-name">Cert ratio recalculated</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Active certifications ÷ benchmark maximum (44) — feeds Delivery Capability sub-score and benchmark comparison</div></td><td>Daily batch</td><td class="sig-freq">Daily</td><td><span class="tag health">Health</span> <span class="tag bench">Benchmark</span></td></tr>
+        <tr><td><div class="sig-name">Practice area cert density changed</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Concentration of certs in a specific practice (e.g. Creator, CRM) shifts — feeds capability depth interpretation</div></td><td>Cert add / expire</td><td class="sig-freq">~6 / day</td><td><span class="tag zia">Zia</span></td></tr>
+      </tbody>
+    </table>
+    <div class="system-note">Certification records are stored and managed in CRM. They feed both the PIP Health Score (via Delivery Capability) and the Zoho Partner Score (Customer Success component, max 100pts). A partner with 44 active certs scores the full 100pts; below 28 triggers an Attention Needed classification.</div>
+  </section>
+
+  <!-- ── Store — 14 ── -->
+  <section class="system-section" id="store">
+    <div class="system-header">
+      <div class="system-dot" style="background:var(--ink3);"></div>
+      <div class="system-name">Zoho Store + CRM Campaigns</div>
+      <div class="system-role">Marketplace listings · co-sell · campaign registrations via CRM Campaigns module</div>
+      <div class="system-count" style="background:var(--s2);color:var(--ink3);border:1px solid var(--border2);">14 signals / 24h</div>
+    </div>
+    <table class="sig-table">
+      <colgroup><col/><col/><col/><col/></colgroup>
+      <thead>
+        <tr><th>Signal</th><th>Trigger</th><th>Frequency</th><th>Feeds</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><div class="sig-name">Marketplace listing created or updated</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Partner publishes or updates a solution listing in the Zoho marketplace — feeds Zoho Engagement component</div></td><td>Listing event</td><td class="sig-freq">~2 / day</td><td><span class="tag bench">Partner Score</span> <span class="tag zia">Zia</span></td></tr>
+        <tr><td><div class="sig-name">Campaign registered</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Partner registers for a Zoho co-marketing campaign or webinar — feeds Branding &amp; Campaigns sub-component</div></td><td>Campaign registration</td><td class="sig-freq">~3 / day</td><td><span class="tag bench">Partner Score</span></td></tr>
+        <tr><td><div class="sig-name">Co-sell opportunity submitted</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Partner submits a joint sales opportunity — indicates active ecosystem participation</div></td><td>Co-sell form submission</td><td class="sig-freq">~2 / day</td><td><span class="tag bench">Partner Score</span> <span class="tag traj">Trajectory</span></td></tr>
+        <tr><td><div class="sig-name">Advocacy reference added</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Partner agrees to serve as a reference — feeds Ecosystem Contribution classification</div></td><td>Reference record created</td><td class="sig-freq">~1 / day</td><td><span class="tag zia">Zia</span></td></tr>
+        <tr><td><div class="sig-name">Partner Console accessed</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Partner principal logs into the Store partner view — engagement signal, no scoring impact</div></td><td>Session event</td><td class="sig-freq">~6 / day</td><td><span class="tag zia">Zia</span></td></tr>
+      </tbody>
+    </table>
+    <div class="system-note">Marketplace and co-sell signals feed the Zoho Engagement component of the Partner Score (max 100pts: 25 for Practice Size, 75 for Branding &amp; Campaigns). Low engagement here is the most common gap between Standard and Premium tier partners.</div>
+  </section>
+
+  <!-- ── Billing — 12 ── -->
+  <section class="system-section" id="billing">
+    <div class="system-header">
+      <div class="system-dot" style="background:var(--ink3);"></div>
+      <div class="system-name">Zoho Books</div>
+      <div class="system-role">Invoice aging · payment retry count · commission status</div>
+      <div class="system-count" style="background:var(--s2);color:var(--ink3);border:1px solid var(--border2);">12 signals / 24h</div>
+    </div>
+    <table class="sig-table">
+      <colgroup><col/><col/><col/><col/></colgroup>
+      <thead>
+        <tr><th>Signal</th><th>Trigger</th><th>Frequency</th><th>Feeds</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><div class="sig-name">Invoice aged past 45 days</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Outstanding invoice crosses the 45-day aging threshold — flags commercial stability, feeds Billing aging alert</div></td><td>Date threshold rule</td><td class="sig-freq">~4 / day</td><td><span class="tag health">Health</span> <span class="tag alert">Alert</span></td></tr>
+        <tr><td><div class="sig-name">Payment retry failed</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Automatic payment attempt failed — indicates financial stress, increases Commercial Stability risk</div></td><td>Payment gateway failure</td><td class="sig-freq">~2 / day</td><td><span class="tag health">Health</span> <span class="tag risk">Risk</span></td></tr>
+        <tr><td><div class="sig-name">Invoice settled</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Outstanding invoice paid — removes aging flag, positive signal for Commercial Stability</div></td><td>Payment received</td><td class="sig-freq">~4 / day</td><td><span class="tag health">Health</span></td></tr>
+        <tr><td><div class="sig-name">Commission statement generated</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Monthly partner commission statement — used to cross-validate revenue trajectory signals from CRM</div></td><td>Monthly billing cycle</td><td class="sig-freq">Monthly</td><td><span class="tag traj">Trajectory</span></td></tr>
+        <tr><td><div class="sig-name">Credit note issued</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Credit applied to a partner account — may indicate dispute or service recovery, monitored as a stress signal</div></td><td>Credit note create</td><td class="sig-freq">~2 / day</td><td><span class="tag risk">Risk</span></td></tr>
+      </tbody>
+    </table>
+    <div class="system-note">Zoho Books signals have a 48-hour processing lag vs. CRM and Desk. PIP accounts for this by using the last settled state rather than real-time for billing-derived dimensions of the Health Score.</div>
+  </section>
+
+  <!-- ── Analytics — daily ── -->
+  <section class="system-section" id="analytics">
+    <div class="system-header">
+      <div class="system-dot" style="background:var(--blue);"></div>
+      <div class="system-name">Zoho Analytics</div>
+      <div class="system-role">Cohort benchmarks · regional averages · historical trajectory</div>
+      <div class="system-count" style="background:var(--blue-s);color:var(--blue);border:1px solid var(--blue-bd);">Daily sync</div>
+    </div>
+    <table class="sig-table">
+      <colgroup><col/><col/><col/><col/></colgroup>
+      <thead>
+        <tr><th>Signal</th><th>What it contains</th><th>Cadence</th><th>Feeds</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><div class="sig-name">Peer cohort benchmark snapshot</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Anonymous aggregated metrics for partners at the same tier and region — CRR, cert density, revenue growth, CSAT median</div></td><td>Percentile positions per metric</td><td class="sig-freq">Daily 02:00</td><td><span class="tag bench">Benchmark</span> <span class="tag zia">Zia</span></td></tr>
+        <tr><td><div class="sig-name">Regional health baseline</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">ARR-weighted average PIP Health Score across all partners in each region — used as the trajectory baseline line in charts</div></td><td>Regional avg per band</td><td class="sig-freq">Daily 02:00</td><td><span class="tag traj">Trajectory</span> <span class="tag zia">Zia</span></td></tr>
+        <tr><td><div class="sig-name">Historical pattern library</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">3-year archive of partner signature patterns — used by Zia to match current state against known deterioration or recovery trajectories</div></td><td>Labelled historical sequences</td><td class="sig-freq">Weekly</td><td><span class="tag zia">Zia</span></td></tr>
+        <tr><td><div class="sig-name">Ecosystem ARR rollup</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Total ARR and at-risk ARR across all 412 partners — feeds Director view headline stats</div></td><td>Aggregated ARR with exposure flags</td><td class="sig-freq">Daily 02:00</td><td><span class="tag bench">Benchmark</span></td></tr>
+        <tr><td><div class="sig-name">PAM effectiveness data</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">ARR-weighted average health score per PAM and SLA breach count — feeds Director PAM effectiveness table</div></td><td>Per-PAM aggregated metrics</td><td class="sig-freq">Daily 02:00</td><td><span class="tag bench">Benchmark</span></td></tr>
+      </tbody>
+    </table>
+    <div class="system-note">Analytics does not contribute to the real-time health score recomputation — it feeds benchmark comparisons and the Zia interpretation context. The health score and trajectory engine run on live signals only. Individual partner data is never shared in benchmark outputs.</div>
+  </section>
+
+  <div class="sep"></div>
+  <div style="font-size:11px;color:var(--ink4);text-align:center;padding-bottom:8px;">
+    PIP · Signal Detail Reference · Stage 01 of the Intelligence Processing Flow · All counts are 24h rolling averages across the full partner portfolio
+  </div>
+
+</main>
+
+
+<!-- ── Shared file navigator ── -->
+<div style="border-top:1px solid var(--border);background:var(--surface);padding:20px 40px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;bottom:0;z-index:100;">
+  <span style="font-family:var(--f-mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-right:4px;">PIP files</span>
+  <span style="color:var(--border2);">·</span>
+  <a href="pip-full-platform.html" target="_blank" style="font-family:var(--f-mono);font-size:11px;font-weight:500;padding:4px 12px;border-radius:4px;background:var(--s3);border:1px solid var(--border);color:var(--ink3);text-decoration:none;white-space:nowrap;transition:.12s;">Platform Demo</a>
+  <a href="pip-architecture-story.html" target="_blank" style="font-family:var(--f-mono);font-size:11px;font-weight:500;padding:4px 12px;border-radius:4px;background:var(--s3);border:1px solid var(--border);color:var(--ink3);text-decoration:none;white-space:nowrap;transition:.12s;">Intelligence Lifecycle</a>
+  <span style="font-family:var(--f-mono);font-size:11px;font-weight:600;padding:4px 12px;border-radius:4px;background:#3D2314;color:#F4F2EC;white-space:nowrap;">Signal Detail</span>
+  <a href="pip-signal-to-intelligence.html" target="_blank" style="font-family:var(--f-mono);font-size:11px;font-weight:500;padding:4px 12px;border-radius:4px;background:var(--s2);border:1px solid var(--border);color:var(--ink3);text-decoration:none;white-space:nowrap;transition:.12s;">Signals → Intelligence</a>
+  <a href="pip-health-score-reference.html" target="_blank" style="font-family:var(--f-mono);font-size:11px;font-weight:500;padding:4px 12px;border-radius:4px;background:var(--s2);border:1px solid var(--border);color:var(--ink3);text-decoration:none;white-space:nowrap;transition:.12s;">Health Score Formula</a>
+  <span style="margin-left:auto;font-size:11px;color:var(--ink4);">Keep all 5 files in the same folder</span>
+</div>
+</body>
+</html>
