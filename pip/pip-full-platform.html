@@ -822,7 +822,7 @@ html, body { min-width: 1440px; }
   font-family: var(--font-mono);
 }
 
-/* ─── Partner 360 Detail ───────────────────────────────────── */
+/* ─── Partner Intelligence Detail ───────────────────────────────────── */
 .p360 {
   display: grid;
   grid-template-columns: 1fr 360px;
@@ -1671,7 +1671,7 @@ html, body { min-width: 1440px; }
 .signal-trace .count { color: var(--ink); font-weight: 500; }
 .signal-trace .src-dot { display: inline-flex; align-items: center; gap: 4px; }
 
-/* ─── PIP Operational Summary (Partner 360 — dominant zone) ─ */
+/* ─── PIP Operational Summary (Partner Intelligence — dominant zone) ─ */
 .op-summary {
   background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
   border-top: 1px solid var(--border);
@@ -3086,7 +3086,7 @@ Object.assign(window, {
 
 const PERSONAS = [
   { id: "pam",      key: "01", label: "PAM Command",       sub: "CRM" },
-  { id: "p360",     key: "02", label: "Partner 360",       sub: "CRM" },
+  { id: "p360",     key: "02", label: "Partner Intelligence",       sub: "CRM" },
   { id: "director", key: "03", label: "Director",          sub: "Exec" },
   { id: "store",    key: "04", label: "Partner Principal", sub: "Store" },
 ];
@@ -3247,7 +3247,7 @@ const EcosystemMomentumBar = ({ partners, label = "Portfolio momentum" }) => {
   );
 };
 
-/* ── TrajectoryCard — first-class section for Partner 360 ── */
+/* ── TrajectoryCard — first-class section for Partner Intelligence ── */
 const TrajectoryCard = ({ partner, baseline }) => {
   const m = momentum(partner.sparkHealth, partner.healthDelta);
   const b = bandClass(partner.health);
@@ -3824,7 +3824,7 @@ const PAMPortfolio = ({
 Object.assign(window, { PAMPortfolio });
 </script>
 <script type="text/babel">/* ─────────────────────────────────────────────────────────────
- * Partner 360 v3 — narrative dominant, numbers recede
+ * Partner Intelligence v3 — narrative dominant, numbers recede
  * Intelligence Summary = primary artifact.
  * Score = compression artifact, visually secondary.
  * Trajectory = explicit, momentum-language everywhere.
@@ -4072,8 +4072,8 @@ const subBandLabel = (v) => {
   return              { label:"Below Benchmark",  color:"var(--red)" };
 };
 
-/* ── Partner 360 main ── */
-const Partner360 = ({ partner, onBack, onOpenCliq, escalations, tweaks }) => {
+/* ── Partner Intelligence main ── */
+const PartnerIntelligence = ({ partner, onBack, onOpenCliq, escalations, tweaks }) => {
   if (!partner) return null;
   const initials = partner.name.split(/\s+/).slice(0,2).map(w=>w[0]).join("");
   const b = bandClass(partner.health);
@@ -4450,7 +4450,7 @@ const Partner360 = ({ partner, onBack, onOpenCliq, escalations, tweaks }) => {
   );
 };
 
-Object.assign(window, { Partner360 });
+Object.assign(window, { PartnerIntelligence });
 </script>
 <script type="text/babel">/* ─── Ecosystem Risk Heatmap ──────────────────────────────── */
 const RiskHeatmap = () => {
@@ -5528,7 +5528,7 @@ const App = () => {
           />
         )}
         {persona === "p360" && (
-          <Partner360
+          <PartnerIntelligence
             partner={activePartner}
             onBack={() => setPersona("pam")}
             onOpenCliq={openCliq}
@@ -5590,16 +5590,72 @@ ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 </script>
 
 
-<!-- ── Shared file navigator ── -->
-<div style="border-top:1px solid var(--border);background:var(--surface);padding:20px 40px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;bottom:0;z-index:100;">
-  <span style="font-family:var(--font-mono,var(--f-mono));font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4,var(--ink4));margin-right:4px;">PIP files</span>
-  <span style="color:var(--border-2,var(--border2));">·</span>
-  <span style="font-family:var(--font-mono,var(--f-mono));font-size:11px;font-weight:600;padding:4px 12px;border-radius:4px;background:var(--ink);color:var(--bg);white-space:nowrap;">Platform Demo</span>
-  <a href="pip-architecture-story.html" target="_blank" style="font-family:var(--font-mono,var(--f-mono));font-size:11px;font-weight:500;padding:4px 12px;border-radius:4px;background:var(--surface-3,#F0EEE7);border:1px solid var(--border);color:var(--ink-3,var(--ink3));text-decoration:none;white-space:nowrap;transition:.12s;">Intelligence Lifecycle</a>
-  <a href="pip-signal-detail.html" target="_blank" style="font-family:var(--font-mono,var(--f-mono));font-size:11px;font-weight:500;padding:4px 12px;border-radius:4px;background:var(--surface-3,#F0EEE7);border:1px solid var(--border);color:var(--ink-3,var(--ink3));text-decoration:none;white-space:nowrap;transition:.12s;">Signal Detail</a>
-  <a href="pip-signal-to-intelligence.html" target="_blank" style="font-family:var(--font-mono,var(--f-mono));font-size:11px;font-weight:500;padding:4px 12px;border-radius:4px;background:var(--surface-3,#F0EEE7);border:1px solid var(--border);color:var(--ink-3,var(--ink3));text-decoration:none;white-space:nowrap;transition:.12s;">Signals → Intelligence</a>
-  <a href="pip-health-score-reference.html" target="_blank" style="font-family:var(--font-mono,var(--f-mono));font-size:11px;font-weight:500;padding:4px 12px;border-radius:4px;background:var(--surface-3,#F0EEE7);border:1px solid var(--border);color:var(--ink-3,var(--ink3));text-decoration:none;white-space:nowrap;transition:.12s;">Health Score Formula</a>
-  <span style="margin-left:auto;font-size:11px;color:var(--ink-4,var(--ink4));">Keep all 5 files in the same folder</span>
+
+<style>
+.pip-nav {
+  border-top: 1px solid #E5E2D8;
+  background: #FAFAF7;
+  padding: 14px 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
+  box-shadow: 0 -1px 0 #E5E2D8;
+}
+.pip-nav-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: #B5B2A9;
+  margin-right: 2px;
+  white-space: nowrap;
+}
+.pip-nav-dot { color: #D0CEC2; }
+.pip-nav-link {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 5px 13px;
+  border-radius: 5px;
+  background: #F4F2EC;
+  border: 1px solid #E5E2D8;
+  color: #87857C;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background .12s, color .12s, border-color .12s;
+}
+.pip-nav-link:hover {
+  background: #FFFFFF;
+  color: #4A4844;
+  border-color: #D0CEC2;
+}
+.pip-nav-active {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 13px;
+  border-radius: 5px;
+  background: #3D2314;
+  color: #F4F2EC;
+  white-space: nowrap;
+}
+.pip-nav-hint {
+  margin-left: auto;
+  font-size: 11px;
+  color: #B5B2A9;
+  white-space: nowrap;
+}
+</style>
+<!-- ── PIP shared nav ── -->
+<div class="pip-nav">
+  <span class="pip-nav-label">PIP</span>
+  <span class="pip-nav-dot">·</span>
+  <span class="pip-nav-active">Platform Demo</span>  <a class="pip-nav-link" href="pip-architecture-story.html" target="_blank">Intelligence Lifecycle</a>  <a class="pip-nav-link" href="pip-signal-detail.html" target="_blank">Signal Detail</a>  <a class="pip-nav-link" href="pip-signal-to-intelligence.html" target="_blank">Signals → Intelligence</a>  <a class="pip-nav-link" href="pip-health-score-reference.html" target="_blank">Health Score Formula</a>
+  <span class="pip-nav-hint">Keep all 5 files in the same folder</span>
 </div>
 </body>
 </html>

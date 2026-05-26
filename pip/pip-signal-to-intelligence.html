@@ -479,22 +479,22 @@ Branding & Campaigns (75 pts) is the larger sub-component and the most common ga
     <tr>
       <td><strong>Intelligence Summary</strong></td>
       <td>One headline sentence encoding state + trajectory: <em>"TruePartner is declining — executive review required"</em></td>
-      <td>Partner 360 header</td>
+      <td>Partner Intelligence header</td>
     </tr>
     <tr>
       <td><strong>Operational Summary</strong></td>
       <td>2–3 sentence prose explaining the causal pattern behind the current score. References historical pattern matches where applicable.</td>
-      <td>Partner 360 · PAM summary strip</td>
+      <td>Partner Intelligence · PAM summary strip</td>
     </tr>
     <tr>
       <td><strong>Signal Interpretation</strong></td>
       <td>5-dimension synthesis (Operational Reliability, Trajectory, Revenue Concentration, Capability Depth, Coordination) — each 1–2 sentences.</td>
-      <td>Partner 360 interpretation grid</td>
+      <td>Partner Intelligence interpretation grid</td>
     </tr>
     <tr>
       <td><strong>Coaching recommendations</strong></td>
       <td>Ranked actions derived from the partner's weakest scoring dimensions. Each includes an estimated ARR or Partner Score impact.</td>
-      <td>Partner 360 · Partner Console</td>
+      <td>Partner Intelligence · Partner Console</td>
     </tr>
   </tbody>
 </table>
@@ -600,16 +600,72 @@ Branding & Campaigns (75 pts) is the larger sub-component and the most common ga
 </script>
 
 
-<!-- ── Shared file navigator ── -->
-<div style="border-top:1px solid var(--border);background:var(--surface);padding:20px 40px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;bottom:0;z-index:100;">
-  <span style="font-family:var(--f-mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-right:4px;">PIP files</span>
-  <span style="color:var(--border2);">·</span>
-  <a href="pip-full-platform.html" target="_blank" style="font-family:var(--f-mono);font-size:11px;font-weight:500;padding:4px 12px;border-radius:4px;background:var(--s3);border:1px solid var(--border);color:var(--ink3);text-decoration:none;white-space:nowrap;transition:.12s;">Platform Demo</a>
-  <a href="pip-architecture-story.html" target="_blank" style="font-family:var(--f-mono);font-size:11px;font-weight:500;padding:4px 12px;border-radius:4px;background:var(--s3);border:1px solid var(--border);color:var(--ink3);text-decoration:none;white-space:nowrap;transition:.12s;">Intelligence Lifecycle</a>
-  <a href="pip-signal-detail.html" target="_blank" style="font-family:var(--f-mono);font-size:11px;font-weight:500;padding:4px 12px;border-radius:4px;background:var(--s3);border:1px solid var(--border);color:var(--ink3);text-decoration:none;white-space:nowrap;transition:.12s;">Signal Detail</a>
-  <span style="font-family:var(--f-mono);font-size:11px;font-weight:600;padding:4px 12px;border-radius:4px;background:#3D2314;color:#F4F2EC;white-space:nowrap;">Signals → Intelligence</span>
-  <a href="pip-health-score-reference.html" target="_blank" style="font-family:var(--f-mono);font-size:11px;font-weight:500;padding:4px 12px;border-radius:4px;background:var(--s3);border:1px solid var(--border);color:var(--ink3);text-decoration:none;white-space:nowrap;transition:.12s;">Health Score Formula</a>
-  <span style="margin-left:auto;font-size:11px;color:var(--ink4);">Keep all 5 files in the same folder</span>
+
+<style>
+.pip-nav {
+  border-top: 1px solid #E5E2D8;
+  background: #FAFAF7;
+  padding: 14px 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
+  box-shadow: 0 -1px 0 #E5E2D8;
+}
+.pip-nav-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: #B5B2A9;
+  margin-right: 2px;
+  white-space: nowrap;
+}
+.pip-nav-dot { color: #D0CEC2; }
+.pip-nav-link {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 5px 13px;
+  border-radius: 5px;
+  background: #F4F2EC;
+  border: 1px solid #E5E2D8;
+  color: #87857C;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background .12s, color .12s, border-color .12s;
+}
+.pip-nav-link:hover {
+  background: #FFFFFF;
+  color: #4A4844;
+  border-color: #D0CEC2;
+}
+.pip-nav-active {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 13px;
+  border-radius: 5px;
+  background: #3D2314;
+  color: #F4F2EC;
+  white-space: nowrap;
+}
+.pip-nav-hint {
+  margin-left: auto;
+  font-size: 11px;
+  color: #B5B2A9;
+  white-space: nowrap;
+}
+</style>
+<!-- ── PIP shared nav ── -->
+<div class="pip-nav">
+  <span class="pip-nav-label">PIP</span>
+  <span class="pip-nav-dot">·</span>
+  <a class="pip-nav-link" href="pip-full-platform.html" target="_blank">Platform Demo</a>  <a class="pip-nav-link" href="pip-architecture-story.html" target="_blank">Intelligence Lifecycle</a>  <a class="pip-nav-link" href="pip-signal-detail.html" target="_blank">Signal Detail</a>  <span class="pip-nav-active">Signals → Intelligence</span>  <a class="pip-nav-link" href="pip-health-score-reference.html" target="_blank">Health Score Formula</a>
+  <span class="pip-nav-hint">Keep all 5 files in the same folder</span>
 </div>
 </body>
 </html>

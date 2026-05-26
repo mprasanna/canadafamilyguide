@@ -269,7 +269,7 @@ body {
         <tr><td><div class="sig-name">PAM activity logged</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Call, email, or meeting logged against a partner record — indicates PAM engagement cadence</div></td><td>Activity create</td><td class="sig-freq">~10 / day</td><td><span class="tag zia">Zia</span></td></tr>
         <tr><td><div class="sig-name">Partner Score fields synced</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Official Zoho Partner Score component values written back from the scoring engine — Revenue Growth, New Customers, CRR, CSAT, Certifications, Projects, Case Studies, Practice Size, Branding</div></td><td>Score sync job</td><td class="sig-freq">Daily</td><td><span class="tag bench">Partner Score</span> <span class="tag zia">Zia</span></td></tr>
         <tr><td><div class="sig-name">Override recorded</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">PAM adjustment to a scoring weight or threshold — logged with actor, timestamp, and reason</div></td><td>Override workflow</td><td class="sig-freq">~4 / day</td><td><span class="tag health">Health</span></td></tr>
-        <tr><td><div class="sig-name">Expansion opportunity flagged</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Cross-sell or upsell affinity flag set on a customer account. Catalyst picks it up → Zia converts it into a coaching recommendation ("X customers eligible for Books cross-sell — est. +12% ARR") → surfaces in Partner 360 coaching section and Partner Console weekly actions. Does not directly affect Health Score — it informs the recommendation layer only.</div></td><td>Affinity model output</td><td class="sig-freq">~6 / day</td><td><span class="tag zia">Zia</span></td></tr>
+        <tr><td><div class="sig-name">Expansion opportunity flagged</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Cross-sell or upsell affinity flag set on a customer account. Catalyst picks it up → Zia converts it into a coaching recommendation ("X customers eligible for Books cross-sell — est. +12% ARR") → surfaces in Partner Intelligence coaching section and Partner Console weekly actions. Does not directly affect Health Score — it informs the recommendation layer only.</div></td><td>Affinity model output</td><td class="sig-freq">~6 / day</td><td><span class="tag zia">Zia</span></td></tr>
         <tr><td><div class="sig-name">Case study submitted</div><div style="font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.5;">Partner submits a new case study for review — feeds Market Readiness component of Partner Score</div></td><td>Record create in case study module</td><td class="sig-freq">~4 / week</td><td><span class="tag bench">Partner Score</span></td></tr>
       </tbody>
     </table>
@@ -456,16 +456,72 @@ body {
 </main>
 
 
-<!-- ── Shared file navigator ── -->
-<div style="border-top:1px solid var(--border);background:var(--surface);padding:20px 40px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;bottom:0;z-index:100;">
-  <span style="font-family:var(--f-mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-right:4px;">PIP files</span>
-  <span style="color:var(--border2);">·</span>
-  <a href="pip-full-platform.html" target="_blank" style="font-family:var(--f-mono);font-size:11px;font-weight:500;padding:4px 12px;border-radius:4px;background:var(--s3);border:1px solid var(--border);color:var(--ink3);text-decoration:none;white-space:nowrap;transition:.12s;">Platform Demo</a>
-  <a href="pip-architecture-story.html" target="_blank" style="font-family:var(--f-mono);font-size:11px;font-weight:500;padding:4px 12px;border-radius:4px;background:var(--s3);border:1px solid var(--border);color:var(--ink3);text-decoration:none;white-space:nowrap;transition:.12s;">Intelligence Lifecycle</a>
-  <span style="font-family:var(--f-mono);font-size:11px;font-weight:600;padding:4px 12px;border-radius:4px;background:#3D2314;color:#F4F2EC;white-space:nowrap;">Signal Detail</span>
-  <a href="pip-signal-to-intelligence.html" target="_blank" style="font-family:var(--f-mono);font-size:11px;font-weight:500;padding:4px 12px;border-radius:4px;background:var(--s2);border:1px solid var(--border);color:var(--ink3);text-decoration:none;white-space:nowrap;transition:.12s;">Signals → Intelligence</a>
-  <a href="pip-health-score-reference.html" target="_blank" style="font-family:var(--f-mono);font-size:11px;font-weight:500;padding:4px 12px;border-radius:4px;background:var(--s2);border:1px solid var(--border);color:var(--ink3);text-decoration:none;white-space:nowrap;transition:.12s;">Health Score Formula</a>
-  <span style="margin-left:auto;font-size:11px;color:var(--ink4);">Keep all 5 files in the same folder</span>
+
+<style>
+.pip-nav {
+  border-top: 1px solid #E5E2D8;
+  background: #FAFAF7;
+  padding: 14px 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
+  box-shadow: 0 -1px 0 #E5E2D8;
+}
+.pip-nav-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: #B5B2A9;
+  margin-right: 2px;
+  white-space: nowrap;
+}
+.pip-nav-dot { color: #D0CEC2; }
+.pip-nav-link {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 5px 13px;
+  border-radius: 5px;
+  background: #F4F2EC;
+  border: 1px solid #E5E2D8;
+  color: #87857C;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background .12s, color .12s, border-color .12s;
+}
+.pip-nav-link:hover {
+  background: #FFFFFF;
+  color: #4A4844;
+  border-color: #D0CEC2;
+}
+.pip-nav-active {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 13px;
+  border-radius: 5px;
+  background: #3D2314;
+  color: #F4F2EC;
+  white-space: nowrap;
+}
+.pip-nav-hint {
+  margin-left: auto;
+  font-size: 11px;
+  color: #B5B2A9;
+  white-space: nowrap;
+}
+</style>
+<!-- ── PIP shared nav ── -->
+<div class="pip-nav">
+  <span class="pip-nav-label">PIP</span>
+  <span class="pip-nav-dot">·</span>
+  <a class="pip-nav-link" href="pip-full-platform.html" target="_blank">Platform Demo</a>  <a class="pip-nav-link" href="pip-architecture-story.html" target="_blank">Intelligence Lifecycle</a>  <span class="pip-nav-active">Signal Detail</span>  <a class="pip-nav-link" href="pip-signal-to-intelligence.html" target="_blank">Signals → Intelligence</a>  <a class="pip-nav-link" href="pip-health-score-reference.html" target="_blank">Health Score Formula</a>
+  <span class="pip-nav-hint">Keep all 5 files in the same folder</span>
 </div>
 </body>
 </html>
