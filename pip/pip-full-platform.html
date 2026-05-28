@@ -3531,10 +3531,13 @@ const PAMPortfolio = ({
 
   const synth = [
     { weight:"high",   kicker:"Concentration",
+      trace:"pip-signal-to-intelligence.html",
       text:<>3 partners account for <strong>42% of at-risk ARR</strong> — TruePartner, Vinculum Konnect, BluRoot. Trajectories all declining. Exec review recommended this week.</> },
     { weight:"high",   kicker:"Trajectory",
+      trace:"pip-signal-detail.html",
       text:<><strong>{decliningCount} of {partners.length} partners</strong> are on a declining trajectory — the majority of the at-risk concentration is also decelerating. This compounds renewal exposure.</> },
     { weight:"medium", kicker:"Certification",
+      trace:"pip-signal-to-intelligence.html",
       text:<>Certification density declining in <strong>US East (−6%)</strong>; renewal pipeline volatility following at 3-week lag.</> },
   ];
 
@@ -3607,7 +3610,7 @@ const PAMPortfolio = ({
                   <span className="synth-kicker">{s.kicker}</span>
                   <span className="synth-text">{s.text}</span>
                   <span className="synth-actions">
-                    <button className="btn sm ghost">Trace <Icon name="chevron-right" size={10} /></button>
+                    <button className="btn sm ghost" onClick={() => window.open(s.trace, "_blank")}>Trace <Icon name="chevron-right" size={10} /></button>
                   </span>
                 </div>
               ))}
@@ -5654,8 +5657,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 <div class="pip-nav">
   <span class="pip-nav-label">PIP</span>
   <span class="pip-nav-dot">·</span>
-  <span class="pip-nav-active">Platform Demo</span>  <a class="pip-nav-link" href="pip-architecture-story.html" target="_blank">Intelligence Lifecycle</a>  <a class="pip-nav-link" href="pip-signal-detail.html" target="_blank">Signal Detail</a>  <a class="pip-nav-link" href="pip-signal-to-intelligence.html" target="_blank">Signals → Intelligence</a>  <a class="pip-nav-link" href="pip-health-score-reference.html" target="_blank">Health Score Formula</a>
-  <span class="pip-nav-hint">Keep all 5 files in the same folder</span>
+  <span class="pip-nav-active">Platform Demo</span>
+  <a class="pip-nav-link" href="pip-architecture-story.html" target="_blank">Intelligence Lifecycle</a>
+  <a class="pip-nav-link" href="pip-pipeline.html" target="_blank">Data Pipeline</a>
+  <a class="pip-nav-link" href="pip-signal-detail.html" target="_blank">Signal Detail</a>
+  <a class="pip-nav-link" href="pip-signal-to-intelligence.html" target="_blank">Signals → Intelligence</a>
+  <a class="pip-nav-link" href="pip-health-score-reference.html" target="_blank">Health Score Formula</a>
+  <span class="pip-nav-hint">Keep all 6 files in the same folder</span>
 </div>
 </body>
 </html>
