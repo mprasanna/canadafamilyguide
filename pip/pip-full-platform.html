@@ -1989,6 +1989,7 @@ window.PIP_DATA = (function () {
       arrFmt: "$1.84M",
       arrAtRiskFmt: "$720K",
       flag: "Renewal exposure",
+      onboardingBottleneck: true,
     },
     {
       id: "ag",
@@ -2019,6 +2020,7 @@ window.PIP_DATA = (function () {
       arrFmt: "$2.12M",
       arrAtRiskFmt: "$90K",
       flag: null,
+      onboardingBottleneck: false,
     },
     {
       id: "tp",
@@ -2051,6 +2053,7 @@ window.PIP_DATA = (function () {
       arrFmt: "$3.24M",
       arrAtRiskFmt: "$1.78M",
       flag: "Critical — exec review",
+      onboardingBottleneck: true,
     },
     {
       id: "zb",
@@ -2081,6 +2084,7 @@ window.PIP_DATA = (function () {
       arrFmt: "$1.46M",
       arrAtRiskFmt: "$280K",
       flag: null,
+      onboardingBottleneck: false,
     },
     {
       id: "br",
@@ -2112,6 +2116,7 @@ window.PIP_DATA = (function () {
       arrFmt: "$980K",
       arrAtRiskFmt: "$540K",
       flag: "Regional slowdown",
+      onboardingBottleneck: false,
     },
     {
       id: "gx",
@@ -2141,6 +2146,7 @@ window.PIP_DATA = (function () {
       arrFmt: "$620K",
       arrAtRiskFmt: "$40K",
       flag: null,
+      onboardingBottleneck: false,
     },
     {
       id: "cs",
@@ -2171,6 +2177,7 @@ window.PIP_DATA = (function () {
       arrFmt: "$1.68M",
       arrAtRiskFmt: "$210K",
       flag: null,
+      onboardingBottleneck: false,
     },
     {
       id: "nx",
@@ -2202,6 +2209,7 @@ window.PIP_DATA = (function () {
       arrFmt: "$410K",
       arrAtRiskFmt: "$280K",
       flag: "Critical — escalated",
+      onboardingBottleneck: false,
     },
   ];
 
@@ -3200,7 +3208,8 @@ const trajectoryUrgency = (p) => {
   const healthPenalty = p.health < 50 ? 100 : p.health < 70 ? 50 : 0;
   const dirPenalty = m.dir === "down" ? 40 : m.dir === "flat" ? 10 : 0;
   const velocityPenalty = Math.abs(m.velocity) * (m.dir === "down" ? 8 : 0);
-  return healthPenalty + dirPenalty + velocityPenalty;
+  const onboardingPenalty = p.onboardingBottleneck ? 15 : 0;
+  return healthPenalty + dirPenalty + velocityPenalty + onboardingPenalty;
 };
 
 /* ── MomentumTag — the display component ── */
@@ -3524,6 +3533,7 @@ const PAMPortfolio = ({
   const openEsc        = escalations.length;
   const slaBreaches    = escalations.filter(e => e.slaBand === "red").length;
   const upcomingRenewals = partners.reduce((s,p) => s + p.renewals.upcoming90d, 0);
+  const onboardingBottleneckCount = partners.filter(p => p.onboardingBottleneck).length;
 
   // Portfolio trajectory density
   const decliningCount    = partners.filter(p => momentum(p.sparkHealth,p.healthDelta).dir === "down").length;
@@ -3662,6 +3672,15 @@ const PAMPortfolio = ({
                     <span style={{ fontSize:11, color:"var(--ink-3)" }}>72% auto</span>
                   </div>
                 </div>
+                {onboardingBottleneckCount > 0 && (
+                  <div style={{ borderTop:"1px solid var(--border)", paddingTop:8, marginTop:0 }}>
+                    <div className="kpi-l" style={{ marginBottom:2 }}>Onboarding bottleneck <Tip d={"Partners where ticket volume stress traces to onboarding handoff issues.\nElevates trajectory urgency score — these partners rank higher for PAM attention."} /></div>
+                    <div style={{ display:"flex", alignItems:"baseline", gap:8 }}>
+                      <span style={{ fontFamily:"var(--font-mono)", fontSize:22, fontWeight:500, color:"var(--amber)" }}>{onboardingBottleneckCount}</span>
+                      <span style={{ fontSize:11, color:"var(--amber)", fontWeight:500 }}>⚠ flagged</span>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </section>
@@ -3734,6 +3753,11 @@ const PAMPortfolio = ({
                           {p.escalations.sla==="amber" && <span className="t-amber"> ●</span>}
                         </td>
                         <td title={p.whyChanged[0] ? p.whyChanged[0].text : ""}>
+                          {p.onboardingBottleneck && (
+                            <span style={{ display:"inline-flex", alignItems:"center", gap:3, fontSize:10, fontWeight:600, color:"var(--amber)", background:"var(--amber-bg)", border:"1px solid var(--amber-bd)", borderRadius:3, padding:"1px 5px", marginRight:5, whiteSpace:"nowrap" }}>
+                              ⚠ Onboarding bottleneck
+                            </span>
+                          )}
                           {p.whyChanged[0] && (
                             <div style={{ display:"flex", alignItems:"center", gap:6, fontSize:11.5, color:"var(--ink-2)" }}>
                               <span className={`dot ${p.whyChanged[0].level==="risk"?"red":p.whyChanged[0].level==="watch"?"amber":"green"}`} style={{ flexShrink:0 }} />
