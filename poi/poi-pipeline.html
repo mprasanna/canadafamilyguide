@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>POI · Data to Intelligence Pipeline</title>
+<meta name="viewport" content="width=1100">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #F4F2EC;
+  --surface:   #FFFFFF;
+  --s2:        #FAFAF7;
+  --s3:        #F0EEE7;
+  --s4:        #E9E6DC;
+  --border:    #E5E2D8;
+  --border2:   #D0CEC2;
+  --border3:   #BFBBAB;
+  --ink:       #181613;
+  --ink2:      #4A4844;
+  --ink3:      #87857C;
+  --ink4:      #B5B2A9;
+  --ink5:      #D7D4C9;
+  --red:       #B0231C;
+  --red-s:     #FAE8E6;
+  --red-bd:    #E0ABA7;
+  --amber:     #9A5209;
+  --amber-s:   #F5EACF;
+  --amber-bd:  #D9C090;
+  --green:     #14653A;
+  --green-s:   #E2EEE6;
+  --green-bd:  #A8CEB0;
+  --blue:      #1B3E94;
+  --blue-s:    #DDE5F6;
+  --blue-bd:   #A8BCE2;
+  --violet:    #4E1F9D;
+  --violet-s:  #EAE4F7;
+  --violet-bd: #C0B1E4;
+  --brand:     #3D2314;
+  --f-sans:    "IBM Plex Sans", sans-serif;
+  --f-mono:    "IBM Plex Mono", monospace;
+  --f-serif:   "IBM Plex Serif", Georgia, serif;
+}
+
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--f-sans);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  min-width: 900px;
+}
+
+/* ── CHROME ── */
+.chrome {
+  position: sticky; top: 0; z-index: 200;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 48px; height: 52px;
+  display: flex; align-items: center; gap: 16px;
+}
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-mark {
+  width: 28px; height: 28px; border-radius: 5px;
+  background: var(--brand); color: var(--bg);
+  display: grid; place-items: center;
+  font-family: var(--f-mono); font-size: 10px; font-weight: 600; letter-spacing: -.04em;
+}
+.brand-name { font-size: 13px; font-weight: 600; letter-spacing: -.01em; }
+.brand-div  { color: var(--border2); }
+.brand-doc  { font-size: 12px; color: var(--ink3); }
+
+.chrome-tabs {
+  display: flex; align-items: center; gap: 0;
+  margin-left: auto;
+  background: var(--s3); border: 1px solid var(--border); border-radius: 6px; padding: 3px;
+}
+.chrome-tab {
+  padding: 4px 12px; border-radius: 4px;
+  font-size: 11px; font-weight: 500; color: var(--ink4);
+  white-space: nowrap; cursor: default; transition: .12s;
+  text-decoration: none;
+}
+.chrome-tab:hover { color: var(--ink2); }
+.chrome-tab.active {
+  background: var(--surface); color: var(--ink);
+  box-shadow: 0 1px 3px rgba(0,0,0,.07);
+}
+
+/* ── PAGE WRAPPER ── */
+.page { max-width: 1040px; margin: 0 auto; padding: 56px 48px 100px; }
+
+/* ── EYEBROW + TITLE ── */
+.eyebrow {
+  font-family: var(--f-mono); font-size: 10px; font-weight: 500;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink4);
+  margin-bottom: 10px; display: flex; align-items: center; gap: 10px;
+}
+.eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+h1.title {
+  font-size: 32px; font-weight: 600; letter-spacing: -.025em;
+  color: var(--ink); margin-bottom: 8px; line-height: 1.15;
+}
+.subtitle {
+  font-family: var(--f-serif); font-size: 15px; color: var(--ink3);
+  font-style: italic; line-height: 1.65; max-width: 600px; margin-bottom: 48px;
+}
+
+/* ── PIPELINE TABLE ── */
+.pipeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(24,22,19,.05), 0 0 0 1px rgba(24,22,19,.03);
+}
+
+/* ── LAYER ROW ── */
+.layer-row {
+  display: grid;
+  grid-template-columns: 148px 1fr;
+  border-bottom: 1px solid var(--border);
+}
+.layer-row:last-child { border-bottom: none; }
+
+.layer-meta {
+  padding: 18px 16px 18px 20px;
+  background: var(--s2);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: flex-start;
+}
+.meta-number {
+  font-family: var(--f-mono); font-size: 10px; font-weight: 500;
+  color: var(--ink5); letter-spacing: .04em;
+}
+.meta-label {
+  font-size: 11px; font-weight: 600; letter-spacing: -.005em; color: var(--ink2);
+}
+.meta-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 2px 7px; border-radius: 100px;
+  font-size: 10px; font-weight: 600; letter-spacing: .04em;
+  text-transform: uppercase; white-space: nowrap; width: fit-content;
+}
+.meta-badge.raw     { background: var(--s4);       color: var(--ink3);  border: 1px solid var(--border2); }
+.meta-badge.engine  { background: var(--brand);     color: #F4F2EC; }
+.meta-badge.score   { background: var(--green-s);   color: var(--green); border: 1px solid var(--green-bd); }
+.meta-badge.pattern { background: var(--amber-s);   color: var(--amber); border: 1px solid var(--amber-bd); }
+.meta-badge.zia     { background: var(--violet-s);  color: var(--violet);border: 1px solid var(--violet-bd); }
+.meta-badge.insight { background: var(--violet-s);  color: var(--violet);border: 1px solid var(--violet-bd); }
+
+.layer-content {
+  padding: 18px 20px;
+}
+
+/* ── SIGNAL CARDS ── */
+.cards {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.sig-card {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+  flex: 1 1 130px; min-width: 120px; max-width: 180px;
+  cursor: default;
+  transition: border-color .12s, background .12s, box-shadow .12s;
+  position: relative;
+}
+.sig-card:hover {
+  border-color: var(--border2);
+  background: var(--surface);
+  box-shadow: 0 2px 8px rgba(24,22,19,.06);
+}
+.sig-card-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  display: inline-block; vertical-align: middle; margin-right: 5px; flex-shrink: 0;
+}
+.sig-card-name {
+  font-size: 11.5px; font-weight: 600; letter-spacing: -.01em;
+  color: var(--ink); margin-bottom: 4px; display: flex; align-items: center;
+}
+.sig-card-fields {
+  display: flex; flex-wrap: wrap; gap: 3px 6px;
+}
+.sig-field {
+  font-family: var(--f-mono); font-size: 9.5px; color: var(--ink4);
+  background: var(--s3); border: 1px solid var(--border); border-radius: 3px;
+  padding: 1px 5px; white-space: nowrap;
+}
+
+/* ── ENGINE BAND ── */
+.engine-band {
+  border-radius: 6px;
+  padding: 12px 16px;
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  border: 1px solid;
+}
+.engine-band.catalyst {
+  background: rgba(61,35,20,.06); border-color: rgba(61,35,20,.2);
+}
+.engine-band.analytics {
+  background: var(--blue-s); border-color: var(--blue-bd);
+}
+.engine-band.zia {
+  background: var(--violet-s); border-color: var(--violet-bd);
+}
+.engine-name {
+  font-size: 12px; font-weight: 600; letter-spacing: -.01em; margin-bottom: 3px;
+}
+.engine-band.catalyst .engine-name { color: var(--brand); }
+.engine-band.analytics .engine-name { color: var(--blue); }
+.engine-band.zia .engine-name { color: var(--violet); }
+.engine-desc { font-size: 11.5px; color: var(--ink3); line-height: 1.55; max-width: 560px; }
+.engine-tag {
+  font-family: var(--f-mono); font-size: 9px; font-weight: 500;
+  letter-spacing: .07em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 3px; white-space: nowrap; flex-shrink: 0;
+}
+.engine-band.catalyst .engine-tag { background: rgba(61,35,20,.1); color: rgba(61,35,20,.75); }
+.engine-band.analytics .engine-tag { background: var(--blue-s); color: var(--blue); border: 1px solid var(--blue-bd); }
+.engine-band.zia .engine-tag { background: var(--violet-s); color: var(--violet); border: 1px solid var(--violet-bd); }
+
+/* ── CONNECTOR ROW ── */
+.connector-row {
+  display: grid;
+  grid-template-columns: 148px 1fr;
+  border-bottom: 1px solid var(--border);
+}
+.connector-meta {
+  background: var(--s2);
+  border-right: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+}
+.connector-arrow-icon {
+  color: var(--ink5); font-size: 12px;
+}
+.connector-label {
+  padding: 8px 20px;
+  display: flex; align-items: center; gap: 10px;
+}
+.connector-line {
+  height: 1px; flex: 0 0 32px; background: var(--border2);
+  position: relative;
+}
+.connector-line::after {
+  content: '▶';
+  position: absolute; right: -6px; top: -5px;
+  font-size: 8px; color: var(--border2);
+}
+.connector-text {
+  font-family: var(--f-mono); font-size: 10px; color: var(--ink4);
+  letter-spacing: .02em; font-style: italic;
+}
+
+/* ── SCORE CARDS ── */
+.score-card {
+  background: var(--surface);
+  border: 1px solid var(--green-bd);
+  border-radius: 6px;
+  padding: 11px 14px;
+  flex: 1 1 140px; min-width: 130px;
+  transition: box-shadow .12s, border-color .12s;
+  cursor: default;
+}
+.score-card:hover {
+  box-shadow: 0 2px 8px rgba(20,101,58,.08);
+  border-color: var(--green);
+}
+.score-card-name {
+  font-size: 11.5px; font-weight: 600; color: var(--green);
+  margin-bottom: 4px; letter-spacing: -.01em;
+}
+.score-card-dims {
+  display: flex; flex-wrap: wrap; gap: 3px;
+}
+.score-dim {
+  font-family: var(--f-mono); font-size: 9.5px; color: var(--green);
+  background: var(--green-s); border: 1px solid var(--green-bd);
+  border-radius: 3px; padding: 1px 5px; white-space: nowrap;
+}
+
+/* ── PATTERN CARDS ── */
+.pattern-card {
+  background: var(--surface);
+  border: 1px solid var(--amber-bd);
+  border-radius: 6px;
+  padding: 11px 14px;
+  flex: 1 1 180px; min-width: 170px;
+  transition: box-shadow .12s, border-color .12s;
+  cursor: default;
+}
+.pattern-card:hover {
+  box-shadow: 0 2px 8px rgba(154,82,9,.08);
+  border-color: var(--amber);
+}
+.pattern-card-name {
+  font-size: 11.5px; font-weight: 600; color: var(--amber);
+  margin-bottom: 4px; letter-spacing: -.01em;
+}
+.pattern-card-desc {
+  font-size: 11px; color: var(--ink3); line-height: 1.5;
+}
+.pattern-card-stat {
+  margin-top: 6px;
+  font-family: var(--f-mono); font-size: 10px; color: var(--amber);
+  background: var(--amber-s); border: 1px solid var(--amber-bd);
+  border-radius: 3px; padding: 2px 6px; display: inline-block;
+}
+
+/* ── INSIGHT CARDS ── */
+.insight-card {
+  background: var(--surface);
+  border: 1px solid var(--violet-bd);
+  border-radius: 6px;
+  padding: 11px 14px;
+  flex: 1 1 150px; min-width: 140px;
+  transition: box-shadow .12s, border-color .12s;
+  cursor: default;
+}
+.insight-card:hover {
+  box-shadow: 0 2px 8px rgba(78,31,157,.08);
+  border-color: var(--violet);
+}
+.insight-card-name {
+  font-size: 11.5px; font-weight: 600; color: var(--violet);
+  margin-bottom: 4px; letter-spacing: -.01em;
+}
+.insight-card-quote {
+  font-family: var(--f-serif); font-size: 11.5px; color: var(--ink3);
+  font-style: italic; line-height: 1.5; margin-bottom: 5px;
+}
+.insight-card-sub {
+  font-size: 10.5px; color: var(--ink4); line-height: 1.45;
+}
+
+/* ── BOUNDARY CALLOUT ── */
+.boundary {
+  margin-top: 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  display: flex; gap: 20px; align-items: flex-start;
+  box-shadow: 0 1px 2px rgba(24,22,19,.04);
+}
+.boundary-rule {
+  flex: 1;
+  border-left: 3px solid var(--brand);
+  padding-left: 16px;
+}
+.boundary-rule-text {
+  font-family: var(--f-serif); font-size: 15px; font-style: italic;
+  color: var(--ink); line-height: 1.55; margin-bottom: 8px;
+}
+.boundary-note {
+  font-size: 11.5px; color: var(--ink3); line-height: 1.6;
+}
+.boundary-table {
+  flex: 0 0 280px;
+  border: 1px solid var(--border);
+  border-radius: 6px; overflow: hidden; font-size: 11px;
+}
+.bt-row {
+  display: grid; grid-template-columns: 80px 1fr 1fr;
+  border-bottom: 1px solid var(--border);
+}
+.bt-row:last-child { border-bottom: none; }
+.bt-row.head {
+  background: var(--s3);
+  font-family: var(--f-mono); font-size: 9.5px; font-weight: 500;
+  text-transform: uppercase; letter-spacing: .06em; color: var(--ink4);
+}
+.bt-cell {
+  padding: 6px 10px; border-right: 1px solid var(--border);
+  line-height: 1.4;
+}
+.bt-cell:last-child { border-right: none; }
+.bt-cell.engine { font-weight: 600; font-size: 11px; }
+.bt-cell.engine.cat { color: var(--brand); }
+.bt-cell.engine.ana { color: var(--blue); }
+.bt-cell.engine.zia { color: var(--violet); }
+
+/* ── ZIA BOUNDARY NOTE ── */
+.zia-boundary {
+  margin-top: 10px;
+  background: var(--violet-s);
+  border: 1px solid var(--violet-bd);
+  border-radius: 6px;
+  padding: 10px 14px;
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.zia-boundary-icon {
+  font-family: var(--f-mono); font-size: 9px; font-weight: 500;
+  text-transform: uppercase; letter-spacing: .08em;
+  color: var(--violet); background: var(--surface);
+  border: 1px solid var(--violet-bd); border-radius: 3px;
+  padding: 2px 6px; white-space: nowrap; margin-top: 1px; flex-shrink: 0;
+}
+.zia-boundary-text {
+  font-size: 11.5px; color: var(--ink2); line-height: 1.55;
+}
+.zia-boundary-text strong { font-weight: 600; color: var(--violet); }
+
+/* ── ZIA DOES NOT ── */
+.zia-restriction {
+  margin-top: 8px;
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.zia-no {
+  font-family: var(--f-mono); font-size: 10px; color: var(--red);
+  background: var(--red-s); border: 1px solid var(--red-bd);
+  border-radius: 3px; padding: 2px 7px; white-space: nowrap;
+}
+
+/* ── TOOLTIP ── */
+#pip-tooltip {
+  position: fixed; z-index: 9000;
+  background: var(--ink); color: #f2f0ea;
+  font-size: 11.5px; line-height: 1.6;
+  padding: 9px 12px; border-radius: 6px;
+  max-width: 260px; pointer-events: none;
+  opacity: 0; transition: opacity .12s;
+  box-shadow: 0 4px 16px rgba(0,0,0,.22);
+}
+#pip-tooltip.visible { opacity: 1; }
+#pip-tooltip::after {
+  content: '';
+  position: absolute; bottom: -5px;
+  left: var(--arrow-left, 50%);
+  width: 8px; height: 8px;
+  background: var(--ink);
+  transform: rotate(45deg);
+  border-radius: 1px;
+}
+.tip { cursor: default; }
+
+/* ── NAV ── */
+.pip-nav {
+  border-top: 1px solid #E5E2D8;
+  background: #FAFAF7;
+  padding: 14px 40px;
+  display: flex; align-items: center; gap: 8px;
+  position: sticky; bottom: 0; z-index: 1000;
+  box-shadow: 0 -1px 0 #E5E2D8;
+}
+.pip-nav-label {
+  font-family: var(--f-mono); font-size: 10px; font-weight: 600;
+  letter-spacing: .09em; text-transform: uppercase; color: #B5B2A9;
+  margin-right: 2px; white-space: nowrap;
+}
+.pip-nav-dot { color: #D0CEC2; }
+.pip-nav-link {
+  font-family: var(--f-mono); font-size: 11px; font-weight: 500;
+  padding: 5px 13px; border-radius: 5px;
+  background: #F4F2EC; border: 1px solid #E5E2D8;
+  color: #87857C; text-decoration: none; white-space: nowrap;
+  transition: background .12s, color .12s, border-color .12s;
+}
+.pip-nav-link:hover { background: #FFFFFF; color: #4A4844; border-color: #D0CEC2; }
+.pip-nav-active {
+  font-family: var(--f-mono); font-size: 11px; font-weight: 600;
+  padding: 5px 13px; border-radius: 5px;
+  background: #3D2314; color: #F4F2EC; white-space: nowrap;
+}
+.pip-nav-hint { margin-left: auto; font-size: 11px; color: #B5B2A9; white-space: nowrap; }
+
+/* ── FADE IN ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.layer-row, .connector-row {
+  animation: fadeUp .3s ease both;
+}
+.layer-row:nth-child(1)  { animation-delay: .04s; }
+.layer-row:nth-child(2)  { animation-delay: .08s; }
+.layer-row:nth-child(3)  { animation-delay: .12s; }
+.layer-row:nth-child(4)  { animation-delay: .16s; }
+.layer-row:nth-child(5)  { animation-delay: .20s; }
+.layer-row:nth-child(6)  { animation-delay: .24s; }
+.layer-row:nth-child(7)  { animation-delay: .28s; }
+.layer-row:nth-child(8)  { animation-delay: .32s; }
+.layer-row:nth-child(9)  { animation-delay: .36s; }
+.layer-row:nth-child(10) { animation-delay: .40s; }
+
+</style>
+</head>
+<body>
+
+<!-- ── CHROME ── -->
+<div class="chrome">
+  <div class="brand">
+    <div class="brand-mark">POI</div>
+    <span class="brand-name">Partner Operations Intelligence</span>
+    <span class="brand-div">·</span>
+    <span class="brand-doc">Data to Intelligence Pipeline</span>
+  </div>
+  <div class="chrome-tabs">
+    <span class="chrome-tab active">Pipeline</span>
+    <a class="chrome-tab" href="poi-architecture-story.html">Intelligence Lifecycle</a>
+    <a class="chrome-tab" href="poi-signal-detail.html">Signal Detail</a>
+    <a class="chrome-tab" href="poi-signal-to-intelligence.html">Signals → Intelligence</a>
+    <a class="chrome-tab" href="poi-health-score-reference.html">Health Score Formula</a>
+    <a class="chrome-tab" href="poi-full-platform.html">Platform Demo</a>
+  </div>
+</div>
+
+<!-- ── MAIN ── -->
+<div class="page">
+
+  <div class="eyebrow">Architecture</div>
+  <h1 class="title">Raw signal to Zia insight</h1>
+  <p class="subtitle">
+    Four deterministic layers produce structured operational truth. Zia interprets — it never computes scores, fires escalations, or mutates health values.
+  </p>
+
+  <div class="pipeline">
+
+    <!-- ═══════════════════════════════
+         LAYER 1 — RAW DATA
+    ═══════════════════════════════ -->
+    <div class="layer-row">
+      <div class="layer-meta">
+        <span class="meta-number">01</span>
+        <span class="meta-label">Raw data</span>
+        <span class="meta-badge raw">Telemetry</span>
+        <span style="font-size:10.5px;color:var(--ink4);margin-top:4px;line-height:1.5;">Source events from CRM, Desk, Finance, and the partner portal. Unprocessed.</span>
+      </div>
+      <div class="layer-content">
+        <div class="cards">
+          <div class="sig-card tip" data-tip="Contract dates, renewal stages, ARR at risk, deal velocity. Sourced from Zoho CRM and billing systems.">
+            <div class="sig-card-name">
+              <span class="sig-card-dot" style="background:var(--ink4)"></span>Renewals
+            </div>
+            <div class="sig-card-fields">
+              <span class="sig-field">contract_date</span>
+              <span class="sig-field">stage</span>
+              <span class="sig-field">arr</span>
+              <span class="sig-field">velocity</span>
+            </div>
+          </div>
+          <div class="sig-card tip" data-tip="Support ticket volume, severity distribution, average resolution time, and open-ticket aging from Zoho Desk.">
+            <div class="sig-card-name">
+              <span class="sig-card-dot" style="background:var(--ink4)"></span>Tickets
+            </div>
+            <div class="sig-card-fields">
+              <span class="sig-field">volume</span>
+              <span class="sig-field">severity</span>
+              <span class="sig-field">age_open</span>
+              <span class="sig-field">resolution_t</span>
+            </div>
+          </div>
+          <div class="sig-card tip" data-tip="Partner certification levels earned, recency, breadth across product lines, and expiry tracking.">
+            <div class="sig-card-name">
+              <span class="sig-card-dot" style="background:var(--ink4)"></span>Certifications
+            </div>
+            <div class="sig-card-fields">
+              <span class="sig-field">level</span>
+              <span class="sig-field">breadth</span>
+              <span class="sig-field">recency</span>
+              <span class="sig-field">expiry</span>
+            </div>
+          </div>
+          <div class="sig-card tip" data-tip="Invoice aging buckets, overdue balances, dispute history, and payment pattern anomalies from Zoho Books.">
+            <div class="sig-card-name">
+              <span class="sig-card-dot" style="background:var(--ink4)"></span>Billing
+            </div>
+            <div class="sig-card-fields">
+              <span class="sig-field">aging_30</span>
+              <span class="sig-field">aging_60</span>
+              <span class="sig-field">disputes</span>
+              <span class="sig-field">balance</span>
+            </div>
+          </div>
+          <div class="sig-card tip" data-tip="Portal login frequency, product usage signals, engagement depth, and last-active timestamps.">
+            <div class="sig-card-name">
+              <span class="sig-card-dot" style="background:var(--ink4)"></span>Activity
+            </div>
+            <div class="sig-card-fields">
+              <span class="sig-field">logins</span>
+              <span class="sig-field">usage_depth</span>
+              <span class="sig-field">last_active</span>
+            </div>
+          </div>
+          <div class="sig-card tip" data-tip="Deal registrations, active pipeline stages, win/loss ratios, and time-in-stage from the partner deal tracker.">
+            <div class="sig-card-name">
+              <span class="sig-card-dot" style="background:var(--ink4)"></span>Deal pipeline
+            </div>
+            <div class="sig-card-fields">
+              <span class="sig-field">registrations</span>
+              <span class="sig-field">stage</span>
+              <span class="sig-field">win_rate</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- connector -->
+    <div class="connector-row">
+      <div class="connector-meta">
+        <span class="connector-arrow-icon">↓</span>
+      </div>
+      <div class="connector-label">
+        <div class="connector-line"></div>
+        <span class="connector-text">Catalyst ingests, normalises, and weights all raw signals</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════
+         CATALYST ENGINE
+    ═══════════════════════════════ -->
+    <div class="layer-row">
+      <div class="layer-meta">
+        <span class="meta-number">—</span>
+        <span class="meta-label">Catalyst</span>
+        <span class="meta-badge engine">Engine</span>
+        <span style="font-size:10.5px;color:var(--ink4);margin-top:4px;line-height:1.5;">Deterministic computation. Fully auditable. No AI.</span>
+      </div>
+      <div class="layer-content">
+        <div class="engine-band catalyst">
+          <div>
+            <div class="engine-name">Deterministic computation layer</div>
+            <div class="engine-desc">
+              Normalises all raw signals, applies governance weights, and computes every context score. Recomputation is triggered on weight changes and is audit-logged. Scoring functions are deterministic — the same inputs always produce the same outputs. No AI involvement at this layer.
+            </div>
+          </div>
+          <span class="engine-tag">Auditable · traceable · deterministic</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- connector -->
+    <div class="connector-row">
+      <div class="connector-meta">
+        <span class="connector-arrow-icon">↓</span>
+      </div>
+      <div class="connector-label">
+        <div class="connector-line"></div>
+        <span class="connector-text">Emits scored context per dimension with velocity and trajectory</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════
+         LAYER 2 — SCORES
+    ═══════════════════════════════ -->
+    <div class="layer-row">
+      <div class="layer-meta">
+        <span class="meta-number">02</span>
+        <span class="meta-label">Scores</span>
+        <span class="meta-badge score">Computed</span>
+        <span style="font-size:10.5px;color:var(--ink4);margin-top:4px;line-height:1.5;">Discrete, traceable outputs per context dimension. Each carries a value, velocity, and trajectory.</span>
+      </div>
+      <div class="layer-content">
+        <div class="cards">
+          <div class="score-card tip" data-tip="Composite of renewal rate, stage progression velocity, and at-risk ARR. Includes trailing 3-quarter trend and a deceleration signal.">
+            <div class="score-card-name">Renewal continuity</div>
+            <div class="score-card-dims">
+              <span class="score-dim">score</span>
+              <span class="score-dim">velocity</span>
+              <span class="score-dim">trajectory</span>
+              <span class="score-dim">at_risk_arr</span>
+            </div>
+          </div>
+          <div class="score-card tip" data-tip="Weighted from ticket volume, severity mix, escalation rate, and resolution speed relative to the partner's tier baseline.">
+            <div class="score-card-name">Escalation discipline</div>
+            <div class="score-card-dims">
+              <span class="score-dim">rate</span>
+              <span class="score-dim">severity_mix</span>
+              <span class="score-dim">resolution_t</span>
+              <span class="score-dim">baseline_delta</span>
+            </div>
+          </div>
+          <div class="score-card tip" data-tip="Breadth across product lines × recency decay × advanced-level weighting. Tracks year-over-year density change.">
+            <div class="score-card-name">Certification depth</div>
+            <div class="score-card-dims">
+              <span class="score-dim">breadth</span>
+              <span class="score-dim">recency_decay</span>
+              <span class="score-dim">density_yoy</span>
+            </div>
+          </div>
+          <div class="score-card tip" data-tip="Weighted composite of all dimension scores. Carries a current value, 30-day velocity, and an acceleration signal consumed by Analytics.">
+            <div class="score-card-name">Partner health</div>
+            <div class="score-card-dims">
+              <span class="score-dim">composite</span>
+              <span class="score-dim">trend_30d</span>
+              <span class="score-dim">acceleration</span>
+            </div>
+          </div>
+          <div class="score-card tip" data-tip="Conversion rate, deal registration volume, active pipeline stages, and time-in-stage relative to partner tier. Informs revenue contribution scoring.">
+            <div class="score-card-name">Revenue contribution</div>
+            <div class="score-card-dims">
+              <span class="score-dim">conversion</span>
+              <span class="score-dim">pipeline_v</span>
+              <span class="score-dim">time_in_stage</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- connector -->
+    <div class="connector-row">
+      <div class="connector-meta">
+        <span class="connector-arrow-icon">↓</span>
+      </div>
+      <div class="connector-label">
+        <div class="connector-line"></div>
+        <span class="connector-text">Analytics correlates scores across cohorts and matches historical episodes</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════
+         ANALYTICS ENGINE
+    ═══════════════════════════════ -->
+    <div class="layer-row">
+      <div class="layer-meta">
+        <span class="meta-number">—</span>
+        <span class="meta-label">Analytics</span>
+        <span class="meta-badge engine">Engine</span>
+        <span style="font-size:10.5px;color:var(--ink4);margin-top:4px;line-height:1.5;">Ecosystem-level correlation across all partners and historical periods.</span>
+      </div>
+      <div class="layer-content">
+        <div class="engine-band analytics">
+          <div>
+            <div class="engine-name">Ecosystem correlation layer</div>
+            <div class="engine-desc">
+              Cross-system pattern matching across historical partner cohorts. Detects when multiple scores move together, quantifies the statistical precedent, and surfaces signals that humans are poor at identifying — multi-variable operational correlation, ecosystem-wide historical patterns, signal clustering.
+            </div>
+          </div>
+          <span class="engine-tag">Cross-system · cohort · statistical</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- connector -->
+    <div class="connector-row">
+      <div class="connector-meta">
+        <span class="connector-arrow-icon">↓</span>
+      </div>
+      <div class="connector-label">
+        <div class="connector-line"></div>
+        <span class="connector-text">Surfaces named patterns with confidence scores and historical precedent</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════
+         LAYER 3 — PATTERNS
+    ═══════════════════════════════ -->
+    <div class="layer-row">
+      <div class="layer-meta">
+        <span class="meta-number">03</span>
+        <span class="meta-label">Patterns</span>
+        <span class="meta-badge pattern">Correlated</span>
+        <span style="font-size:10.5px;color:var(--ink4);margin-top:4px;line-height:1.5;">Named, statistically meaningful signals with historical precedent. Input to Zia.</span>
+      </div>
+      <div class="layer-content">
+        <div class="cards">
+          <div class="pattern-card tip" data-tip="Detected when renewal continuity and escalation discipline decline together across the same rolling window. A compound risk flag that is statistically more predictive than either signal alone.">
+            <div class="pattern-card-name">Co-deterioration signal</div>
+            <div class="pattern-card-desc">Renewal + escalation declining in concert across the same period.</div>
+          </div>
+          <div class="pattern-card tip" data-tip="64% of partners matching this multi-dimensional score profile lost ≥1 enterprise renewal within 6 months in historical data. Analytics surfaces the match confidence.">
+            <div class="pattern-card-name">Historical cohort match</div>
+            <div class="pattern-card-desc">Current profile matches a known precursor pattern.</div>
+            <div class="pattern-card-stat">64% → enterprise renewal loss within 6 mo</div>
+          </div>
+          <div class="pattern-card tip" data-tip="The velocity and acceleration of health decline: distinguishes structural deterioration from a temporary dip, and collapse from a decelerating fall that is partially stabilising.">
+            <div class="pattern-card-name">Trajectory shape</div>
+            <div class="pattern-card-desc">Velocity, acceleration, and inflection point detection.</div>
+          </div>
+          <div class="pattern-card tip" data-tip="Declining certification density combined with increasing escalation load. Historical data shows this combination typically precedes renewal instability within 2 quarters.">
+            <div class="pattern-card-name">Cert + escalation divergence</div>
+            <div class="pattern-card-desc">Capability declining as operational load increases.</div>
+            <div class="pattern-card-stat">renewal instability within 2 quarters</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- connector -->
+    <div class="connector-row">
+      <div class="connector-meta">
+        <span class="connector-arrow-icon">↓</span>
+      </div>
+      <div class="connector-label">
+        <div class="connector-line"></div>
+        <span class="connector-text">Zia receives structured patterns — interprets, synthesises, and drafts recommendations</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════
+         ZIA ENGINE
+    ═══════════════════════════════ -->
+    <div class="layer-row">
+      <div class="layer-meta">
+        <span class="meta-number">—</span>
+        <span class="meta-label">Zia</span>
+        <span class="meta-badge zia">AI layer</span>
+        <span style="font-size:10.5px;color:var(--ink4);margin-top:4px;line-height:1.5;">Interpretation and synthesis only. Never computes truth.</span>
+      </div>
+      <div class="layer-content">
+        <div class="engine-band zia">
+          <div>
+            <div class="engine-name">Interpretation and synthesis layer</div>
+            <div class="engine-desc">
+              Explains what patterns mean operationally. Converts raw telemetry into operational significance. Cross-synthesises signals from renewals, tickets, certifications, and trajectory into a single operational narrative.
+            </div>
+          </div>
+          <span class="engine-tag">Assistive · interpretive · non-authoritative</span>
+        </div>
+        <div class="zia-boundary" style="margin-top:10px;">
+          <span class="zia-boundary-icon">Zia does NOT</span>
+          <div class="zia-boundary-text">
+            <strong>Never touches the deterministic layer.</strong> Zia does not compute scores, fire escalations, mutate health values, decide Sev-1 routing, alter governance thresholds, or directly change urgency. Those remain deterministic and auditable. This is why the platform feels trustworthy rather than AI-hyped.
+          </div>
+        </div>
+        <div class="zia-restriction">
+          <span class="zia-no">✗ compute scores</span>
+          <span class="zia-no">✗ fire escalations</span>
+          <span class="zia-no">✗ mutate health values</span>
+          <span class="zia-no">✗ decide Sev-1 routing</span>
+          <span class="zia-no">✗ alter governance thresholds</span>
+          <span class="zia-no">✗ change urgency directly</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- connector -->
+    <div class="connector-row">
+      <div class="connector-meta">
+        <span class="connector-arrow-icon">↓</span>
+      </div>
+      <div class="connector-label">
+        <div class="connector-line"></div>
+        <span class="connector-text">Delivers to PAM surface, director review, and partner portal</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════
+         LAYER 4 — ZIA INSIGHTS
+    ═══════════════════════════════ -->
+    <div class="layer-row" style="border-bottom:none;">
+      <div class="layer-meta">
+        <span class="meta-number">04</span>
+        <span class="meta-label">Zia insights</span>
+        <span class="meta-badge insight">Output</span>
+        <span style="font-size:10.5px;color:var(--ink4);margin-top:4px;line-height:1.5;">Interpretive outputs delivered to PAM, leadership, and partner surfaces.</span>
+      </div>
+      <div class="layer-content">
+        <div class="cards">
+          <div class="insight-card tip" data-tip="Zia synthesises signals from renewals, tickets, certifications, and trajectory into one operational narrative — e.g. 'Renewal continuity, escalation discipline, and certification depth are deteriorating in concert.'">
+            <div class="insight-card-name">Operational narrative</div>
+            <div class="insight-card-quote">"Deteriorating in concert."</div>
+            <div class="insight-card-sub">Cross-system synthesis into one readable story.</div>
+          </div>
+          <div class="insight-card tip" data-tip="Zia converts raw pattern matches into operational significance: 'Pattern matches partners that lost ≥1 enterprise renewal within 6 months in 64% of historical cases.'">
+            <div class="insight-card-name">Signal interpretation</div>
+            <div class="insight-card-quote">"Historically precedes enterprise renewal loss."</div>
+            <div class="insight-card-sub">Telemetry → operational significance.</div>
+          </div>
+          <div class="insight-card tip" data-tip="Zia explains trajectory: 'Health is declining at a slowing rate, suggesting destabilising forces are being partially offset.' Distinguishes collapse from stabilisation, recovery from deceleration.">
+            <div class="insight-card-name">Trajectory interpretation</div>
+            <div class="insight-card-quote">"Decline decelerating — partial offset detected."</div>
+            <div class="insight-card-sub">Stabilising vs collapsing, structural vs temporary.</div>
+          </div>
+          <div class="insight-card tip" data-tip="Zia drafts, prioritises, and contextualises coaching actions with expected impact — e.g. increase certification density, reduce ticket dependency, expand cross-sell coverage. Recommend only, never enforce.">
+            <div class="insight-card-name">Coaching recommendations</div>
+            <div class="insight-card-quote">"Increase cert density · reduce ticket dependency."</div>
+            <div class="insight-card-sub">Drafted, prioritised, explained. Not enforced.</div>
+          </div>
+          <div class="insight-card tip" data-tip="For director review: 'Top-3 partners carry 55% ARR exposure while renewal continuity and escalation discipline deteriorate together.' 120 signals compressed into executive cognition.">
+            <div class="insight-card-name">Executive summary</div>
+            <div class="insight-card-quote">"Top-3 carry 55% ARR exposure."</div>
+            <div class="insight-card-sub">120 signals → 1 director-ready narrative.</div>
+          </div>
+          <div class="insight-card tip" data-tip="Future capability: 'Similar intervention in Q3 reduced escalation burden by 18% within 45 days.' Zia surfaces what worked historically for comparable partner profiles.">
+            <div class="insight-card-name">Institutional memory</div>
+            <div class="insight-card-quote">"Similar intervention reduced escalations 18% in 45 days."</div>
+            <div class="insight-card-sub">Historical outcome reference for comparable cases.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /pipeline -->
+
+  <!-- ── BOUNDARY RULE ── -->
+  <div class="boundary">
+    <div class="boundary-rule">
+      <div class="boundary-rule-text">
+        "Zia explains operational patterns.<br>Catalyst computes operational truth."
+      </div>
+      <div class="boundary-note">
+        AI is interpretive, not authoritative. Humans remain operationally accountable. Scoring, escalations, and governance thresholds remain deterministic, traceable, and auditable. This is what makes the platform trustworthy — not AI-hyped.
+      </div>
+    </div>
+    <div class="boundary-table">
+      <div class="bt-row head">
+        <div class="bt-cell">Engine</div>
+        <div class="bt-cell">Answers</div>
+        <div class="bt-cell">Authority</div>
+      </div>
+      <div class="bt-row">
+        <div class="bt-cell engine cat">Catalyst</div>
+        <div class="bt-cell">What happened?</div>
+        <div class="bt-cell">Deterministic</div>
+      </div>
+      <div class="bt-row">
+        <div class="bt-cell engine ana">Analytics</div>
+        <div class="bt-cell">What patterns exist?</div>
+        <div class="bt-cell">Statistical</div>
+      </div>
+      <div class="bt-row">
+        <div class="bt-cell engine zia">Zia</div>
+        <div class="bt-cell">What does this mean?</div>
+        <div class="bt-cell" style="color:var(--violet);font-weight:500;">Interpretive only</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<!-- ── NAV ── -->
+<div class="pip-nav">
+  <span class="pip-nav-label">POI</span>
+  <span class="pip-nav-dot">·</span>
+  <a class="pip-nav-link" href="poi-full-platform.html" target="_blank">Platform Demo</a>
+  <a class="pip-nav-link" href="poi-architecture-story.html" target="_blank">Intelligence Lifecycle</a>
+  <span class="pip-nav-active">Data Pipeline</span>
+  <a class="pip-nav-link" href="poi-signal-detail.html" target="_blank">Signal Detail</a>
+  <a class="pip-nav-link" href="poi-signal-to-intelligence.html" target="_blank">Signals → Intelligence</a>
+  <a class="pip-nav-link" href="poi-health-score-reference.html" target="_blank">Health Score Formula</a>
+  <span class="pip-nav-hint">Keep all 6 files in the same folder</span>
+</div>
+
+<!-- ── TOOLTIP ── -->
+<div id="pip-tooltip"></div>
+<script>
+(function(){
+  var box = document.getElementById('pip-tooltip'), cur = null;
+  function show(el) {
+    var t = el.getAttribute('data-tip');
+    if (!t) return;
+    box.textContent = t; cur = el; pos();
+    box.classList.add('visible');
+  }
+  function hide() { box.classList.remove('visible'); cur = null; }
+  function pos() {
+    if (!cur) return;
+    var r = cur.getBoundingClientRect(), bw = 260, mg = 12, vw = window.innerWidth;
+    var l = r.left + r.width / 2 - bw / 2;
+    l = Math.max(mg, Math.min(l, vw - bw - mg));
+    box.style.visibility = 'hidden';
+    box.style.top = '0px';
+    box.style.left = l + 'px';
+    box.style.width = bw + 'px';
+    var bh = box.offsetHeight || 80;
+    var top = r.top - bh - 10;
+    if (top < mg) top = r.bottom + 10;
+    box.style.top = top + 'px';
+    box.style.visibility = '';
+    var al = (r.left + r.width / 2) - l - 4;
+    al = Math.max(8, Math.min(al, bw - 16));
+    box.style.setProperty('--arrow-left', al + 'px');
+  }
+  document.addEventListener('mouseover', function(e) {
+    var el = e.target.closest && e.target.closest('.tip');
+    if (el && el !== cur) show(el);
+  });
+  document.addEventListener('mouseout', function(e) {
+    var el = e.target.closest && e.target.closest('.tip');
+    if (el) {
+      var to = e.relatedTarget;
+      if (!to || !(to.closest && to.closest('.tip'))) hide();
+    }
+  });
+  document.addEventListener('scroll', pos, true);
+  window.addEventListener('resize', pos);
+})();
+</script>
+</body>
+</html>

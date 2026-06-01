@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>POI · Signal-to-Intelligence Reference</title>
+<meta name="viewport" content="width=900">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #F4F2EC;
+  --surface: #FFFFFF;
+  --s2:      #FAFAF7;
+  --border:  #E5E2D8;
+  --ink:     #181613;
+  --ink2:    #4A4844;
+  --ink3:    #87857C;
+  --ink4:    #B5B2A9;
+  --green:   #14653A;
+  --green-s: #E2EEE6;
+  --green-bd:#A8CEAF;
+  --violet:  #4E1F9D;
+  --violet-s:#EAE4F7;
+  --violet-bd:#C0B1E4;
+  --blue:    #1B3E94;
+  --blue-s:  #DDE5F6;
+  --blue-bd: #A8BCE2;
+  --amber:   #9A5209;
+  --amber-s: #F5EACF;
+  --f-sans:  "IBM Plex Sans", sans-serif;
+  --f-mono:  "IBM Plex Mono", monospace;
+  --f-serif: "IBM Plex Serif", Georgia, serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--f-sans);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 14.5px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  padding: 0;
+}
+.page-content {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 48px 48px 96px;
+}
+
+/* ── Header ── */
+.doc-eyebrow {
+  font-family: var(--f-mono); font-size: 10px; font-weight: 500;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink4);
+  margin-bottom: 12px;
+}
+.doc-title {
+  font-size: 30px; font-weight: 600; letter-spacing: -.02em;
+  color: var(--ink); line-height: 1.2; margin-bottom: 8px;
+}
+.doc-subtitle {
+  font-family: var(--f-serif); font-size: 15px; color: var(--ink3);
+  font-style: italic; line-height: 1.6; margin-bottom: 40px;
+  padding-bottom: 28px; border-bottom: 1px solid var(--border);
+}
+
+/* ── Sections ── */
+h2 {
+  font-size: 12px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink4);
+  font-family: var(--f-mono); margin: 36px 0 14px;
+}
+h2:first-of-type { margin-top: 0; }
+
+p { color: var(--ink2); margin-bottom: 12px; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 600; color: var(--ink); }
+
+/* ── Signal table ── */
+.signal-table {
+  width: 100%; border-collapse: collapse; margin: 16px 0;
+  font-size: 12.5px;
+}
+.signal-table thead th {
+  background: var(--s2); border-bottom: 1px solid var(--border);
+  padding: 7px 12px; text-align: left;
+  font-size: 10px; font-weight: 600; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--ink4);
+  font-family: var(--f-mono);
+}
+.signal-table tbody td {
+  padding: 9px 12px; border-bottom: 1px solid var(--border);
+  vertical-align: top; color: var(--ink2);
+}
+.signal-table tbody tr:last-child td { border-bottom: none; }
+.signal-table tbody tr:nth-child(even) td { background: var(--s2); }
+.mono { font-family: var(--f-mono); font-size: 11.5px; color: var(--ink); }
+.tag {
+  display: inline-block; font-family: var(--f-mono); font-size: 10px;
+  padding: 1px 6px; border-radius: 3px; letter-spacing: .02em;
+}
+.tag.det  { background: var(--blue-s);   color: var(--blue);   border: 1px solid var(--blue-bd); }
+.tag.ai   { background: var(--violet-s); color: var(--violet); border: 1px solid var(--violet-bd); }
+.tag.both { background: var(--green-s);  color: var(--green);  border: 1px solid var(--green-bd); }
+
+/* ── Score composition box ── */
+.score-box {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; overflow: hidden; margin: 16px 0;
+}
+.score-row {
+  display: grid; grid-template-columns: 200px 1fr 80px 80px;
+  padding: 10px 16px; border-bottom: 1px solid var(--border);
+  align-items: center; gap: 12px; font-size: 12.5px;
+}
+.score-row:last-child { border-bottom: none; }
+.score-row.head {
+  background: var(--s2); font-size: 10px; font-weight: 600;
+  letter-spacing: .07em; text-transform: uppercase; color: var(--ink4);
+  font-family: var(--f-mono); padding: 7px 16px;
+}
+.score-dim { font-weight: 500; color: var(--ink); }
+.score-src { font-size: 11px; color: var(--ink4); font-family: var(--f-mono); }
+.score-w   { font-family: var(--f-mono); font-size: 12px; color: var(--ink3); text-align: right; }
+.score-max { font-family: var(--f-mono); font-size: 12px; color: var(--ink4); text-align: right; }
+
+/* ── Flow diagram ── */
+.flow {
+  display: flex; align-items: stretch; gap: 0;
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+  margin: 16px 0;
+}
+.flow-stage {
+  flex: 1; padding: 16px;
+  border-right: 1px solid var(--border);
+}
+.flow-stage:last-child { border-right: none; }
+.flow-stage.zia {
+  background: linear-gradient(180deg, var(--violet-s), var(--surface));
+  border-color: var(--violet-bd);
+  border-left: 2px solid var(--violet);
+}
+.flow-label {
+  font-family: var(--f-mono); font-size: 9.5px; font-weight: 600;
+  letter-spacing: .09em; text-transform: uppercase; margin-bottom: 6px;
+}
+.flow-name { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+.flow-item { font-size: 11.5px; color: var(--ink3); margin-bottom: 4px; line-height: 1.4; }
+
+/* ── Zia callout ── */
+.zia-callout {
+  background: var(--violet-s); border: 1px solid var(--violet-bd);
+  border-radius: 8px; padding: 16px 20px; margin: 16px 0;
+  display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start;
+}
+.zia-mark {
+  font-family: var(--f-mono); font-size: 11px; font-weight: 600;
+  color: var(--violet); background: var(--surface); border: 1px solid var(--violet-bd);
+  border-radius: 4px; padding: 3px 8px; white-space: nowrap;
+}
+.zia-text { font-size: 13px; color: var(--ink2); line-height: 1.6; }
+.zia-text strong { color: var(--violet); }
+
+/* ── Example block ── */
+.example {
+  background: var(--s2); border: 1px solid var(--border);
+  border-radius: 6px; padding: 14px 16px; margin: 12px 0;
+  font-size: 12.5px;
+}
+.example-label {
+  font-family: var(--f-mono); font-size: 9.5px; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--ink4);
+  margin-bottom: 8px;
+}
+.example-in  { color: var(--ink3); margin-bottom: 6px; }
+.example-out { font-family: var(--f-serif); font-style: italic; color: var(--ink2); line-height: 1.6; }
+
+/* ── Boundary box ── */
+.boundary {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0;
+}
+.boundary-col {
+  border-radius: 6px; padding: 14px 16px; font-size: 12.5px; line-height: 1.6;
+}
+.boundary-col.det  { background: var(--blue-s);   border: 1px solid var(--blue-bd); }
+.boundary-col.ai   { background: var(--violet-s); border: 1px solid var(--violet-bd); }
+.boundary-col h4 {
+  font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  font-family: var(--f-mono); margin-bottom: 8px;
+}
+.boundary-col.det h4 { color: var(--blue); }
+.boundary-col.ai  h4 { color: var(--violet); }
+.boundary-col li {
+  list-style: none; padding: 3px 0; color: var(--ink2);
+}
+.boundary-col li::before { content: "✓ "; font-weight: 600; }
+.boundary-col.ai li.no::before { content: "✗ "; color: var(--amber); }
+.boundary-col.ai li.no { color: var(--ink4); }
+
+/* ── Divider ── */
+.sep { height: 1px; background: var(--border); margin: 32px 0; }
+
+/* Footer */
+.footer {
+  margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border);
+  font-size: 11px; color: var(--ink4); display: flex; justify-content: space-between;
+}
+
+/* ── Tooltip system ── */
+.tip {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 15px; height: 15px; border-radius: 50%;
+  background: var(--s3); border: 1px solid var(--border2);
+  color: var(--ink4); font-size: 8.5px; font-weight: 700;
+  cursor: help; flex-shrink: 0; font-family: var(--f-sans);
+  font-style: normal; line-height: 1; vertical-align: middle;
+  margin-left: 5px; transition: background .12s, color .12s;
+  user-select: none; position: relative; top: -1px;
+}
+.tip:hover { background: var(--blue-s); color: var(--blue); border-color: var(--blue-bd); }
+#pip-tooltip {
+  position: fixed; background: #3D2314; color: #F4F2EC;
+  font-size: 12px; font-family: var(--f-sans);
+  font-weight: 400; line-height: 1.65; padding: 11px 14px;
+  border-radius: 6px; white-space: pre-wrap; width: 300px;
+  text-align: left; pointer-events: none; z-index: 9999;
+  box-shadow: 0 4px 20px rgba(61,35,20,.25);
+  opacity: 0; transition: opacity .12s;
+}
+#pip-tooltip.visible { opacity: 1; }
+#pip-tooltip::before {
+  content: ''; position: absolute; top: 100%;
+  left: var(--arrow-left, 20px);
+  border: 5px solid transparent; border-top-color: #3D2314;
+}
+.score-dim { display: inline-flex; align-items: center; }
+</style>
+</head>
+<body>
+
+<!-- Brown brand strip -->
+<div style="background:#3D2314;padding:12px 48px;display:flex;align-items:center;gap:10px;">
+  <div style="width:24px;height:24px;border-radius:4px;background:rgba(244,242,236,.15);display:grid;place-items:center;font-family:var(--f-mono);font-size:9px;font-weight:600;color:#F4F2EC;letter-spacing:-.04em;">POI</div>
+  <span style="font-family:var(--f-mono);font-size:11px;font-weight:500;color:rgba(244,242,236,.5);letter-spacing:.04em;">Partner Operations Intelligence</span>
+  <span style="color:rgba(244,242,236,.2);">&nbsp;·&nbsp;</span>
+  <span style="font-family:var(--f-mono);font-size:11px;color:rgba(244,242,236,.35);">From Signals to Intelligence</span>
+</div>
+
+<div class="page-content">
+<div class="doc-eyebrow">POI · Internal Technical Reference · Stage 02–03</div>
+<h1 class="doc-title">From Signals to Intelligence</h1>
+<p class="doc-subtitle">How POI's 182 daily signals move through the Deterministic Engine and into Zia-powered narrative interpretation — and where the boundary between the two sits.</p>
+
+<!-- ══════════════════════════════════════
+     SECTION 1: THE 182 SIGNALS
+════════════════════════════════════════ -->
+<h2>Where the 182 signals come from</h2>
+
+<p>Every number in POI traces to a specific event in a source system. The 182 is a 24-hour rolling count across 8 systems — not a static figure. Each signal is a timestamped fact: a ticket opened, a cert expiring, an invoice aging past 45 days.</p>
+
+<table class="signal-table">
+  <thead>
+    <tr>
+      <th>Source</th>
+      <th>What it contributes</th>
+      <th>Signals/24h</th>
+      <th>Feeds</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="mono">CRM</td>
+      <td>Partner records, renewal registrations, deal activity, partner score fields</td>
+      <td class="mono">47</td>
+      <td><span class="tag det">Deterministic</span></td>
+    </tr>
+    <tr>
+      <td class="mono">Desk</td>
+      <td>Ticket volume, escalation severity, SLA status, CSAT scores</td>
+      <td class="mono">31</td>
+      <td><span class="tag det">Deterministic</span></td>
+    </tr>
+    <tr>
+      <td class="mono">Catalyst</td>
+      <td>Threshold breach events, routing decisions, override entries</td>
+      <td class="mono">28</td>
+      <td><span class="tag det">Deterministic</span></td>
+    </tr>
+    <tr>
+      <td class="mono">Zoho Store</td>
+      <td>Auto-renew rate, review-stage entries, CRR, upcoming renewal dates</td>
+      <td class="mono">23</td>
+      <td><span class="tag det">Deterministic</span></td>
+    </tr>
+    <tr>
+      <td class="mono">Cert · via CRM</td>
+      <td>Active certifications, expiry within 45 days, cert ratio by practice area</td>
+      <td class="mono">18</td>
+      <td><span class="tag det">Deterministic</span></td>
+    </tr>
+    <tr>
+      <td class="mono">Store + CRM Campaigns</td>
+      <td>Marketplace listings, co-sell activity, campaign registrations via CRM Campaigns module</td>
+      <td class="mono">14</td>
+      <td><span class="tag both">Det + Zia</span></td>
+    </tr>
+    <tr>
+      <td class="mono">Zoho Books</td>
+      <td>Invoice aging, payment retry count, commission status</td>
+      <td class="mono">12</td>
+      <td><span class="tag det">Deterministic</span></td>
+    </tr>
+    <tr>
+      <td class="mono">Analytics</td>
+      <td>Cohort benchmarks, regional averages, historical trajectory — daily sync</td>
+      <td class="mono">daily</td>
+      <td><span class="tag both">Det + Zia</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="sep"></div>
+
+<!-- ══════════════════════════════════════
+     SECTION 2: DETERMINISTIC ENGINE
+════════════════════════════════════════ -->
+<h2>What the Deterministic Engine computes</h2>
+
+<p>Catalyst ingests the signals and runs them through a weighted scoring model. The output is always the same given the same inputs — no randomness, no model inference at this stage. PAMs can adjust weights via the Tweaks panel; every adjustment is logged.</p>
+
+<p><strong>POI Health Score (0–100)</strong> — the real-time operational score. Four weighted dimensions:</p>
+
+<div class="score-box">
+  <div class="score-row head">
+    <div>Dimension</div>
+    <div>Signal sources</div>
+    <div>Default weight</div>
+    <div>Max contribution</div>
+  </div>
+  <div class="score-row">
+    <div class="score-dim">Commercial Stability<i class="tip" data-tip="Sources: Zoho Books · CRM · Zoho Store
+
+Zoho Books: invoice aging, payment retry count — financial stress signals.
+CRM: revenue activity, deal pipeline, partner record updates.
+Zoho Store: CRR, renewal stage entries, auto-renew rate.
+
+All three sources are combined into a single weighted sub-score.
+Weight: 30% of the POI Health Score.">i</i></div>
+    <div class="score-src">Zoho Books · CRM · Zoho Store</div>
+    <div class="score-w">30%</div>
+    <div class="score-max">30 pts</div>
+  </div>
+  <div class="score-row">
+    <div class="score-dim">Operational Reliability<i class="tip" data-tip="Sources: Desk · Catalyst
+
+Desk: ticket volume, escalation severity, SLA breach status, CSAT.
+Catalyst: threshold breach events, routing decisions.
+
+High ticket volume without SLA breaches = moderate impact.
+Active SLA breaches = significant deduction.
+Weight: 25% of the POI Health Score.">i</i></div>
+    <div class="score-src">Desk · Catalyst</div>
+    <div class="score-w">25%</div>
+    <div class="score-max">25 pts</div>
+  </div>
+  <div class="score-row">
+    <div class="score-dim">Renewal Continuity<i class="tip" data-tip="Sources: Zoho Store · CRM
+
+Zoho Store: auto-renew rate, review-stage entries, CRR (Customer Retention Rate), upcoming renewal dates.
+CRM: renewal registrations, partner-level renewal records.
+
+CRR is the highest-weight signal within this dimension.
+Weight: 25% of the POI Health Score.">i</i></div>
+    <div class="score-src">Zoho Store · CRM</div>
+    <div class="score-w">25%</div>
+    <div class="score-max">25 pts</div>
+  </div>
+  <div class="score-row">
+    <div class="score-dim">Escalation Impact<i class="tip" data-tip="Sources: Desk · Catalyst
+
+Desk: open escalation count, severity level (Sev-1 vs Sev-2).
+Catalyst: SLA breach detection, escalation penalty rules.
+
+Formula: 100 − (open escalations × penalty weight).
+Each open SLA breach deducts more than a non-breach escalation.
+Weight: 20% of the POI Health Score.">i</i></div>
+    <div class="score-src">Desk · Catalyst</div>
+    <div class="score-w">20%</div>
+    <div class="score-max">20 pts</div>
+  </div>
+</div>
+
+
+
+
+<p><strong>Zoho Partner Score (0–1000)</strong> — the official annual tier-determining score. Four components, computed separately from the health score:</p>
+
+<div class="score-box">
+  <div class="score-row head">
+    <div>Component</div>
+    <div>Sub-components</div>
+    <div>Max</div>
+    <div></div>
+  </div>
+  <div class="score-row">
+    <div class="score-dim">Commercial Health<i class="tip" data-tip="Sources: CRM
+
+Revenue Growth (max 400 pts): year-over-year ARR growth from CRM subscription records.
+New Customers YTD (max 100 pts): net new customer logos added this calendar year from CRM.
+
+Total max: 500 pts.
+This is the largest single component — commercial performance drives tier standing more than any other factor.">i</i></div>
+    <div class="score-src">Revenue Growth + New Customers YTD</div>
+    <div class="score-w">500 pts</div>
+    <div></div>
+  </div>
+  <div class="score-row">
+    <div class="score-dim">Customer Success<i class="tip" data-tip="Sources: Zoho Store · Desk · CRM
+
+CRR (max 100 pts): Customer Retention Rate from Zoho Store.
+CSAT (max 100 pts): average customer satisfaction score from Desk feedback.
+Certifications (max 100 pts): active cert count vs benchmark (44) from CRM.
+Escalation penalty (up to −100 pts): open SLA breaches from Desk.
+
+Total max: 300 pts (before penalty).
+The escalation penalty means poor Desk performance can erase all certification gains.">i</i></div>
+    <div class="score-src">CRR + CSAT + Certifications − Escalation penalty</div>
+    <div class="score-w">300 pts</div>
+    <div></div>
+  </div>
+  <div class="score-row">
+    <div class="score-dim">Market Readiness<i class="tip" data-tip="Sources: CRM
+
+Implementation Projects (max 50 pts): verified active implementation projects on record in CRM.
+Case Studies (max 50 pts): published, customer-approved case studies in CRM.
+
+Total max: 100 pts.
+This is the most commonly underfilled component — partners with strong revenue often neglect case study documentation.">i</i></div>
+    <div class="score-src">CRM — Projects + Case Studies</div>
+    <div class="score-w">100 pts</div>
+    <div></div>
+  </div>
+  <div class="score-row">
+    <div class="score-dim">Zoho Engagement<i class="tip" data-tip="Sources: CRM · Zoho Store · CRM Campaigns module
+
+Zoho Practice Size (max 25 pts): number of certified consultants actively engaged in Zoho practice, from CRM.
+Branding and Campaigns (max 75 pts): co-marketing events, Zoho-branded activities, webinar registrations — from Zoho Store and the CRM Campaigns module.
+
+Total max: 100 pts.
+Branding & Campaigns (75 pts) is the larger sub-component and the most common gap between Standard and Premium tier partners.">i</i></div>
+    <div class="score-src">CRM Practice Size · Store + CRM Campaigns</div>
+    <div class="score-w">100 pts</div>
+    <div></div>
+  </div>
+</div>
+
+<p><strong>Trajectory</strong> — a weighted slope of the 12-month health score history. Input is the POI Health Score time-series computed above — not raw signals directly. Recent months are weighted 1.4× more than older data. Produces: label (Accelerating / Recovering / Stable / Decelerating / Declining), velocity in pts/month, and an acceleration flag. Drives portfolio sort order via <span class="mono">trajectoryUrgency()</span>.</p>
+
+<p><strong>Benchmark position</strong> — partner's scores compared anonymously against partners at the same tier and region. Sourced from the Analytics daily sync.</p>
+
+<div style="margin-top:16px;padding:12px 16px;background:var(--s2);border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:space-between;">
+  <span style="font-size:12.5px;color:var(--ink3);">Full sub-score weights, signal normalisation curves, and worked examples</span>
+  <a href="poi-health-score-reference.html" target="_blank" style="font-family:var(--f-mono);font-size:11px;font-weight:600;color:var(--blue);background:var(--blue-s);border:1px solid var(--blue-bd);border-radius:4px;padding:5px 12px;text-decoration:none;white-space:nowrap;">POI Health Score · Calculation Reference →</a>
+</div>
+
+<div class="sep"></div>
+
+<!-- ══════════════════════════════════════
+     SECTION 3: ZIA INTERPRETATION
+════════════════════════════════════════ -->
+<h2>How Zia interprets the scores</h2>
+
+<div class="zia-callout">
+  <div class="zia-mark">Zia · AI</div>
+  <div class="zia-text">
+    <strong>Zia is Zoho's AI layer</strong> — the natural fit for POI's interpretation stage given that POI lives inside the Zoho ecosystem. Zia receives the computed scores as structured input and produces plain-language operational summaries. It does not have access to raw signals or write access to any score field.
+  </div>
+</div>
+
+<p>Once the Deterministic Engine produces its output, Zia receives a structured context payload per partner. It generates four types of text:</p>
+
+<table class="signal-table">
+  <thead>
+    <tr>
+      <th>Output type</th>
+      <th>What Zia generates</th>
+      <th>Where it appears</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Intelligence Summary</strong></td>
+      <td>One headline sentence encoding state + trajectory: <em>"TruePartner is declining — executive review required"</em></td>
+      <td>Partner Intelligence header</td>
+    </tr>
+    <tr>
+      <td><strong>Operational Summary</strong></td>
+      <td>2–3 sentence prose explaining the causal pattern behind the current score. References historical pattern matches where applicable.</td>
+      <td>Partner Intelligence · PAM summary strip</td>
+    </tr>
+    <tr>
+      <td><strong>Signal Interpretation</strong></td>
+      <td>5-dimension synthesis (Operational Reliability, Trajectory, Revenue Concentration, Capability Depth, Coordination) — each 1–2 sentences.</td>
+      <td>Partner Intelligence interpretation grid</td>
+    </tr>
+    <tr>
+      <td><strong>Coaching recommendations</strong></td>
+      <td>Ranked actions derived from the partner's weakest scoring dimensions. Each includes an estimated ARR or Partner Score impact.</td>
+      <td>Partner Intelligence · Partner Console</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>An example of the translation from score to language:</p>
+
+<div class="example">
+  <div class="example-label">Deterministic Engine output → Zia input</div>
+  <div class="example-in">Health: 41 · Trajectory: Declining · Velocity: −3.2 pts/mo · CRR: 84.1 · Escalations open: 7 · Certs expiring: 6 · ARR at risk: $1.78M (42%)</div>
+  <div class="example-out">"TruePartner has destabilized. Renewal continuity, escalation discipline, and certification depth are deteriorating in concert. This pattern matches partners that lost one or more enterprise renewals within six months in 64% of historical cases. Top-3 customers carry 42% of ARR exposure. Executive review recommended this week."</div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ══════════════════════════════════════
+     SECTION 4: THE BOUNDARY
+════════════════════════════════════════ -->
+<h2>The boundary between the two</h2>
+
+<p>This distinction is what makes POI auditable. Governance requires that the deterministic layer is never touched by inference.</p>
+
+<div class="boundary">
+  <div class="boundary-col det">
+    <h4>Deterministic Engine</h4>
+    <ul>
+      <li>Computes Health Score (0–100)</li>
+      <li>Computes Partner Score (0–1000)</li>
+      <li>Classifies trajectory + velocity</li>
+      <li>Fires threshold alerts via Catalyst</li>
+      <li>Routes escalations by RBAC</li>
+      <li>Writes to the immutable audit log</li>
+      <li>Drives portfolio sort order</li>
+    </ul>
+  </div>
+  <div class="boundary-col ai">
+    <h4>Zia · AI Interpretation</h4>
+    <ul>
+      <li>Writes narrative summaries</li>
+      <li>Synthesises signal patterns into prose</li>
+      <li>Generates coaching recommendations</li>
+      <li>Produces benchmark comparison language</li>
+    </ul>
+    <ul style="margin-top:10px;">
+      <li class="no">Cannot compute or alter any score</li>
+      <li class="no">Cannot fire alerts or route escalations</li>
+      <li class="no">Cannot write to the audit log</li>
+      <li class="no">Cannot change portfolio sort order</li>
+    </ul>
+  </div>
+</div>
+
+<p>If Zia is unavailable or returns an error, every score, trajectory, and threshold alert continues to function normally. The deterministic layer has no dependency on Zia.</p>
+
+<div class="footer">
+  <span>POI · Signal-to-Intelligence Reference</span>
+  <span>Internal · Stage 02–03 of the Intelligence Processing Flow</span>
+</div>
+
+
+<div id="pip-tooltip"></div>
+<script>
+(function(){
+  var box = document.getElementById('pip-tooltip');
+  var cur = null;
+  function show(el) {
+    var t = el.getAttribute('data-tip');
+    if (!t) return;
+    box.textContent = t;
+    cur = el;
+    reposition();
+    box.classList.add('visible');
+  }
+  function hide() { box.classList.remove('visible'); cur = null; }
+  function reposition() {
+    if (!cur) return;
+    var r = cur.getBoundingClientRect();
+    var bw = 300, mg = 12, vw = window.innerWidth;
+    var left = r.left + r.width / 2 - bw / 2;
+    left = Math.max(mg, Math.min(left, vw - bw - mg));
+    box.style.visibility = 'hidden';
+    box.style.top = '0px';
+    box.style.left = left + 'px';
+    var bh = box.offsetHeight || 80;
+    var top = r.top - bh - 10;
+    if (top < mg) top = r.bottom + 10;
+    box.style.top = top + 'px';
+    box.style.visibility = '';
+    var al = (r.left + r.width / 2) - left - 5;
+    al = Math.max(8, Math.min(al, bw - 18));
+    box.style.setProperty('--arrow-left', al + 'px');
+  }
+  document.addEventListener('mouseover', function(e) {
+    var el = e.target.closest ? e.target.closest('.tip') : null;
+    if (el && el !== cur) show(el);
+  });
+  document.addEventListener('mouseout', function(e) {
+    var el = e.target.closest ? e.target.closest('.tip') : null;
+    if (el) { var to = e.relatedTarget; if (!to || !(to.closest && to.closest('.tip'))) hide(); }
+  });
+  document.addEventListener('scroll', reposition, true);
+  window.addEventListener('resize', reposition);
+})();
+</script>
+
+
+
+</div><!-- end page-content -->
+
+<style>
+.pip-nav {
+  border-top: 1px solid #E5E2D8;
+  background: #FAFAF7;
+  padding: 14px 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
+  box-shadow: 0 -1px 0 #E5E2D8;
+}
+.pip-nav-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: #B5B2A9;
+  margin-right: 2px;
+  white-space: nowrap;
+}
+.pip-nav-dot { color: #D0CEC2; }
+.pip-nav-link {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 5px 13px;
+  border-radius: 5px;
+  background: #F4F2EC;
+  border: 1px solid #E5E2D8;
+  color: #87857C;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background .12s, color .12s, border-color .12s;
+}
+.pip-nav-link:hover {
+  background: #FFFFFF;
+  color: #4A4844;
+  border-color: #D0CEC2;
+}
+.pip-nav-active {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 13px;
+  border-radius: 5px;
+  background: #3D2314;
+  color: #F4F2EC;
+  white-space: nowrap;
+}
+.pip-nav-hint {
+  margin-left: auto;
+  font-size: 11px;
+  color: #B5B2A9;
+  white-space: nowrap;
+}
+</style>
+<!-- ── POI shared nav ── -->
+<div class="pip-nav">
+  <span class="pip-nav-label">POI</span>
+  <span class="pip-nav-dot">·</span>
+  <a class="pip-nav-link" href="poi-full-platform.html" target="_blank">Platform Demo</a>
+  <a class="pip-nav-link" href="poi-architecture-story.html" target="_blank">Intelligence Lifecycle</a>
+  <a class="pip-nav-link" href="poi-pipeline.html" target="_blank">Data Pipeline</a>
+  <a class="pip-nav-link" href="poi-signal-detail.html" target="_blank">Signal Detail</a>
+  <span class="pip-nav-active">Signals → Intelligence</span>
+  <a class="pip-nav-link" href="poi-health-score-reference.html" target="_blank">Health Score Formula</a>
+  <span class="pip-nav-hint">Keep all 6 files in the same folder</span>
+</div>
+</body>
+</html>

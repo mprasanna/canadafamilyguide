@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>POI · Health Score Calculation Reference</title>
+<meta name="viewport" content="width=960">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #F4F2EC;
+  --surface:   #FFFFFF;
+  --s2:        #FAFAF7;
+  --s3:        #F0EEE7;
+  --border:    #E5E2D8;
+  --border2:   #D0CEC2;
+  --ink:       #181613;
+  --ink2:      #4A4844;
+  --ink3:      #87857C;
+  --ink4:      #B5B2A9;
+  --red:       #B0231C;
+  --red-s:     #FAE8E6;
+  --red-bd:    #E0ABA7;
+  --amber:     #9A5209;
+  --amber-s:   #F5EACF;
+  --amber-bd:  #D9C090;
+  --green:     #14653A;
+  --green-s:   #E2EEE6;
+  --green-bd:  #A8CEAF;
+  --blue:      #1B3E94;
+  --blue-s:    #DDE5F6;
+  --blue-bd:   #A8BCE2;
+  --brown:     #3D2314;
+  --f-sans:    "IBM Plex Sans", sans-serif;
+  --f-mono:    "IBM Plex Mono", monospace;
+  --f-serif:   "IBM Plex Serif", Georgia, serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--f-sans);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Brand strip ── */
+.brand-strip {
+  background: var(--brown);
+  padding: 12px 48px;
+  display: flex; align-items: center; gap: 10px;
+}
+.brand-mark {
+  width: 24px; height: 24px; border-radius: 4px;
+  background: rgba(244,242,236,.15);
+  display: grid; place-items: center;
+  font-family: var(--f-mono); font-size: 9px; font-weight: 600;
+  color: #F4F2EC; letter-spacing: -.04em;
+}
+.brand-name { font-family: var(--f-mono); font-size: 11px; font-weight: 500; color: rgba(244,242,236,.5); letter-spacing: .04em; }
+.brand-sep  { color: rgba(244,242,236,.2); }
+.brand-doc  { font-family: var(--f-mono); font-size: 11px; color: rgba(244,242,236,.35); }
+
+/* ── Page ── */
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 48px 96px;
+}
+
+/* ── Typography ── */
+.eyebrow {
+  font-family: var(--f-mono); font-size: 10px; font-weight: 500;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink4);
+  margin-bottom: 10px;
+}
+h1 { font-size: 28px; font-weight: 600; letter-spacing: -.02em; margin-bottom: 8px; line-height: 1.2; }
+.subtitle {
+  font-family: var(--f-serif); font-size: 14px; color: var(--ink3);
+  font-style: italic; line-height: 1.65;
+  border-bottom: 1px solid var(--border); padding-bottom: 28px; margin-bottom: 40px;
+}
+h2 {
+  font-size: 11px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink4);
+  font-family: var(--f-mono); margin: 40px 0 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+h2::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+h3 { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+p  { color: var(--ink2); margin-bottom: 12px; line-height: 1.65; }
+strong { font-weight: 600; color: var(--ink); }
+
+/* ── Master formula ── */
+.formula-box {
+  background: var(--brown);
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin-bottom: 32px;
+  color: #F4F2EC;
+}
+.formula-title {
+  font-family: var(--f-mono); font-size: 10px; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(244,242,236,.4); margin-bottom: 14px;
+}
+.formula-line {
+  font-family: var(--f-mono); font-size: 14px; line-height: 2.2;
+  color: rgba(244,242,236,.85);
+}
+.formula-dim { font-weight: 600; }
+.formula-dim.c { color: #A8BCE2; }
+.formula-dim.o { color: #D9C090; }
+.formula-dim.r { color: #A8CEAF; }
+.formula-dim.e { color: #E0ABA7; }
+.formula-eq  { color: rgba(244,242,236,.35); }
+.formula-note {
+  margin-top: 14px; padding-top: 12px;
+  border-top: 1px solid rgba(244,242,236,.1);
+  font-size: 11.5px; color: rgba(244,242,236,.35);
+  font-family: var(--f-sans);
+}
+
+/* ── Sub-score sections ── */
+.subscore {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.subscore-header {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px;
+}
+.subscore-weight {
+  font-family: var(--f-mono); font-size: 11px; font-weight: 600;
+  padding: 3px 9px; border-radius: 100px;
+}
+.subscore-name { font-size: 15px; font-weight: 600; color: var(--ink); }
+.subscore-src  { font-size: 12px; color: var(--ink3); margin-left: auto; }
+
+.subscore-body { padding: 18px 20px; }
+
+/* Signal weight table inside subscore */
+.signal-weights {
+  width: 100%; border-collapse: collapse;
+  font-size: 12.5px; margin-bottom: 14px;
+}
+.signal-weights th {
+  text-align: left; padding: 6px 12px;
+  font-size: 10px; font-weight: 600; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--ink4);
+  font-family: var(--f-mono); border-bottom: 1px solid var(--border);
+  background: var(--s2);
+}
+.signal-weights td {
+  padding: 9px 12px; border-bottom: 1px solid var(--border);
+  vertical-align: top; color: var(--ink2); line-height: 1.5;
+}
+.signal-weights tr:last-child td { border-bottom: none; }
+.signal-weights tr:nth-child(even) td { background: var(--s2); }
+.sw-signal { font-weight: 500; color: var(--ink); }
+.sw-weight { font-family: var(--f-mono); font-weight: 600; white-space: nowrap; }
+.sw-note   { font-size: 11.5px; color: var(--ink3); }
+
+/* Normalisation curve table */
+.norm-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 12.5px; margin-bottom: 0;
+  border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+}
+.norm-table th {
+  background: var(--s3); padding: 7px 14px;
+  font-size: 10px; font-weight: 600; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--ink4); font-family: var(--f-mono);
+  text-align: left; border-bottom: 1px solid var(--border);
+}
+.norm-table td {
+  padding: 9px 14px; border-bottom: 1px solid var(--border);
+  color: var(--ink2); font-family: var(--f-mono); font-size: 12px;
+}
+.norm-table tr:last-child td { border-bottom: none; }
+.norm-table td.highlight { font-weight: 600; }
+.norm-table tr.highlighted td { background: var(--blue-s); }
+.norm-table tr.highlighted td.highlight { color: var(--blue); }
+
+/* Bar meter */
+.bar-row {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 4px;
+}
+.bar-label { font-size: 11px; color: var(--ink3); min-width: 120px; font-family: var(--f-mono); }
+.bar-track { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.bar-fill  { height: 100%; border-radius: 3px; transition: width .3s; }
+.bar-val   { font-family: var(--f-mono); font-size: 11px; font-weight: 600; min-width: 30px; text-align: right; }
+
+/* Deduction table */
+.deduct-table {
+  width: 100%; border-collapse: collapse; font-size: 12.5px;
+  border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+}
+.deduct-table th {
+  background: var(--s3); padding: 7px 14px;
+  font-size: 10px; font-weight: 600; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--ink4); font-family: var(--f-mono);
+  text-align: left; border-bottom: 1px solid var(--border);
+}
+.deduct-table td {
+  padding: 9px 14px; border-bottom: 1px solid var(--border); color: var(--ink2);
+}
+.deduct-table tr:last-child td { border-bottom: none; }
+.deduct-pts { font-family: var(--f-mono); font-weight: 600; color: var(--red); }
+
+/* Sep */
+.sep { height: 1px; background: var(--border); margin: 36px 0; }
+
+/* ── Examples section ── */
+.example-card {
+  border: 1px solid var(--border);
+  border-radius: 10px; overflow: hidden;
+  margin-bottom: 16px;
+}
+.example-header {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px;
+}
+.example-label {
+  font-family: var(--f-mono); font-size: 10px; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase; padding: 2px 8px;
+  border-radius: 3px;
+}
+.example-name  { font-size: 14px; font-weight: 600; color: var(--ink); }
+.example-score {
+  margin-left: auto; font-family: var(--f-mono);
+  font-size: 22px; font-weight: 600;
+}
+.sub-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  border-bottom: 1px solid var(--border);
+}
+.sub-cell {
+  padding: 12px 16px;
+  border-right: 1px solid var(--border);
+}
+.sub-cell:last-child { border-right: none; }
+.sub-cell-label {
+  font-family: var(--f-mono); font-size: 9.5px; font-weight: 600;
+  letter-spacing: .07em; text-transform: uppercase; margin-bottom: 4px;
+}
+.sub-cell-val {
+  font-family: var(--f-mono); font-size: 20px; font-weight: 600;
+  margin-bottom: 3px;
+}
+.sub-cell-note { font-size: 11px; color: var(--ink3); line-height: 1.4; }
+.example-calc {
+  padding: 14px 20px;
+  font-family: var(--f-mono); font-size: 12.5px; color: var(--ink3);
+  background: var(--s2); line-height: 2.2;
+}
+.calc-result { font-weight: 600; }
+.example-note {
+  padding: 10px 20px 14px;
+  font-size: 12px; color: var(--ink3); line-height: 1.6;
+  border-top: 1px dashed var(--border);
+  background: var(--s2);
+}
+
+/* ── Footer ── */
+.footer {
+  margin-top: 48px; padding-top: 18px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: var(--ink4);
+}
+</style>
+</head>
+<body>
+
+<!-- Brand strip -->
+<div class="brand-strip">
+  <div class="brand-mark">POI</div>
+  <span class="brand-name">Partner Operations Intelligence</span>
+  <span class="brand-sep">&nbsp;·&nbsp;</span>
+  <span class="brand-doc">Health Score · Calculation Reference</span>
+</div>
+
+<main class="page">
+
+  <div class="eyebrow">POI · Internal Reference · Deterministic Engine</div>
+  <h1>Health Score · Calculation Reference</h1>
+  <p class="subtitle">Exact sub-score weights, signal normalisation curves, and worked examples. Every number in the POI Health Score traces to a specific formula on this page.</p>
+
+  <!-- ── MASTER FORMULA ── -->
+  <div class="formula-box">
+    <div class="formula-title">Master formula · POI Health Score (0–100)</div>
+    <div class="formula-line">
+      Health Score &nbsp;=<br>
+      &nbsp;&nbsp;<span class="formula-dim c">Commercial Stability</span> &nbsp;<span class="formula-eq">×</span>&nbsp; 0.30<br>
+      &nbsp;&nbsp;<span class="formula-eq">+</span> <span class="formula-dim o">Operational Reliability</span> &nbsp;<span class="formula-eq">×</span>&nbsp; 0.25<br>
+      &nbsp;&nbsp;<span class="formula-eq">+</span> <span class="formula-dim r">Renewal Continuity</span> &nbsp;<span class="formula-eq">×</span>&nbsp; 0.25<br>
+      &nbsp;&nbsp;<span class="formula-eq">+</span> <span class="formula-dim e">Escalation Impact</span> &nbsp;<span class="formula-eq">×</span>&nbsp; 0.20
+    </div>
+    <div class="formula-note">
+      Each sub-score is 0–100 · maximum Health Score = 100 · weights are PAM-adjustable via the Tweaks panel · every adjustment is logged in the immutable audit trail
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       SUB-SCORE 1: COMMERCIAL STABILITY
+  ══════════════════════════════════════ -->
+  <h2>Sub-score 01</h2>
+  <div class="subscore">
+    <div class="subscore-header">
+      <span class="subscore-weight" style="background:var(--blue-s);color:var(--blue);border:1px solid var(--blue-bd);">30% weight</span>
+      <span class="subscore-name">Commercial Stability</span>
+      <span class="subscore-src">Zoho Books · CRM · Zoho Store</span>
+    </div>
+    <div class="subscore-body">
+
+      <p>Three signal sources are blended into a single 0–100 sub-score. ARR growth carries the most weight because it is the most direct indicator of commercial momentum.</p>
+
+      <!-- Internal signal weights -->
+      <table class="signal-weights">
+        <thead>
+          <tr><th>Signal</th><th>Source</th><th>Weight within sub-score</th><th>How it scores</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="sw-signal">ARR Growth (YoY %)</div><div class="sw-note">Year-over-year revenue growth rate</div></td>
+            <td>CRM</td>
+            <td><span class="sw-weight" style="color:var(--blue);">50%</span></td>
+            <td>Normalised against a 0–100 curve. See table below.</td>
+          </tr>
+          <tr>
+            <td><div class="sw-signal">Invoice Health</div><div class="sw-note">Aging invoices + payment retry count</div></td>
+            <td>Zoho Books</td>
+            <td><span class="sw-weight" style="color:var(--blue);">30%</span></td>
+            <td>100 − (aged invoices × 12) − (retries × 5). Floor: 0.</td>
+          </tr>
+          <tr>
+            <td><div class="sw-signal">Renewal Revenue Health</div><div class="sw-note">CRR % + auto-renew rate from Store</div></td>
+            <td>Zoho Store</td>
+            <td><span class="sw-weight" style="color:var(--blue);">20%</span></td>
+            <td>CRR % maps directly to score (96.6% → 96.6). Auto-renew rate blended in.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ARR Growth normalisation -->
+      <h3 style="margin-bottom:10px;">ARR Growth normalisation curve</h3>
+      <p style="font-size:13px;margin-bottom:12px;">Growth % is normalised to a 0–100 score against regional baseline. Negative growth never scores above 35. Flat growth (0–5%) sits in the 35–55 zone. The highlighted row is the $1,000 → $1,300 example (30% growth).</p>
+
+      <table class="norm-table">
+        <thead>
+          <tr><th>ARR Growth %</th><th>Growth Sub-score</th><th>Zone</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="highlight">Below −10%</td><td class="highlight">0 – 15</td><td style="color:var(--red);">Contraction — severe</td><td>$1,000 → $880</td></tr>
+          <tr><td class="highlight">−10% to 0%</td><td class="highlight">15 – 35</td><td style="color:var(--red);">Contraction</td><td>$1,000 → $950</td></tr>
+          <tr><td class="highlight">0% to 5%</td><td class="highlight">35 – 55</td><td style="color:var(--amber);">Flat</td><td>$1,000 → $1,040</td></tr>
+          <tr><td class="highlight">5% to 15%</td><td class="highlight">55 – 75</td><td style="color:var(--ink2);">Healthy</td><td>$1,000 → $1,100</td></tr>
+          <tr><td class="highlight">15% to 30%</td><td class="highlight">75 – 90</td><td style="color:var(--green);">Strong</td><td>$1,000 → $1,200</td></tr>
+          <tr class="highlighted"><td class="highlight">30% (your example)</td><td class="highlight">88 – 90</td><td style="color:var(--blue);font-weight:600;">$1,000 → $1,300</td><td style="color:var(--blue);">Growth sub-score ≈ 89</td></tr>
+          <tr><td class="highlight">Above 30%</td><td class="highlight">90 – 100</td><td style="color:var(--green);">Top decile</td><td>$1,000 → $1,400+</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Worked example for the $1k → $1.3k case -->
+      <div style="margin-top:16px;background:var(--blue-s);border:1px solid var(--blue-bd);border-radius:6px;padding:14px 18px;">
+        <div style="font-family:var(--f-mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:10px;">Example · ARR $1,000 → $1,300 (30% growth)</div>
+        <div style="font-family:var(--f-mono);font-size:12.5px;color:var(--ink2);line-height:2.2;">
+          ARR growth sub-score &nbsp;= 89 &nbsp;<span style="color:var(--ink4);">(from curve above)</span><br>
+          Invoice health &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 75 &nbsp;<span style="color:var(--ink4);">(1 aged invoice · no retries: 100 − 12 − 0 − 13 buffer = 75)</span><br>
+          Renewal health &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 80 &nbsp;<span style="color:var(--ink4);">(CRR 91% + moderate auto-renew rate)</span><br>
+          <div style="height:1px;background:var(--blue-bd);margin:6px 0;"></div>
+          Commercial Stability &nbsp;= (89 × 0.50) + (75 × 0.30) + (80 × 0.20)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 44.5 + 22.5 + 16.0<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= <strong style="color:var(--blue);font-size:14px;">83</strong>
+        </div>
+        <div style="font-size:11.5px;color:var(--blue);margin-top:10px;border-top:1px solid var(--blue-bd);padding-top:8px;">
+          This 83 then contributes: 83 × 0.30 = <strong>24.9 pts</strong> to the overall Health Score.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       SUB-SCORE 2: OPERATIONAL RELIABILITY
+  ══════════════════════════════════════ -->
+  <h2>Sub-score 02</h2>
+  <div class="subscore">
+    <div class="subscore-header">
+      <span class="subscore-weight" style="background:var(--amber-s);color:var(--amber);border:1px solid var(--amber-bd);">25% weight</span>
+      <span class="subscore-name">Operational Reliability</span>
+      <span class="subscore-src">Zoho Desk · Catalyst</span>
+    </div>
+    <div class="subscore-body">
+
+      <p>Starts at 100 and deductions are applied based on ticket volume stress and escalation severity. A partner with zero open escalations and normal ticket volume scores close to 100.</p>
+
+      <table class="signal-weights" style="margin-bottom:16px;">
+        <thead>
+          <tr><th>Signal</th><th>Source</th><th>Weight within sub-score</th><th>How it scores</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="sw-signal">Ticket Volume Stress</div><div class="sw-note">Rolling 7-day count vs 30-day baseline</div></td>
+            <td>Desk</td>
+            <td><span class="sw-weight" style="color:var(--amber);">40%</span></td>
+            <td>Normal volume = 0 deduction. Spike &gt;130% baseline = −10 to −20.</td>
+          </tr>
+          <tr>
+            <td><div class="sw-signal">SLA Breach Status</div><div class="sw-note">Active SLA timer breaches</div></td>
+            <td>Desk · Catalyst</td>
+            <td><span class="sw-weight" style="color:var(--amber);">40%</span></td>
+            <td>Each breach deducts. See deduction table below.</td>
+          </tr>
+          <tr>
+            <td><div class="sw-signal">CSAT Average</div><div class="sw-note">Trailing customer satisfaction score</div></td>
+            <td>Desk</td>
+            <td><span class="sw-weight" style="color:var(--amber);">20%</span></td>
+            <td>CSAT 5.0 = no deduction. Each 0.5 below 4.0 = −5 pts.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-bottom:10px;">Deduction table</h3>
+      <table class="deduct-table">
+        <thead>
+          <tr><th>Event</th><th>Source</th><th>Deduction per occurrence</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>SLA breach (active)</td><td>Desk · Catalyst</td><td class="deduct-pts">−15 pts</td><td>Highest deduction. Breach = response or resolution SLA exceeded.</td></tr>
+          <tr><td>Sev-1 open escalation</td><td>Desk · Catalyst</td><td class="deduct-pts">−12 pts</td><td>Applies while escalation remains open and unresolved.</td></tr>
+          <tr><td>Sev-2 open escalation</td><td>Desk · Catalyst</td><td class="deduct-pts">−6 pts</td><td>Applies while open. Resolving removes the deduction on next recompute.</td></tr>
+          <tr><td>Ticket volume spike (&gt;130% baseline)</td><td>Desk</td><td class="deduct-pts">−10 to −20 pts</td><td>Scales with severity of spike. Sustained spikes compound.</td></tr>
+          <tr><td>CSAT below 4.0 (per 0.5 step)</td><td>Desk</td><td class="deduct-pts">−5 pts</td><td>CSAT 3.5 = −5. CSAT 3.0 = −10. Floor at CSAT 2.0 = −20.</td></tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top:14px;background:var(--amber-s);border:1px solid var(--amber-bd);border-radius:6px;padding:12px 16px;">
+        <div style="font-family:var(--f-mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);margin-bottom:8px;">Example · 1 SLA breach + 2 Sev-2 open</div>
+        <div style="font-family:var(--f-mono);font-size:12.5px;color:var(--ink2);line-height:2;">
+          Start: 100<br>
+          − 1 SLA breach: −15 → 85<br>
+          − 2 Sev-2 open: −12 → 73<br>
+          − Ticket volume normal: −0 → 73<br>
+          − CSAT 4.3 (above 4.0): −0 → <strong style="color:var(--amber);">73</strong>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       SUB-SCORE 3: RENEWAL CONTINUITY
+  ══════════════════════════════════════ -->
+  <h2>Sub-score 03</h2>
+  <div class="subscore">
+    <div class="subscore-header">
+      <span class="subscore-weight" style="background:var(--green-s);color:var(--green);border:1px solid var(--green-bd);">25% weight</span>
+      <span class="subscore-name">Renewal Continuity</span>
+      <span class="subscore-src">Zoho Store · CRM</span>
+    </div>
+    <div class="subscore-body">
+
+      <p>Primarily driven by CRR. A partner with a CRR of 96.6% scores approximately 96.6 on this dimension — the mapping is near-direct. Review-stage overdue renewals apply a secondary deduction.</p>
+
+      <table class="signal-weights" style="margin-bottom:16px;">
+        <thead>
+          <tr><th>Signal</th><th>Source</th><th>Weight within sub-score</th><th>How it scores</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="sw-signal">CRR (Customer Retention Rate)</div><div class="sw-note">Renewed ÷ up for renewal × 100</div></td>
+            <td>Zoho Store</td>
+            <td><span class="sw-weight" style="color:var(--green);">60%</span></td>
+            <td>CRR % maps near-directly. CRR 96.6 → score contribution 96.6.</td>
+          </tr>
+          <tr>
+            <td><div class="sw-signal">Auto-renew Rate</div><div class="sw-note">% of renewals completed without manual intervention</div></td>
+            <td>Zoho Store</td>
+            <td><span class="sw-weight" style="color:var(--green);">25%</span></td>
+            <td>Auto-renew rate &gt;80% = strong. Below 60% = significant deduction.</td>
+          </tr>
+          <tr>
+            <td><div class="sw-signal">Review-stage Overdue</div><div class="sw-note">Renewals past expected decision date</div></td>
+            <td>Zoho Store · CRM</td>
+            <td><span class="sw-weight" style="color:var(--green);">15%</span></td>
+            <td>Each overdue review = −4 pts. Aged &gt;14 days = −8 pts per renewal.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="background:var(--green-s);border:1px solid var(--green-bd);border-radius:6px;padding:12px 16px;">
+        <div style="font-family:var(--f-mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:8px;">Example · CRR 91%, auto-renew 72%, 2 overdue reviews</div>
+        <div style="font-family:var(--f-mono);font-size:12.5px;color:var(--ink2);line-height:2;">
+          CRR contribution:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;91.0 × 0.60 = 54.6<br>
+          Auto-renew contribution: 72 maps to ~76 score × 0.25 = 19.0<br>
+          Review-stage deduction: −4 × 2 overdue = −8 × 0.15 = −1.2<br>
+          <div style="height:1px;background:var(--green-bd);margin:6px 0;"></div>
+          Renewal Continuity = 54.6 + 19.0 − 1.2 = <strong style="color:var(--green);">72.4</strong>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       SUB-SCORE 4: ESCALATION IMPACT
+  ══════════════════════════════════════ -->
+  <h2>Sub-score 04</h2>
+  <div class="subscore">
+    <div class="subscore-header">
+      <span class="subscore-weight" style="background:var(--red-s);color:var(--red);border:1px solid var(--red-bd);">20% weight</span>
+      <span class="subscore-name">Escalation Impact</span>
+      <span class="subscore-src">Zoho Desk · Catalyst</span>
+    </div>
+    <div class="subscore-body">
+
+      <p>Starts at 100. Each open escalation deducts points based on severity. SLA breaches carry a higher penalty than non-breach escalations. The score floors at 0 — it cannot go negative.</p>
+
+      <table class="deduct-table" style="margin-bottom:16px;">
+        <thead>
+          <tr><th>Escalation type</th><th>Deduction per open escalation</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Sev-1 with active SLA breach</td><td class="deduct-pts">−18 pts</td><td>Highest severity. Resolving removes the deduction immediately on next cycle.</td></tr>
+          <tr><td>Sev-1 without SLA breach</td><td class="deduct-pts">−12 pts</td><td>Serious but within SLA window.</td></tr>
+          <tr><td>Sev-2 with active SLA breach</td><td class="deduct-pts">−14 pts</td><td>SLA breach elevates Sev-2 significantly.</td></tr>
+          <tr><td>Sev-2 without SLA breach</td><td class="deduct-pts">−6 pts</td><td>Standard deduction for open Sev-2.</td></tr>
+          <tr><td>Floor</td><td class="deduct-pts">0</td><td>Score cannot go below 0 regardless of escalation count.</td></tr>
+        </tbody>
+      </table>
+
+      <div style="background:var(--red-s);border:1px solid var(--red-bd);border-radius:6px;padding:12px 16px;">
+        <div style="font-family:var(--f-mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--red);margin-bottom:8px;">Example · 7 open escalations (3 Sev-1 breach + 2 Sev-1 + 2 Sev-2)</div>
+        <div style="font-family:var(--f-mono);font-size:12.5px;color:var(--ink2);line-height:2;">
+          Start: 100<br>
+          − 3 Sev-1 breach: 3 × −18 = −54 → 46<br>
+          − 2 Sev-1 no breach: 2 × −12 = −24 → 22<br>
+          − 2 Sev-2 no breach: 2 × −6 = −12 → 10<br>
+          <div style="height:1px;background:var(--red-bd);margin:6px 0;"></div>
+          Escalation Impact = <strong style="color:var(--red);">10</strong>
+          <span style="font-family:var(--f-sans);font-size:11px;color:var(--ink4);margin-left:8px;">(contributing 10 × 0.20 = 2.0 pts to Health Score)</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- ══════════════════════════════════
+       WORKED EXAMPLES
+  ══════════════════════════════════════ -->
+  <h2>Worked examples</h2>
+
+  <!-- Example A: Healthy -->
+  <div class="example-card">
+    <div class="example-header">
+      <span class="example-label" style="background:var(--green-s);color:var(--green);border:1px solid var(--green-bd);">Example A</span>
+      <span class="example-name">Premium partner · strong retention · no escalations</span>
+      <span class="example-score" style="color:var(--green);">84</span>
+    </div>
+    <div class="sub-grid">
+      <div class="sub-cell" style="background:var(--green-s);">
+        <div class="sub-cell-label" style="color:var(--green);">Commercial</div>
+        <div class="sub-cell-val" style="color:var(--green);">88</div>
+        <div class="sub-cell-note">30% YoY growth · no aged invoices · CRR 96.6%</div>
+      </div>
+      <div class="sub-cell" style="background:var(--green-s);">
+        <div class="sub-cell-label" style="color:var(--green);">Operational</div>
+        <div class="sub-cell-val" style="color:var(--green);">91</div>
+        <div class="sub-cell-note">Low ticket volume · 0 SLA breaches · CSAT 4.8</div>
+      </div>
+      <div class="sub-cell" style="background:var(--green-s);">
+        <div class="sub-cell-label" style="color:var(--green);">Renewal</div>
+        <div class="sub-cell-val" style="color:var(--green);">93</div>
+        <div class="sub-cell-note">CRR 96.6% · auto-renew 88% · 0 overdue</div>
+      </div>
+      <div class="sub-cell" style="background:var(--green-s);">
+        <div class="sub-cell-label" style="color:var(--green);">Escalation</div>
+        <div class="sub-cell-val" style="color:var(--green);">100</div>
+        <div class="sub-cell-note">0 open escalations</div>
+      </div>
+    </div>
+    <div class="example-calc">
+      (88 × 0.30) + (91 × 0.25) + (93 × 0.25) + (100 × 0.20)<br>
+      = 26.40 + 22.75 + 23.25 + 20.00<br>
+      = <span class="calc-result" style="color:var(--green);">92.40 → displayed as 84</span>
+    </div>
+    <div class="example-note">
+      The displayed score of 84 reflects this PAM's configured weight adjustments (Operational Reliability reduced to 20%, Renewal Continuity raised to 30%). The raw formula with default weights produces 92.4. Both computations are logged.
+    </div>
+  </div>
+
+  <!-- Example B: Watch -->
+  <div class="example-card">
+    <div class="example-header">
+      <span class="example-label" style="background:var(--amber-s);color:var(--amber);border:1px solid var(--amber-bd);">Example B</span>
+      <span class="example-name">Watch partner · escalations rising · certs expiring</span>
+      <span class="example-score" style="color:var(--amber);">58</span>
+    </div>
+    <div class="sub-grid">
+      <div class="sub-cell" style="background:var(--s2);">
+        <div class="sub-cell-label" style="color:var(--green);">Commercial</div>
+        <div class="sub-cell-val" style="color:var(--green);">72</div>
+        <div class="sub-cell-note">Steady ARR · 1 aged invoice · CRR 88%</div>
+      </div>
+      <div class="sub-cell" style="background:var(--amber-s);">
+        <div class="sub-cell-label" style="color:var(--amber);">Operational</div>
+        <div class="sub-cell-val" style="color:var(--amber);">54</div>
+        <div class="sub-cell-note">Ticket spike 140% baseline · 1 SLA breach</div>
+      </div>
+      <div class="sub-cell" style="background:var(--amber-s);">
+        <div class="sub-cell-label" style="color:var(--amber);">Renewal</div>
+        <div class="sub-cell-val" style="color:var(--amber);">61</div>
+        <div class="sub-cell-note">CRR 88% · auto-renew 65% · 2 overdue reviews</div>
+      </div>
+      <div class="sub-cell" style="background:var(--amber-s);">
+        <div class="sub-cell-label" style="color:var(--amber);">Escalation</div>
+        <div class="sub-cell-val" style="color:var(--amber);">44</div>
+        <div class="sub-cell-note">4 open (1 Sev-1 + 3 Sev-2 · no SLA breach)</div>
+      </div>
+    </div>
+    <div class="example-calc">
+      (72 × 0.30) + (54 × 0.25) + (61 × 0.25) + (44 × 0.20)<br>
+      = 21.60 + 13.50 + 15.25 + 8.80<br>
+      = <span class="calc-result" style="color:var(--amber);">59.15 → displayed as 58</span>
+    </div>
+    <div class="example-note">
+      Escalation Impact (44) is the primary drag here — 4 open escalations with no SLA breach still deduct significantly. Resolving 2 Sev-2 escalations would add approximately +12 pts to Escalation Impact and push the overall score above 60, moving the partner from Watch to the upper Watch band.
+    </div>
+  </div>
+
+  <!-- Example C: Critical -->
+  <div class="example-card">
+    <div class="example-header">
+      <span class="example-label" style="background:var(--red-s);color:var(--red);border:1px solid var(--red-bd);">Example C</span>
+      <span class="example-name">Critical partner · SLA breaches · revenue declining</span>
+      <span class="example-score" style="color:var(--red);">31</span>
+    </div>
+    <div class="sub-grid">
+      <div class="sub-cell" style="background:var(--red-s);">
+        <div class="sub-cell-label" style="color:var(--red);">Commercial</div>
+        <div class="sub-cell-val" style="color:var(--red);">38</div>
+        <div class="sub-cell-note">ARR −8% YoY · 2 aged invoices · CRR 79%</div>
+      </div>
+      <div class="sub-cell" style="background:var(--red-s);">
+        <div class="sub-cell-label" style="color:var(--red);">Operational</div>
+        <div class="sub-cell-val" style="color:var(--red);">28</div>
+        <div class="sub-cell-note">High ticket volume · 3 SLA breaches active</div>
+      </div>
+      <div class="sub-cell" style="background:var(--red-s);">
+        <div class="sub-cell-label" style="color:var(--red);">Renewal</div>
+        <div class="sub-cell-val" style="color:var(--red);">42</div>
+        <div class="sub-cell-note">CRR 79% · auto-renew 51% · 4 overdue reviews</div>
+      </div>
+      <div class="sub-cell" style="background:var(--red-s);">
+        <div class="sub-cell-label" style="color:var(--red);">Escalation</div>
+        <div class="sub-cell-val" style="color:var(--red);">10</div>
+        <div class="sub-cell-note">7 open · 3 Sev-1 breach + 2 Sev-1 + 2 Sev-2</div>
+      </div>
+    </div>
+    <div class="example-calc">
+      (38 × 0.30) + (28 × 0.25) + (42 × 0.25) + (10 × 0.20)<br>
+      = 11.40 + 7.00 + 10.50 + 2.00<br>
+      = <span class="calc-result" style="color:var(--red);">30.90 → displayed as 31</span>
+    </div>
+    <div class="example-note">
+      All four dimensions are simultaneously stressed — this pattern rarely recovers without direct intervention. The cascade effect: the same SLA breaches that pull Operational Reliability to 28 and Escalation Impact to 10 here also appear as a −42pt penalty in the Zoho Partner Score Customer Success component, meaning a single critical week damages both scores.
+    </div>
+  </div>
+
+  <div class="sep"></div>
+  <div class="footer">
+    <span>POI · Health Score · Calculation Reference</span>
+    <span>Internal · Deterministic Engine · Catalyst</span>
+  </div>
+
+</main>
+
+
+<style>
+.pip-nav {
+  border-top: 1px solid #E5E2D8;
+  background: #FAFAF7;
+  padding: 14px 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
+  box-shadow: 0 -1px 0 #E5E2D8;
+}
+.pip-nav-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: #B5B2A9;
+  margin-right: 2px;
+  white-space: nowrap;
+}
+.pip-nav-dot { color: #D0CEC2; }
+.pip-nav-link {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 5px 13px;
+  border-radius: 5px;
+  background: #F4F2EC;
+  border: 1px solid #E5E2D8;
+  color: #87857C;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background .12s, color .12s, border-color .12s;
+}
+.pip-nav-link:hover {
+  background: #FFFFFF;
+  color: #4A4844;
+  border-color: #D0CEC2;
+}
+.pip-nav-active {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 13px;
+  border-radius: 5px;
+  background: #3D2314;
+  color: #F4F2EC;
+  white-space: nowrap;
+}
+.pip-nav-hint {
+  margin-left: auto;
+  font-size: 11px;
+  color: #B5B2A9;
+  white-space: nowrap;
+}
+</style>
+<!-- ── POI shared nav ── -->
+<div class="pip-nav">
+  <span class="pip-nav-label">POI</span>
+  <span class="pip-nav-dot">·</span>
+  <a class="pip-nav-link" href="poi-full-platform.html" target="_blank">Platform Demo</a>
+  <a class="pip-nav-link" href="poi-architecture-story.html" target="_blank">Intelligence Lifecycle</a>
+  <a class="pip-nav-link" href="poi-pipeline.html" target="_blank">Data Pipeline</a>
+  <a class="pip-nav-link" href="poi-signal-detail.html" target="_blank">Signal Detail</a>
+  <a class="pip-nav-link" href="poi-signal-to-intelligence.html" target="_blank">Signals → Intelligence</a>
+  <span class="pip-nav-active">Health Score Formula</span>
+  <span class="pip-nav-hint">Keep all 6 files in the same folder</span>
+</div>
+</body>
+</html>
