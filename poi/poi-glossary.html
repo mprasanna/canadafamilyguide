@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>POI · Platform Glossary</title>
+<style>
+  :root {
+    --bg: #F4F2EC;
+    --surface: #FAFAF7;
+    --ink: #1C1B18;
+    --ink-2: #4B4A44;
+    --ink-3: #82807A;
+    --ink-4: #B0ADA3;
+    --border: #E5E2D8;
+    --border-2: #D4D1C4;
+    --red: #B0231C;
+    --red-soft: #FAE7E4;
+    --amber: #A2570B;
+    --amber-soft: #FEF3E2;
+    --green: #14653A;
+    --green-soft: #EAF3DE;
+    --blue: #1B3E94;
+    --blue-soft: #E6F1FB;
+    --f-sans: 'Inter', system-ui, sans-serif;
+    --f-mono: 'JetBrains Mono', 'Fira Mono', monospace;
+    --r: 8px;
+    --r-lg: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--bg); font-family: var(--f-sans); color: var(--ink); font-size: 13px; }
+  body { min-height: 100vh; display: flex; flex-direction: column; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--ink);
+    display: flex; align-items: center;
+    height: 44px;
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 20px; border-right: 1px solid rgba(255,255,255,.1);
+    height: 100%; flex-shrink: 0;
+  }
+  .nav-mark {
+    width: 24px; height: 24px; border-radius: 5px;
+    background: rgba(244,242,236,.15);
+    display: grid; place-items: center;
+    font-family: var(--f-mono); font-size: 9px; font-weight: 700;
+    color: #F4F2EC; letter-spacing: -.04em;
+  }
+  .nav-name { font-size: 12px; font-weight: 600; color: rgba(244,242,236,.9); letter-spacing: .02em; }
+  .nav-tabs { display: flex; align-items: center; height: 100%; padding: 0 8px; gap: 2px; flex: 1; }
+  .nav-tab {
+    height: 100%; padding: 0 14px;
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 500; color: rgba(244,242,236,.5);
+    cursor: pointer; border: none; background: transparent;
+    text-decoration: none; transition: color .15s;
+    border-bottom: 2px solid transparent; white-space: nowrap;
+  }
+  .nav-tab:hover { color: rgba(244,242,236,.85); }
+  .nav-tab.active { color: #F4F2EC; border-bottom-color: #F4F2EC; }
+  .nav-tab .tab-key {
+    font-size: 9px; font-family: var(--f-mono); font-weight: 700;
+    background: rgba(244,242,236,.12); border-radius: 3px;
+    padding: 1px 5px; color: rgba(244,242,236,.4);
+  }
+  .nav-tab.active .tab-key { color: rgba(244,242,236,.6); }
+  .nav-right { padding: 0 16px; font-size: 11px; color: rgba(244,242,236,.3); white-space: nowrap; }
+
+  main { flex: 1; }
+  .page { display: none; padding: 32px 40px 60px; max-width: 1100px; margin: 0 auto; }
+  .page.active { display: block; }
+
+  .page-header { margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .page-header .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px; }
+  .page-header h1 { font-size: 22px; font-weight: 700; color: var(--ink); letter-spacing: -.02em; margin-bottom: 6px; }
+  .page-header .desc { font-size: 13px; color: var(--ink-3); line-height: 1.6; max-width: 680px; }
+
+  .section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-3); margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  col.c-term   { width: 190px; }
+  col.c-val    { width: 140px; }
+  col.c-plain  { width: auto; }
+
+  thead th {
+    font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--ink-4); text-align: left; padding: 6px 12px 8px;
+    border-bottom: 1px solid var(--border-2);
+  }
+  thead th:first-child { padding-left: 0; }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(0,0,0,.018); }
+  td { padding: 12px 12px; vertical-align: top; line-height: 1.55; }
+  td:first-child { padding-left: 0; }
+
+  .t-heading { font-weight: 600; font-size: 13px; color: var(--ink); }
+  .t-sub { font-size: 11px; color: var(--ink-4); margin-top: 3px; }
+  .t-val { font-family: var(--f-mono); font-size: 12px; font-weight: 600; display: block; margin-bottom: 2px; }
+  .t-val.red   { color: var(--red); }
+  .t-val.amber { color: var(--amber); }
+  .t-val.green { color: var(--green); }
+  .t-val.blue  { color: var(--blue); }
+  .t-val.muted { color: var(--ink-3); }
+
+  .three { font-size: 13px; color: var(--ink-2); line-height: 1.65; }
+  .three .q { font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-4); display: block; margin-top: 7px; margin-bottom: 1px; }
+  .three .q:first-child { margin-top: 0; }
+  .three .a { display: block; }
+
+  .badge {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    letter-spacing: .04em; text-transform: uppercase;
+    padding: 2px 7px; border-radius: 4px;
+  }
+  .badge.high   { background: var(--red-soft);   color: var(--red); }
+  .badge.medium { background: var(--amber-soft);  color: var(--amber); }
+  .badge.low    { background: var(--green-soft);  color: var(--green); }
+  .badge.info   { background: var(--blue-soft);   color: var(--blue); }
+
+  footer {
+    background: var(--ink); color: rgba(244,242,236,.35);
+    padding: 20px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 11px; flex-wrap: wrap; gap: 12px;
+  }
+  .footer-brand { display: flex; align-items: center; gap: 10px; }
+  .footer-mark {
+    width: 20px; height: 20px; border-radius: 4px;
+    background: rgba(244,242,236,.1);
+    display: grid; place-items: center;
+    font-family: var(--f-mono); font-size: 8px; font-weight: 700;
+    color: rgba(244,242,236,.5);
+  }
+  .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+  .footer-links a { color: rgba(244,242,236,.35); text-decoration: none; }
+  .footer-links a:hover { color: rgba(244,242,236,.7); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <div class="nav-mark">POI</div>
+    <div class="nav-name">Partner Operations Intelligence</div>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('pam')"><span class="tab-key">01</span> PAM Command</button>
+    <button class="nav-tab" onclick="showPage('p360')"><span class="tab-key">02</span> Partner Intelligence</button>
+    <button class="nav-tab" onclick="showPage('director')"><span class="tab-key">03</span> Director</button>
+    <button class="nav-tab" onclick="showPage('store')"><span class="tab-key">04</span> Partner Principal</button>
+  </div>
+  <div class="nav-right">Platform Glossary · v2</div>
+</nav>
+
+<main>
+
+<!-- ══ PAGE 01 — PAM COMMAND ═════════════════════════════════ -->
+<div id="pam" class="page active">
+  <div class="page-header">
+    <div class="eyebrow">Tab 01 · PAM Command</div>
+    <h1>PAM Command</h1>
+    <div class="desc">The daily working view for Partner Account Managers. Shows which partners need attention today, how the portfolio is moving, and exactly what actions to take — ordered by urgency so the PAM doesn't have to decide where to start.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Top 3 summary tiles</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Label on screen</th><th>Value shown</th><th>What it means in plain language</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="t-heading">Revenue at risk</div></td>
+          <td><span class="t-val red">$14.7M</span><span class="t-val muted">↑ 9.2% vs 30d</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">$14.7M of partner-managed revenue is currently in danger — renewals are delayed, SLAs have been breached, or customer health is poor.</span>
+            <span class="q">Impact</span><span class="a">This amount grew 9.2% compared to last month — the problem is getting bigger, not smaller.</span>
+            <span class="q">Recommended action</span><span class="a">Open the portfolio table, sort by urgency, and start with the top three partners who hold most of this exposure.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Portfolio health bar</div><div class="t-sub">Colour bar showing 3 bands</div></td>
+          <td><span class="t-val green">Healthy</span><span class="t-val amber">Watch</span><span class="t-val red">Critical</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">The coloured bar shows how the PAM's 22 partners are distributed — green (doing well), amber (needs monitoring), red (needs immediate action).</span>
+            <span class="q">Impact</span><span class="a">A shrinking green section or growing red section means the portfolio is deteriorating overall — not just one partner having a bad month.</span>
+            <span class="q">Recommended action</span><span class="a">If red is growing, escalate to the Director. If amber is growing, block time this week to contact those partners.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Open escalations</div><div class="t-sub">Including SLA breaches</div></td>
+          <td><span class="t-val red">40 open</span><span class="t-val red">8 breached</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">40 customer support issues are currently open across the portfolio. 8 have already missed the deadline for a first response.</span>
+            <span class="q">Impact</span><span class="a">Breached deadlines hurt customer satisfaction and, over time, reduce the likelihood of renewal. Each breach that isn't resolved quickly compounds the problem.</span>
+            <span class="q">Recommended action</span><span class="a">Address the 8 breached escalations today — they are the most urgent items in the portfolio.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Upcoming renewals</div><div class="t-sub">Next 90 days</div></td>
+          <td><span class="t-val muted">82 renewals</span><span class="t-val muted">72% auto</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">82 customer contracts across the portfolio are up for renewal in the next 3 months. 72% will renew automatically without anyone needing to act.</span>
+            <span class="q">Impact</span><span class="a">The remaining 28% — roughly 23 contracts — need a human to follow up or they may not renew.</span>
+            <span class="q">Recommended action</span><span class="a">Identify which partners own those 23 non-auto renewals and confirm each one has an owner and a plan.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Onboarding problems</div></td>
+          <td><span class="t-val amber">2 partners flagged</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">2 partners have rising support ticket volumes that trace specifically to broken handoffs when onboarding new customers.</span>
+            <span class="q">Impact</span><span class="a">Onboarding problems don't fix themselves — they compound. More tickets mean worse customer experience, which means lower renewal rates later.</span>
+            <span class="q">Recommended action</span><span class="a">Schedule a call with each flagged partner to review their onboarding handoff process this week.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Risk alerts — intelligence strip</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Alert</th><th>Urgency</th><th>What it means in plain language</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="t-heading">Risk concentrated in 3 partners</div></td>
+          <td><span class="badge high">High</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">TruePartner, Vinculum Konnect, and BluRoot together hold 42% of all at-risk revenue — and all three are getting worse.</span>
+            <span class="q">Impact</span><span class="a">Risk is not spread evenly. Fixing just these three relationships would cut total portfolio risk nearly in half.</span>
+            <span class="q">Recommended action</span><span class="a">Escalate all three for executive review this week — this requires more than PAM-level intervention.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Multiple partners getting worse</div></td>
+          <td><span class="badge high">High</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Several partners are declining at the same time, and most of the concentrated revenue risk sits in that declining group.</span>
+            <span class="q">Impact</span><span class="a">Decline plus concentration together is the most dangerous combination — if these partners don't recover, renewal losses will cluster in the same quarter.</span>
+            <span class="q">Recommended action</span><span class="a">Treat this as a portfolio-level risk issue, not individual partner issues — bring it to the Director now.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">US East qualifications dropping</div></td>
+          <td><span class="badge medium">Medium</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Fewer partner employees in the US East region are maintaining their product qualifications — down 6% this quarter.</span>
+            <span class="q">Impact</span><span class="a">When qualifications decline, renewals tend to become less predictable a few months later — it's an early warning, not yet a crisis.</span>
+            <span class="q">Recommended action</span><span class="a">Contact US East partners this week to understand why certification renewals are being skipped and what support they need.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Portfolio sort modes — how to rank partners</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Sort mode</th><th>Default?</th><th>What it means and when to use it</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="t-heading">Most urgent first</div></td>
+          <td><span class="badge info">Default</span></td>
+          <td class="three">
+            <span class="q">What is this?</span><span class="a">Partners are ranked by combining how bad their situation is right now with how fast it is getting worse.</span>
+            <span class="q">Impact</span><span class="a">A partner at 40 health and declining quickly is more urgent than a partner at 35 who has stabilised. This sort finds the ones who need you today, not just the ones who look worst on paper.</span>
+            <span class="q">Recommended action</span><span class="a">Every morning as the default starting point for the day.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Highest revenue risk first</div></td>
+          <td>—</td>
+          <td class="three">
+            <span class="q">What is this?</span><span class="a">Partners are ranked by the total value of delayed or at-risk renewals they manage.</span>
+            <span class="q">Impact</span><span class="a">A smaller partner declining fast may rank higher by urgency, but if you need to protect maximum revenue in a renewals QBR, this sort gives the financial view.</span>
+            <span class="q">Recommended action</span><span class="a">Before a quarterly business review or when reporting portfolio revenue risk to leadership.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Direction of change first</div></td>
+          <td>—</td>
+          <td class="three">
+            <span class="q">What is this?</span><span class="a">Partners are ranked by whether they are improving or getting worse, and how fast.</span>
+            <span class="q">Impact</span><span class="a">Useful for spotting fast-declining partners early — before they become critical — or finding partners who are recovering and may no longer need intensive attention.</span>
+            <span class="q">Recommended action</span><span class="a">Weekly review to reassign attention as the portfolio changes.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Actions this week — your prioritised to-do list</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Action</th><th>Due</th><th>What it means in plain language</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="t-heading">Exec review — TruePartner ($1.78M)</div></td>
+          <td><span class="t-val red">By Wednesday</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">TruePartner manages $1.78M of at-risk revenue and their situation is getting worse, not better.</span>
+            <span class="q">Impact</span><span class="a">A PAM-level intervention is no longer sufficient — this partner needs a Director-level conversation before Wednesday or the renewal risk escalates further.</span>
+            <span class="q">Recommended action</span><span class="a">Request an executive review meeting and brief the Director with the partner's current health summary.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Push 2 Vinculum renewals forward</div></td>
+          <td><span class="t-val red">Today</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Two Vinculum customer renewals have passed their internal deadline without moving forward in the process.</span>
+            <span class="q">Impact</span><span class="a">Renewals that stall in the review stage are statistically much more likely to not close. Every additional day increases churn risk.</span>
+            <span class="q">Recommended action</span><span class="a">Contact the Vinculum PAM contact today and manually advance both renewals to the next stage.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Reroute Northwind issue to engineering</div></td>
+          <td><span class="t-val red">Today</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">A serious customer issue at Northwind ERP Partners cannot be resolved through the standard support path — it needs engineering involvement.</span>
+            <span class="q">Impact</span><span class="a">This issue is stalling and the longer it waits in the wrong queue, the worse the customer experience gets and the greater the SLA breach risk.</span>
+            <span class="q">Recommended action</span><span class="a">Reassign the ticket to the engineering escalation queue today and confirm the engineering owner has acknowledged it.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Book 6 certification renewals — Vinculum</div></td>
+          <td><span class="t-val amber">This week</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">6 Vinculum employee certifications for the Creator product expire within 45 days and no renewal sessions are currently scheduled.</span>
+            <span class="q">Impact</span><span class="a">If these lapse, Vinculum loses official qualification to sell and support Creator — reducing their Partner Score and ability to serve customers.</span>
+            <span class="q">Recommended action</span><span class="a">Contact the Vinculum partner manager this week to schedule 6 certification renewal sessions before the 45-day window closes.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">BluRoot revenue opportunity review</div></td>
+          <td><span class="t-val amber">Thursday</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">BluRoot's commercial momentum is slowing down, but there are identified cross-sell opportunities that could offset the decline.</span>
+            <span class="q">Impact</span><span class="a">Acting on growth opportunities before a partner enters a critical health state is far more effective than trying to recover them after.</span>
+            <span class="q">Recommended action</span><span class="a">Review BluRoot's eligible customer list for cross-sell by Thursday and plan an outreach with the partner.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Where does the data come from? — 8 connected systems</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>System</th><th>Events / 24h</th><th>What it contributes</th></tr></thead>
+      <tbody>
+        <tr><td><div class="t-heading">CRM</div></td><td><span class="t-val blue">47</span></td><td class="three"><span class="q">What is it?</span><span class="a">Zoho CRM — manages deals, customers, and renewal records. The largest source of data in the platform, covering commercial health and customer retention.</span></td></tr>
+        <tr><td><div class="t-heading">Desk</div></td><td><span class="t-val amber">31</span></td><td class="three"><span class="q">What is it?</span><span class="a">Zoho Desk — the support ticketing system. Every ticket opened, resolved, or that missed a deadline flows through here. Feeds the service health score.</span></td></tr>
+        <tr><td><div class="t-heading">Billing</div></td><td><span class="t-val muted">12</span></td><td class="three"><span class="q">What is it?</span><span class="a">Zoho Books/Billing — tracks invoice payments. An overdue invoice (30 or 45 days) is an early commercial stress signal before the revenue problem becomes visible.</span></td></tr>
+        <tr><td><div class="t-heading">Renewals</div></td><td><span class="t-val amber">23</span></td><td class="three"><span class="q">What is it?</span><span class="a">The Zoho renewals module — tracks every renewal stage change, completion, and delay. Feeds the renewal health score directly.</span></td></tr>
+        <tr><td><div class="t-heading">Certifications</div></td><td><span class="t-val muted">18</span></td><td class="three"><span class="q">What is it?</span><span class="a">The Zoho certification system — tracks which partner employees hold active product qualifications. Feeds the delivery readiness score and the Partner Score.</span></td></tr>
+        <tr><td><div class="t-heading">Campaigns</div></td><td><span class="t-val muted">9</span></td><td class="three"><span class="q">What is it?</span><span class="a">Zoho Campaigns — co-marketing and partner activity signals. Used in the go-to-market strength score and the ecosystem contribution ranking.</span></td></tr>
+        <tr><td><div class="t-heading">Store</div></td><td><span class="t-val muted">14</span></td><td class="three"><span class="q">What is it?</span><span class="a">The Zoho Partner Store — marketplace listings, co-sell registrations, and renewal management events from the partner portal.</span></td></tr>
+        <tr><td><div class="t-heading">Catalyst (automation layer)</div></td><td><span class="t-val blue">28</span></td><td class="three"><span class="q">What is it?</span><span class="a">Not a data source — the automation engine. Catalyst monitors all other systems and automatically assigns actions, sends alerts, and pages the right people when thresholds are crossed. 28 events means 28 automated actions happened today without anyone having to manually check anything.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ PAGE 02 — PARTNER INTELLIGENCE ════════════════════════ -->
+<div id="p360" class="page">
+  <div class="page-header">
+    <div class="eyebrow">Tab 02 · Partner Intelligence</div>
+    <h1>Partner Intelligence</h1>
+    <div class="desc">A complete view of a single partner. The platform reads 120 data events from 7 systems and produces one clear verdict, five health dimensions, a score breakdown, a trend line, an automated event log, a timeline of recent activity, and a specific action list — all for one partner at a time.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Summary banner — the platform's verdict</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Label on screen</th><th>Value shown</th><th>What it means in plain language</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="t-heading">Summary verdict</div></td>
+          <td><span class="t-val red">"Decelerating — exec review required"</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">The platform read all available signals and produced one sentence describing the partner's current state and the action required.</span>
+            <span class="q">Impact</span><span class="a">So you don't have to interpret multiple charts and decide for yourself. The platform tells you the state and what to do next — in plain English.</span>
+            <span class="q">Recommended action</span><span class="a">Take the stated action — in this case, arrange an executive review this week.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">120 signals · 7 systems</div><div class="t-sub">Data freshness indicator</div></td>
+          <td><span class="t-val muted">Updated 4 min ago</span></td>
+          <td class="three">
+            <span class="q">What is this?</span><span class="a">The number of individual data events read from 7 connected systems to produce this view — and how recently it was updated.</span>
+            <span class="q">Impact</span><span class="a">This is not a weekly report — it's live data refreshed every few minutes. What you see reflects what is happening now, not last week.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Direction of change</div></td>
+          <td><span class="t-val red">↓ Getting worse</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">The partner's health has been declining — and the rate of decline has not slowed down yet.</span>
+            <span class="q">Impact</span><span class="a">A partner can have a low score but be stable or improving. The direction of change tells you whether the situation is under control or still deteriorating.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Root cause signal</div></td>
+          <td><span class="t-val amber">Delayed renewals</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">The platform identified the single strongest early warning sign — the issue most likely to cause revenue loss if not addressed.</span>
+            <span class="q">Impact</span><span class="a">Knowing the root cause means you can act on the right thing, not just respond to whichever signal is loudest.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Required action</div></td>
+          <td><span class="t-val red">Exec review · this week</span></td>
+          <td class="three">
+            <span class="q">What is this?</span><span class="a">A specific, timed instruction — who should act, what they should do, and by when. Computed from the combined severity of all signals.</span>
+            <span class="q">Impact</span><span class="a">Most dashboards show data. This platform tells you what to do. The action tag removes ambiguity.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Five health dimensions — what is breaking and why</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Dimension</th><th>Status</th><th>What it means in plain language</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="t-heading">Service health</div></td>
+          <td><span class="t-val red">Broken down</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">The partner's ability to handle day-to-day support, billing, and renewals has deteriorated across all three areas at the same time — not just one.</span>
+            <span class="q">Impact</span><span class="a">When multiple operational areas fail together, it usually indicates a deeper organisational problem — not a one-off issue that will resolve itself.</span>
+            <span class="q">Recommended action</span><span class="a">Request a diagnostic call with the partner's operations lead to identify what resource or process has broken down.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Direction of change</div></td>
+          <td><span class="t-val red">Declining · −14 pts in 30 days</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">The partner's overall health score dropped 14 points in the last 30 days while the regional average stayed flat.</span>
+            <span class="q">Impact</span><span class="a">The gap between this partner and comparable peers is actively widening — they are underperforming their region, not just having a difficult period.</span>
+            <span class="q">Recommended action</span><span class="a">Compare this partner's situation to regionally similar partners to understand if this is fixable with targeted support or requires structural change.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Revenue dependency</div></td>
+          <td><span class="t-val red">55% of revenue in delayed renewals</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">More than half of this partner's total revenue is tied to customer renewals that have not yet been confirmed — the top 3 customers hold most of it.</span>
+            <span class="q">Impact</span><span class="a">A small number of customer decisions could cause a very large revenue impact. This partner is over-dependent on a handful of accounts renewing.</span>
+            <span class="q">Recommended action</span><span class="a">Identify the top 3 at-risk customers and assign a dedicated outreach plan for each before their renewal date.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Delivery readiness</div></td>
+          <td><span class="t-val amber">58% qualified · 12 lapsing soon</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Only 58% of the expected product qualifications are active, and 12 more will expire this quarter with no renewals scheduled.</span>
+            <span class="q">Impact</span><span class="a">When partner employees lose their qualifications, the partner can no longer officially deliver and support certain products — which directly affects customer outcomes and the Partner Score.</span>
+            <span class="q">Recommended action</span><span class="a">Work with the partner to schedule qualification renewal sessions before the 45-day expiry window closes.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Support health</div></td>
+          <td><span class="t-val red">14 open · SLA missed on most</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">14 customer issues are currently open and most have already missed their response deadline. The platform has automatically assigned owners and sent alerts.</span>
+            <span class="q">Impact</span><span class="a">14 open issues is a significant backlog. Customers experiencing unresolved problems are far less likely to renew — this is directly connected to the revenue risk flagged above.</span>
+            <span class="q">Recommended action</span><span class="a">Review the escalation list today and confirm each of the 14 issues has an active owner with a resolution timeline.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Overall health score breakdown — how the 31 is calculated</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Component</th><th>Score · weight</th><th>What it means in plain language</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="t-heading">Revenue health</div></td>
+          <td><span class="t-val amber">38 / 100</span><span class="t-val muted">Adds 11 to total</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">The partner's revenue pipeline — new deals, customer growth, and expansion — is underperforming. Scored 38 out of 100.</span>
+            <span class="q">Impact</span><span class="a">This is the biggest single component (30% of the total score). A weak commercial position here drags the overall health number more than any other dimension.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Service health</div></td>
+          <td><span class="t-val red">28 / 100</span><span class="t-val muted">Adds 7 to total</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">How well this partner handles support tickets, deadlines, and day-to-day operations. 28 out of 100 is critical — active service failure.</span>
+            <span class="q">Impact</span><span class="a">Even at 25% weight, a score of 28 signals that customer experience is being actively damaged right now.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Renewal health</div></td>
+          <td><span class="t-val amber">36 / 100</span><span class="t-val muted">Adds 9 to total</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">How reliably customers renew through this partner. At 36, too many renewals are stalling in review rather than completing automatically.</span>
+            <span class="q">Impact</span><span class="a">A healthy partner should score 70+ here. At 36, revenue leakage from lapsed renewals is already happening or imminent.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Support risk</div></td>
+          <td><span class="t-val red">16 / 100</span><span class="t-val muted">Adds 3 to total</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">This is a penalty score — high escalation volume and missed deadlines reduce it. At 16, active support problems are significantly pulling the overall health score down.</span>
+            <span class="q">Impact</span><span class="a">Reducing open escalations and resolving breaches is the fastest way to improve this dimension and stop it dragging the composite score lower.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Overall health score</div><div class="t-sub">Composite total</div></td>
+          <td><span class="t-val red">31 / 100</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">The four weighted components add up to a total of 31. Below 50 is "Watch" — below 40 triggers automatic Director escalation.</span>
+            <span class="q">Impact</span><span class="a">31 is firmly in the critical zone. No single dimension is doing well — all four are contributing to a low number simultaneously.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Automatic alerts — what the system did without being asked</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Alert name</th><th>Time triggered</th><th>What it means in plain language</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="t-heading">Service health below 50</div></td>
+          <td><span class="t-val muted">10:42 today</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">The service health score dropped below 50 — the threshold that marks a serious operational problem. The system automatically notified the responsible owner.</span>
+            <span class="q">Impact</span><span class="a">Nobody had to check a dashboard. The system detected the crossing of a critical threshold and acted immediately — the owner was notified within minutes.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">90% of open issues near deadline</div></td>
+          <td><span class="t-val muted">09:30 today</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">90% of open escalations are about to breach their response deadline. The system automatically paged the Director-on-call.</span>
+            <span class="q">Impact</span><span class="a">This is the most severe automated alert. When 9 in 10 open issues are near the deadline, the problem has exceeded what normal PAM-level intervention can handle.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Renewal stuck for 7 days</div></td>
+          <td><span class="t-val muted">08:00 today</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">A customer renewal has been stuck in the review process for 7 days without progressing. The system escalated it to the renewals owner.</span>
+            <span class="q">Impact</span><span class="a">Renewals that sit in review for more than a week are statistically much more likely to not close. The system caught this before it became a confirmed loss.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Invoice unpaid for 45 days</div></td>
+          <td><span class="t-val muted">Yesterday</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">An invoice has been unpaid for 45 days. The system automatically added a flag to the partner's record.</span>
+            <span class="q">Impact</span><span class="a">An overdue invoice is an early signal of financial stress on the partner's side — before it shows up in revenue numbers.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Trend analysis — is this partner improving or getting worse over time?</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Metric</th><th>Value</th><th>What it means in plain language</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="t-heading">12-month trend</div></td>
+          <td><span class="t-val red">↓ Getting worse (−1.7/mo)</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">The platform measured this partner's health score every month for 12 months and calculated whether the trend is up, down, or flat. This partner is declining at 1.7 points per month.</span>
+            <span class="q">Impact</span><span class="a">At this rate, without intervention, the partner will reach the lowest health band within a few months.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Monthly rate of decline</div></td>
+          <td><span class="t-val red">−1.7 pts per month</span></td>
+          <td class="three">
+            <span class="q">What is this?</span><span class="a">The average amount the health score drops each month, with more recent months counted more heavily.</span>
+            <span class="q">Impact</span><span class="a">−1.7 per month means this partner will lose another 17 points in the next 10 months at the current rate. It quantifies how urgent the situation is.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Is the decline speeding up?</div></td>
+          <td><span class="t-val red">Yes — getting worse faster</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Not only is the health score declining, the rate of decline is also increasing — the situation is deteriorating more quickly each month.</span>
+            <span class="q">Impact</span><span class="a">An accelerating decline is more alarming than a steady one — it means whatever is causing the problem is getting worse, not resolving.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Compared to similar partners</div></td>
+          <td><span class="t-val red">14 points below regional peers</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">This partner is 14 points below the average health score of comparable partners in the Americas region.</span>
+            <span class="q">Impact</span><span class="a">This confirms the problem is specific to this partner — not a regional market issue affecting everyone. Other partners nearby are doing fine.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Official Partner Score breakdown — the tier-determining number</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Component</th><th>Score</th><th>What it means in plain language</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="t-heading">Overall Partner Score</div></td>
+          <td><span class="t-val red">343 / 1000</span><span class="t-val muted">Below Standard tier</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">The official Zoho score that determines whether a partner qualifies for Standard or Premium tier. This partner scored 343 — well below the ~500 needed for Standard.</span>
+            <span class="q">Impact</span><span class="a">A score below the tier threshold means this partner is at risk of demotion — losing benefits, marketplace visibility, and potentially co-sell support.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Revenue performance component</div></td>
+          <td><span class="t-val red">149 / 500 · Declining</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Revenue acquisition and customer growth are both underperforming. At 149 out of a possible 500, this is by far the biggest drag on the total score.</span>
+            <span class="q">Recommended action</span><span class="a">Improving commercial performance — more deals, more expansion revenue — would move the Partner Score more than any other action.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Customer experience component</div></td>
+          <td><span class="t-val amber">144 / 300 · Declining</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">How well the partner retains and satisfies customers. Customer retention is below the benchmark and the high escalation volume is actively reducing this score.</span>
+            <span class="q">Impact</span><span class="a">Customer experience is a direct leading indicator of renewal performance — partners with low customer satisfaction lose more renewals.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">What has changed recently — 30-day activity feed</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Event</th><th>When</th><th>What it means in plain language</th></tr></thead>
+      <tbody>
+        <tr><td><div class="t-heading">Critical issue opened — Halberd Logistics</div></td><td><span class="t-val muted">Today 10:42</span></td><td class="three"><span class="q">What happened?</span><span class="a">A Severity-1 issue — meaning a critical failure affecting the customer's daily operations — was opened for one of this partner's customers. This is the most serious type of support case.</span></td></tr>
+        <tr><td><div class="t-heading">Two enterprise renewals 9 days overdue</div></td><td><span class="t-val muted">Today 09:14</span></td><td class="three"><span class="q">What happened?</span><span class="a">Two high-value customer contracts passed their internal review deadline without being confirmed. Every day they stay stuck increases the risk they won't renew.</span></td></tr>
+        <tr><td><div class="t-heading">Service health crossed critical threshold</div></td><td><span class="t-val muted">Yesterday 16:30</span></td><td class="three"><span class="q">What happened?</span><span class="a">The service health score dropped below the level where the platform considers the situation serious. This is when automated escalation alerts started firing.</span></td></tr>
+        <tr><td><div class="t-heading">6 qualifications expiring in 45 days</div></td><td><span class="t-val muted">5 days ago</span></td><td class="three"><span class="q">What happened?</span><span class="a">6 employee certifications for the Creator product are lapsing soon with no renewals booked. Losing these reduces the partner's ability to support customers and lowers their Partner Score.</span></td></tr>
+        <tr><td><div class="t-heading">Two invoices unpaid — $84K combined</div></td><td><span class="t-val muted">9 days ago</span></td><td class="three"><span class="q">What happened?</span><span class="a">Saraswat ($61K) and Halberd ($23K) have overdue invoices — a sign of financial pressure on the partner's side. Left unaddressed, this feeds into the revenue health score.</span></td></tr>
+        <tr><td><div class="t-heading">Support ticket volume up 38%</div></td><td><span class="t-val muted">14 days ago</span></td><td class="three"><span class="q">What happened?</span><span class="a">Support tickets from this partner grew 38% in a month, specifically from broken customer onboarding handoffs. A structural problem — not random support noise.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Who did what — every action logged for accountability</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Entry</th><th>Who · When</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr><td><div class="t-heading">Director made alerts more sensitive</div></td><td><span class="t-val muted">Marcus Hale · Today</span></td><td class="three"><span class="q">What happened?</span><span class="a">A Director manually adjusted how easily this partner triggers alerts — making the platform more sensitive to deterioration for this specific case. Every manual adjustment is permanently logged with the person's name and time.</span></td></tr>
+        <tr><td><div class="t-heading">System assigned the escalation owner</div></td><td><span class="t-val muted">System · Yesterday</span></td><td class="three"><span class="q">What happened?</span><span class="a">The automation layer detected an escalation and automatically assigned it to the responsible person — no one had to manually decide who handles it. Logged so there is always an audit trail of what the system did automatically.</span></td></tr>
+        <tr><td><div class="t-heading">PAM flagged: renewal risk</div></td><td><span class="t-val muted">Anika Rao · 5 days ago</span></td><td class="three"><span class="q">What happened?</span><span class="a">A PAM added a manual flag to this partner's record based on their own judgement — layering human insight on top of automated signals. Logged with the person's name so anyone reading the record understands the context.</span></td></tr>
+        <tr><td><div class="t-heading">Scoring model updated</div></td><td><span class="t-val muted">System · 12 days ago</span></td><td class="three"><span class="q">What happened?</span><span class="a">The underlying calculation model was updated to a new version. Every model change is logged so scores can always be traced to the exact version that produced them — important for accountability.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ PAGE 03 — DIRECTOR ═════════════════════════════════════ -->
+<div id="director" class="page">
+  <div class="page-header">
+    <div class="eyebrow">Tab 03 · Director</div>
+    <h1>Director View</h1>
+    <div class="desc">The ecosystem-wide view for Directors and senior leadership. Shows the health of all 412 partners together — not individual partner details. Designed to surface the 5–10 things a Director needs to act on at the ecosystem level, not manage individually.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">412 partners — here is how the ecosystem looks right now</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Label on screen</th><th>Value shown</th><th>What it means in plain language</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="t-heading">Overall distribution</div><div class="t-sub">412 partners total</div></td>
+          <td><span class="t-val green">287 healthy</span><span class="t-val amber">89 watching</span><span class="t-val red">36 critical</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Of 412 total partners, 287 are operating normally, 89 need monitoring, and 36 are in a critical situation requiring active intervention.</span>
+            <span class="q">Impact</span><span class="a">36 critical partners is the number that requires Director-level attention — not PAM-level. These are the situations where individual partner management has not been sufficient.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Movement this month</div><div class="t-sub">Partners changing health band</div></td>
+          <td><span class="t-val green">11 improved</span><span class="t-val amber">17 worsened</span><span class="t-val red">6 became critical</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">In the last 30 days, 17 partners moved from healthy to needing monitoring, and 6 moved into the critical band. Only 11 improved.</span>
+            <span class="q">Impact</span><span class="a">The net movement is negative — more partners deteriorated than improved. If this trend continues, the critical count will grow. This is the leading indicator of ecosystem direction.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Partners heading toward critical</div></td>
+          <td><span class="t-val amber">18 partners · Americas · Premium</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">18 partners are currently in the "monitoring" band but are trending downward — they are likely to become critical within the next quarter if nothing changes.</span>
+            <span class="q">Impact</span><span class="a">These are Premium partners in Americas — the highest-value tier in the highest-revenue region. A deterioration wave here would have significant revenue impact.</span>
+            <span class="q">Recommended action</span><span class="a">Prioritise PAM interventions for these 18 partners now, before they cross into critical.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Revenue in upcoming renewals</div><div class="t-sub">Next 90 days</div></td>
+          <td><span class="t-val red">$22.4M · top 10 hold 58%</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">$22.4M of partner-managed revenue is up for renewal in the next 90 days across the ecosystem. It has not yet been confirmed.</span>
+            <span class="q">Impact</span><span class="a">The top 10 partners hold 58% of that number — meaning the Director can protect the majority of this exposure by focusing on just 10 relationships.</span>
+            <span class="q">Recommended action</span><span class="a">Review the top 10 renewal situations personally and ensure each has a clear owner and plan.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Five things every Director needs to act on now</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Finding</th><th>Urgency</th><th>What it means in plain language</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="t-heading">42% of ecosystem risk is concentrated in 3 partners</div></td>
+          <td><span class="badge high">High</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Three partners — TruePartner, Vinculum Konnect, and BluRoot — account for 42% of all revenue currently at risk. All three are on a declining trend.</span>
+            <span class="q">Impact</span><span class="a">Fixing these three relationships would eliminate nearly half of the ecosystem's total revenue risk. The problem is concentrated, which makes it actionable.</span>
+            <span class="q">Recommended action</span><span class="a">Request executive reviews for all three this week.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">US East certification coverage fell 6% — renewals will follow</div></td>
+          <td><span class="badge high">High</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Fewer partner employees in the US East region are maintaining their product qualifications — down 6% this quarter.</span>
+            <span class="q">Impact</span><span class="a">Historical data shows that when qualifications decline in a region, renewal performance worsens a few months later. This is a leading warning — the renewal impact hasn't arrived yet but will if unchecked.</span>
+            <span class="q">Recommended action</span><span class="a">Launch a targeted qualification renewal programme for US East partners this quarter.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Creator support demand is growing 2.3× faster than capacity</div></td>
+          <td><span class="badge medium">Medium</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Creator product-related support issues are growing 2.3 times faster than the team's ability to handle them. The rate of missed response deadlines is up 14% in 30 days.</span>
+            <span class="q">Impact</span><span class="a">This is a structural capacity gap, not a temporary spike. Without adding resource or reducing demand, the missed deadline rate will keep climbing.</span>
+            <span class="q">Recommended action</span><span class="a">Assess whether Creator support needs additional headcount, a self-service knowledge base, or demand reduction through better partner training.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Standard-tier partners renew 9 points less reliably than Premium</div></td>
+          <td><span class="badge medium">Medium</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Standard-tier partners renew customer contracts 9 percentage points less reliably than Premium partners — even when their health scores look similar.</span>
+            <span class="q">Impact</span><span class="a">The gap is concentrated in partners who only sell Zoho Books. Single-product partners are more vulnerable to churn than multi-product ones — the breadth of what they sell protects renewals.</span>
+            <span class="q">Recommended action</span><span class="a">Design an enablement programme for Books-only Standard partners focused on cross-selling to a second Zoho product.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Partners with CSAT above 4.4 have 31% fewer renewal surprises</div></td>
+          <td><span class="badge low">Low</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Partners whose customers rate them above 4.4 out of 5 have 31% fewer unpredictable renewal outcomes than those below that threshold.</span>
+            <span class="q">Impact</span><span class="a">This is the strongest predictive signal in the ecosystem. A partner with high customer satisfaction rarely has renewal surprises — it is a more reliable indicator than health score alone.</span>
+            <span class="q">Recommended action</span><span class="a">Use customer satisfaction as an early screening tool — partners below 4.4 should receive proactive coaching before renewals come due.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">$14.7M at risk — where is it and how urgent is each cluster?</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Element</th><th>Range</th><th>What it means in plain language</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="t-heading">Vertical axis — partner health</div></td>
+          <td>Excellent → Critical</td>
+          <td class="three">
+            <span class="q">What is this?</span><span class="a">The rows show how operationally healthy the partners in each cell are. Top rows are fine. Bottom rows are in trouble.</span>
+            <span class="q">Impact</span><span class="a">Red cells at the bottom-left are the most urgent — partners who are both struggling operationally AND have renewals due very soon. That combination is the highest churn risk.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Horizontal axis — renewal timing</div></td>
+          <td>Within 30 days → 180+ days</td>
+          <td class="three">
+            <span class="q">What is this?</span><span class="a">The columns show how soon renewals are due. Left = renewing very soon. Right = renewals further out.</span>
+            <span class="q">Impact</span><span class="a">The closer to the left, the less time there is to intervene. A large number in the bottom-left cell means high revenue is at risk with little time remaining to act.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Cell value — e.g. $3.4M · 6 partners · Americas</div></td>
+          <td>ARR · partner count · region</td>
+          <td class="three">
+            <span class="q">What is this?</span><span class="a">Each cell shows the total at-risk revenue, the number of partners in that risk zone, and the dominant region.</span>
+            <span class="q">How do I use it?</span><span class="a">Find the largest number in the darkest red cell — that is the highest-priority intervention cluster for the Director. In this case: $3.4M at risk, 6 partners, Americas, critical health, renewals within 90 days.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Americas is declining while APAC is improving — the regional gap</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Column</th><th>Example value</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr><td><div class="t-heading">Revenue managed</div></td><td><span class="t-val muted">Americas: $92.4M</span></td><td class="three"><span class="q">What is this?</span><span class="a">Total customer revenue managed by partners in that region. Americas at $92.4M is the largest — which means it carries the most risk if health declines there.</span></td></tr>
+        <tr><td><div class="t-heading">Health score + direction</div></td><td><span class="t-val red">Americas: 71 ↓ −2%</span><span class="t-val green">APAC: 78 ↑ +4%</span></td><td class="three"><span class="q">What is this?</span><span class="a">The average health score for all partners in that region, and which direction it is moving. Americas declining while APAC is improving shows a regional divergence — resource allocation between regions may need to change.</span></td></tr>
+        <tr><td><div class="t-heading">Customer retention rate</div></td><td><span class="t-val muted">Americas: 90.4%</span><span class="t-val green">APAC: 93.6%</span></td><td class="three"><span class="q">What is this?</span><span class="a">The percentage of customers who renewed their contracts in that region. APAC at 93.6% vs Americas at 90.4% shows APAC partners retain customers more reliably — a 3-point gap across $134M of combined revenue is significant.</span></td></tr>
+        <tr><td><div class="t-heading">Revenue currently at risk</div></td><td><span class="t-val red">Americas: $6.2M</span></td><td class="three"><span class="q">What is this?</span><span class="a">Revenue in that region where renewals are overdue or support issues have been flagged. Americas at $6.2M aligns with its declining health — the highest at-risk figure matches the region with the most problems.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Premium carries 78% of ecosystem revenue — but Standard has a hidden renewal problem</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Tier</th><th>Partners · Revenue · Health</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="t-heading">Premium</div></td>
+          <td><span class="t-val muted">142 partners</span><span class="t-val muted">$154.2M · Health 73</span></td>
+          <td class="three">
+            <span class="q">What is this?</span><span class="a">142 Premium partners manage $154.2M — 78% of all ecosystem revenue. Average health of 73 is reasonable, but any decline in this group has an outsized revenue impact.</span>
+            <span class="q">Impact</span><span class="a">This is the load-bearing layer of the ecosystem. Protecting Premium partner health is the highest-leverage activity for a Director.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Standard</div></td>
+          <td><span class="t-val muted">198 partners</span><span class="t-val muted">$38.6M · Health 71</span></td>
+          <td class="three">
+            <span class="q">What is this?</span><span class="a">The largest group by partner count but only $38.6M revenue. Health looks similar to Premium at 71, but renewal reliability is 9 points lower.</span>
+            <span class="q">Impact</span><span class="a">The health score doesn't show the renewal reliability gap — which is why this tier needs a dedicated enablement programme, not just monitoring.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Authorised</div></td>
+          <td><span class="t-val muted">72 partners</span><span class="t-val muted">$5.6M · Health 78</span></td>
+          <td class="three">
+            <span class="q">What is this?</span><span class="a">The smallest group by revenue but the healthiest average score. Authorised partners are typically smaller and generate less operational complexity.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">The 9-point renewal gap</div></td>
+          <td><span class="t-val amber">Standard lags Premium by 9pts</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Standard-tier partners renew customers 9 percentage points less reliably than Premium, despite similar health scores. The gap is concentrated in partners who only sell one Zoho product.</span>
+            <span class="q">Recommended action</span><span class="a">Design a cross-sell programme for Books-only Standard partners — getting them to a second product is the most effective way to close this renewal gap.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">One PAM portfolio is declining while others are stable — where to look</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Column</th><th>Example value</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr><td><div class="t-heading">Revenue under management</div></td><td><span class="t-val muted">Marcus Hale: $18.9M</span></td><td class="three"><span class="q">What is this?</span><span class="a">The total partner-managed revenue each PAM is responsible for. Hale carries the most at $18.9M — relevant context for interpreting his portfolio health score.</span></td></tr>
+        <tr><td><div class="t-heading">Portfolio trend bar</div></td><td><span class="t-val red">Hale: declining</span><span class="t-val green">Carvalho: flat</span></td><td class="three"><span class="q">What is this?</span><span class="a">How the average health of each PAM's portfolio has moved over time. A red declining bar means the portfolio has deteriorated. This is the most forward-looking indicator — a PAM's trend tells you more than their current average.</span></td></tr>
+        <tr><td><div class="t-heading">Average portfolio health</div></td><td><span class="t-val red">Hale: 62</span><span class="t-val green">Carvalho: 79</span></td><td class="three"><span class="q">What is this?</span><span class="a">The average health score across all partners in the PAM's portfolio. A 17-point gap between two PAMs is significant — but the trend bar provides context: Hale may manage inherently harder accounts.</span></td></tr>
+        <tr><td><div class="t-heading">Missed deadlines in portfolio</div></td><td><span class="t-val red">Hale: 6</span><span class="t-val green">Yusuf / Inês: 0</span></td><td class="three"><span class="q">What is this?</span><span class="a">Number of support response deadlines missed across each PAM's portfolio. 6 breaches for one PAM versus 0 for two others with similar portfolio sizes suggests this is a partner-specific problem — not a systemic issue.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ PAGE 04 — PARTNER PRINCIPAL ═══════════════════════════ -->
+<div id="store" class="page">
+  <div class="page-header">
+    <div class="eyebrow">Tab 04 · Partner Principal</div>
+    <h1>Partner Principal View</h1>
+    <div class="desc">What the partner sees when they log into their own POI dashboard. A transparent, self-service view of their operational health, standing versus peers, upcoming pressures, and specific actions they can take to improve their own score. The platform tells partners what to fix — not just what is broken.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Health status — what the platform is telling this partner about themselves</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Label on screen</th><th>Value shown</th><th>What it means in plain language</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="t-heading">Health band</div></td>
+          <td><span class="t-val amber">Attention Needed</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">The partner's overall operational health has dropped to a level that requires action this week — not a crisis, but not healthy either.</span>
+            <span class="q">Impact</span><span class="a">POI gives partners direct visibility into their own health — not filtered through a PAM. The philosophy is: if there's a problem, the partner should know about it immediately and act on it themselves.</span>
+            <span class="q">What should the partner do?</span><span class="a">Read the health message below to understand the two specific issues flagged, then follow the recommended actions.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Health message</div></td>
+          <td><span class="t-val muted">"Two operational signals need your attention this week."</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">The platform identified the two most important issues for this partner right now: onboarding handoff problems and Creator certifications nearing expiry.</span>
+            <span class="q">Impact</span><span class="a">Partners are not analysts. The platform uses plain language so the partner understands the issue without needing to interpret data or ask a PAM to translate it.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Four health areas — how this partner is doing across key dimensions</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Health area</th><th>Status</th><th>What it means in plain language</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="t-heading">Renewal readiness</div></td>
+          <td><span class="t-val amber">Attention needed</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">18 customer contracts are up for renewal in the next 90 days and 2 enterprise renewals have already slipped past their internal review deadline.</span>
+            <span class="q">What should the partner do?</span><span class="a">Contact the two delayed renewals immediately and build a schedule for the remaining 18 before the quarter ends.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Revenue growth</div></td>
+          <td><span class="t-val green">Stable</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Revenue is holding steady and two cross-sell opportunities have been identified and are ready to register.</span>
+            <span class="q">Impact</span><span class="a">Even amid operational challenges, the commercial picture is stable. The partner can see a genuine positive alongside the areas that need work.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Delivery readiness</div></td>
+          <td><span class="t-val amber">Needs attention</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">6 employee certifications for the Creator product expire in 45 days and no renewal sessions have been booked yet.</span>
+            <span class="q">What should the partner do?</span><span class="a">Schedule 6 Creator certification renewal sessions this week. If these lapse, the partner's ability to support Creator customers officially is reduced.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Customer portfolio health</div></td>
+          <td><span class="t-val green">Mostly healthy</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Of 142 customers, 11 need outreach this week and 4 are ready for an additional product conversation. The majority are fine.</span>
+            <span class="q">What should the partner do?</span><span class="a">Contact the 11 flagged customers this week — POI will show you which ones and why they were flagged.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Actions this week — what the partner should do right now</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Action</th><th>Due · Impact</th><th>What it means in plain language</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="t-heading">Book 6 Creator certification renewals</div></td>
+          <td><span class="t-val amber">Within 45 days</span><span class="t-val muted">Restores delivery readiness to 88%</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">6 employee certifications are expiring with nothing booked to replace them.</span>
+            <span class="q">Impact</span><span class="a">Booking now leaves enough time to complete sessions before expiry. Waiting reduces options and risks a gap in qualification coverage.</span>
+            <span class="q">Recommended action</span><span class="a">Contact the Zoho certification team or your PAM to schedule 6 sessions for the relevant employees.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Confirm Saraswat Capital renewal</div></td>
+          <td><span class="t-val red">This week</span><span class="t-val muted">Removes $61K from at-risk revenue</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">A specific high-value customer renewal has not been confirmed yet. The platform identified it by name so the partner knows exactly who to contact.</span>
+            <span class="q">Impact</span><span class="a">The longer a renewal sits unconfirmed, the more likely it is to not close. This is the most financially important action on the list.</span>
+            <span class="q">Recommended action</span><span class="a">Contact the Saraswat Capital account holder this week to confirm the renewal and move it out of the at-risk category.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Register 2 customers for Books cross-sell</div></td>
+          <td><span class="t-val muted">Next 14 days</span><span class="t-val green">Adds est. ₹12L revenue</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Two existing customers have been identified as good candidates to add Zoho Books to their package. The platform has already done the analysis — the partner just needs to act.</span>
+            <span class="q">Recommended action</span><span class="a">Contact both customers within the next two weeks to introduce Books. Register the opportunity in CRM to track it.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Fix the customer onboarding handoff process</div></td>
+          <td><span class="t-val muted">Ongoing</span><span class="t-val muted">Reducing ticket volume</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">The top source of support tickets from this partner's customers is confusion during onboarding — when a new customer is handed from sales to the support team.</span>
+            <span class="q">Recommended action</span><span class="a">Review the onboarding handoff process with your operations lead. The top 3 ticket categories can likely be eliminated with better internal documentation or a clearer customer welcome process.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">How this partner compares to peers — anonymous benchmarks</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Benchmark</th><th>Result</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="t-heading">Customer retention ranking</div></td>
+          <td><span class="t-val green">Top 22% — Premium APAC</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Despite operational challenges, this partner's customer retention rate is better than 78% of comparable Premium partners in APAC.</span>
+            <span class="q">Impact</span><span class="a">Customers are staying — the problems are operational, not relational. That distinction matters: it means this partner can recover with the right actions, not a complete rebuild.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Certification coverage vs. peers</div></td>
+          <td><span class="t-val amber">At average · Creator slipping</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Overall qualification levels match peers, but Creator specifically is falling below average. The benchmark pinpoints which product area needs work — not all certifications, just Creator.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Renewal stability trend</div></td>
+          <td><span class="t-val green">Improving quarter-over-quarter</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Even with some individual renewals at risk, the overall trend in renewal stability is positive — it is getting better, not worse, compared to last quarter.</span>
+            <span class="q">Impact</span><span class="a">Partners need to see progress, not just problems. This benchmark confirms the interventions from recent quarters are working.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Growth potential — what to work on to move up</div>
+    <table>
+      <colgroup><col class="c-term"><col class="c-val"><col class="c-plain"></colgroup>
+      <thead><tr><th>Recommendation</th><th>Category</th><th>What it means in plain language</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="t-heading">Increase Creator qualifications</div></td>
+          <td><span class="badge info">Customer experience</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Creator qualification density is below the regional average for partners at this tier.</span>
+            <span class="q">Impact</span><span class="a">Closing this gap restores the delivery readiness score and adds points to the Partner Score's certification component. It is the single highest-impact near-term action for improving the overall score.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Expand coverage in US East</div></td>
+          <td><span class="badge info">Revenue growth</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">Two existing customers in US East are eligible to add Zoho Books — an estimated 12% ARR increase if both convert.</span>
+            <span class="q">Impact</span><span class="a">This is a specific, quantified opportunity — not a general suggestion. The partner has an identified list and an estimated number.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Fix onboarding to reduce support load</div></td>
+          <td><span class="badge info">Service quality</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">The top 3 categories of support tickets can be eliminated with better onboarding documentation.</span>
+            <span class="q">Impact</span><span class="a">Fewer tickets improves customer satisfaction, reduces operational cost, and lifts the service health score — a compounding benefit.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="t-heading">Publish one case study this quarter</div></td>
+          <td><span class="badge info">Go-to-market strength</span></td>
+          <td class="three">
+            <span class="q">What happened?</span><span class="a">No published case studies is listed as a specific reason this partner cannot progress toward a higher tier.</span>
+            <span class="q">Impact</span><span class="a">One case study this quarter removes a specific, named blocker to tier progression. The recommendation is precise — not "improve marketing" but "publish one case study."</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-brand">
+    <div class="footer-mark">POI</div>
+    <span>Partner Operations Intelligence · Platform Glossary · v2 · Internal reference</span>
+  </div>
+  <div class="footer-links">
+    <a href="#" onclick="showPage('pam'); return false;">PAM Command</a>
+    <a href="#" onclick="showPage('p360'); return false;">Partner Intelligence</a>
+    <a href="#" onclick="showPage('director'); return false;">Director</a>
+    <a href="#" onclick="showPage('store'); return false;">Partner Principal</a>
+  </div>
+  <span>All values from poi-full-platform.html · June 2026</span>
+</footer>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    const idx = { pam:0, p360:1, director:2, store:3 };
+    document.querySelectorAll('.nav-tab')[idx[id]].classList.add('active');
+    window.scrollTo(0, 0);
+  }
+</script>
+</body>
+</html>
