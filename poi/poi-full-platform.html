@@ -1595,21 +1595,23 @@ html, body { min-width: 1440px; }
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
   overflow: hidden;
+  order: -1;
 }
 .es-head {
   display: flex; justify-content: space-between; align-items: center;
-  padding: 12px 16px;
+  padding: 14px 18px;
   border-bottom: 1px solid var(--border);
+  background: var(--ink);
 }
 .es-title {
   display: flex; align-items: center; gap: 10px;
-  font-size: 12px; font-weight: 600;
+  font-size: 13px; font-weight: 600; color: rgba(244,242,236,.9);
 }
 .es-title .stamp {
   font-family: var(--font-mono);
   font-size: 9.5px;
-  background: var(--ink);
-  color: var(--bg-2);
+  background: rgba(244,242,236,.15);
+  color: rgba(244,242,236,.8);
   padding: 1px 6px;
   border-radius: 3px;
   font-weight: 500;
@@ -1617,38 +1619,45 @@ html, body { min-width: 1440px; }
 }
 .es-body {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 0;
   background: var(--border);
 }
 .es-cell {
   background: var(--surface);
-  padding: 14px 16px;
+  padding: 18px 20px;
   display: flex; flex-direction: column;
-  gap: 6px;
-  min-height: 116px;
+  gap: 8px;
+  min-height: 130px;
+  border-left: 3px solid transparent;
+  transition: border-color .15s;
 }
+.es-cell:hover { background: var(--surface-2); }
+.es-cell:has(.dot.red)    { border-left-color: var(--red); }
+.es-cell:has(.dot.amber)  { border-left-color: var(--amber); }
+.es-cell:has(.dot.green)  { border-left-color: var(--green); }
+.es-cell:has(.dot.violet) { border-left-color: #6C47C4; }
 .es-cell .kicker {
   font-family: var(--font-mono);
   font-size: 9.5px;
-  font-weight: 600;
-  letter-spacing: .06em;
+  font-weight: 700;
+  letter-spacing: .07em;
   text-transform: uppercase;
   color: var(--ink-3);
   display: flex; align-items: center; gap: 6px;
 }
 .es-cell .stat {
   font-family: var(--font-mono);
-  font-size: 22px;
-  font-weight: 400;
+  font-size: 26px;
+  font-weight: 500;
   color: var(--ink);
-  letter-spacing: -.025em;
+  letter-spacing: -.03em;
   line-height: 1;
 }
 .es-cell .text {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--ink-2);
-  line-height: 1.45;
+  line-height: 1.55;
   letter-spacing: -.005em;
 }
 .es-cell .text strong { color: var(--ink); font-weight: 600; }
@@ -3262,18 +3271,18 @@ const TrajectoryCard = ({ partner, baseline }) => {
   const b = bandClass(partner.health);
   const trajText = () => {
     if (m.dir === "down" && m.label === "Declining") {
-      return <>Trajectory has been <strong>declining for {Math.abs(Math.round(partner.healthDelta))} pts over 30 days</strong>, diverging from regional baseline. This pattern matches partners that lost 1+ enterprise renewals within 6 months in <span style={{ borderBottom:"1px dashed var(--ink-4)", cursor:"help" }} title="64% of partners with this signature lost ≥1 enterprise renewal within 6 months.">64% of historical cases</span>. Intervention is time-critical — the window is narrowing.</>;
+      return <>Health trend has been <strong>declining for {Math.abs(Math.round(partner.healthDelta))} pts over 30 days</strong>, diverging from regional baseline. This pattern matches partners that lost 1+ enterprise renewals within 6 months in <span style={{ borderBottom:"1px dashed var(--ink-4)", cursor:"help" }} title="64% of partners with this signature lost ≥1 enterprise renewal within 6 months.">64% of historical cases</span>. Intervention is time-critical — the window is narrowing.</>;
     }
     if (m.dir === "down") {
-      return <>Trajectory is <strong>decelerating</strong> — health is declining at a slowing rate, suggesting the destabilizing forces are being partially offset. The weighted velocity of {m.velocity.toFixed(1)} pts/month warrants monitoring but not emergency intervention yet. Review certification coverage and escalation load.</>;
+      return <>Health trend is <strong>decelerating</strong> — health is declining at a slowing rate, suggesting the destabilizing forces are being partially offset. The weighted velocity of {m.velocity.toFixed(1)} pts/month warrants monitoring but not emergency intervention yet. Review certification coverage and escalation load.</>;
     }
     if (m.label === "Recovering") {
-      return <>Trajectory is <strong>recovering</strong> after a period of decline — a positive signal, but recovery is not yet confirmed as stable. Monitor for 2 more periods before reducing attention level. CRR and certification density are the leading indicators to watch.</>;
+      return <>Health trend is <strong>recovering</strong> after a period of decline — a positive signal, but recovery is not yet confirmed as stable. Monitor for 2 more periods before reducing attention level. CRR and certification density are the leading indicators to watch.</>;
     }
     if (m.label === "Accelerating" || m.label === "Improving") {
-      return <>Trajectory is <strong>{m.label.toLowerCase()}</strong> — health has moved {partner.healthDelta > 0 ? "+" : ""}{partner.healthDelta} pts over 30 days, outpacing regional baseline by {Math.round(partner.health - 72)} pts. Pattern aligns with partners reaching Tier-1 contribution within next FY. This trajectory, if sustained, supports tier progression.</>;
+      return <>Health trend is <strong>{m.label.toLowerCase()}</strong> — health has moved {partner.healthDelta > 0 ? "+" : ""}{partner.healthDelta} pts over 30 days, outpacing regional baseline by {Math.round(partner.health - 72)} pts. Pattern aligns with partners reaching Tier-1 contribution within next FY. This trajectory, if sustained, supports tier progression.</>;
     }
-    return <>Trajectory is <strong>stable</strong> — health has held within ±2 pts of prior period. Support dependency vs. certification growth ratio is the early signal worth monitoring next quarter.</>;
+    return <>Health trend is <strong>stable</strong> — health has held within ±2 pts of prior period. Support dependency vs. certification growth ratio is the early signal worth monitoring next quarter.</>;
   };
 
   return (
@@ -3281,7 +3290,7 @@ const TrajectoryCard = ({ partner, baseline }) => {
       <header className="card-head">
         <div>
           <div className="card-title">
-            Trajectory Intelligence
+            Trend Intelligence
             <i className="tip" data-tip={"Where this partner is heading — not just where they are.\nMomentum computed from weighted slope of 12-month health score history.\nRecent months weighted more heavily than older data.\nVelocity = average monthly change (weighted). Acceleration = whether velocity is increasing."}>i</i>
           </div>
           <div className="card-sub">Weighted 12-month momentum · velocity + acceleration</div>
@@ -3331,28 +3340,28 @@ const interpretPartner = (p) => {
   const opAvg = (p.sub.financial + p.sub.operational + p.sub.delivery) / 3;
   const m = (window.momentum || momentum)(p.sparkHealth, p.healthDelta);
   if (opAvg >= 65 && p.escalations.open > 4) {
-    out.push({ dim:"Operational Reliability", tone:"amber",
-      text:<>Operational reliability remains <strong>resilient</strong> despite elevated support volume — SLA discipline and renewal continuity offset the escalation load.</>,
+    out.push({ dim:"Service Health", tone:"amber",
+      text:<>Service health remains <strong>resilient</strong> despite elevated support volume — SLA discipline and renewal continuity offset the escalation load.</>,
       src:["Desk","Renewals","CRM"] });
   } else if (opAvg < 50) {
-    out.push({ dim:"Operational Reliability", tone:"red",
+    out.push({ dim:"Service Health", tone:"red",
       text:<>Reliability has <strong>destabilized</strong> across commercial, delivery and support dimensions — pattern matches partners with {m.label.toLowerCase()} renewal loss trajectory.</>,
       src:["Desk","Billing","Renewals"] });
   } else {
-    out.push({ dim:"Operational Reliability", tone:opAvg >= 70 ? "green" : "amber",
+    out.push({ dim:"Service Health", tone:opAvg >= 70 ? "green" : "amber",
       text:<>Reliability {opAvg >= 70 ? "above" : "tracking"} regional baseline. Stability driven by <strong>{p.sub.delivery >= 70 ? "delivery capability" : "renewal continuity"}</strong>.</>,
       src:["CRM","Cert","Renewals"] });
   }
   if (p.healthDelta < -5) {
-    out.push({ dim:"Trajectory", tone:"red",
+    out.push({ dim:"Trend", tone:"red",
       text:<>Health trajectory is <strong>{m.label.toLowerCase()}</strong> — {Math.abs(p.healthDelta)} pts over 30d while regional baseline held. Intervention window is now.</>,
       src:["Catalyst","CRM"] });
   } else if (p.healthDelta > 2) {
-    out.push({ dim:"Trajectory", tone:"green",
+    out.push({ dim:"Trend", tone:"green",
       text:<>Health is <strong>{m.label.toLowerCase()}</strong> — {p.healthDelta} pts ahead of regional baseline over 30d. Pattern aligns with partners reaching Tier-1 contribution within next FY.</>,
       src:["Catalyst","Analytics"] });
   } else {
-    out.push({ dim:"Trajectory", tone:"amber",
+    out.push({ dim:"Trend", tone:"amber",
       text:<>Health is <strong>{m.label.toLowerCase()}</strong>. Support dependency vs. certification growth ratio is the early signal worth tracking next quarter.</>,
       src:["Catalyst","Cert"] });
   }
@@ -3368,10 +3377,10 @@ const interpretPartner = (p) => {
       text:<>Revenue concentration <strong>well-diversified</strong> at {conc}% — expansion velocity ahead of churn.</>, src:["Renewals","CRM"] });
   }
   if (p.certifications.ratio < .65) {
-    out.push({ dim:"Capability Depth", tone:"amber",
+    out.push({ dim:"Delivery Readiness", tone:"amber",
       text:<>Certification coverage at <strong>{Math.round(p.certifications.ratio*100)}%</strong> with {p.certifications.expiring} lapsing in 45d.</>, src:["Cert","Campaigns"] });
   } else {
-    out.push({ dim:"Capability Depth", tone:p.certifications.ratio >= .85 ? "green" : "amber",
+    out.push({ dim:"Delivery Readiness", tone:p.certifications.ratio >= .85 ? "green" : "amber",
       text:<>Certification depth <strong>{p.certifications.ratio >= .85 ? "above" : "near"} regional baseline</strong>. {p.practices[0]} and Creator are the load-bearing capability areas.</>, src:["Cert"] });
   }
   if (p.escalations.sla === "red") {
@@ -3394,7 +3403,7 @@ const PIPInterpretation = ({ partner }) => {
         <div className="interp-title">
           <span className="badge">POI</span>
           Signal Interpretation
-          <i className="tip" data-tip={"5-dimension synthesis: Operational Reliability · Trajectory · Revenue Concentration · Capability Depth · Coordination.\nMomentum language computed from 12-month weighted slope."}>i</i>
+          <i className="tip" data-tip={"5-dimension synthesis: Service Health · Trend · Revenue Concentration · Delivery Readiness · Support Health.\nMomentum language computed from 12-month weighted slope."}>i</i>
           <span style={{color:"var(--ink-4)",fontSize:10.5,fontWeight:400,textTransform:"none"}}>· synthesized across 8 source systems</span>
         </div>
         <div className="interp-trace">
@@ -3424,15 +3433,15 @@ const synthesizeSummary = (p) => {
   if (p.health < 50) {
     headline = `${p.name} is ${m.label.toLowerCase()} — executive review required`;
     body = (<>Renewal continuity, escalation discipline, and certification depth are deteriorating in concert. This pattern matches partners that lost <span className="underline" title="64% of partners with this signature lost ≥1 enterprise renewal within 6 months.">≥1 enterprise renewal within 6 months</span> in 64% of historical cases. Top-{Math.min(3,p.customersAtRisk)} customers carry <strong>{conc}% of ARR exposure</strong>.</>);
-    tags = [{k:"Trajectory",v:`↓ ${m.label}`},{k:"Lead signal",v:"Renewal review-stage"},{k:"Action",v:"Exec review · this week"}];
+    tags = [{k:"Trend",v:`↓ ${m.label}`},{k:"Lead signal",v:"Renewal review-stage"},{k:"Action",v:"Exec review · this week"}];
   } else if (p.health < 70) {
     headline = `${p.name} is commercially strong — operational stress ${m.label.toLowerCase()}`;
     body = (<>Escalation volume in <strong>{p.escalations.open > 4 ? "Partner-Ops" : "onboarding handoffs"}</strong> is rising. <strong>Certification density</strong> is the emerging constraint — {p.certifications.expiring} certs lapse within 45d with the renewal pipeline under-scheduled. A {m.label.toLowerCase()} health signal typically precedes a Partner Score decline by 2–3 quarters.</>);
-    tags = [{k:"Trajectory",v:`→ ${m.label}`},{k:"Lead signal",v:`${p.certifications.expiring} certs lapsing`},{k:"Action",v:"Coaching · 45d window"}];
+    tags = [{k:"Trend",v:`→ ${m.label}`},{k:"Lead signal",v:`${p.certifications.expiring} certs lapsing`},{k:"Action",v:"Coaching · 45d window"}];
   } else {
     headline = `${p.name} is ${m.label.toLowerCase()} — above regional baseline`;
     body = (<>Expansion velocity outpaces churn. CSAT at <strong>{p.csat}/5.0</strong> positions this partner in the cohort showing <span className="underline" title="Top decile of Premium partners by renewal reliability.">31% lower renewal-pipeline volatility</span>. A {m.label.toLowerCase()} trajectory supports tier progression.</>);
-    tags = [{k:"Trajectory",v:`↑ ${m.label}`},{k:"Lead signal",v:"Expansion velocity"},{k:"Action",v:"Reference candidate"}];
+    tags = [{k:"Trend",v:`↑ ${m.label}`},{k:"Lead signal",v:"Expansion velocity"},{k:"Action",v:"Reference candidate"}];
   }
   return { headline, body, tags, m };
 };
@@ -3543,7 +3552,7 @@ const PAMPortfolio = ({
     { weight:"high",   kicker:"Concentration",
       trace:"poi-signal-to-intelligence.html",
       text:<>3 partners account for <strong>42% of at-risk ARR</strong> — TruePartner, Vinculum Konnect, BluRoot. Trajectories all declining. Exec review recommended this week.</> },
-    { weight:"high",   kicker:"Trajectory",
+    { weight:"high",   kicker:"Trend",
       trace:"poi-signal-detail.html",
       text:<><strong>{decliningCount} of {partners.length} partners</strong> are on a declining trajectory — the majority of the at-risk concentration is also decelerating. This compounds renewal exposure.</> },
     { weight:"medium", kicker:"Certification",
@@ -3559,14 +3568,14 @@ const PAMPortfolio = ({
         <div className="scope-head">
           <div className="scope-title">
             My Portfolio
-            <Tip d={"Your assigned partner book.\nSorted by Trajectory Urgency by default — combines health score, direction, and velocity.\nSwitch to ARR or Momentum sort above the table."} />
+            <Tip d={"Your assigned partner book.\nSorted by Urgency by default — combines health score, direction, and velocity.\nSwitch to ARR or Momentum sort above the table."} />
           </div>
           <div className="scope-meta">22 partners · {fmtMoney(totalArr)} ARR · Marcus Hale</div>
         </div>
         <div className="scope-tabs">
           <button className={`scope-tab ${sortMode==="urgency"?"active":""}`} onClick={()=>setSortMode("urgency")}>Urgency</button>
           <button className={`scope-tab ${sortMode==="arr"?"active":""}`} onClick={()=>setSortMode("arr")}>ARR Risk</button>
-          <button className={`scope-tab ${sortMode==="momentum"?"active":""}`} onClick={()=>setSortMode("momentum")}>Trajectory</button>
+          <button className={`scope-tab ${sortMode==="momentum"?"active":""}`} onClick={()=>setSortMode("momentum")}>Trend</button>
         </div>
         <div className="scope-filters">
           <span className="f-chip on">All</span>
@@ -3612,7 +3621,7 @@ const PAMPortfolio = ({
           <section>
             <div style={{ display:"flex", alignItems:"center", gap:6, fontSize:10, fontWeight:600, letterSpacing:".07em", textTransform:"uppercase", color:"var(--ink-3)", marginBottom:6 }}>
               Intelligence Synthesis
-              <Tip d={"POI's top-level operational conclusions for your portfolio.\nHigh = statistically significant risk. Medium = emerging pattern.\nTrajectory line added — declining partners compound ARR exposure."} />
+              <Tip d={"POI's top-level operational conclusions for your portfolio.\nHigh = statistically significant risk. Medium = emerging pattern.\nTrend line added — declining partners compound ARR exposure."} />
             </div>
             <div className="synth-strip">
               {synth.map((s,i) => (
@@ -3685,12 +3694,52 @@ const PAMPortfolio = ({
             </div>
           </section>
 
+          {/* Actions this week — promoted above portfolio table */}
+          <section style={{ marginBottom: 0 }}>
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom: 8 }}>
+              <div style={{ display:"flex", alignItems:"center", gap:6, fontSize:10, fontWeight:700, letterSpacing:".07em", textTransform:"uppercase", color:"var(--ink-3)" }}>
+                <Icon name="spark" size={12}/> Actions · This Week
+                <Tip d={"PAM-level actions computed from portfolio signals.\nPrioritized by: trajectory urgency × ARR at risk × renewal proximity."} />
+              </div>
+              <span style={{ fontSize:10, color:"var(--ink-4)", fontFamily:"var(--font-mono)" }}>Ordered by urgency</span>
+            </div>
+            <div style={{ background:"var(--surface)", border:"1px solid var(--border)", borderRadius:"var(--r-lg)", overflow:"hidden" }}>
+              {[
+                {title:"Exec review — TruePartner · $1.78M · declining", due:"By Wed",  ref:"PAM-A1", urgent:true},
+                {title:"Force review-stage — 2 Vinculum renewals",        due:"Today",   ref:"PAM-A2", urgent:true},
+                {title:"Reroute Northwind Sev-2 — engineering",          due:"Today",   ref:"PAM-A3", urgent:true},
+                {title:"Schedule 6 Creator cert renewals (Vinculum)",     due:"This wk", ref:"PAM-A4", urgent:false},
+                {title:"BluRoot cross-sell pipeline review — decelerating",due:"Thu",   ref:"PAM-A5", urgent:false},
+              ].map((a,i) => (
+                <div key={i} style={{
+                  display:"grid", gridTemplateColumns:"auto 1fr auto",
+                  gap:12, padding:"10px 14px", alignItems:"center",
+                  borderBottom: i < 4 ? "1px solid var(--border)" : "none",
+                  borderLeft: a.urgent ? "3px solid var(--red)" : "3px solid var(--border-2)",
+                  background: a.urgent ? "rgba(176,35,28,.03)" : "transparent",
+                }}>
+                  <span style={{ fontFamily:"var(--font-mono)", fontSize:11, fontWeight:700, color:"var(--ink-4)", width:22, textAlign:"center" }}>{i+1}</span>
+                  <div>
+                    <div style={{ fontSize:12.5, fontWeight:500, color:"var(--ink)" }}>{a.title}</div>
+                    <div style={{ fontSize:10, color:"var(--ink-4)", fontFamily:"var(--font-mono)", marginTop:2 }}>{a.ref}</div>
+                  </div>
+                  <div style={{
+                    fontSize:10, fontWeight:700, fontFamily:"var(--font-mono)",
+                    color: a.due === "Today" || a.due === "By Wed" ? "var(--red)" : "var(--amber)",
+                    background: a.due === "Today" || a.due === "By Wed" ? "var(--red-soft)" : "var(--amber-soft)",
+                    padding:"2px 8px", borderRadius:4, whiteSpace:"nowrap"
+                  }}>{a.due}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+
           {/* Portfolio table — urgency sort default, trajectory dominant column */}
           <section className="card">
             <header className="card-head">
               <div className="card-title">
-                Portfolio · {sortMode === "urgency" ? "Trajectory Urgency" : sortMode === "arr" ? "ARR Risk" : "Momentum"} Ranking
-                <Tip d={"Default sort = Trajectory Urgency: combines health score, direction, and velocity.\nA Critical partner declining sharply outranks a Watch partner with stable trajectory.\nSwitch sort via the left panel tabs."} />
+                Portfolio · {sortMode === "urgency" ? "Urgency Ranking" : sortMode === "arr" ? "ARR Risk" : "Trend"} Ranking
+                <Tip d={"Default sort = Urgency: combines health score, direction, and velocity.\nA Critical partner declining sharply outranks a Watch partner with a stable trend.\nSwitch sort via the left panel tabs."} />
                 <span className="card-title-num">{partners.length}</span>
               </div>
               <div className="card-actions">
@@ -3706,7 +3755,7 @@ const PAMPortfolio = ({
                 <thead>
                   <tr>
                     <th>Partner</th>
-                    <th>Trajectory <Tip d={"30-day weighted momentum — direction and velocity.\nComputed from weighted slope of 12-month health history.\nRecent months weighted more heavily than older data.\nThis column drives default sort order."} l /></th>
+                    <th>Trend <Tip d={"30-day weighted momentum — direction and velocity.\nComputed from weighted slope of 12-month health history.\nRecent months weighted more heavily than older data.\nThis column drives default sort order."} l /></th>
                     <th>Health <Tip d={"POI Health Score 0–100. Weighted composite of 4 dimensions.\nSecondary to trajectory — where a partner is heading matters more than where they are now."} l /></th>
                     <th className="num">ARR at Risk <Tip d={"Renewal-stage overdue + escalation-flagged ARR.\nNot churn — current exposure requiring action."} /></th>
                     <th className="num">Renewals 90d</th>
@@ -4119,8 +4168,8 @@ const PartnerIntelligence = ({ partner, onBack, onOpenCliq, escalations, tweaks 
   ];
 
   const subs = [
-    { key:"financial",   name:"Commercial Stability",    desc:"Revenue + renewal reliability",         trend:partner.arrDelta>=5?"up":partner.arrDelta>=0?"stable":"down" },
-    { key:"operational", name:"Operational Reliability", desc:"Tickets + escalation discipline",       trend:partner.escalations.sla==="green"?"up":partner.escalations.sla==="red"?"down":"stable" },
+    { key:"financial",   name:"Revenue Health",          desc:"Revenue + renewal reliability",         trend:partner.arrDelta>=5?"up":partner.arrDelta>=0?"stable":"down" },
+    { key:"operational", name:"Service Health",          desc:"Tickets + escalation discipline",       trend:partner.escalations.sla==="green"?"up":partner.escalations.sla==="red"?"down":"stable" },
     { key:"delivery",    name:"Delivery Capability",     desc:"Certifications + implementation depth", trend:partner.certifications.expiring>5?"down":partner.certifications.ratio>.85?"up":"stable" },
     { key:"engagement",  name:"Ecosystem Participation", desc:"Campaigns + advocacy + marketplace",    trend:"stable" },
     { key:"momentum",    name:"Growth Momentum",         desc:"ARR velocity + customer acquisition",   trend:partner.growth>=5?"up":partner.growth>=0?"stable":"down" },
@@ -4371,7 +4420,7 @@ const PartnerIntelligence = ({ partner, onBack, onOpenCliq, escalations, tweaks 
                 {[
                   { t:"Today 10:42", who:"Desk · #44012",    text:<>Sev-1 opened — <strong>Halberd Logistics</strong> (Tier 1)</> },
                   { t:"Today 09:14", who:"Renewals",         text:<>Two enterprise renewals slipped review-stage by 9d</> },
-                  { t:"Yest. 16:30", who:"Catalyst",         text:<>Threshold: <strong>Operational Reliability</strong> below 50</> },
+                  { t:"Yest. 16:30", who:"Catalyst",         text:<>Threshold: <strong>Service Health</strong> below 50</> },
                   { t:"5d ago",      who:"Cert",             text:<>6 Creator certifications expiring within 45d</> },
                   { t:"9d ago",      who:"Billing",          text:<>Two invoices 45d aging — Saraswat ($61K), Halberd ($23K)</> },
                   { t:"14d ago",     who:"CRM",              text:<>Ticket volume up 38% over 30d, onboarding handoffs</> },
@@ -4422,10 +4471,10 @@ const PartnerIntelligence = ({ partner, onBack, onOpenCliq, escalations, tweaks 
         </div>
         <div style={{ padding:"12px 14px" }}>
           {[
-            { name:"Commercial Stability",    w:tweaks.weightRevenue,     v:partner.sub.financial,             pts:Math.round(tweaks.weightRevenue/100*partner.sub.financial) },
-            { name:"Operational Reliability", w:tweaks.weightOperational, v:partner.sub.operational,           pts:Math.round(tweaks.weightOperational/100*partner.sub.operational) },
+            { name:"Revenue Health",          w:tweaks.weightRevenue,     v:partner.sub.financial,             pts:Math.round(tweaks.weightRevenue/100*partner.sub.financial) },
+            { name:"Service Health",          w:tweaks.weightOperational, v:partner.sub.operational,           pts:Math.round(tweaks.weightOperational/100*partner.sub.operational) },
             { name:"Renewal Continuity",      w:tweaks.weightRenewal,     v:partner.sub.renewal,               pts:Math.round(tweaks.weightRenewal/100*partner.sub.renewal) },
-            { name:"Escalation Impact",       w:tweaks.weightEscalation,  v:100-partner.escalations.open*6,    pts:Math.round(tweaks.weightEscalation/100*(100-partner.escalations.open*6)) },
+            { name:"Support Health",          w:tweaks.weightEscalation,  v:100-partner.escalations.open*6,    pts:Math.round(tweaks.weightEscalation/100*(100-partner.escalations.open*6)) },
           ].map((row,i) => (
             <div key={i} style={{ marginBottom:12 }}>
               <div style={{ display:"flex", justifyContent:"space-between", fontSize:11.5, color:"var(--ink-2)", marginBottom:4 }}>
@@ -4598,55 +4647,55 @@ const Director = ({ ecosystem, partners }) => {
           <header className="es-head">
             <div className="es-title">
               <span className="stamp">POI</span>
-              Ecosystem Intelligence · Synthesis
+              What needs attention now
               <span style={{ color: "var(--ink-3)", fontWeight: 400, fontSize: 11, marginLeft: 2 }}>
                 · operational conclusions, not metrics
               </span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "var(--font-mono)", fontSize: 10.5, color: "var(--ink-3)" }}>
               <span className="live-dot" />
-              <span><strong style={{ color: "var(--ink)" }}>147</strong> live signals · recomputed 6m ago</span>
-              <button className="btn sm ghost">Replay <Icon name="play" size={10} /></button>
+              <span><strong style={{ color: "rgba(244,242,236,.9)" }}>147</strong><span style={{ color: "rgba(244,242,236,.45)" }}> live signals · recomputed 6m ago</span></span>
+              <button className="btn sm ghost" style={{ color: "rgba(244,242,236,.6)", borderColor: "rgba(244,242,236,.2)" }}>Replay <Icon name="play" size={10} /></button>
             </div>
           </header>
           <div className="es-body">
             <div className="es-cell">
-              <div className="kicker"><span className="dot violet" /> Concentration <Tip d={"Premium partners = 61% of ecosystem ARR but only 22% of escalation volume."} /></div>
+              <div className="kicker"><span className="dot violet" /> Premium load-bearing reliability <Tip d={"Premium partners = 61% of ecosystem ARR but only 22% of escalation volume."} /></div>
               <div className="stat">61% / 22%</div>
               <div className="text">
                 <strong>Premium-tier partners</strong> account for <strong>61% of ecosystem ARR</strong> but only <strong>22% of escalation volume</strong> — the load-bearing layer is also the most reliable.
               </div>
             </div>
             <div className="es-cell">
-              <div className="kicker"><span className="dot red" /> Regional Coupling <Tip d={"US East cert density declining correlates with renewal volatility — 2-quarter lag.\nAnalytics-derived historical pattern."} /></div>
+              <div className="kicker"><span className="dot red" /> US East certification falling <Tip d={"US East cert density declining correlates with renewal volatility — 2-quarter lag.\nAnalytics-derived historical pattern."} /></div>
               <div className="stat">2-quarter lag</div>
               <div className="text">
                 <strong>US East renewal volatility</strong> correlates with declining certification density over <strong>two consecutive quarters</strong>. Capability drag precedes renewal exposure with measurable lag.
               </div>
             </div>
             <div className="es-cell">
-              <div className="kicker"><span className="dot amber" /> Capacity <Tip d={"Creator escalations rising 2.3x faster than implementation capacity in Americas.\nSLA breach rate up 14% over 30d."} /></div>
+              <div className="kicker"><span className="dot amber" /> Creator support demand gap <Tip d={"Creator escalations rising 2.3x faster than implementation capacity in Americas.\nSLA breach rate up 14% over 30d."} /></div>
               <div className="stat">2.3× faster</div>
               <div className="text">
                 <strong>Creator escalations</strong> are rising <strong>2.3× faster</strong> than implementation capacity in Americas. Cliq breach rate up 14% / 30d.
               </div>
             </div>
             <div className="es-cell">
-              <div className="kicker"><span className="dot amber" /> Tier Asymmetry <Tip d={"Standard-tier renewal reliability lags Premium by 9pts.\nGap concentrated in single-product practices."} /></div>
+              <div className="kicker"><span className="dot amber" /> Standard renewal gap <Tip d={"Standard-tier renewal reliability lags Premium by 9pts.\nGap concentrated in single-product practices."} /></div>
               <div className="stat">9 pt gap</div>
               <div className="text">
                 <strong>Standard-tier renewal reliability</strong> lags Premium by <strong>9 pts</strong> despite comparable health — exposure concentrated in Books-only practices.
               </div>
             </div>
             <div className="es-cell">
-              <div className="kicker"><span className="dot green" /> Reliability Correlation <Tip d={"Partners with CSAT >4.4 show 31% lower renewal-pipeline volatility.\nStrongest leading indicator."} /></div>
+              <div className="kicker"><span className="dot green" /> CSAT predicts renewals <Tip d={"Partners with CSAT >4.4 show 31% lower renewal-pipeline volatility.\nStrongest leading indicator."} /></div>
               <div className="stat">31% lower</div>
               <div className="text">
                 Partners with <strong>CSAT &gt; 4.4</strong> show <strong>31% lower</strong> renewal-pipeline volatility — the strongest leading indicator across the ecosystem.
               </div>
             </div>
             <div className="es-cell">
-              <div className="kicker"><span className="dot red" /> Exposure <Tip d={"$14.7M = current at-risk ARR.\n$22.4M = review-stage renewals due in next 90 days."} /></div>
+              <div className="kicker"><span className="dot red" /> Revenue at risk now <Tip d={"$14.7M = current at-risk ARR.\n$22.4M = review-stage renewals due in next 90 days."} /></div>
               <div className="stat">$14.7M / $22.4M</div>
               <div className="text">
                 <strong>$14.7M ARR is at-risk</strong>; <strong>$22.4M sits in review-stage renewals</strong> across next 90d. Top-10 partners hold 58% of that exposure.
@@ -4729,7 +4778,7 @@ const Director = ({ ecosystem, partners }) => {
         {/* Ecosystem health distribution — stacked bar */}
         <section className="card" style={{ gridColumn: "span 6" }}>
           <header className="card-head">
-            <div className="card-title">Ecosystem Health Distribution <Tip d={"412 partners split by POI Health Score band.\nMigration data shows how many moved between bands in 30 days."} /></div>
+            <div className="card-title">Partner health across 412 partners <Tip d={"412 partners split by POI Health Score band.\nMigration data shows how many moved between bands in 30 days."} /></div>
             <div className="card-sub">412 partners · live computation</div>
           </header>
           <div className="card-body">
@@ -4781,7 +4830,7 @@ const Director = ({ ecosystem, partners }) => {
         {/* Risk insights */}
         <section className="card" style={{ gridColumn: "span 6" }}>
           <header className="card-head">
-            <div className="card-title">Ecosystem Risk Intelligence <Tip d={"Cross-system correlations from Analytics historical data.\nPattern-derived from 3+ years of partner behavior."} /></div>
+            <div className="card-title">Supporting risk signals <Tip d={"Cross-system correlations from Analytics historical data.\nPattern-derived from 3+ years of partner behavior."} /></div>
             <div className="card-sub">Cross-system correlations</div>
           </header>
           <div className="card-body flush">
@@ -5392,7 +5441,7 @@ const PIPTweaks = ({ tweaks, setTweak, onRecomputed }) => {
         onChange={(v) => { setTweak("weightRenewal", v); onRecomputed && onRecomputed("Renewal weight"); }}
       />
       <TweakSlider
-        label="Escalation impact"
+        label="Support health"
         value={tweaks.weightEscalation}
         min={0} max={100} step={5} unit="%"
         onChange={(v) => { setTweak("weightEscalation", v); onRecomputed && onRecomputed("Escalation weight"); }}
@@ -5687,7 +5736,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(<App />);
   <a class="pip-nav-link" href="poi-signal-detail.html" target="_blank">Signal Detail</a>
   <a class="pip-nav-link" href="poi-signal-to-intelligence.html" target="_blank">Signals → Intelligence</a>
   <a class="pip-nav-link" href="poi-health-score-reference.html" target="_blank">Health Score Formula</a>
-  <span class="pip-nav-hint">Keep all 6 files in the same folder</span>
+  <a class="pip-nav-link" href="poi-glossary.html" target="_blank">Glossary</a>
+  <span class="pip-nav-hint">Keep all 7 files in the same folder</span>
 </div>
 </body>
 </html>
