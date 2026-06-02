@@ -3249,7 +3249,7 @@ const EcosystemMomentumBar = ({ partners, label = "Portfolio momentum" }) => {
     <div style={{ display:"flex", flexDirection:"column", gap:5 }}>
       <div style={{ display:"flex", alignItems:"center", gap:8, fontSize:10, fontWeight:600, letterSpacing:".06em", textTransform:"uppercase", color:"var(--ink-3)" }}>
         {label}
-        <i className="tip" data-tip={"Distribution of 30-day health trajectory across all partners in this view.\nImproving = upward weighted slope. Stable = near-flat. Declining = downward slope.\nThis tells you ecosystem direction — more actionable than average health score alone."}>i</i>
+        <i className="tip" data-tip={"Whether the portfolio is collectively improving or getting worse over the last 30 days.\nMore useful than the average score — it tells you which direction you are heading, not just where you are.\nCalculated from the weighted slope of each partner's health score over 30 days."}>i</i>
       </div>
       <div style={{ display:"flex", height:8, borderRadius:4, overflow:"hidden", border:"1px solid var(--border)" }}>
         <div title={`${groups.up} improving`}  style={{ background:"var(--green)", width:`${groups.up/total*100}%`, transition:"width .4s" }} />
@@ -3291,7 +3291,7 @@ const TrajectoryCard = ({ partner, baseline }) => {
         <div>
           <div className="card-title">
             Trend Intelligence
-            <i className="tip" data-tip={"Where this partner is heading — not just where they are.\nMomentum computed from weighted slope of 12-month health score history.\nRecent months weighted more heavily than older data.\nVelocity = average monthly change (weighted). Acceleration = whether velocity is increasing."}>i</i>
+            <i className="tip" data-tip={"Shows whether this partner is getting better or worse over time, and how fast.\nA declining trend is often a more reliable early warning than a low score alone — it means the situation is not yet resolved.\nVelocity = average monthly score change. Acceleration = whether the rate of change is itself increasing."}>i</i>
           </div>
           <div className="card-sub">Weighted 12-month momentum · velocity + acceleration</div>
         </div>
@@ -3403,7 +3403,7 @@ const PIPInterpretation = ({ partner }) => {
         <div className="interp-title">
           <span className="badge">POI</span>
           Signal Interpretation
-          <i className="tip" data-tip={"5-dimension synthesis: Service Health · Trend · Revenue Concentration · Delivery Readiness · Support Health.\nMomentum language computed from 12-month weighted slope."}>i</i>
+          <i className="tip" data-tip={"POI's five-way read on this partner — each dimension covers a different risk area.\nTaken together they explain why a partner is in their current state, not just what the number is.\nEach dimension uses a different set of source signals; see tooltips on individual dimensions for detail."}>i</i>
           <span style={{color:"var(--ink-4)",fontSize:10.5,fontWeight:400,textTransform:"none"}}>· synthesized across 8 source systems</span>
         </div>
         <div className="interp-trace">
@@ -3455,7 +3455,7 @@ const OperationalSummary = ({ partner }) => {
         <div className="op-summary-l">
           <span className="stamp">POI</span>
           <span className="kicker">Intelligence Summary
-            <i className="tip" data-tip={"POI's primary output — not the score.\nHeadline encodes both state and trajectory.\nMomentum language computed from weighted 12-month slope."}>i</i>
+            <i className="tip" data-tip={"The platform's single-sentence verdict on this partner — the most important output on this screen.\nReads current state and trend together so you don't have to interpret two separate numbers.\nDerived from the composite health score combined with 12-month weighted trend direction."}>i</i>
           </span>
           <span style={{fontSize:11,color:"var(--ink-4)",letterSpacing:".01em"}}>· synthesized 4m ago</span>
         </div>
@@ -3490,7 +3490,7 @@ const SignalProvenance = ({ scope = "Portfolio" }) => (
   <div className="provenance-bar">
     <div className="provenance-l">
       Signal Provenance · {scope}
-      <i className="tip" data-tip={"Each badge shows one source system and its 24-hour signal count.\n182 signals total = the inputs feeding the current computation.\nPIP → intelligence arrow shows the transformation: raw events become operational conclusions."}>i</i>
+      <i className="tip" data-tip={"Shows which systems contributed data to this view and how many events came in today.\nEvery number on this screen traces back to a real event in one of these systems — nothing is estimated.\nThe arrow represents the transformation from raw system events into operational conclusions."}>i</i>
     </div>
     <div className="provenance-sources">
       {PROVENANCE_SOURCES.map(s => (
@@ -3568,7 +3568,7 @@ const PAMPortfolio = ({
         <div className="scope-head">
           <div className="scope-title">
             My Portfolio
-            <Tip d={"Your assigned partner book.\nSorted by Urgency by default — combines health score, direction, and velocity.\nSwitch to ARR or Momentum sort above the table."} />
+            <Tip d={"Shows the partners you're responsible for.\nSorted by urgency by default — the partner who needs attention most appears first.\nCalculated by combining current health score, direction, and rate of change."} />
           </div>
           <div className="scope-meta">22 partners · {fmtMoney(totalArr)} ARR · Marcus Hale</div>
         </div>
@@ -3621,7 +3621,7 @@ const PAMPortfolio = ({
           <section>
             <div style={{ display:"flex", alignItems:"center", gap:6, fontSize:10, fontWeight:600, letterSpacing:".07em", textTransform:"uppercase", color:"var(--ink-3)", marginBottom:6 }}>
               Intelligence Synthesis
-              <Tip d={"POI's top-level operational conclusions for your portfolio.\nHigh = statistically significant risk. Medium = emerging pattern.\nTrend line added — declining partners compound ARR exposure."} />
+              <Tip d={"The platform's judgment on your portfolio — the patterns worth acting on, not a list of metrics.\nHigh risk means statistically significant — these patterns historically precede renewal loss.\nDerived from cross-system signal correlations across your partner book."} />
             </div>
             <div className="synth-strip">
               {synth.map((s,i) => (
@@ -3643,12 +3643,12 @@ const PAMPortfolio = ({
           <section>
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", background:"var(--surface)", border:"1px solid var(--border)", borderRadius:"var(--r-lg)", overflow:"hidden" }}>
               <div style={{ padding:"14px 18px", borderRight:"1px solid var(--border)" }}>
-                <div className="kpi-l">ARR at Risk <Tip d={"Partners where renewal is overdue, escalation SLA is breached, or customer health score is below 50.\nNot churn — current exposure requiring action."} /></div>
+                <div className="kpi-l">ARR at Risk <Tip d={"Revenue that is currently in danger and needs active intervention.\nThis is not confirmed churn — it is the amount you can still protect with the right actions.\nCalculated from renewals overdue + escalation-flagged ARR + customers with health below 50."} /></div>
                 <div className="kpi-v red" style={{ fontSize:28 }}>{fmtMoney(totalAtRisk)}</div>
                 <div className="kpi-s"><span className="kpi-delta down">▲ 9.2%</span><span>vs. 30d · {fmtMoney(totalArr)} total</span></div>
               </div>
               <div style={{ padding:"14px 18px", borderRight:"1px solid var(--border)" }}>
-                <div className="kpi-l">Portfolio Health <Tip d={"Distribution of your 22 partners across health bands.\nBar shows proportion — width = share of portfolio."} /></div>
+                <div className="kpi-l">Portfolio Health <Tip d={"Shows how your portfolio is split between healthy, watch, and critical partners.\nA shrinking green section or growing red section means the portfolio is getting worse overall.\nEach partner's health score determines their band: 70+ healthy, 50–69 watch, below 50 critical."} /></div>
                 <div style={{ display:"flex", height:28, borderRadius:4, overflow:"hidden", margin:"6px 0 4px", border:"1px solid var(--border)" }}>
                   <div title={`${criticalCount} Critical`} style={{ background:"var(--red)", width:`${criticalCount/partners.length*100}%`, display:"flex", alignItems:"center", justifyContent:"center" }}>
                     {criticalCount>0 && <span style={{ color:"#fff", fontSize:10, fontFamily:"var(--font-mono)", fontWeight:600 }}>{criticalCount}</span>}
@@ -3699,7 +3699,7 @@ const PAMPortfolio = ({
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom: 8 }}>
               <div style={{ display:"flex", alignItems:"center", gap:6, fontSize:10, fontWeight:700, letterSpacing:".07em", textTransform:"uppercase", color:"var(--ink-3)" }}>
                 <Icon name="spark" size={12}/> Actions · This Week
-                <Tip d={"PAM-level actions computed from portfolio signals.\nPrioritized by: trajectory urgency × ARR at risk × renewal proximity."} />
+                <Tip d={"Your prioritised to-do list for this week, generated from live portfolio signals.\nActing on these in order protects the most revenue with the least effort.\nPrioritised by combining urgency, revenue at risk, and how soon renewals are due."} />
               </div>
               <span style={{ fontSize:10, color:"var(--ink-4)", fontFamily:"var(--font-mono)" }}>Ordered by urgency</span>
             </div>
@@ -3739,7 +3739,7 @@ const PAMPortfolio = ({
             <header className="card-head">
               <div className="card-title">
                 Portfolio · {sortMode === "urgency" ? "Urgency Ranking" : sortMode === "arr" ? "ARR Risk" : "Trend"} Ranking
-                <Tip d={"Default sort = Urgency: combines health score, direction, and velocity.\nA Critical partner declining sharply outranks a Watch partner with a stable trend.\nSwitch sort via the left panel tabs."} />
+                <Tip d={"Shows which partner needs your attention most urgently — not just which is lowest-scoring.\nA partner declining rapidly outranks a worse-scoring partner that has stabilised.\nCalculated by combining current health score, rate of decline, and onboarding issues."} />
                 <span className="card-title-num">{partners.length}</span>
               </div>
               <div className="card-actions">
@@ -3755,9 +3755,9 @@ const PAMPortfolio = ({
                 <thead>
                   <tr>
                     <th>Partner</th>
-                    <th>Trend <Tip d={"30-day weighted momentum — direction and velocity.\nComputed from weighted slope of 12-month health history.\nRecent months weighted more heavily than older data.\nThis column drives default sort order."} l /></th>
-                    <th>Health <Tip d={"POI Health Score 0–100. Weighted composite of 4 dimensions.\nSecondary to trajectory — where a partner is heading matters more than where they are now."} l /></th>
-                    <th className="num">ARR at Risk <Tip d={"Renewal-stage overdue + escalation-flagged ARR.\nNot churn — current exposure requiring action."} /></th>
+                    <th>Trend <Tip d={"Whether this partner is improving, stable, or getting worse — and how fast.\nMore important than the score alone: a partner at 65 declining sharply is more urgent than a partner at 55 who is recovering.\nCalculated from the weighted slope of 12 months of health scores, with recent months counting more."} l /></th>
+                    <th>Health <Tip d={"The partner's current overall operational health on a 0–100 scale.\nRead this alongside the trend column — a low score improving is less urgent than a mid score declining fast.\nComposite of four weighted dimensions: Revenue Health, Service Health, Renewal Health, and Support Health."} l /></th>
+                    <th className="num">ARR at Risk <Tip d={"Revenue at risk of being lost if no action is taken.\nThis is not confirmed churn — it is still recoverable with the right intervention.\nCalculated from renewals that are overdue plus ARR tied to partners with active SLA breaches."} /></th>
                     <th className="num">Renewals 90d</th>
                     <th className="num">Escalations</th>
                     <th>Lead signal</th>
@@ -3825,7 +3825,7 @@ const PAMPortfolio = ({
           {/* Signal sources */}
           <section className="card">
             <header className="card-head">
-              <div className="card-title">Signal Sources <Tip d={"8 source systems feeding POI.\nEach number = signals ingested in last 24h.\nAll feed both the POI Health Score and trajectory computation."} /><span className="card-title-num">live</span></div>
+              <div className="card-title">Signal Sources <Tip d={"Shows which systems POI is reading and how many data events came in today.\nEach number represents real operational events — not samples or estimates.\nAll 8 systems feed both the real-time health score and the trend calculation."} /><span className="card-title-num">live</span></div>
               <div className="card-sub">Routed through Catalyst → operational scoring + trajectory</div>
             </header>
             <div className="card-body" style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:8 }}>
@@ -3853,7 +3853,7 @@ const PAMPortfolio = ({
       {/* RIGHT RAIL */}
       <div className="col right">
         <div className="rail-h">
-          <div className="rail-title"><span className="live-dot"/>Signal Feed <Tip d={"Real-time event stream from last 24h.\nSLA breaches flagged Sev-1."} /></div>
+          <div className="rail-title"><span className="live-dot"/>Signal Feed <Tip d={"Live feed of operational events across your partners in the last 24 hours.\nShows what is happening right now — not a summary or daily digest.\nSLA breaches are flagged Sev-1 and appear at the top."} /></div>
           <div className="card-sub" style={{ marginTop:2 }}>Across portfolio · last 24h</div>
         </div>
         <div className="feed">
@@ -3873,7 +3873,7 @@ const PAMPortfolio = ({
           ))}
         </div>
         <div className="rail-h" style={{ borderTop:"1px solid var(--border)" }}>
-          <div className="rail-title"><Icon name="spark" size={12}/>Actions · This Week <Tip d={"PAM-level actions computed from portfolio signals.\nPrioritized by: trajectory urgency × ARR at risk × renewal proximity."} /></div>
+          <div className="rail-title"><Icon name="spark" size={12}/>Actions · This Week <Tip d={"Your prioritised to-do list for this week, generated from live portfolio signals.\nActing on these in order protects the most revenue with the least effort.\nPrioritised by combining urgency, revenue at risk, and how soon renewals are due."} /></div>
           <div className="card-sub" style={{ marginTop:2 }}>Ordered by trajectory urgency</div>
         </div>
         <div className="action-list">
@@ -3969,10 +3969,10 @@ const ZohoMaturityScore = ({ partner }) => {
         : growth >= 0
         ? "Revenue stable. New customer acquisition velocity has slowed versus prior year."
         : "Revenue contracting. Both acquisition and expansion ARR need attention.",
-      tip:"Revenue Growth (max 400pts): ARR growth velocity vs prior year.\nNew Customers YTD (max 100pts): net new logos this year.",
+      tip:"Measures how effectively this partner is growing revenue and acquiring new customers.\nRevenue growth that outpaces the regional average leads to a higher score and supports tier progression.\nRevenue Growth (max 400pts) = ARR growth vs prior year. New Customers (max 100pts) = net new logos in CRM.",
       subs:[
-        { name:"Revenue Growth",    val:revGrowthPts, max:400, tip:"Year-over-year ARR growth. Higher = more points." },
-        { name:"New Customers YTD", val:newCustPts,   max:100, tip:"Net new customer logos this calendar year. Source: CRM." },
+        { name:"Revenue Growth",    val:revGrowthPts, max:400, tip:"Measures how fast this partner's managed revenue is growing compared to last year.\nFast growth signals a healthy and expanding practice — it is the strongest single component of Commercial Health.\nCalculated as percentage ARR growth year-over-year, scaled to a 400-point maximum." },
+        { name:"New Customers YTD", val:newCustPts,   max:100, tip:"Measures how effectively the partner is acquiring new customers, not just growing existing ones.\nNew customer acquisition indicates pipeline health and go-to-market strength beyond existing account management.\nCalculated from net new customer logos recorded in CRM this calendar year." },
       ] },
     { name:"Customer Success", icon:"◉", total:Math.max(0,csTotal), max:300,
       trend:partner.crr >= 93 ? "up" : partner.crr >= 85 ? "stable" : "down",
@@ -3981,12 +3981,12 @@ const ZohoMaturityScore = ({ partner }) => {
         : partner.crr >= 85
         ? "Customer retention healthy. Certification density near baseline — monitor expiring certs."
         : "Retention below benchmark. Escalation volume is weighing on Customer Success.",
-      tip:"CRR (100pts) + CSAT (100pts) + Certifications (100pts) − Escalation penalty (up to −100pts).\nSource: Desk + Renewals + Cert records.",
+      tip:"Measures how well this partner retains customers, satisfies them, and maintains the qualifications to serve them.\nThis is the most predictive component of future renewal performance — partners with high Customer Success scores churn far less.\nCalculated as CRR (100pts) + CSAT (100pts) + Certifications (100pts) minus an escalation penalty (up to −100pts).",
       subs:[
-        { name:"CRR",            val:crrPts,      max:100, tip:"CRR % scored 0–100." },
-        { name:"CSAT",           val:csatPts,     max:100, tip:"Customer satisfaction × 20. CSAT 4.3/5 = 86 points." },
-        { name:"Certifications", val:certPts,     max:100, tip:"Active certifications as % of benchmark (44)." },
-        { name:"Escalations",    val:-escPenalty, max:0,   tip:"Penalty: each open escalation deducts points. SLA breaches carry higher weight." },
+        { name:"CRR",            val:crrPts,      max:100, tip:"Measures the proportion of eligible customers who renewed their contracts through this partner.\nCustomer retention is the most direct indicator of partner-level relationship quality and service consistency.\nCalculated as renewals completed ÷ renewals eligible × 100, then scaled to a 100-point score." },
+        { name:"CSAT",           val:csatPts,     max:100, tip:"Measures how satisfied customers are with this partner's service and support.\nHigh satisfaction strongly predicts renewal reliability — partners above 4.4 show 31% fewer renewal surprises.\nCalculated as the average customer satisfaction rating multiplied by 20 (e.g. 4.3/5 = 86 points)." },
+        { name:"Certifications", val:certPts,     max:100, tip:"Measures whether the partner has enough certified staff to deliver and support Zoho products at the expected standard.\nLow certification coverage reduces delivery quality and directly lowers the Customer Success component of the Partner Score.\nCalculated as active certifications as a percentage of the benchmark of 44 required certifications." },
+        { name:"Escalations",    val:-escPenalty, max:0,   tip:"Reduces the Customer Success score to reflect unresolved customer issues — the more open escalations, the lower the score.\nActively penalises service failure so it cannot be hidden behind good retention or CSAT numbers.\nEach open escalation deducts points; SLA breaches carry a higher deduction than standard escalations." },
       ] },
     { name:"Market Readiness", icon:"◇", total:mrTotal, max:100,
       trend:mrTotal >= 60 ? "up" : mrTotal >= 30 ? "stable" : "down",
@@ -3995,10 +3995,10 @@ const ZohoMaturityScore = ({ partner }) => {
         : mrTotal >= 30
         ? "Implementation projects active but case study documentation lagging. Limits reference-selling."
         : "Market Readiness is the primary gap. No published case studies reduces tier progression potential.",
-      tip:"Projects (max 50pts): verified implementation projects.\nCase Studies (max 50pts): published with customer approval.",
+      tip:"Measures whether this partner is actively doing implementations and building a visible track record.\nPartners with no published case studies cannot progress to higher tiers regardless of other scores.\nProjects (max 50pts) = verified implementations on record. Case Studies (max 50pts) = published with customer approval.",
       subs:[
-        { name:"Implementation Projects", val:projPts, max:50, tip:"Verified implementation projects on record." },
-        { name:"Case Studies",            val:csPts,   max:50, tip:"Published, customer-approved case studies." },
+        { name:"Implementation Projects", val:projPts, max:50, tip:"Measures the depth of this partner's real-world Zoho implementation experience.\nMore verified projects signals a mature practice capable of handling enterprise deals and complex deployments.\nCounted from verified implementation records in the partner programme database." },
+        { name:"Case Studies",            val:csPts,   max:50, tip:"Measures whether this partner has a visible and documented track record that supports reference selling.\nNo case studies is a common blocker for tier progression — it limits the partner's credibility with new prospects.\nCounted from case studies published with explicit customer approval." },
       ] },
     { name:"Zoho Engagement", icon:"◎", total:engTotal, max:100,
       trend:engTotal >= 70 ? "up" : engTotal >= 40 ? "stable" : "down",
@@ -4007,7 +4007,7 @@ const ZohoMaturityScore = ({ partner }) => {
         : engTotal >= 40
         ? "Practice size established but branding participation is below Premium tier norms."
         : "Engagement below benchmark. Branding and campaign activity need investment to support tier standing.",
-      tip:"Practice Size (max 25pts): certified consultants active in Zoho practice.\nBranding & Campaigns (max 75pts): co-marketing, events, branded activities.",
+      tip:"Measures how invested this partner is in the Zoho partnership — team size and active co-marketing effort.\nPartners who engage actively in co-marketing generate significantly more ARR per customer than transactional partners.\nPractice Size (max 25pts) = certified consultants. Branding & Campaigns (max 75pts) = co-marketing and event participation.",
       subs:[
         { name:"Zoho Practice Size",   val:practPts, max:25, tip:"Team members actively engaged in Zoho practice." },
         { name:"Branding & Campaigns", val:brandPts, max:75, tip:"Co-marketing participation: events, branded activities, webinars." },
@@ -4022,14 +4022,14 @@ const ZohoMaturityScore = ({ partner }) => {
         <div>
           <div className="card-title">
             Partner Maturity Profile
-            <Tip d={"Official Zoho Partner Score — 1000 points total.\nFour components: Commercial Health, Customer Success, Market Readiness, Zoho Engagement.\nDetermines tier standing. ~500 = Standard, ~750 = Premium.\nPIP tracks signals that predict where this will land next annual cycle."} />
+            <Tip d={"The official score that determines whether a partner qualifies for Standard or Premium tier.\nA falling score means tier demotion risk — losing benefits, marketplace visibility, and co-sell support.\nOut of 1000 points across four components. ~500 = Standard threshold, ~750 = Premium threshold."} />
           </div>
           <div className="card-sub">Zoho official model · 1000pt scale · tier-determining · click rows to expand</div>
         </div>
         <div style={{ display:"flex", alignItems:"center", gap:10 }}>
           <div style={{ textAlign:"right" }}>
             <div style={{ fontSize:10, fontWeight:600, letterSpacing:".07em", textTransform:"uppercase", color:"var(--ink-3)", marginBottom:2, display:"flex", alignItems:"center", gap:4, justifyContent:"flex-end" }}>
-              Overall <i className="tip tip-left" data-tip={"Total Zoho Partner Score out of 1000.\nSum of all four components.\nDetermines tier standing: ~500 = Standard threshold, ~750 = Premium threshold.\nPIP tracks signals that predict where this will land next annual cycle."}>i</i>
+              Overall <i className="tip tip-left" data-tip={"The partner's official tier-determining score, combining all four performance components.\nFalling below ~500 risks Standard tier demotion; falling below ~750 risks losing Premium status.\nUpdated annually by Zoho; POI tracks the leading signals that predict where it will land."}>i</i>
             </div>
             <div style={{ display:"flex", alignItems:"baseline", gap:4 }}>
               <span style={{ fontFamily:"var(--font-mono)", fontSize:20, fontWeight:500, color:overallBand.color }}>{totalScore}</span>
@@ -4113,7 +4113,7 @@ const ZohoMaturityScore = ({ partner }) => {
       <div style={{ padding:"10px 14px", background:"var(--surface-2)" }}>
         <div style={{ fontSize:10, fontWeight:600, letterSpacing:".07em", textTransform:"uppercase", color:"var(--ink-3)", marginBottom:7, display:"flex", alignItems:"center", gap:4 }}>
           Benchmark Intelligence
-          <Tip d={"Anonymous comparison against partners at the same tier and region.\nSource: Analytics daily sync — individual partner data is never shared.\nPercentile positions recomputed quarterly."} />
+          <Tip d={"Shows how this partner ranks against similar partners — same tier, same region — without revealing individual data.\nHelps distinguish partners who are genuinely underperforming from those facing market-wide challenges.\nPercentiles recomputed quarterly from Analytics data; individual partner data is never shared."} />
         </div>
         {[
           partner.crr >= 93
@@ -4216,7 +4216,7 @@ const PartnerIntelligence = ({ partner, onBack, onOpenCliq, escalations, tweaks 
             <div style={{ display:"flex", gap:18, alignItems:"flex-start", flexShrink:0 }}>
               <div style={{ textAlign:"right", opacity:.85 }}>
                 <div style={{ fontSize:9.5, fontWeight:600, letterSpacing:".07em", textTransform:"uppercase", color:"var(--ink-3)", marginBottom:2 }}>
-                  POI Health <Tip d={"Real-time operational health score, 0–100.\nComputed by Catalyst from live signals.\nPredicts where the Zoho Partner Score will trend next cycle."} />
+                  POI Health <Tip d={"A live operational signal — not the official Partner Score, but a leading indicator of where it is heading.\nA falling POI Health score typically precedes a Partner Score decline by one to two quarters.\nComputed continuously from live signals across all 8 source systems."} />
                 </div>
                 <div style={{ display:"flex", alignItems:"baseline", gap:6, justifyContent:"flex-end" }}>
                   <span className={`p360-score-v ${b}`} style={{ fontSize:30 }}>{partner.health}</span>
@@ -4227,7 +4227,7 @@ const PartnerIntelligence = ({ partner, onBack, onOpenCliq, escalations, tweaks 
               <div style={{ width:1, background:"var(--border)", alignSelf:"stretch" }} />
               <div style={{ textAlign:"right", opacity:.75 }}>
                 <div style={{ fontSize:9.5, fontWeight:600, letterSpacing:".07em", textTransform:"uppercase", color:"var(--ink-3)", marginBottom:2 }}>
-                  Partner Score <Tip d={"Official Zoho partner score out of 1000.\nDetermines tier standing.\nSee Partner Maturity Profile below for full breakdown."} />
+                  Partner Score <Tip d={"The score that determines this partner's tier and programme benefits.\nThis is the number Zoho uses for tier decisions — not the POI score.\nSee the Partner Maturity Profile section below for a full breakdown of how it is composed."} />
                 </div>
                 <div style={{ display:"flex", alignItems:"baseline", gap:3, justifyContent:"flex-end" }}>
                   <span style={{ fontFamily:"var(--font-mono)", fontSize:22, fontWeight:400, color:"var(--ink)" }}>{Math.round(partner.health*8.2+50)}</span>
@@ -4265,7 +4265,7 @@ const PartnerIntelligence = ({ partner, onBack, onOpenCliq, escalations, tweaks 
               <header className="card-head">
                 <div className="card-title">
                   Why Changed
-                  <Tip d={"Specific signals from the last 30 days that moved the score.\nDirect cause-effect mappings from the Catalyst event ledger.\nTrace any score change to a specific event."} />
+                  <Tip d={"Explains exactly why the score changed — the specific events that caused it to move up or down.\nRemoves ambiguity: instead of 'the score dropped', you see 'three renewals slipped into review stage on this date'.\nEach entry links directly to the source system event that triggered the change."} />
                   <span className="card-title-num">{partner.whyChanged.length}</span>
                 </div>
                 <div className="card-sub">Signals driving 30d health movement</div>
@@ -4292,7 +4292,7 @@ const PartnerIntelligence = ({ partner, onBack, onOpenCliq, escalations, tweaks 
               <header className="card-head">
                 <div className="card-title">
                   Operational Health · Real-time
-                  <Tip d={"POI's 6-dimension health model — separate from the official Partner Score.\nComputed continuously from live signals.\nBand labels (Strong, Healthy, Attention Needed) are the primary signal.\nNumbers and weights visible in the Score Composition rail on the right."} />
+                  <Tip d={"POI's own real-time health assessment — separate from and more current than the official annual Partner Score.\nThe band label (Strong / Healthy / Attention Needed / Critical) is the primary signal — it tells you the state clearly without requiring score interpretation.\nUpdated continuously; weights visible in the Score Composition panel on the right."} />
                 </div>
                 <div className="card-sub">Live signals · band labels lead · numbers secondary</div>
               </header>
@@ -4332,7 +4332,7 @@ const PartnerIntelligence = ({ partner, onBack, onOpenCliq, escalations, tweaks 
               <header className="card-head">
                 <div className="card-title">
                   Customer Portfolio
-                  <Tip d={"Cross-system risk density for this partner's customer book.\nAt-risk: health score below 60 or renewal overdue.\nExpansion-ready: cross-sell affinity flag in CRM."} />
+                  <Tip d={"A snapshot of the partner's 211 customers — who needs attention and who represents a growth opportunity.\nAt-risk customers are the most likely to churn if not contacted. Expansion-ready customers are most likely to add a product.\nAt-risk = health below 60 or renewal overdue. Expansion-ready = cross-sell affinity flag active in CRM."} />
                   <span className="card-title-num">{partner.customers}</span>
                 </div>
               </header>
@@ -4356,7 +4356,7 @@ const PartnerIntelligence = ({ partner, onBack, onOpenCliq, escalations, tweaks 
               <header className="card-head">
                 <div className="card-title">
                   Coaching Recommendations
-                  <Tip d={"Generated from the partner's weakest scoring dimensions.\nCritical: 4 recommendations. Healthy: 2.\nEach includes estimated impact on Partner Score or ARR."} />
+                  <Tip d={"Specific actions the partner can take to improve their health score and Partner Score.\nEach recommendation targets the dimension with the highest improvement potential for this partner specifically.\nGenerated from weakest scoring dimensions; each includes an estimated impact on Partner Score or revenue."} />
                 </div>
               </header>
               <div className="card-body flush">
@@ -4386,7 +4386,7 @@ const PartnerIntelligence = ({ partner, onBack, onOpenCliq, escalations, tweaks 
               <header className="card-head">
                 <div className="card-title">
                   Escalations
-                  <Tip d={"Open escalations for this partner.\nSLA breaches carry a penalty in the Partner Score Customer Success component.\nClick any escalation to open the Cliq coordination drawer."} />
+                  <Tip d={"Active customer issues that are unresolved — each one is damaging customer experience and the partner's score.\nEvery SLA breach reduces the Partner Score's Customer Success component; resolving them quickly limits the damage.\nClick any escalation to open the coordination thread in Cliq."} />
                   <span className="card-title-num">{myEsc.length || partner.escalations.open}</span>
                 </div>
                 <div className="card-actions"><button className="btn sm ghost"><Icon name="cliq" size={11} /> Cliq</button></div>
@@ -4413,7 +4413,7 @@ const PartnerIntelligence = ({ partner, onBack, onOpenCliq, escalations, tweaks 
 
             <section className="card">
               <header className="card-head">
-                <div className="card-title">Signal Timeline <Tip d={"30-day cross-system event log.\nEvery signal that moved the score is recorded here.\nTrace any score movement to a specific event."} /></div>
+                <div className="card-title">Signal Timeline <Tip d={"A chronological record of everything that happened operationally in the last 30 days for this partner.\nProvides full context for any score change — no change is unexplained.\nEvery entry traces to a specific event in a source system: Desk, Renewals, Cert, Billing, or CRM."} /></div>
                 <div className="card-sub">30d · cross-system</div>
               </header>
               <div className="card-body flush">
@@ -4437,7 +4437,7 @@ const PartnerIntelligence = ({ partner, onBack, onOpenCliq, escalations, tweaks 
               <header className="card-head">
                 <div className="card-title">
                   <Icon name="shield" size={12} /> Governance & Audit
-                  <Tip d={"Every PAM override and system decision logged with actor and timestamp.\nAppend-only immutable record — nothing can be deleted."} />
+                  <Tip d={"A permanent record of every human decision and automated action taken on this partner.\nEnsures accountability — if a threshold was adjusted or a flag was added, you know who did it and when.\nAppend-only and immutable: entries cannot be edited or deleted after the fact."} />
                 </div>
               </header>
               <div className="card-body flush">
@@ -4465,7 +4465,7 @@ const PartnerIntelligence = ({ partner, onBack, onOpenCliq, escalations, tweaks 
           <div className="rail-title">
             <Icon name="command" size={12} />
             POI Score Composition
-            <Tip d={"Live breakdown of how the POI Health Score is computed.\nSub-score × weight% = contribution points.\nDrag Tweaks sliders to recompute in real time.\nProves the score is deterministic — not a black box."} r />
+            <Tip d={"Shows exactly how the overall health score is built — each dimension's score, weight, and contribution to the total.\nAllows a Director or PAM to see why the score is what it is, and test what would change it.\nDrag the Tweaks sliders above to recompute with different weights and see the score update live."} r />
           </div>
           <div className="card-sub" style={{ marginTop:2 }}>How the {partner.health} is computed · live</div>
         </div>
@@ -4501,7 +4501,7 @@ const PartnerIntelligence = ({ partner, onBack, onOpenCliq, escalations, tweaks 
           <div className="rail-title">
             <Icon name="alert" size={12} />
             Catalyst Threshold Events
-            <Tip d={"Specific Catalyst rules that fired for this partner.\nEach entry: rule, timestamp, action taken.\nAppend-only — cannot be retroactively modified."} r />
+            <Tip d={"Shows every automated action the system took for this partner — which rule fired, when, and what it did.\nProvides transparency into automated decisions so nothing happens to a partner record without a traceable reason.\nAppend-only: the record cannot be modified after the fact."} r />
           </div>
           <div className="card-sub" style={{ marginTop:2 }}>Real-time deterministic layer</div>
         </div>
@@ -4626,7 +4626,7 @@ const Director = ({ ecosystem, partners }) => {
     <div className="director">
       <header className="director-h">
         <div>
-          <div className="director-title">Partner Ecosystem · Observability <Tip d={"Cross-partner intelligence from Analytics daily sync + real-time Catalyst signals.\n412 partners · $198.4M total managed ARR."} /></div>
+          <div className="director-title">Partner Ecosystem · Observability <Tip d={"A live read of the entire 412-partner ecosystem — where it is healthy, where it is at risk, and what needs leadership attention.\nShows patterns that are invisible at the individual partner level but become clear at ecosystem scale.\nPowered by daily Analytics sync plus real-time Catalyst signals across all 8 source systems."} /></div>
           <div className="director-sub">412 partners · $198.4M ARR · Q3 FY26 · Marcus Hale · Director, Partner Program</div>
         </div>
         <div style={{ display: "flex", gap: 6 }}>
@@ -4660,42 +4660,42 @@ const Director = ({ ecosystem, partners }) => {
           </header>
           <div className="es-body">
             <div className="es-cell">
-              <div className="kicker"><span className="dot violet" /> Premium load-bearing reliability <Tip d={"Premium partners = 61% of ecosystem ARR but only 22% of escalation volume."} /></div>
+              <div className="kicker"><span className="dot violet" /> Premium load-bearing reliability <Tip d={"Confirms that your highest-value partners are also your most operationally reliable — they generate revenue without generating disproportionate support cost.\nThis is a positive structural signal, but it also means concentration risk: if Premium partners deteriorate, the revenue impact is severe.\nCalculated from ARR share versus escalation share across the Premium tier."} /></div>
               <div className="stat">61% / 22%</div>
               <div className="text">
                 <strong>Premium-tier partners</strong> account for <strong>61% of ecosystem ARR</strong> but only <strong>22% of escalation volume</strong> — the load-bearing layer is also the most reliable.
               </div>
             </div>
             <div className="es-cell">
-              <div className="kicker"><span className="dot red" /> US East certification falling <Tip d={"US East cert density declining correlates with renewal volatility — 2-quarter lag.\nAnalytics-derived historical pattern."} /></div>
+              <div className="kicker"><span className="dot red" /> US East certification falling <Tip d={"When certification coverage falls in a region, renewals in that region become less predictable a few months later — consistently.\nThis is a leading indicator: the renewal impact has not yet arrived, but acting on the certification gap now prevents it.\nDerived from 3+ years of historical Analytics data showing a 2-quarter lag between cert decline and renewal volatility."} /></div>
               <div className="stat">2-quarter lag</div>
               <div className="text">
                 <strong>US East renewal volatility</strong> correlates with declining certification density over <strong>two consecutive quarters</strong>. Capability drag precedes renewal exposure with measurable lag.
               </div>
             </div>
             <div className="es-cell">
-              <div className="kicker"><span className="dot amber" /> Creator support demand gap <Tip d={"Creator escalations rising 2.3x faster than implementation capacity in Americas.\nSLA breach rate up 14% over 30d."} /></div>
+              <div className="kicker"><span className="dot amber" /> Creator support demand gap <Tip d={"Demand for Creator support is growing faster than the team's ability to handle it — and the gap is widening.\nIf capacity does not increase, SLA breach rates will continue rising, damaging partner experience and renewal rates.\nMeasured as the ratio of new Creator escalations per week versus available implementation capacity in Americas."} /></div>
               <div className="stat">2.3× faster</div>
               <div className="text">
                 <strong>Creator escalations</strong> are rising <strong>2.3× faster</strong> than implementation capacity in Americas. Cliq breach rate up 14% / 30d.
               </div>
             </div>
             <div className="es-cell">
-              <div className="kicker"><span className="dot amber" /> Standard renewal gap <Tip d={"Standard-tier renewal reliability lags Premium by 9pts.\nGap concentrated in single-product practices."} /></div>
+              <div className="kicker"><span className="dot amber" /> Standard renewal gap <Tip d={"Standard partners lose customers at a meaningfully higher rate than Premium partners, despite similar health scores.\nThe gap is concentrated in partners who only sell one Zoho product — multi-product partners renew much more reliably.\nCalculated from renewal completion rates compared across tier groups; gap = 9 percentage points."} /></div>
               <div className="stat">9 pt gap</div>
               <div className="text">
                 <strong>Standard-tier renewal reliability</strong> lags Premium by <strong>9 pts</strong> despite comparable health — exposure concentrated in Books-only practices.
               </div>
             </div>
             <div className="es-cell">
-              <div className="kicker"><span className="dot green" /> CSAT predicts renewals <Tip d={"Partners with CSAT >4.4 show 31% lower renewal-pipeline volatility.\nStrongest leading indicator."} /></div>
+              <div className="kicker"><span className="dot green" /> CSAT predicts renewals <Tip d={"Customer satisfaction above 4.4 is the strongest single predictor of renewal stability across the ecosystem.\nThis means improving CSAT is not just a service quality goal — it is a direct lever for protecting revenue.\nDerived from correlation analysis; partners above 4.4 show 31% fewer unpredictable renewal outcomes."} /></div>
               <div className="stat">31% lower</div>
               <div className="text">
                 Partners with <strong>CSAT &gt; 4.4</strong> show <strong>31% lower</strong> renewal-pipeline volatility — the strongest leading indicator across the ecosystem.
               </div>
             </div>
             <div className="es-cell">
-              <div className="kicker"><span className="dot red" /> Revenue at risk now <Tip d={"$14.7M = current at-risk ARR.\n$22.4M = review-stage renewals due in next 90 days."} /></div>
+              <div className="kicker"><span className="dot red" /> Revenue at risk now <Tip d={"The two most important revenue numbers for the Director: what is already at risk, and what is coming up.\nTogether they define the financial exposure that requires leadership attention in the next 90 days.\n$14.7M = renewals overdue or escalation-flagged. $22.4M = review-stage renewals due within 90 days."} /></div>
               <div className="stat">$14.7M / $22.4M</div>
               <div className="text">
                 <strong>$14.7M ARR is at-risk</strong>; <strong>$22.4M sits in review-stage renewals</strong> across next 90d. Top-10 partners hold 58% of that exposure.
@@ -4727,12 +4727,12 @@ const Director = ({ ecosystem, partners }) => {
         <div className="card" style={{ gridColumn: "span 6" }}>
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", borderBottom:"1px solid var(--border)" }}>
             <div className="big-stat" style={{ borderRight:"1px solid var(--border)" }}>
-              <div className="l">ARR at Risk <i className="tip" data-tip={"Aggregated at-risk ARR across all 412 partners.\n7.4% = at-risk as % of total ecosystem ARR.\nTop-10 partners hold 58% of this concentration."}>i</i></div>
+              <div className="l">ARR at Risk <i className="tip" data-tip={"The total revenue across all 412 partners that is currently at risk of being lost.\nRisk is highly concentrated — addressing the top 10 partners would resolve 58% of the total exposure.\nAt-risk = renewals overdue + escalation-flagged ARR. 7.4% of $198.4M total ecosystem ARR."}>i</i></div>
               <div className="v" style={{ color: "var(--red)" }}>{fmtMoney(ecosystem.arrAtRisk)}</div>
               <div className="s">{ecosystem.arrAtRiskPct}% of {fmtMoney(ecosystem.totalArr)} total · {ecosystem.critical} critical partners</div>
             </div>
             <div className="big-stat">
-              <div className="l">Renewal Reliability <i className="tip" data-tip={"Ecosystem-wide auto-renew rate.\n% of renewals completed without escalation or manual intervention."}>i</i></div>
+              <div className="l">Renewal Reliability <i className="tip" data-tip={"Measures how smoothly the ecosystem is renewing — how much revenue closes automatically versus requiring manual effort.\nA rising auto-renewal rate means the ecosystem is becoming more self-sufficient and predictable.\nCalculated as renewals completed without escalation or manual PAM intervention, as a percentage of total renewals."}>i</i></div>
               <div className="v">91.6<span style={{ fontSize: 18, color: "var(--ink-3)" }}>%</span></div>
               <div className="s"><span className="t-green">↑ Improving</span> · was 91.0% Q2 · {ecosystem.healthy} healthy partners</div>
             </div>
@@ -4778,7 +4778,7 @@ const Director = ({ ecosystem, partners }) => {
         {/* Ecosystem health distribution — stacked bar */}
         <section className="card" style={{ gridColumn: "span 6" }}>
           <header className="card-head">
-            <div className="card-title">Partner health across 412 partners <Tip d={"412 partners split by POI Health Score band.\nMigration data shows how many moved between bands in 30 days."} /></div>
+            <div className="card-title">Partner health across 412 partners <Tip d={"Shows the overall health of the ecosystem at a glance — how many partners are healthy, monitoring-level, or critical.\nThe migration numbers tell you whether the ecosystem is improving or deteriorating this month, not just where it is today.\nBands based on POI Health Score: 70+ healthy, 50–69 watch, below 50 critical."} /></div>
             <div className="card-sub">412 partners · live computation</div>
           </header>
           <div className="card-body">
@@ -4830,7 +4830,7 @@ const Director = ({ ecosystem, partners }) => {
         {/* Risk insights */}
         <section className="card" style={{ gridColumn: "span 6" }}>
           <header className="card-head">
-            <div className="card-title">Supporting risk signals <Tip d={"Cross-system correlations from Analytics historical data.\nPattern-derived from 3+ years of partner behavior."} /></div>
+            <div className="card-title">Supporting risk signals <Tip d={"Patterns identified across the ecosystem that historically precede specific outcomes — renewals lost, tier changes, escalation waves.\nThese are the five things a Director should act on, in order, before they become the five things that went wrong.\nDerived from 3+ years of Analytics data; each pattern has a statistically significant correlation with downstream outcomes."} /></div>
             <div className="card-sub">Cross-system correlations</div>
           </header>
           <div className="card-body flush">
@@ -4847,7 +4847,7 @@ const Director = ({ ecosystem, partners }) => {
         <section className="card" style={{ gridColumn: "span 12" }}>
           <header className="card-head">
             <div className="card-title">
-              Ecosystem Risk Heatmap <Tip d={"X-axis: renewal proximity. Y-axis: operational maturity.\nDangerous cells = bottom-left: Critical maturity + renewals due now."} />
+              Ecosystem Risk Heatmap <Tip d={"Maps every at-risk dollar to where it sits on two dimensions: how soon it renews and how healthy the partner is operationally.\nThe bottom-left cells are the most urgent — partners who are struggling and have renewals due very soon.\nCell colour intensity shows ARR concentration; the darkest red cells are the highest-priority intervention clusters."} />
               <span className="card-title-num">$14.7M at risk</span>
             </div>
             <div className="card-actions">
@@ -4866,7 +4866,7 @@ const Director = ({ ecosystem, partners }) => {
         {/* Regional Intelligence */}
         <section className="card" style={{ gridColumn: "span 7" }}>
           <header className="card-head">
-            <div className="card-title">Regional Intelligence <Tip d={"Direction arrows = 30-day momentum per region.\nHealth = ARR-weighted average POI score."} /></div>
+            <div className="card-title">Regional Intelligence <Tip d={"Shows which regions are improving and which are declining — not just where each region stands today.\nA declining region with high ARR is a higher priority than a critical-scoring small region that is stabilising.\nDirection = 30-day momentum. Health = ARR-weighted average score across all partners in that region."} /></div>
             <div className="card-sub">ARR · partner density · CRR · trend</div>
           </header>
           <div className="card-body flush">
@@ -4877,7 +4877,7 @@ const Director = ({ ecosystem, partners }) => {
                   <th className="num">ARR</th>
                   <th className="num">Partners</th>
                   <th>Health</th>
-                  <th>Direction <i className="tip" data-tip={"30-day momentum for this region.\n↑ Improving · → Stable · ↓ Declining."}>i</i></th>
+                  <th>Direction <i className="tip" data-tip={"Whether this region's overall partner health is getting better or worse over the last 30 days.\nA declining direction in the highest-ARR region is the most important signal on this table.\nCalculated from the weighted average of all partner health score changes in the region over 30 days."}>i</i></th>
                   <th className="num">CRR</th>
                   <th className="num">At-Risk ARR</th>
                 </tr>
@@ -4911,7 +4911,7 @@ const Director = ({ ecosystem, partners }) => {
         {/* Tier Intelligence */}
         <section className="card" style={{ gridColumn: "span 5" }}>
           <header className="card-head">
-            <div className="card-title">Partner Tier Intelligence <Tip d={"Premium partners hold 78% of ecosystem ARR.\nTier thresholds: ~500/1000 = Standard, ~750/1000 = Premium."} /></div>
+            <div className="card-title">Partner Tier Intelligence <Tip d={"Shows how revenue is distributed across tiers — and where the ecosystem's structural concentration risk lies.\nWith 78% of revenue in the Premium tier, any deterioration at the top has an outsized impact on the whole.\nTier thresholds: ~500/1000 = Standard, ~750/1000 = Premium. Based on annual Zoho Partner Score."} /></div>
           </header>
           <div className="card-body flush">
             <table className="dtable">
@@ -4949,7 +4949,7 @@ const Director = ({ ecosystem, partners }) => {
         {/* PAM Effectiveness */}
         <section className="card" style={{ gridColumn: "span 7" }}>
           <header className="card-head">
-            <div className="card-title">PAM Effectiveness <Tip d={"Portfolio Trajectory bar shows momentum distribution across each PAM's partner book.\nAvg Health = ARR-weighted average POI score."} /></div>
+            <div className="card-title">PAM Effectiveness <Tip d={"Compares PAM portfolios side by side to surface where performance is strongest and where intervention may be needed.\nA PAM with a declining portfolio trend needs support or a caseload review — regardless of the average health score.\nTrajectory bar shows the proportion of partners improving vs declining. Avg Health is ARR-weighted."} /></div>
             <div className="card-sub">Load · health · escalation discipline</div>
           </header>
           <div className="card-body flush">
@@ -4957,9 +4957,9 @@ const Director = ({ ecosystem, partners }) => {
               <span>PAM</span>
               <span className="num">Partners</span>
               <span className="num">ARR</span>
-              <span>Portfolio Trajectory <i className="tip" data-tip={"Distribution of 30-day momentum across all partners in this PAM's book.\nImproving = upward slope. Declining = downward slope.\nA PAM with mostly declining partners needs support."}>i</i></span>
-              <span className="num">Avg Health <i className="tip" data-tip={"ARR-weighted average POI Health Score across this PAM's partner book."}>i</i></span>
-              <span className="num">SLA Brch <i className="tip" data-tip={"Escalations where Catalyst logged a breach this period."}>i</i></span>
+              <span>Portfolio Trajectory <i className="tip" data-tip={"Whether the partners in this PAM's book are collectively getting better or worse over the last month.\nA portfolio trending downward despite acceptable average health is an early warning that more partners will become critical.\nThe bar shows proportion of partners by trend direction: green = improving, grey = stable, red = declining."}>i</i></span>
+              <span className="num">Avg Health <i className="tip" data-tip={"The average health of this PAM's partners, weighted by how much revenue each one manages.\nA PAM with a low average may be managing inherently harder accounts — read alongside the trend bar for context.\nCalculated as the ARR-weighted mean POI Health Score across all partners in the PAM's assigned book."}>i</i></span>
+              <span className="num">SLA Brch <i className="tip" data-tip={"The number of customer issues in this PAM's portfolio that missed their response deadline.\nBreaches directly damage customer satisfaction and the Partner Score — zero breaches across a full portfolio is a strong performance signal.\nLogged by Catalyst when an escalation passes its SLA deadline without a confirmed owner response."}>i</i></span>
             </div>
             {ecosystem.pams.map(p => {
               const bb = bandClass(p.health);
@@ -5001,7 +5001,7 @@ const Director = ({ ecosystem, partners }) => {
         {/* Contribution Intelligence */}
         <section className="card" style={{ gridColumn: "span 5" }}>
           <header className="card-head">
-            <div className="card-title">Ecosystem Contribution <Tip d={"Partners classified as Ecosystem Builders.\nEcosystem Builders generate 2.3x ARR per customer vs transactional resellers."} /></div>
+            <div className="card-title">Ecosystem Contribution <Tip d={"Shows which partners are actively contributing to the ecosystem beyond transactional reselling — through advocacy, co-marketing, and implementation depth.\nEcosystem Builders generate 2.3× more ARR per customer than transactional partners, making them disproportionately valuable.\nClassified based on combination of case studies published, co-marketing participation, and implementation project volume."} /></div>
             <div className="card-sub">Top contributors · maturity</div>
           </header>
           <div className="card-body flush">
@@ -5089,7 +5089,7 @@ const PartnerStore = ({ store, partner }) => {
           <span style={{ fontSize:12, color:"var(--ink-3)" }}>
             {store.healthBand === "Attention Needed" ? "Two operational signals need your attention" : "Operational health on track"}
           </span>
-          <Tip d={"This surface shows your partnership health from your perspective.\nPowered by POI — same intelligence your PAM sees, with internal scoring redacted.\nUpdated weekly from CRM, Desk, Renewals, and Certification data."} />
+          <Tip d={"Your view of your own partnership health — the same signals your PAM uses, presented for action rather than oversight.\nTransparent by design: you see what is affecting your score so you can act on it directly, without waiting for a PAM call.\nUpdated weekly from CRM, Desk, Renewals, and Certification data. Internal risk weightings are redacted."} />
         </div>
       </div>
 
@@ -5103,7 +5103,7 @@ const PartnerStore = ({ store, partner }) => {
             <header className="card-head">
               <div className="card-title">
                 Operational Health
-                <Tip d={"Your composite performance across certifications, renewals, customer health, and support quality.\nUpdated weekly.\nYou see your band — not the internal score number."} />
+                <Tip d={"Your overall partnership health in a single band — Strong, Healthy, Attention Needed, or Critical.\nThe band is more actionable than a number: it tells you whether things are on track or need attention this week.\nCalculated weekly from certifications, renewals, customer health, and support quality. Internal score is redacted."} />
               </div>
               <div className="card-sub">Composite of cross-system signals</div>
             </header>
@@ -5122,7 +5122,7 @@ const PartnerStore = ({ store, partner }) => {
                 {/* Band — supporting context */}
                 <div style={{ paddingTop:8, borderTop:"1px solid var(--border)" }}>
                   <div style={{ fontSize:10, fontWeight:600, letterSpacing:".07em", textTransform:"uppercase", color:"var(--ink-3)", marginBottom:3 }}>
-                    Composite <Tip d={"Your overall operational health band.\nYou see the band (Healthy / Attention Needed / Critical) — not the internal score number.\nInternal scoring is redacted."} />
+                    Composite <Tip d={"Shows the current state of your partnership in plain terms — no number to interpret, just a clear status.\nThe band directly drives the recommended actions section below: different bands trigger different priorities.\nInternal scoring details are redacted; you see the outcome, not the formula."} />
                   </div>
                   <div style={{ fontFamily:"var(--font-mono)", fontSize:18, fontWeight:500, color: m.dir==="up"?"var(--green)":m.dir==="down"?"var(--red)":"var(--amber)" }}>
                     {store.healthBand}
@@ -5140,7 +5140,7 @@ const PartnerStore = ({ store, partner }) => {
             <header className="card-head">
               <div className="card-title">
                 Operational Bands
-                <Tip d={"Four areas of your partnership health.\nEach maps to a Zoho Partner Score component.\nRenewal Readiness → Customer Success.\nGrowth Momentum → Commercial Health.\nCertification Coverage → Customer Success.\nCustomer Portfolio → Customer Success."} />
+                <Tip d={"Four dimensions of your partnership, each linked to a component of the official Zoho Partner Score.\nImproving any of these moves both your operational health and your annual Partner Score in the right direction.\nRenewal Readiness → Customer Success. Growth Momentum → Commercial Health. Certifications + Portfolio → Customer Success."} />
               </div>
               <div className="card-sub">Across renewals · growth · certifications · customers</div>
             </header>
@@ -5168,7 +5168,7 @@ const PartnerStore = ({ store, partner }) => {
             <header className="card-head">
               <div className="card-title">
                 Customer Portfolio
-                <Tip d={"Your active customer book by action priority.\nNeed Outreach = health score below 60 OR renewal due within 30 days with no recent touch.\nExpansion-ready = cross-sell affinity flag in CRM."} />
+                <Tip d={"Your customers, sorted by who needs attention most urgently and who is ready to grow.\nContacting at-risk customers proactively is the highest-impact action for protecting renewals.\nNeed Outreach = health below 60 or renewal due within 30 days. Expansion-ready = cross-sell flag active in CRM."} />
               </div>
               <div className="card-sub">{partner.customers} active · {store.customers.msg.split(".")[0]}</div>
             </header>
@@ -5198,7 +5198,7 @@ const PartnerStore = ({ store, partner }) => {
             <header className="card-head">
               <div className="card-title">
                 How You Compare
-                <Tip d={"Anonymous comparison against partners at your tier and region.\nSource: Analytics daily sync — individual partner data is never shared.\nTop 22% CRR means 78% of comparable partners have lower retention."} />
+                <Tip d={"Shows how you compare to partners at the same tier and in the same region — without revealing anyone's data.\nHelps you understand whether your performance reflects individual issues or market-wide conditions.\nAnonymised Analytics data, recomputed quarterly. Individual partner data is never shared."} />
               </div>
               <div className="card-sub">vs. {partner.tier} partners in {partner.region} · anonymous · quarterly</div>
             </header>
@@ -5223,7 +5223,7 @@ const PartnerStore = ({ store, partner }) => {
               <div className="bench-row" style={{ background:"var(--surface-2)", flexDirection:"column", alignItems:"flex-start", borderTop:"1px solid var(--border)" }}>
                 <div className="label" style={{ marginBottom:4 }}>
                   Ecosystem baseline
-                  <Tip d={"Behavior pattern of top-decile Premium partners in your region.\nShown as an aspirational target, not a judgment."} />
+                  <Tip d={"Shows what the highest-performing partners in your tier and region consistently do — as a practical guide, not a benchmark to be judged against.\nThe patterns shown (certification renewal cadence, case study publishing, renewal outreach timing) are the behaviours that correlate with top scores.\nDerived from the top 10% of Premium partners in your region by Partner Score."} />
                 </div>
                 <div style={{ fontSize:11.5, color:"var(--ink-3)", lineHeight:1.5 }}>
                   Top-performing Premium partners maintain certification coverage above 85% and resolve escalations 37% faster than median.
@@ -5237,7 +5237,7 @@ const PartnerStore = ({ store, partner }) => {
             <header className="card-head">
               <div className="card-title">
                 Actions · This Week
-                <Tip d={"Generated weekly from your specific operational signals.\nOrdered by: ARR impact × urgency × ease of action.\nActing on these improves both operational health and your annual Partner Score."} />
+                <Tip d={"Specific actions you can take this week to improve your health score and protect revenue.\nOrdered so that acting from the top down has the highest impact on both your operational health and annual Partner Score.\nGenerated weekly from your live signals, prioritised by ARR impact × urgency × ease of action."} />
               </div>
               <div className="card-sub">Ordered by operational impact</div>
             </header>
@@ -5260,7 +5260,7 @@ const PartnerStore = ({ store, partner }) => {
             <div style={{ padding:"12px 16px" }}>
               <div className="label" style={{ marginBottom:6 }}>
                 Privacy
-                <Tip d={"You see your own operational signals, simplified for action.\nInternal risk weighting, PAM notes, and portfolio rankings are not visible here.\nRedaction is enforced at the score API level — a technical constraint, not a policy promise."} />
+                <Tip d={"You see the signals that affect your partnership — simplified and made actionable, without internal scoring details.\nPAM notes, portfolio rankings, and risk weightings are not visible here: this surface is designed for action, not oversight.\nRedaction is enforced at the API level — a technical constraint, not a policy choice."} />
               </div>
               <div style={{ fontSize:11.5, color:"var(--ink-3)", lineHeight:1.5 }}>
                 You see your <strong style={{ color:"var(--ink-2)" }}>operational signal</strong>, simplified for action. Internal risk weighting, portfolio ranking, and PAM commentary are not shown.
