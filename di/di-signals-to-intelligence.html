@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Decision Intelligence · Signals to Intelligence</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F2EC;--surface:#FFFFFF;--s2:#FAFAF7;--s3:#F0EEE7;--s4:#E9E6DC;
+  --border:#E5E2D8;--border2:#D0CEC2;
+  --ink:#181613;--ink2:#4A4844;--ink3:#87857C;--ink4:#B5B2A9;--ink5:#D7D4C9;
+  --red:#B0231C;--red-s:#FAE8E6;--red-bd:#E0ABA7;
+  --amber:#9A5209;--amber-s:#F5EACF;--amber-bd:#D9C090;
+  --green:#14653A;--green-s:#E2EEE6;--green-bd:#A8CEB0;
+  --blue:#1B3E94;--blue-s:#DDE5F6;--blue-bd:#A8BCE2;
+  --violet:#4E1F9D;--violet-s:#EAE4F7;--violet-bd:#C0B1E4;
+  --brand:#3D2314;
+  --f-sans:"IBM Plex Sans",sans-serif;--f-mono:"IBM Plex Mono",monospace;--f-serif:"IBM Plex Serif",Georgia,serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--f-sans);background:var(--bg);color:var(--ink);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.chrome{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;height:52px;display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-mark{width:28px;height:28px;border-radius:5px;background:var(--brand);color:var(--bg);display:grid;place-items:center;font-family:var(--f-mono);font-size:9px;font-weight:600;letter-spacing:-.04em}
+.brand-name{font-size:13px;font-weight:600}.brand-div{color:var(--border2)}.brand-doc{font-size:12px;color:var(--ink3)}
+.page{max-width:860px;margin:0 auto;padding:48px 32px 70px}
+.eyebrow{font-family:var(--f-mono);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.eyebrow::after{content:'';flex:1;height:1px;background:var(--border)}
+h1.title{font-size:30px;font-weight:600;letter-spacing:-.025em;margin-bottom:8px}
+.subtitle{font-family:var(--f-serif);font-size:15px;color:var(--ink3);font-style:italic;line-height:1.6;max-width:600px;margin-bottom:28px}
+.flowline{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:36px;font-family:var(--f-mono);font-size:11px;color:var(--ink3)}
+.flowline b{color:var(--ink);font-weight:600}
+.flowline .arr{color:var(--ink4)}
+.src{border:1px solid var(--border);border-radius:9px;overflow:hidden;background:var(--surface);margin-bottom:12px;box-shadow:0 1px 2px rgba(24,22,19,.04)}
+.src-top{display:flex;align-items:center;gap:10px;padding:11px 15px;background:var(--s2);border-bottom:1px solid var(--border)}
+.src-name{font-size:13px;font-weight:600;letter-spacing:-.01em}
+.src-kind{font-family:var(--f-mono);font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink4);margin-left:auto}
+.src-body{padding:13px 15px;display:flex;flex-direction:column;gap:11px}
+.line{display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:start}
+.line-lab{font-family:var(--f-mono);font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink4);padding-top:3px}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{font-family:var(--f-mono);font-size:9.5px;border-radius:4px;padding:2px 7px;border:1px solid var(--border);background:var(--s3);color:var(--ink3);white-space:nowrap}
+.chip.score{background:var(--green-s);color:var(--green);border-color:var(--green-bd)}
+.chip.agent{background:rgba(61,35,20,.07);color:var(--brand);border-color:rgba(61,35,20,.22)}
+@media(max-width:560px){.line{grid-template-columns:1fr}}
+.foot{margin-top:24px;border-top:1px solid var(--border);padding-top:16px;font-size:12.5px;color:var(--ink2);line-height:1.6}
+.foot b{color:var(--ink);font-weight:600}
+
+
+/* ── SUITE NAV ── */
+.chrome{height:auto;min-height:52px;flex-wrap:wrap;gap:10px;padding-top:8px;padding-bottom:8px}
+.chrome-tabs{display:flex;align-items:center;gap:0;margin-left:auto;background:var(--s3);border:1px solid var(--border);border-radius:6px;padding:3px;flex-wrap:wrap}
+.chrome-tab{padding:4px 10px;border-radius:4px;font-size:11px;font-weight:500;color:var(--ink4);white-space:nowrap;text-decoration:none;transition:.12s}
+.chrome-tab:hover{color:var(--ink2)}
+.chrome-tab.active{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.pagenav{max-width:880px;margin:0 auto;padding:8px 32px 64px;display:flex;align-items:stretch;gap:12px;justify-content:space-between}
+.pagenav a{flex:1 1 0;text-decoration:none;border:1px solid var(--border);border-radius:8px;padding:11px 15px;background:var(--surface);transition:border-color .12s,box-shadow .12s;display:flex;flex-direction:column;gap:3px;max-width:300px}
+.pagenav a:hover{border-color:var(--border2);box-shadow:0 2px 8px rgba(24,22,19,.06)}
+.pagenav a.next{text-align:right;align-items:flex-end}
+.pagenav .dir{font-family:var(--f-mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink4)}
+.pagenav .nm{font-size:13px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.pn-spacer{flex:1 1 0;max-width:300px}
+</style>
+</head>
+<body>
+<div class="chrome"><div class="brand"><div class="brand-mark">DI</div><span class="brand-name">Zoho Store</span><span class="brand-div">·</span><span class="brand-doc">Decision Intelligence — Signals to Intelligence</span></div><div class="chrome-tabs"><a class="chrome-tab" href="di-document-map.html">Map</a><a class="chrome-tab" href="di-architecture-story.html">Story</a><a class="chrome-tab" href="decision-intelligence-data-flow.html">Flow</a><span class="chrome-tab active">Signals</span><a class="chrome-tab" href="di-score-reference.html">Scores</a><a class="chrome-tab" href="di-nba-decision.html">NBA</a><a class="chrome-tab" href="di-output-surfaces.html">Surfaces</a><a class="chrome-tab" href="di-glossary.html">Glossary</a><a class="chrome-tab" href="di-agent-catalog.html">Catalog</a></div></div>
+<div class="page">
+  <div class="eyebrow">Pipeline · Where the intelligence comes from</div>
+  <h1 class="title">Every number traces to a real event</h1>
+  <p class="subtitle">No score is invented. Each one is built from timestamped events streaming in from the systems you already run — not inferred, not guessed.</p>
+
+  <div class="flowline"><b>Source events</b> <span class="arr">→</span> <b>Scores</b> <span class="arr">→</span> <b>Agents</b> <span class="arr">→</span> <b>NBA Engine</b> <span class="arr">→</span> <b>Action</b> <span style="margin-left:auto;color:var(--ink4)">traceable end to end</span></div>
+
+  <div class="src">
+    <div class="src-top"><span class="src-name">Zoho Store</span><span class="src-kind">subscriptions &middot; billing</span></div>
+    <div class="src-body">
+      <div class="line"><span class="line-lab">Events</span><div class="chips"><span class="chip">trial started</span><span class="chip">purchase completed</span><span class="chip">renewal due</span><span class="chip">payment failed</span><span class="chip">subscription cancelled</span><span class="chip">wallet credit</span><span class="chip">plan changed</span></div></div>
+      <div class="line"><span class="line-lab">Feeds</span><div class="chips"><span class="chip score">Payment Risk</span><span class="chip score">Churn</span><span class="chip score">Expansion</span></div></div>
+      <div class="line"><span class="line-lab">Powers</span><div class="chips"><span class="chip agent">Recovery</span><span class="chip agent">Renewal</span><span class="chip agent">Cancellation</span><span class="chip agent">Trial Conversion</span></div></div>
+    </div>
+  </div>
+
+  <div class="src">
+    <div class="src-top"><span class="src-name">Zoho Payments / Stripe</span><span class="src-kind">transactions &middot; risk</span></div>
+    <div class="src-body">
+      <div class="line"><span class="line-lab">Events</span><div class="chips"><span class="chip">charge succeeded</span><span class="chip">charge failed</span><span class="chip">card expiring</span><span class="chip">decline code</span><span class="chip">Radar score</span><span class="chip">early fraud warning</span></div></div>
+      <div class="line"><span class="line-lab">Feeds</span><div class="chips"><span class="chip score">Payment Risk</span><span class="chip score">Fraud</span></div></div>
+      <div class="line"><span class="line-lab">Powers</span><div class="chips"><span class="chip agent">Recovery</span><span class="chip agent">Fraud Investigation</span></div></div>
+    </div>
+  </div>
+
+  <div class="src">
+    <div class="src-top"><span class="src-name">Zoho Books</span><span class="src-kind">invoicing &middot; tax</span></div>
+    <div class="src-body">
+      <div class="line"><span class="line-lab">Events</span><div class="chips"><span class="chip">invoice generated</span><span class="chip">payment received</span><span class="chip">credit note</span><span class="chip">tax status</span></div></div>
+      <div class="line"><span class="line-lab">Feeds</span><div class="chips"><span class="chip score">Payment Risk</span><span class="chip score">Health</span></div></div>
+      <div class="line"><span class="line-lab">Powers</span><div class="chips"><span class="chip agent">Recovery</span><span class="chip agent">Tax Compliance</span></div></div>
+    </div>
+  </div>
+
+  <div class="src">
+    <div class="src-top"><span class="src-name">Zoho Desk</span><span class="src-kind">support</span></div>
+    <div class="src-body">
+      <div class="line"><span class="line-lab">Events</span><div class="chips"><span class="chip">ticket opened</span><span class="chip">ticket escalated</span><span class="chip">SLA breach</span><span class="chip">CSAT score</span></div></div>
+      <div class="line"><span class="line-lab">Feeds</span><div class="chips"><span class="chip score">Health</span><span class="chip score">Churn</span></div></div>
+      <div class="line"><span class="line-lab">Powers</span><div class="chips"><span class="chip agent">Churn Prevention</span><span class="chip agent">Escalation</span><span class="chip agent">Ticket Pattern</span></div></div>
+    </div>
+  </div>
+
+  <div class="src">
+    <div class="src-top"><span class="src-name">Product usage &middot; Projects</span><span class="src-kind">engagement</span></div>
+    <div class="src-body">
+      <div class="line"><span class="line-lab">Events</span><div class="chips"><span class="chip">login</span><span class="chip">active users</span><span class="chip">feature adopted</span><span class="chip">license added / reduced</span><span class="chip">usage trend</span></div></div>
+      <div class="line"><span class="line-lab">Feeds</span><div class="chips"><span class="chip score">Health</span><span class="chip score">Churn</span><span class="chip score">Expansion</span></div></div>
+      <div class="line"><span class="line-lab">Powers</span><div class="chips"><span class="chip agent">Churn Prevention</span><span class="chip agent">Adoption</span><span class="chip agent">Expansion Readiness</span></div></div>
+    </div>
+  </div>
+
+  <div class="src">
+    <div class="src-top"><span class="src-name">Zoho CRM</span><span class="src-kind">deals &middot; relationships</span></div>
+    <div class="src-body">
+      <div class="line"><span class="line-lab">Events</span><div class="chips"><span class="chip">deal stage change</span><span class="chip">contact activity</span><span class="chip">opportunity logged</span><span class="chip">account owner</span></div></div>
+      <div class="line"><span class="line-lab">Feeds</span><div class="chips"><span class="chip score">Expansion</span><span class="chip score">Health</span></div></div>
+      <div class="line"><span class="line-lab">Powers</span><div class="chips"><span class="chip agent">Pre-Call</span><span class="chip agent">Deal Risk</span><span class="chip agent">Next Best Product</span></div></div>
+    </div>
+  </div>
+
+  <div class="src">
+    <div class="src-top"><span class="src-name">Marketing &middot; engagement</span><span class="src-kind">campaigns</span></div>
+    <div class="src-body">
+      <div class="line"><span class="line-lab">Events</span><div class="chips"><span class="chip">email opened / clicked</span><span class="chip">campaign response</span><span class="chip">unsubscribe</span></div></div>
+      <div class="line"><span class="line-lab">Feeds</span><div class="chips"><span class="chip score">Health</span><span class="chip score">Churn</span></div></div>
+      <div class="line"><span class="line-lab">Powers</span><div class="chips"><span class="chip agent">Renewal</span><span class="chip agent">Trial Conversion</span></div></div>
+    </div>
+  </div>
+
+  <div class="src">
+    <div class="src-top"><span class="src-name">External Intelligence</span><span class="src-kind">outside Zoho &middot; enrichment</span></div>
+    <div class="src-body">
+      <div class="line"><span class="line-lab">Events</span><div class="chips"><span class="chip">company profile</span><span class="chip">industry data</span><span class="chip">news signal</span><span class="chip">enrichment API</span></div></div>
+      <div class="line"><span class="line-lab">Feeds</span><div class="chips"><span class="chip score">Business 360 context</span></div></div>
+      <div class="line"><span class="line-lab">Powers</span><div class="chips"><span class="chip agent">Pre-Call</span><span class="chip agent">Solution Recommendation</span></div></div>
+    </div>
+  </div>
+
+  <div class="foot"><b>Why this matters:</b> because every score links back to a specific, timestamped event, any recommendation can be explained and audited — "we surfaced ABC Corp because <b>charge failed</b> yesterday raised Payment Risk to 92." That traceability is what separates a decision platform from a black box.</div>
+</div>
+<div class="pagenav"><a class="prev" href="decision-intelligence-data-flow.html"><span class="dir">&larr; Previous</span><span class="nm">Flow</span></a><a class="next" href="di-score-reference.html"><span class="dir">Next &rarr;</span><span class="nm">Scores</span></a></div>
+</body>
+</html>

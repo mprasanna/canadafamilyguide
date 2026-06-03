@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Decision Intelligence · Score Reference</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F2EC;--surface:#FFFFFF;--s2:#FAFAF7;--s3:#F0EEE7;--s4:#E9E6DC;
+  --border:#E5E2D8;--border2:#D0CEC2;
+  --ink:#181613;--ink2:#4A4844;--ink3:#87857C;--ink4:#B5B2A9;--ink5:#D7D4C9;
+  --red:#B0231C;--red-s:#FAE8E6;--red-bd:#E0ABA7;
+  --amber:#9A5209;--amber-s:#F5EACF;--amber-bd:#D9C090;
+  --green:#14653A;--green-s:#E2EEE6;--green-bd:#A8CEB0;
+  --blue:#1B3E94;--blue-s:#DDE5F6;--blue-bd:#A8BCE2;
+  --violet:#4E1F9D;--violet-s:#EAE4F7;--violet-bd:#C0B1E4;
+  --brand:#3D2314;
+  --f-sans:"IBM Plex Sans",sans-serif;--f-mono:"IBM Plex Mono",monospace;--f-serif:"IBM Plex Serif",Georgia,serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--f-sans);background:var(--bg);color:var(--ink);font-size:13px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.chrome{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;height:52px;display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-mark{width:28px;height:28px;border-radius:5px;background:var(--brand);color:var(--bg);display:grid;place-items:center;font-family:var(--f-mono);font-size:9px;font-weight:600;letter-spacing:-.04em}
+.brand-name{font-size:13px;font-weight:600}.brand-div{color:var(--border2)}.brand-doc{font-size:12px;color:var(--ink3)}
+.page{max-width:860px;margin:0 auto;padding:48px 32px 90px}
+.eyebrow{font-family:var(--f-mono);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.eyebrow::after{content:'';flex:1;height:1px;background:var(--border)}
+h1.title{font-size:30px;font-weight:600;letter-spacing:-.025em;margin-bottom:8px;line-height:1.15}
+.subtitle{font-family:var(--f-serif);font-size:15px;color:var(--ink3);font-style:italic;line-height:1.6;max-width:600px;margin-bottom:28px}
+
+.how{background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:15px 17px;margin-bottom:34px}
+.how-h{font-family:var(--f-mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:9px}
+.how p{font-size:12.5px;color:var(--ink2);line-height:1.6;margin-bottom:8px}
+.how p:last-child{margin-bottom:0}.how b{color:var(--ink);font-weight:600}
+
+.score{background:var(--surface);border:1px solid var(--border);border-radius:9px;overflow:hidden;margin-bottom:16px;box-shadow:0 1px 2px rgba(24,22,19,.04)}
+.score-top{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:14px;background:var(--s2)}
+.score-name{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.score-q{font-family:var(--f-serif);font-style:italic;font-size:12.5px;color:var(--ink3);margin-top:2px}
+.score-val{margin-left:auto;text-align:right;flex-shrink:0}
+.score-val .lab{font-family:var(--f-mono);font-size:8.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink4)}
+.score-val .num{font-size:24px;font-weight:600;letter-spacing:-.02em;line-height:1}
+.score-val .num.bad{color:var(--red)}.score-val .num.warn{color:var(--amber)}.score-val .num.ok{color:var(--green)}
+.score-body{padding:14px 16px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.score-body{grid-template-columns:1fr}}
+.sb-block .h{font-family:var(--f-mono);font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink4);margin-bottom:7px}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{font-family:var(--f-mono);font-size:9.5px;border-radius:4px;padding:2px 7px;border:1px solid;white-space:nowrap}
+.chip.up{background:var(--green-s);color:var(--green);border-color:var(--green-bd)}
+.chip.dn{background:var(--red-s);color:var(--red);border-color:var(--red-bd)}
+.chip.in{background:var(--s3);color:var(--ink3);border-color:var(--border)}
+.chip.use{background:rgba(61,35,20,.06);color:var(--brand);border-color:rgba(61,35,20,.2)}
+.score-foot{padding:9px 16px;background:var(--s3);border-top:1px solid var(--border);font-size:11.5px;color:var(--ink3)}
+.score-foot b{color:var(--ink2);font-weight:600}
+.span2{grid-column:1 / -1}
+
+/* ── SUITE NAV ── */
+.chrome{height:auto;min-height:52px;flex-wrap:wrap;gap:10px;padding-top:8px;padding-bottom:8px}
+.chrome-tabs{display:flex;align-items:center;gap:0;margin-left:auto;background:var(--s3);border:1px solid var(--border);border-radius:6px;padding:3px;flex-wrap:wrap}
+.chrome-tab{padding:4px 10px;border-radius:4px;font-size:11px;font-weight:500;color:var(--ink4);white-space:nowrap;text-decoration:none;transition:.12s}
+.chrome-tab:hover{color:var(--ink2)}
+.chrome-tab.active{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.pagenav{max-width:880px;margin:0 auto;padding:8px 32px 64px;display:flex;align-items:stretch;gap:12px;justify-content:space-between}
+.pagenav a{flex:1 1 0;text-decoration:none;border:1px solid var(--border);border-radius:8px;padding:11px 15px;background:var(--surface);transition:border-color .12s,box-shadow .12s;display:flex;flex-direction:column;gap:3px;max-width:300px}
+.pagenav a:hover{border-color:var(--border2);box-shadow:0 2px 8px rgba(24,22,19,.06)}
+.pagenav a.next{text-align:right;align-items:flex-end}
+.pagenav .dir{font-family:var(--f-mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink4)}
+.pagenav .nm{font-size:13px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.pn-spacer{flex:1 1 0;max-width:300px}
+</style>
+</head>
+<body>
+<div class="chrome"><div class="brand"><div class="brand-mark">DI</div><span class="brand-name">Zoho Store</span><span class="brand-div">·</span><span class="brand-doc">Decision Intelligence — Score Reference</span></div><div class="chrome-tabs"><a class="chrome-tab" href="di-document-map.html">Map</a><a class="chrome-tab" href="di-architecture-story.html">Story</a><a class="chrome-tab" href="decision-intelligence-data-flow.html">Flow</a><a class="chrome-tab" href="di-signals-to-intelligence.html">Signals</a><span class="chrome-tab active">Scores</span><a class="chrome-tab" href="di-nba-decision.html">NBA</a><a class="chrome-tab" href="di-output-surfaces.html">Surfaces</a><a class="chrome-tab" href="di-glossary.html">Glossary</a><a class="chrome-tab" href="di-agent-catalog.html">Catalog</a></div></div>
+
+<div class="page">
+  <div class="eyebrow">Reference · How the system forms an opinion</div>
+  <h1 class="title">Score Reference</h1>
+  <p class="subtitle">Five shared scores translate millions of raw signals into a handful of numbers every agent can reason about. They are computed once and read everywhere.</p>
+
+  <div class="how">
+    <div class="how-h">How every score works</div>
+    <p>Each score runs <b>0–100</b> and is built the same way: positive and negative signals from Account 360, weighted into a single number. A score is an <b>opinion, not a fact</b> — a way to rank attention, not a verdict.</p>
+    <p>They start as <b>heuristics</b> (defensible base rates and rules, no ML required) so the platform is useful on day one. As the Outcome Store fills, the <b>learning loop</b> retunes the weights — so the scores get sharper without re-architecting anything.</p>
+    <p>Numbers shown below are for <b>ABC Corp</b>, the account threaded through the rest of the suite.</p>
+  </div>
+
+  <!-- HEALTH -->
+  <div class="score">
+    <div class="score-top">
+      <div><div class="score-name">Health Score</div><div class="score-q">Is this account thriving or slipping?</div></div>
+      <div class="score-val"><div class="lab">ABC Corp</div><div class="num warn">45</div></div>
+    </div>
+    <div class="score-body">
+      <div class="sb-block"><div class="h">Raises it</div><div class="chips"><span class="chip up">Usage growth</span><span class="chip up">More active users</span><span class="chip up">Login frequency</span><span class="chip up">Feature adoption</span></div></div>
+      <div class="sb-block"><div class="h">Lowers it</div><div class="chips"><span class="chip dn">Usage decline</span><span class="chip dn">License reduction</span><span class="chip dn">Ticket spikes</span><span class="chip dn">Payment trouble</span></div></div>
+      <div class="sb-block"><div class="h">Inputs from</div><div class="chips"><span class="chip in">Product usage</span><span class="chip in">Logins</span><span class="chip in">Desk</span><span class="chip in">Payments</span></div></div>
+      <div class="sb-block"><div class="h">Read by</div><div class="chips"><span class="chip use">Churn Agent</span><span class="chip use">Renewal Agent</span><span class="chip use">Expansion Agent</span></div></div>
+    </div>
+    <div class="score-foot"><b>The master gauge.</b> A low health score gates expansion offers and raises the priority of retention actions.</div>
+  </div>
+
+  <!-- CHURN -->
+  <div class="score">
+    <div class="score-top">
+      <div><div class="score-name">Churn Score</div><div class="score-q">How likely is this account to leave?</div></div>
+      <div class="score-val"><div class="lab">ABC Corp</div><div class="num bad">78</div></div>
+    </div>
+    <div class="score-body">
+      <div class="sb-block"><div class="h">Raises it</div><div class="chips"><span class="chip dn">Login decline</span><span class="chip dn">Usage drop</span><span class="chip dn">Renewal delay</span><span class="chip dn">Cancellation-page visits</span></div></div>
+      <div class="sb-block"><div class="h">Lowers it</div><div class="chips"><span class="chip up">Steady usage</span><span class="chip up">Multi-product</span><span class="chip up">On-time payments</span></div></div>
+      <div class="sb-block"><div class="h">Inputs from</div><div class="chips"><span class="chip in">Usage</span><span class="chip in">Renewals</span><span class="chip in">Store events</span><span class="chip in">Desk</span></div></div>
+      <div class="sb-block"><div class="h">Read by</div><div class="chips"><span class="chip use">Cancellation Agent</span><span class="chip use">Renewal Agent</span><span class="chip use">Policy Engine</span></div></div>
+    </div>
+    <div class="score-foot"><b>The brake on expansion.</b> A high churn score makes the Policy Engine block cross-sell and triggers retention before renewal.</div>
+  </div>
+
+  <!-- EXPANSION -->
+  <div class="score">
+    <div class="score-top">
+      <div><div class="score-name">Expansion Score</div><div class="score-q">Is this account ready to buy more?</div></div>
+      <div class="score-val"><div class="lab">ABC Corp</div><div class="num warn">25</div></div>
+    </div>
+    <div class="score-body">
+      <div class="sb-block"><div class="h">Raises it</div><div class="chips"><span class="chip up">Healthy &amp; growing</span><span class="chip up">New users added</span><span class="chip up">Hitting plan limits</span><span class="chip up">High affinity product</span></div></div>
+      <div class="sb-block"><div class="h">Lowers it</div><div class="chips"><span class="chip dn">Low health</span><span class="chip dn">At-risk signals</span><span class="chip dn">Flat usage</span></div></div>
+      <div class="sb-block"><div class="h">Inputs from</div><div class="chips"><span class="chip in">Usage</span><span class="chip in">Product affinity</span><span class="chip in">Licenses</span><span class="chip in">Health score</span></div></div>
+      <div class="sb-block"><div class="h">Read by</div><div class="chips"><span class="chip use">Next Best Product Agent</span><span class="chip use">Bundle Agent</span></div></div>
+    </div>
+    <div class="score-foot"><b>ABC Corp scores low (25)</b> — correctly. You don't cross-sell an account that's at risk and failing payment.</div>
+  </div>
+
+  <!-- PAYMENT RISK -->
+  <div class="score">
+    <div class="score-top">
+      <div><div class="score-name">Payment Risk Score</div><div class="score-q">How likely is the next payment to fail?</div></div>
+      <div class="score-val"><div class="lab">ABC Corp</div><div class="num bad">92</div></div>
+    </div>
+    <div class="score-body">
+      <div class="sb-block"><div class="h">Raises it</div><div class="chips"><span class="chip dn">Recent failure</span><span class="chip dn">Card expiring</span><span class="chip dn">Past failures</span><span class="chip dn">Decline codes</span></div></div>
+      <div class="sb-block"><div class="h">Lowers it</div><div class="chips"><span class="chip up">Clean history</span><span class="chip up">Valid card</span><span class="chip up">Auto-pay on</span></div></div>
+      <div class="sb-block"><div class="h">Inputs from</div><div class="chips"><span class="chip in">Payments</span><span class="chip in">Invoices</span><span class="chip in">Stripe signals</span><span class="chip in">Card metadata</span></div></div>
+      <div class="sb-block"><div class="h">Read by</div><div class="chips"><span class="chip use">Recovery Agent</span><span class="chip use">Renewal Agent</span></div></div>
+    </div>
+    <div class="score-foot"><b>ABC Corp scores 92</b> — payment failed yesterday. This is what surfaced it to the Recovery Agent first.</div>
+  </div>
+
+  <!-- FRAUD -->
+  <div class="score">
+    <div class="score-top">
+      <div><div class="score-name">Fraud Score</div><div class="score-q">Is this transaction or account a fraud risk?</div></div>
+      <div class="score-val"><div class="lab">ABC Corp</div><div class="num ok">12</div></div>
+    </div>
+    <div class="score-body">
+      <div class="sb-block"><div class="h">Raises it</div><div class="chips"><span class="chip dn">Stripe Radar flag</span><span class="chip dn">Country mismatch</span><span class="chip dn">Device anomaly</span><span class="chip dn">Early fraud warning</span></div></div>
+      <div class="sb-block"><div class="h">Lowers it</div><div class="chips"><span class="chip up">Established account</span><span class="chip up">Consistent geo/device</span><span class="chip up">Clean chargeback record</span></div></div>
+      <div class="sb-block"><div class="h">Inputs from</div><div class="chips"><span class="chip in">Stripe Radar</span><span class="chip in">Device fingerprint</span><span class="chip in">Payment history</span></div></div>
+      <div class="sb-block"><div class="h">Read by</div><div class="chips"><span class="chip use">Fraud Agent</span><span class="chip use">Policy Engine</span></div></div>
+    </div>
+    <div class="score-foot"><b>ABC Corp scores 12</b> — a long-standing customer. The failure is a billing problem, not fraud, so Recovery (not Block) is the right path.</div>
+  </div>
+
+</div>
+<div class="pagenav"><a class="prev" href="di-signals-to-intelligence.html"><span class="dir">&larr; Previous</span><span class="nm">Signals</span></a><a class="next" href="di-nba-decision.html"><span class="dir">Next &rarr;</span><span class="nm">NBA</span></a></div>
+</body>
+</html>

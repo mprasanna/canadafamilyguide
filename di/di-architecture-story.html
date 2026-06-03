@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Decision Intelligence · Architecture Story</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F2EC;--surface:#FFFFFF;--s2:#FAFAF7;--s3:#F0EEE7;--s4:#E9E6DC;
+  --border:#E5E2D8;--border2:#D0CEC2;
+  --ink:#181613;--ink2:#4A4844;--ink3:#87857C;--ink4:#B5B2A9;--ink5:#D7D4C9;
+  --red:#B0231C;--red-s:#FAE8E6;--red-bd:#E0ABA7;
+  --amber:#9A5209;--amber-s:#F5EACF;--amber-bd:#D9C090;
+  --green:#14653A;--green-s:#E2EEE6;--green-bd:#A8CEB0;
+  --blue:#1B3E94;--blue-s:#DDE5F6;--blue-bd:#A8BCE2;
+  --violet:#4E1F9D;--violet-s:#EAE4F7;--violet-bd:#C0B1E4;
+  --brand:#3D2314;
+  --f-sans:"IBM Plex Sans",sans-serif;--f-mono:"IBM Plex Mono",monospace;--f-serif:"IBM Plex Serif",Georgia,serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--f-sans);background:var(--bg);color:var(--ink);font-size:13px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.chrome{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;height:52px;display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-mark{width:28px;height:28px;border-radius:5px;background:var(--brand);color:var(--bg);display:grid;place-items:center;font-family:var(--f-mono);font-size:9px;font-weight:600;letter-spacing:-.04em}
+.brand-name{font-size:13px;font-weight:600}.brand-div{color:var(--border2)}.brand-doc{font-size:12px;color:var(--ink3)}
+.page{max-width:760px;margin:0 auto;padding:48px 32px 70px}
+.eyebrow{font-family:var(--f-mono);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.eyebrow::after{content:'';flex:1;height:1px;background:var(--border)}
+h1.title{font-size:30px;font-weight:600;letter-spacing:-.025em;margin-bottom:10px;line-height:1.18}
+.subtitle{font-family:var(--f-serif);font-size:15px;color:var(--ink3);font-style:italic;line-height:1.65;max-width:600px;margin-bottom:14px}
+.abc{font-family:var(--f-mono);font-size:10.5px;color:var(--ink3);background:var(--s2);border:1px solid var(--border);border-left:3px solid var(--brand);border-radius:6px;padding:10px 13px;margin-bottom:42px;line-height:1.6}
+.abc b{color:var(--ink);font-weight:500}
+.layer{margin-bottom:34px}
+.layer-num{font-family:var(--f-mono);font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:7px;display:flex;align-items:center;gap:9px}
+.layer-num .dot{width:7px;height:7px;border-radius:50%;background:var(--brand)}
+.layer h2{font-size:18px;font-weight:600;letter-spacing:-.02em;margin-bottom:8px}
+.layer p{font-size:13.5px;color:var(--ink2);line-height:1.65;margin-bottom:9px}
+.layer p:last-child{margin-bottom:0}
+.layer b{font-weight:600;color:var(--ink)}
+.aside{font-family:var(--f-mono);font-size:11px;color:var(--ink3);background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:9px 12px;line-height:1.6}
+.aside .q{color:var(--ink);font-style:normal}
+.closing{margin-top:10px;border-top:1px solid var(--border);padding-top:30px}
+.closing h2{font-size:18px;font-weight:600;letter-spacing:-.02em;margin-bottom:14px}
+.evo{display:flex;flex-wrap:wrap;gap:0;margin-bottom:16px}
+.evo-step{flex:1 1 140px;background:var(--s2);border:1px solid var(--border);padding:11px 14px}
+.evo-step:not(:last-child){border-right:none}
+.evo-step:first-child{border-radius:6px 0 0 6px}.evo-step:last-child{border-radius:0 6px 6px 0}
+.evo-era{font-family:var(--f-mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink4);margin-bottom:3px}
+.evo-name{font-size:12.5px;font-weight:600;letter-spacing:-.01em}
+.evo-step.f .evo-name{color:var(--violet)}
+.closing p{font-size:13.5px;color:var(--ink2);line-height:1.65}
+.closing p b{color:var(--ink);font-weight:600}
+@media(max-width:520px){.evo-step{flex:1 1 100%;border-right:1px solid var(--border)!important;border-radius:6px!important;margin-bottom:5px}}
+
+
+/* ── SUITE NAV ── */
+.chrome{height:auto;min-height:52px;flex-wrap:wrap;gap:10px;padding-top:8px;padding-bottom:8px}
+.chrome-tabs{display:flex;align-items:center;gap:0;margin-left:auto;background:var(--s3);border:1px solid var(--border);border-radius:6px;padding:3px;flex-wrap:wrap}
+.chrome-tab{padding:4px 10px;border-radius:4px;font-size:11px;font-weight:500;color:var(--ink4);white-space:nowrap;text-decoration:none;transition:.12s}
+.chrome-tab:hover{color:var(--ink2)}
+.chrome-tab.active{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.pagenav{max-width:880px;margin:0 auto;padding:8px 32px 64px;display:flex;align-items:stretch;gap:12px;justify-content:space-between}
+.pagenav a{flex:1 1 0;text-decoration:none;border:1px solid var(--border);border-radius:8px;padding:11px 15px;background:var(--surface);transition:border-color .12s,box-shadow .12s;display:flex;flex-direction:column;gap:3px;max-width:300px}
+.pagenav a:hover{border-color:var(--border2);box-shadow:0 2px 8px rgba(24,22,19,.06)}
+.pagenav a.next{text-align:right;align-items:flex-end}
+.pagenav .dir{font-family:var(--f-mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink4)}
+.pagenav .nm{font-size:13px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.pn-spacer{flex:1 1 0;max-width:300px}
+</style>
+</head>
+<body>
+<div class="chrome"><div class="brand"><div class="brand-mark">DI</div><span class="brand-name">Zoho Store</span><span class="brand-div">·</span><span class="brand-doc">Decision Intelligence — Architecture Story</span></div><div class="chrome-tabs"><a class="chrome-tab" href="di-document-map.html">Map</a><span class="chrome-tab active">Story</span><a class="chrome-tab" href="decision-intelligence-data-flow.html">Flow</a><a class="chrome-tab" href="di-signals-to-intelligence.html">Signals</a><a class="chrome-tab" href="di-score-reference.html">Scores</a><a class="chrome-tab" href="di-nba-decision.html">NBA</a><a class="chrome-tab" href="di-output-surfaces.html">Surfaces</a><a class="chrome-tab" href="di-glossary.html">Glossary</a><a class="chrome-tab" href="di-agent-catalog.html">Catalog</a></div></div>
+<div class="page">
+  <div class="eyebrow">Narrative · The platform in plain language</div>
+  <h1 class="title">Today Zoho knows everything.<br>Tomorrow it knows what to do next.</h1>
+  <p class="subtitle">The whole platform as a story — no formulas, no jargon. What it takes in, what it does, and what comes out.</p>
+  <div class="abc">Told through one customer — <b>ABC Corp</b>: $24,000 ARR · CRM + Books + Projects · renewal in 15 days · payment failed yesterday · usage down 30% · 3 open support tickets.</div>
+
+  <div class="layer">
+    <div class="layer-num"><span class="dot"></span>Layer 01 · The problem today</div>
+    <h2>All the information exists. Nobody answers "what next?"</h2>
+    <p>Store knows ABC Corp's renewal is near. Books knows the payment failed. Desk knows the tickets are piling up. Analytics can chart all of it. Each system holds a piece of the truth.</p>
+    <p>But no system answers the only question that matters: <b>what should happen next, and who should do it?</b> Today a human is expected to stitch the pieces together — across thousands of accounts they'll never get to.</p>
+  </div>
+
+  <div class="layer">
+    <div class="layer-num"><span class="dot"></span>Layer 02 · One view</div>
+    <h2>Everything comes together — Account 360</h2>
+    <p>First, the pieces are unified into one live profile per customer: products, ARR, renewal date, payment health, usage trend, support risk. For ABC Corp, that's one screen instead of six systems. <b>This already exists.</b></p>
+    <p>Extended with a customer's wider business and external context, it becomes <b>Business 360</b> — the difference between knowing a customer and knowing their business.</p>
+  </div>
+
+  <div class="layer">
+    <div class="layer-num"><span class="dot"></span>Layer 03 · An opinion</div>
+    <h2>The system forms a view — Scores</h2>
+    <p>No human can read millions of profiles, so the platform distils each one into a few 0–100 scores. ABC Corp: Health 45, Churn 78, Payment Risk 92, Expansion 25. Now the system has an opinion, not just data.</p>
+  </div>
+
+  <div class="layer">
+    <div class="layer-num"><span class="dot"></span>Layer 04 · Specialists</div>
+    <h2>Agents recommend — but none of them decides</h2>
+    <p>Think of agents as specialists, not the people running the hospital. The Recovery Agent looks only at payments and says "retry — 85% likely." The Cancellation Agent says "offer monthly — 42%." The Bundle Agent says "Zoho One is cheaper."</p>
+    <p>Each is an expert in one thing. Crucially, <b>none of them decides its own importance.</b></p>
+  </div>
+
+  <div class="layer">
+    <div class="layer-num"><span class="dot"></span>Layer 05 · The decision</div>
+    <h2>The brain chooses — the NBA (Next Business Action) Engine</h2>
+    <p>Every recommendation reports to one place. The NBA Engine turns each into a single comparable number — expected value — and ranks them. For ABC Corp, recovering the $24,000 payment far outweighs a long-shot cross-sell, so recovery wins.</p>
+    <div class="aside"><span class="q">"Which action creates the highest business value?"</span> — one question, asked of every customer, every day.</div>
+  </div>
+
+  <div class="layer">
+    <div class="layer-num"><span class="dot"></span>Layer 06 · The guardrails</div>
+    <h2>Rules and limits keep it safe — Policy, Capacity, Budget</h2>
+    <p>The <b>Policy Engine</b> can veto any action no matter how it ranks: no discount over the cap, no cross-sell to an at-risk account. The <b>Capacity Engine</b> only creates as many human tasks as there are people to do them — top 50 of 10,000, not 10,000 ignored. The <b>Communication Budget</b> ensures the customer gets one well-chosen touch, not five at once.</p>
+  </div>
+
+  <div class="layer">
+    <div class="layer-num"><span class="dot"></span>Layer 07 · Act, then learn</div>
+    <h2>Something changes — and the system remembers</h2>
+    <p>The chosen action goes out through the right channel and someone acts. Then, unlike most systems, this one doesn't stop: the <b>Outcome Store</b> records what happened — sent, viewed, accepted, renewed, churned.</p>
+    <p>The <b>Learning Loop</b> turns those outcomes into sharper future decisions. A save offer that worked 20% of the time learns its way to 37%. The platform gets better on its own.</p>
+  </div>
+
+  <div class="closing">
+    <h2>The bigger picture</h2>
+    <div class="evo">
+      <div class="evo-step"><div class="evo-era">Past</div><div class="evo-name">Systems of Record</div></div>
+      <div class="evo-step"><div class="evo-era">Today</div><div class="evo-name">Systems of Analysis</div></div>
+      <div class="evo-step f"><div class="evo-era">Next</div><div class="evo-name">Systems of Attention</div></div>
+      <div class="evo-step f"><div class="evo-era">Then</div><div class="evo-name">Systems of Action</div></div>
+    </div>
+    <p>Store isn't really building agents. It's building a <b>Decision Intelligence platform</b> whose job is to turn information into judgment, judgment into attention, and attention into action — and because Zoho already holds Store, CRM, Books, Desk, Projects, and Analytics, the eventual question isn't just about Store. It's: <b>given everything Zoho knows about a customer and their business, what is the next best action?</b></p>
+  </div>
+</div>
+<div class="pagenav"><a class="prev" href="di-document-map.html"><span class="dir">&larr; Previous</span><span class="nm">Map</span></a><a class="next" href="decision-intelligence-data-flow.html"><span class="dir">Next &rarr;</span><span class="nm">Flow</span></a></div>
+</body>
+</html>

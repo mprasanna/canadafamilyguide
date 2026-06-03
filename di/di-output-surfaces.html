@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Decision Intelligence · Output Surfaces</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F2EC; --surface:#FFFFFF; --s2:#FAFAF7; --s3:#F0EEE7; --s4:#E9E6DC;
+  --border:#E5E2D8; --border2:#D0CEC2;
+  --ink:#181613; --ink2:#4A4844; --ink3:#87857C; --ink4:#B5B2A9; --ink5:#D7D4C9;
+  --red:#B0231C; --red-s:#FAE8E6; --red-bd:#E0ABA7;
+  --amber:#9A5209; --amber-s:#F5EACF; --amber-bd:#D9C090;
+  --green:#14653A; --green-s:#E2EEE6; --green-bd:#A8CEB0;
+  --blue:#1B3E94; --blue-s:#DDE5F6; --blue-bd:#A8BCE2;
+  --violet:#4E1F9D; --violet-s:#EAE4F7; --violet-bd:#C0B1E4;
+  --brand:#3D2314;
+  --f-sans:"IBM Plex Sans",sans-serif; --f-mono:"IBM Plex Mono",monospace; --f-serif:"IBM Plex Serif",Georgia,serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--f-sans);background:var(--bg);color:var(--ink);font-size:13px;line-height:1.55;-webkit-font-smoothing:antialiased}
+
+.chrome{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;height:52px;display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-mark{width:28px;height:28px;border-radius:5px;background:var(--brand);color:var(--bg);display:grid;place-items:center;font-family:var(--f-mono);font-size:9px;font-weight:600;letter-spacing:-.04em}
+.brand-name{font-size:13px;font-weight:600}
+.brand-div{color:var(--border2)}
+.brand-doc{font-size:12px;color:var(--ink3)}
+
+.page{max-width:900px;margin:0 auto;padding:48px 32px 90px}
+.eyebrow{font-family:var(--f-mono);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.eyebrow::after{content:'';flex:1;height:1px;background:var(--border)}
+h1.title{font-size:30px;font-weight:600;letter-spacing:-.025em;margin-bottom:8px;line-height:1.15}
+.subtitle{font-family:var(--f-serif);font-size:15px;color:var(--ink3);font-style:italic;line-height:1.6;max-width:600px;margin-bottom:24px}
+
+.thread-note{display:flex;gap:10px;align-items:flex-start;background:var(--s2);border:1px solid var(--border);border-left:3px solid var(--brand);border-radius:6px;padding:11px 14px;margin-bottom:40px;font-size:12px;color:var(--ink2)}
+.thread-note .acc{font-family:var(--f-mono);font-size:11px;color:var(--ink);font-weight:500}
+.thread-note .facts{font-family:var(--f-mono);font-size:10.5px;color:var(--ink3);margin-top:3px}
+
+/* section heading */
+.sec-head{margin:0 0 14px}
+.sec-num{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.sec-num .pill{font-family:var(--f-mono);font-size:9px;font-weight:600;letter-spacing:.05em;padding:2px 7px;border-radius:100px;text-transform:uppercase}
+.pill.cliq{background:var(--green-s);color:var(--green);border:1px solid var(--green-bd)}
+.pill.mail{background:var(--blue-s);color:var(--blue);border:1px solid var(--blue-bd)}
+.pill.dash{background:var(--violet-s);color:var(--violet);border:1px solid var(--violet-bd)}
+.pill.crm{background:rgba(61,35,20,.08);color:var(--brand);border:1px solid rgba(61,35,20,.25)}
+.sec-title{font-size:18px;font-weight:600;letter-spacing:-.02em}
+.sec-who{font-family:var(--f-serif);font-style:italic;font-size:13px;color:var(--ink3);margin-top:2px}
+.sec{margin-bottom:52px}
+
+/* ============ CLIQ MOCKUP ============ */
+.cliq{border:1px solid var(--border2);border-radius:10px;overflow:hidden;background:var(--surface);box-shadow:0 2px 12px rgba(24,22,19,.06);max-width:560px}
+.cliq-top{background:var(--s3);border-bottom:1px solid var(--border);padding:9px 14px;display:flex;align-items:center;gap:8px}
+.cliq-hash{font-family:var(--f-mono);color:var(--ink4);font-weight:600}
+.cliq-chan{font-size:12.5px;font-weight:600}
+.cliq-members{margin-left:auto;font-size:10.5px;color:var(--ink4)}
+.cliq-body{padding:16px 14px;display:flex;gap:10px}
+.cliq-av{width:32px;height:32px;border-radius:7px;background:var(--brand);color:var(--bg);display:grid;place-items:center;font-family:var(--f-mono);font-size:9px;font-weight:600;flex-shrink:0}
+.cliq-main{flex:1;min-width:0}
+.cliq-meta{display:flex;align-items:baseline;gap:7px;margin-bottom:6px}
+.cliq-bot{font-size:12.5px;font-weight:600}
+.cliq-badge{font-family:var(--f-mono);font-size:8px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;background:var(--s4);color:var(--ink3);border:1px solid var(--border2);border-radius:3px;padding:1px 5px}
+.cliq-time{font-size:10.5px;color:var(--ink4)}
+.cliq-card{border:1px solid var(--border);border-left:3px solid var(--red);border-radius:7px;overflow:hidden}
+.cliq-card-top{padding:11px 13px;background:var(--red-s)}
+.cliq-card-flag{font-family:var(--f-mono);font-size:10px;font-weight:600;color:var(--red);letter-spacing:.03em;margin-bottom:3px}
+.cliq-acc{font-size:14px;font-weight:600;letter-spacing:-.01em}
+.cliq-sub{font-family:var(--f-mono);font-size:10.5px;color:var(--ink3);margin-top:2px}
+.cliq-card-mid{padding:11px 13px;display:flex;flex-direction:column;gap:8px}
+.cliq-sig{display:flex;flex-wrap:wrap;gap:5px}
+.cliq-chip{font-family:var(--f-mono);font-size:9.5px;border-radius:4px;padding:2px 7px;border:1px solid}
+.cliq-chip.bad{background:var(--red-s);color:var(--red);border-color:var(--red-bd)}
+.cliq-chip.warn{background:var(--amber-s);color:var(--amber);border-color:var(--amber-bd)}
+.cliq-rec{background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:10px 12px}
+.cliq-rec-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink4);margin-bottom:4px}
+.cliq-rec-action{font-size:13px;font-weight:600;color:var(--ink)}
+.cliq-rec-stats{display:flex;gap:16px;margin-top:7px;flex-wrap:wrap}
+.cliq-stat .k{font-family:var(--f-mono);font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink4)}
+.cliq-stat .v{font-size:13px;font-weight:600;color:var(--green)}
+.cliq-stat .v.neutral{color:var(--ink)}
+.cliq-why{font-size:11px;color:var(--ink3);line-height:1.5}
+.cliq-why b{color:var(--ink2);font-weight:500}
+.cliq-actions{padding:10px 13px;background:var(--s3);border-top:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap}
+.btn{font-family:var(--f-sans);font-size:11px;font-weight:600;border-radius:5px;padding:6px 12px;border:1px solid;cursor:default}
+.btn.primary{background:var(--brand);color:var(--bg);border-color:var(--brand)}
+.btn.ghost{background:var(--surface);color:var(--ink2);border-color:var(--border2)}
+
+/* ============ MAIL MOCKUP ============ */
+.mail{border:1px solid var(--border2);border-radius:10px;overflow:hidden;background:var(--surface);box-shadow:0 2px 12px rgba(24,22,19,.06);max-width:640px}
+.mail-head{padding:14px 18px;border-bottom:1px solid var(--border)}
+.mail-subject{font-size:15px;font-weight:600;letter-spacing:-.01em;margin-bottom:8px}
+.mail-from{display:flex;align-items:center;gap:9px}
+.mail-av{width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-family:var(--f-mono);font-size:10px;font-weight:600}
+.mail-fromline{font-size:12px}
+.mail-fromline .nm{font-weight:600}
+.mail-fromline .em{color:var(--ink4);font-family:var(--f-mono);font-size:10.5px}
+.mail-to{font-size:10.5px;color:var(--ink4);margin-top:1px}
+.mail-when{margin-left:auto;font-size:10.5px;color:var(--ink4)}
+.mail-body{padding:16px 18px;font-size:12.5px;color:var(--ink2);line-height:1.6}
+.mail-body p{margin-bottom:12px}
+.mail-list{border:1px solid var(--border);border-radius:7px;overflow:hidden;margin:4px 0 12px}
+.mail-row{display:grid;grid-template-columns:20px 1fr auto;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--border)}
+.mail-row:last-child{border-bottom:none}
+.mail-row.h{background:var(--s3);font-family:var(--f-mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink4);padding:7px 12px}
+.mail-rank{font-family:var(--f-mono);font-size:11px;font-weight:600;color:var(--ink4)}
+.mail-acc{font-size:12.5px;font-weight:600}
+.mail-meta{font-family:var(--f-mono);font-size:10px;color:var(--ink3);margin-top:2px}
+.mail-act{font-size:11.5px;color:var(--ink2)}
+.mail-arr{text-align:right}
+.mail-arr .a{font-size:12.5px;font-weight:600}
+.mail-arr .c{font-family:var(--f-mono);font-size:9.5px;color:var(--green)}
+.mail-foot{font-family:var(--f-serif);font-style:italic;font-size:12px;color:var(--ink3);border-top:1px dashed var(--border2);padding-top:11px}
+
+/* ============ DASHBOARD MOCKUP ============ */
+.dash{border:1px solid var(--border2);border-radius:10px;background:var(--surface);box-shadow:0 2px 12px rgba(24,22,19,.06);overflow:hidden}
+.dash-top{padding:12px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:var(--s2)}
+.dash-title{font-size:13px;font-weight:600}
+.dash-range{margin-left:auto;font-family:var(--f-mono);font-size:10px;color:var(--ink4);border:1px solid var(--border2);border-radius:5px;padding:3px 9px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--border)}
+.tile{background:var(--surface);padding:14px 16px}
+.tile-k{font-family:var(--f-mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink4);margin-bottom:6px}
+.tile-v{font-size:22px;font-weight:600;letter-spacing:-.02em}
+.tile-d{font-family:var(--f-mono);font-size:9.5px;margin-top:3px}
+.tile-d.up{color:var(--green)}.tile-d.dn{color:var(--red)}
+.dash-charts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-top:1px solid var(--border)}
+.chart{background:var(--surface);padding:16px 18px}
+.chart-h{font-size:12px;font-weight:600;margin-bottom:14px}
+.chart-h span{font-family:var(--f-mono);font-size:9.5px;font-weight:400;color:var(--ink4);margin-left:6px}
+.bars{display:flex;flex-direction:column;gap:9px}
+.bar-row{display:grid;grid-template-columns:54px 1fr 34px;gap:8px;align-items:center}
+.bar-lab{font-family:var(--f-mono);font-size:9.5px;color:var(--ink3)}
+.bar-track{height:14px;background:var(--s3);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px}
+.bar-val{font-family:var(--f-mono);font-size:9.5px;color:var(--ink3);text-align:right}
+@media(max-width:620px){.dash-charts{grid-template-columns:1fr}}
+
+/* ============ CRM CARD MOCKUP ============ */
+.crm{border:1px solid var(--border2);border-radius:10px;background:var(--surface);box-shadow:0 2px 12px rgba(24,22,19,.06);overflow:hidden;max-width:560px}
+.crm-top{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:var(--s2)}
+.crm-icon{width:26px;height:26px;border-radius:6px;background:rgba(61,35,20,.1);color:var(--brand);display:grid;place-items:center;font-family:var(--f-mono);font-size:11px;font-weight:600}
+.crm-t{font-size:12.5px;font-weight:600}
+.crm-sub{font-family:var(--f-mono);font-size:10px;color:var(--ink4)}
+.crm-rec{padding:15px 16px;border-bottom:1px solid var(--border)}
+.crm-rec-lab{font-family:var(--f-mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink4);margin-bottom:5px}
+.crm-rec-act{font-size:15px;font-weight:600;letter-spacing:-.01em;margin-bottom:9px}
+.crm-rec-stats{display:flex;gap:18px;flex-wrap:wrap}
+.crm-s .k{font-family:var(--f-mono);font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink4)}
+.crm-s .v{font-size:14px;font-weight:600}
+.crm-why{padding:14px 16px;background:var(--s2)}
+.crm-why-h{font-family:var(--f-mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink4);margin-bottom:9px}
+.crm-reason{display:flex;gap:9px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--border);font-size:11.5px}
+.crm-reason:last-child{border-bottom:none}
+.crm-rank{font-family:var(--f-mono);font-size:10px;font-weight:600;flex-shrink:0;width:38px}
+.crm-rank.win{color:var(--green)}.crm-rank.lose{color:var(--ink4)}.crm-rank.block{color:var(--red)}
+.crm-reason .txt{color:var(--ink2);line-height:1.5}
+.crm-reason .txt b{font-weight:600;color:var(--ink)}
+.crm-foot{padding:11px 16px;background:var(--s3);border-top:1px solid var(--border);display:flex;gap:8px}
+
+.closing{margin-top:8px;border-top:1px solid var(--border);padding-top:22px;font-size:12.5px;color:var(--ink2);line-height:1.65}
+.closing b{font-weight:600;color:var(--ink)}
+
+
+/* ── SUITE NAV ── */
+.chrome{height:auto;min-height:52px;flex-wrap:wrap;gap:10px;padding-top:8px;padding-bottom:8px}
+.chrome-tabs{display:flex;align-items:center;gap:0;margin-left:auto;background:var(--s3);border:1px solid var(--border);border-radius:6px;padding:3px;flex-wrap:wrap}
+.chrome-tab{padding:4px 10px;border-radius:4px;font-size:11px;font-weight:500;color:var(--ink4);white-space:nowrap;text-decoration:none;transition:.12s}
+.chrome-tab:hover{color:var(--ink2)}
+.chrome-tab.active{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.pagenav{max-width:880px;margin:0 auto;padding:8px 32px 64px;display:flex;align-items:stretch;gap:12px;justify-content:space-between}
+.pagenav a{flex:1 1 0;text-decoration:none;border:1px solid var(--border);border-radius:8px;padding:11px 15px;background:var(--surface);transition:border-color .12s,box-shadow .12s;display:flex;flex-direction:column;gap:3px;max-width:300px}
+.pagenav a:hover{border-color:var(--border2);box-shadow:0 2px 8px rgba(24,22,19,.06)}
+.pagenav a.next{text-align:right;align-items:flex-end}
+.pagenav .dir{font-family:var(--f-mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink4)}
+.pagenav .nm{font-size:13px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.pn-spacer{flex:1 1 0;max-width:300px}
+</style>
+</head>
+<body>
+
+<div class="chrome">
+  <div class="brand">
+    <div class="brand-mark">DI</div>
+    <span class="brand-name">Zoho Store</span>
+    <span class="brand-div">·</span>
+    <span class="brand-doc">Decision Intelligence — Output Surfaces</span>
+  </div><div class="chrome-tabs"><a class="chrome-tab" href="di-document-map.html">Map</a><a class="chrome-tab" href="di-architecture-story.html">Story</a><a class="chrome-tab" href="decision-intelligence-data-flow.html">Flow</a><a class="chrome-tab" href="di-signals-to-intelligence.html">Signals</a><a class="chrome-tab" href="di-score-reference.html">Scores</a><a class="chrome-tab" href="di-nba-decision.html">NBA</a><span class="chrome-tab active">Surfaces</span><a class="chrome-tab" href="di-glossary.html">Glossary</a><a class="chrome-tab" href="di-agent-catalog.html">Catalog</a></div>
+</div>
+
+<div class="page">
+  <div class="eyebrow">Surfaces · What the platform produces</div>
+  <h1 class="title">What does it actually look like?</h1>
+  <p class="subtitle">The same NBA (Next Business Action) reaches different people in different forms. The intelligence is identical — the surface is shaped for the audience and the moment.</p>
+
+  <div class="thread-note">
+    <div>
+      <span class="acc">Following one account through every surface — ABC&nbsp;Corp</span>
+      <div class="facts">$24,000 ARR · CRM + Books + Projects · Renewal in 15 days · Payment failed yesterday · Usage −30% · Health 45 · Churn 78 · Payment Risk 92</div>
+    </div>
+  </div>
+
+  <!-- ========== 1. CLIQ ========== -->
+  <div class="sec">
+    <div class="sec-head">
+      <div class="sec-num"><span class="pill cliq">Cliq</span> Surface 01 · Real-time alert</div>
+      <div class="sec-title">Cliq escalation</div>
+      <div class="sec-who">For the Account Manager — the moment something urgent happens.</div>
+    </div>
+
+    <div class="cliq">
+      <div class="cliq-top">
+        <span class="cliq-hash">#</span><span class="cliq-chan">store-revenue-signals</span>
+        <span class="cliq-members">PAM team · 12</span>
+      </div>
+      <div class="cliq-body">
+        <div class="cliq-av">DI</div>
+        <div class="cliq-main">
+          <div class="cliq-meta">
+            <span class="cliq-bot">Decision Intelligence</span>
+            <span class="cliq-badge">Bot</span>
+            <span class="cliq-time">9:02 AM</span>
+          </div>
+          <div class="cliq-card">
+            <div class="cliq-card-top">
+              <div class="cliq-card-flag">● HIGH PRIORITY — ACT TODAY</div>
+              <div class="cliq-acc">ABC Corp</div>
+              <div class="cliq-sub">$24,000 ARR · renewal in 15 days</div>
+            </div>
+            <div class="cliq-card-mid">
+              <div class="cliq-sig">
+                <span class="cliq-chip bad">Payment failed</span>
+                <span class="cliq-chip bad">Payment risk 92</span>
+                <span class="cliq-chip warn">Churn 78</span>
+                <span class="cliq-chip warn">Usage −30%</span>
+              </div>
+              <div class="cliq-rec">
+                <div class="cliq-rec-label">Recommended NBA (Next Business Action)</div>
+                <div class="cliq-rec-action">Retry payment + send card-update link</div>
+                <div class="cliq-rec-stats">
+                  <div class="cliq-stat"><div class="k">Save likelihood</div><div class="v">85%</div></div>
+                  <div class="cliq-stat"><div class="k">ARR protected</div><div class="v neutral">$24,000</div></div>
+                  <div class="cliq-stat"><div class="k">Action cost</div><div class="v neutral">$5</div></div>
+                </div>
+              </div>
+              <div class="cliq-why">
+                <b>Why:</b> 4 agents evaluated this account. Recovery ranked #1 by expected value — far ahead of a churn offer or cross-sell. Policy: clear.
+              </div>
+            </div>
+            <div class="cliq-actions">
+              <span class="btn primary">Approve &amp; run</span>
+              <span class="btn ghost">Call customer</span>
+              <span class="btn ghost">Snooze 24h</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 2. MAIL ========== -->
+  <div class="sec">
+    <div class="sec-head">
+      <div class="sec-num"><span class="pill mail">Mail</span> Surface 02 · Daily digest</div>
+      <div class="sec-title">Morning Mail digest</div>
+      <div class="sec-who">For the Account Manager — the day's work, already prioritised and capped to capacity.</div>
+    </div>
+
+    <div class="mail">
+      <div class="mail-head">
+        <div class="mail-subject">5 accounts to act on today — $61,400 ARR in focus</div>
+        <div class="mail-from">
+          <div class="mail-av">DI</div>
+          <div class="mail-fromline">
+            <span class="nm">Decision Intelligence</span> <span class="em">&lt;di@zohostore.com&gt;</span>
+            <div class="mail-to">to Priya R. (Account Manager)</div>
+          </div>
+          <div class="mail-when">Today, 8:00 AM</div>
+        </div>
+      </div>
+      <div class="mail-body">
+        <p>Good morning Priya. Of the 4,200 accounts in your book, these five need <i>you</i> today — ranked by expected impact and limited to what one person can act on.</p>
+        <div class="mail-list">
+          <div class="mail-row h"><span>#</span><span>Account &amp; signal</span><span>ARR · confidence</span></div>
+          <div class="mail-row">
+            <span class="mail-rank">1</span>
+            <div><div class="mail-acc">ABC Corp</div><div class="mail-meta">payment failed · churn 78</div><div class="mail-act">→ Retry payment, call if it fails</div></div>
+            <div class="mail-arr"><div class="a">$24,000</div><div class="c">85%</div></div>
+          </div>
+          <div class="mail-row">
+            <span class="mail-rank">2</span>
+            <div><div class="mail-acc">Meridian Labs</div><div class="mail-meta">cancellation page visited</div><div class="mail-act">→ Offer monthly billing</div></div>
+            <div class="mail-arr"><div class="a">$15,600</div><div class="c">44%</div></div>
+          </div>
+          <div class="mail-row">
+            <span class="mail-rank">3</span>
+            <div><div class="mail-acc">Northwind Co</div><div class="mail-meta">5 standalone apps · renewal 21d</div><div class="mail-act">→ Zoho One saves them 18%</div></div>
+            <div class="mail-arr"><div class="a">$12,200</div><div class="c">61%</div></div>
+          </div>
+          <div class="mail-row">
+            <span class="mail-rank">4</span>
+            <div><div class="mail-acc">Helix Retail</div><div class="mail-meta">usage up 40% · 9 new users</div><div class="mail-act">→ Cross-sell Analytics (healthy)</div></div>
+            <div class="mail-arr"><div class="a">$6,400</div><div class="c">38%</div></div>
+          </div>
+          <div class="mail-row">
+            <span class="mail-rank">5</span>
+            <div><div class="mail-acc">Toba Group</div><div class="mail-meta">renewal 10d · no engagement</div><div class="mail-act">→ Personal renewal call</div></div>
+            <div class="mail-arr"><div class="a">$3,200</div><div class="c">—</div></div>
+          </div>
+        </div>
+        <div class="mail-foot">47 lower-priority accounts were handled automatically by email and in-product nudges. Nothing else needs you today.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 3. DASHBOARD ========== -->
+  <div class="sec">
+    <div class="sec-head">
+      <div class="sec-num"><span class="pill dash">Analytics</span> Surface 03 · Dashboard</div>
+      <div class="sec-title">Leadership dashboard</div>
+      <div class="sec-who">For Store / leadership — is the platform actually moving ARR?</div>
+    </div>
+
+    <div class="dash">
+      <div class="dash-top">
+        <span class="dash-title">Decision Intelligence — Revenue Impact</span>
+        <span class="dash-range">Last 30 days</span>
+      </div>
+      <div class="tiles">
+        <div class="tile"><div class="tile-k">ARR protected</div><div class="tile-v">$1.24M</div><div class="tile-d up">▲ vs $0.92M last month</div></div>
+        <div class="tile"><div class="tile-k">ARR recovered</div><div class="tile-v">$341K</div><div class="tile-d up">▲ 71% recovery rate</div></div>
+        <div class="tile"><div class="tile-k">NBA acceptance</div><div class="tile-v">71%</div><div class="tile-d up">▲ +6 pts</div></div>
+        <div class="tile"><div class="tile-k">Accounts saved</div><div class="tile-v">312</div><div class="tile-d up">▲ vs 248</div></div>
+        <div class="tile"><div class="tile-k">Lift vs holdout</div><div class="tile-v">+14%</div><div class="tile-d up">▲ proven causal</div></div>
+      </div>
+      <div class="dash-charts">
+        <div class="chart">
+          <div class="chart-h">Health score distribution <span>all accounts</span></div>
+          <div class="bars">
+            <div class="bar-row"><span class="bar-lab">0–20</span><div class="bar-track"><div class="bar-fill" style="width:14%;background:var(--red)"></div></div><span class="bar-val">6%</span></div>
+            <div class="bar-row"><span class="bar-lab">21–40</span><div class="bar-track"><div class="bar-fill" style="width:34%;background:var(--amber)"></div></div><span class="bar-val">15%</span></div>
+            <div class="bar-row"><span class="bar-lab">41–60</span><div class="bar-track"><div class="bar-fill" style="width:62%;background:var(--ink4)"></div></div><span class="bar-val">27%</span></div>
+            <div class="bar-row"><span class="bar-lab">61–80</span><div class="bar-track"><div class="bar-fill" style="width:78%;background:var(--green)"></div></div><span class="bar-val">34%</span></div>
+            <div class="bar-row"><span class="bar-lab">81–100</span><div class="bar-track"><div class="bar-fill" style="width:42%;background:var(--green)"></div></div><span class="bar-val">18%</span></div>
+          </div>
+        </div>
+        <div class="chart">
+          <div class="chart-h">Save rate over time <span>learning loop</span></div>
+          <svg viewBox="0 0 280 130" width="100%" height="130" style="display:block">
+            <line x1="30" y1="10" x2="30" y2="105" stroke="var(--border2)" stroke-width="1"/>
+            <line x1="30" y1="105" x2="272" y2="105" stroke="var(--border2)" stroke-width="1"/>
+            <text x="6" y="30" font-family="IBM Plex Mono" font-size="8" fill="var(--ink4)">40%</text>
+            <text x="6" y="72" font-family="IBM Plex Mono" font-size="8" fill="var(--ink4)">20%</text>
+            <polyline fill="none" stroke="var(--violet)" stroke-width="2" stroke-linejoin="round"
+              points="30,88 70,84 110,76 150,66 190,54 230,44 272,38"/>
+            <polygon fill="var(--violet)" fill-opacity="0.08"
+              points="30,88 70,84 110,76 150,66 190,54 230,44 272,38 272,105 30,105"/>
+            <circle cx="30" cy="88" r="2.4" fill="var(--violet)"/>
+            <circle cx="272" cy="38" r="2.4" fill="var(--violet)"/>
+            <text x="30" y="120" font-family="IBM Plex Mono" font-size="8" fill="var(--ink4)">Month 1 · 20%</text>
+            <text x="200" y="120" font-family="IBM Plex Mono" font-size="8" fill="var(--violet)">Month 12 · 37%</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 4. CRM CARD ========== -->
+  <div class="sec">
+    <div class="sec-head">
+      <div class="sec-num"><span class="pill crm">CRM</span> Surface 04 · The reasoning</div>
+      <div class="sec-title">CRM recommendation card</div>
+      <div class="sec-who">For the AM, inside the account record — the action <i>and</i> why it beat the alternatives.</div>
+    </div>
+
+    <div class="crm">
+      <div class="crm-top">
+        <div class="crm-icon">★</div>
+        <div><div class="crm-t">Recommended Next Business Action</div><div class="crm-sub">ABC Corp · refreshed 9:02 AM</div></div>
+      </div>
+      <div class="crm-rec">
+        <div class="crm-rec-lab">NBA (Next Business Action)</div>
+        <div class="crm-rec-act">Retry payment + send card-update link</div>
+        <div class="crm-rec-stats">
+          <div class="crm-s"><div class="k">Confidence</div><div class="v" style="color:var(--green)">85%</div></div>
+          <div class="crm-s"><div class="k">ARR at risk</div><div class="v">$24,000</div></div>
+          <div class="crm-s"><div class="k">Cost</div><div class="v">$5</div></div>
+        </div>
+      </div>
+      <div class="crm-why">
+        <div class="crm-why-h">Why this action — what each agent proposed</div>
+        <div class="crm-reason"><span class="crm-rank win">#1 ✓</span><span class="txt"><b>Recovery Agent</b> — card expired; retry + updater recovers ~85%. Highest expected value, lowest cost. <b>Chosen.</b></span></div>
+        <div class="crm-reason"><span class="crm-rank lose">#2</span><span class="txt"><b>Cancellation Agent</b> — offer monthly billing, but only 42% likely and higher cost. Held back.</span></div>
+        <div class="crm-reason"><span class="crm-rank block">blocked</span><span class="txt"><b>Bundle Agent</b> — Zoho One would be cheaper, but cross-sell to a churn-78 account is blocked by Policy.</span></div>
+        <div class="crm-reason"><span class="crm-rank lose">queued</span><span class="txt"><b>Renewal Agent</b> — reminder queued for after payment is recovered, not before.</span></div>
+      </div>
+      <div class="crm-foot">
+        <span class="btn primary">Run now</span>
+        <span class="btn ghost">Assign to me</span>
+        <span class="btn ghost">Dismiss with reason</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="closing">
+    <b>One decision, four surfaces.</b> The NBA (Next Business Action) Engine decided once — retry ABC Corp's payment. Cliq raised it the instant it mattered, Mail folded it into the AM's prioritised morning list, the dashboard rolled it into proven ARR impact, and CRM showed the reasoning behind it. That consistency — same decision, audience-shaped surface — is what makes the platform feel like one system rather than another set of alerts.
+  </div>
+</div>
+
+<div class="pagenav"><a class="prev" href="di-nba-decision.html"><span class="dir">&larr; Previous</span><span class="nm">NBA</span></a><a class="next" href="di-glossary.html"><span class="dir">Next &rarr;</span><span class="nm">Glossary</span></a></div>
+</body>
+</html>

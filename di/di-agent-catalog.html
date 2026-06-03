@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Decision Intelligence · Agent Catalog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F2EC;--surface:#FFFFFF;--s2:#FAFAF7;--s3:#F0EEE7;--s4:#E9E6DC;
+  --border:#E5E2D8;--border2:#D0CEC2;
+  --ink:#181613;--ink2:#4A4844;--ink3:#87857C;--ink4:#B5B2A9;--ink5:#D7D4C9;
+  --red:#B0231C;--red-s:#FAE8E6;--red-bd:#E0ABA7;
+  --amber:#9A5209;--amber-s:#F5EACF;--amber-bd:#D9C090;
+  --green:#14653A;--green-s:#E2EEE6;--green-bd:#A8CEB0;
+  --blue:#1B3E94;--blue-s:#DDE5F6;--blue-bd:#A8BCE2;
+  --violet:#4E1F9D;--violet-s:#EAE4F7;--violet-bd:#C0B1E4;
+  --brand:#3D2314;
+  --f-sans:"IBM Plex Sans",sans-serif;--f-mono:"IBM Plex Mono",monospace;--f-serif:"IBM Plex Serif",Georgia,serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--f-sans);background:var(--bg);color:var(--ink);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.chrome{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;height:52px;display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-mark{width:28px;height:28px;border-radius:5px;background:var(--brand);color:var(--bg);display:grid;place-items:center;font-family:var(--f-mono);font-size:9px;font-weight:600;letter-spacing:-.04em}
+.brand-name{font-size:13px;font-weight:600}.brand-div{color:var(--border2)}.brand-doc{font-size:12px;color:var(--ink3)}
+.page{max-width:860px;margin:0 auto;padding:48px 32px 90px}
+.eyebrow{font-family:var(--f-mono);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.eyebrow::after{content:'';flex:1;height:1px;background:var(--border)}
+h1.title{font-size:30px;font-weight:600;letter-spacing:-.025em;margin-bottom:8px}
+.subtitle{font-family:var(--f-serif);font-size:15px;color:var(--ink3);font-style:italic;line-height:1.6;max-width:620px;margin-bottom:18px}
+.note{display:flex;gap:9px;align-items:flex-start;background:var(--s2);border:1px solid var(--border);border-left:3px solid var(--brand);border-radius:6px;padding:10px 13px;margin-bottom:34px;font-size:11.5px;color:var(--ink2);line-height:1.55}
+.note b{color:var(--ink);font-weight:600}
+.dom{margin-bottom:24px}
+.dom-h{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.dom-dot{width:8px;height:8px;border-radius:50%}
+.dom-name{font-family:var(--f-mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.dom-h::after{content:'';flex:1;height:1px;background:var(--border)}
+.d-rev .dom-dot{background:var(--green)} .d-sales .dom-dot{background:var(--blue)}
+.d-pre .dom-dot{background:var(--violet)} .d-sup .dom-dot{background:var(--amber)}
+.d-cs .dom-dot{background:var(--brand)} .d-cust .dom-dot{background:var(--ink4)}
+.d-risk .dom-dot{background:var(--red)}
+.rows{border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--surface);box-shadow:0 1px 2px rgba(24,22,19,.04)}
+.row{display:grid;grid-template-columns:198px 1fr 138px;border-bottom:1px solid var(--border)}
+.row:last-child{border-bottom:none}
+.r-name{padding:10px 14px;background:var(--s2);border-right:1px solid var(--border);font-weight:600;font-size:12px;letter-spacing:-.01em;display:flex;align-items:center;gap:7px}
+.r-desc{padding:10px 14px;font-size:12px;color:var(--ink2);display:flex;align-items:center}
+.r-value{padding:10px 12px;border-left:1px solid var(--border);display:flex;align-items:center}
+.vtag{font-family:var(--f-mono);font-size:8.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;border-radius:100px;padding:2px 8px;border:1px solid;white-space:nowrap}
+.vtag.arr{background:var(--green-s);color:var(--green);border-color:var(--green-bd)}
+.vtag.sales{background:var(--blue-s);color:var(--blue);border-color:var(--blue-bd)}
+.vtag.supp{background:var(--amber-s);color:var(--amber);border-color:var(--amber-bd)}
+.vtag.risk{background:var(--red-s);color:var(--red);border-color:var(--red-bd)}
+.p1{font-family:var(--f-mono);font-size:8px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;background:var(--green-s);color:var(--green);border:1px solid var(--green-bd);border-radius:100px;padding:1px 6px;white-space:nowrap}
+@media(max-width:600px){.row{grid-template-columns:1fr}.r-name,.r-value{border-right:none;border-left:none;border-bottom:1px solid var(--border)}}
+.legend{margin-top:28px;border-top:1px solid var(--border);padding-top:14px;font-family:var(--f-mono);font-size:10px;color:var(--ink3);display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend .vtag{cursor:default}
+
+/* ── SUITE NAV ── */
+.chrome{height:auto;min-height:52px;flex-wrap:wrap;gap:10px;padding-top:8px;padding-bottom:8px}
+.chrome-tabs{display:flex;align-items:center;gap:0;margin-left:auto;background:var(--s3);border:1px solid var(--border);border-radius:6px;padding:3px;flex-wrap:wrap}
+.chrome-tab{padding:4px 10px;border-radius:4px;font-size:11px;font-weight:500;color:var(--ink4);white-space:nowrap;text-decoration:none;transition:.12s}
+.chrome-tab:hover{color:var(--ink2)}
+.chrome-tab.active{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.pagenav{max-width:880px;margin:0 auto;padding:8px 32px 64px;display:flex;align-items:stretch;gap:12px;justify-content:space-between}
+.pagenav a{flex:1 1 0;text-decoration:none;border:1px solid var(--border);border-radius:8px;padding:11px 15px;background:var(--surface);transition:border-color .12s,box-shadow .12s;display:flex;flex-direction:column;gap:3px;max-width:300px}
+.pagenav a:hover{border-color:var(--border2);box-shadow:0 2px 8px rgba(24,22,19,.06)}
+.pagenav a.next{text-align:right;align-items:flex-end}
+.pagenav .dir{font-family:var(--f-mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink4)}
+.pagenav .nm{font-size:13px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.pn-spacer{flex:1 1 0;max-width:300px}
+</style>
+</head>
+<body>
+<div class="chrome"><div class="brand"><div class="brand-mark">DI</div><span class="brand-name">Zoho Store</span><span class="brand-div">·</span><span class="brand-doc">Decision Intelligence — Agent Catalog</span></div><div class="chrome-tabs"><a class="chrome-tab" href="di-document-map.html">Map</a><a class="chrome-tab" href="di-architecture-story.html">Story</a><a class="chrome-tab" href="decision-intelligence-data-flow.html">Flow</a><a class="chrome-tab" href="di-signals-to-intelligence.html">Signals</a><a class="chrome-tab" href="di-score-reference.html">Scores</a><a class="chrome-tab" href="di-nba-decision.html">NBA</a><a class="chrome-tab" href="di-output-surfaces.html">Surfaces</a><a class="chrome-tab" href="di-glossary.html">Glossary</a><span class="chrome-tab active">Catalog</span></div></div>
+<div class="page">
+  <div class="eyebrow">Document B · Idea repository</div>
+  <h1 class="title">Agent Catalog</h1>
+  <p class="subtitle">Everything that could plug into the Decision Intelligence platform over time — an app store for the brain. Same engine, more specialists — each mapped to the lever it moves.</p>
+  <div class="note"><div><b>This is not the pitch.</b> The platform and the Phase-1 agents are what you ask funding for; this list is the parking lot that grows forever. Keep it separate — in the room it's one blurred "future agents" slide, nothing more. Only the agents marked <span class="p1" style="display:inline-flex">Phase 1</span> are in scope today.</div></div>
+
+  <div class="dom d-rev">
+    <div class="dom-h"><span class="dom-dot"></span><span class="dom-name">Revenue — retention &amp; expansion</span></div>
+    <div class="rows">
+      <div class="row"><div class="r-name">Recovery Agent <span class="p1">Phase 1</span></div><div class="r-desc">Recovers failed payments — retry, card updater, alternative method, AM escalation.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
+      <div class="row"><div class="r-name">Cancellation Rescue <span class="p1">Phase 1</span></div><div class="r-desc">Intervenes at cancellation with a save offer matched to the stated reason.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
+      <div class="row"><div class="r-name">Renewal Agent</div><div class="r-desc">Optimises renewal collection — best timing and channel per customer.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
+      <div class="row"><div class="r-name">Churn Prevention Agent</div><div class="r-desc">Catches decline weeks before the cancel page, when saves are cheaper.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
+      <div class="row"><div class="r-name">Bundle Economics Agent</div><div class="r-desc">Detects when Zoho One is cheaper than the standalone stack and proves it.</div><div class="r-value"><span class="vtag arr">Expansion ARR</span></div></div>
+      <div class="row"><div class="r-name">Next Best Product Agent</div><div class="r-desc">Cross-sells the most relevant product — only to healthy, growing accounts.</div><div class="r-value"><span class="vtag arr">Expansion ARR</span></div></div>
+      <div class="row"><div class="r-name">Wallet Optimization Agent</div><div class="r-desc">Uses wallet credits and incentives to tip fence-sitters, sized per opportunity.</div><div class="r-value"><span class="vtag arr">Expansion ARR</span></div></div>
+      <div class="row"><div class="r-name">Trial Conversion Agent</div><div class="r-desc">Converts trials by removing the next activation blocker, not by sending more email.</div><div class="r-value"><span class="vtag arr">New ARR</span></div></div>
+      <div class="row"><div class="r-name">Checkout Completion Agent</div><div class="r-desc">Recovers stalled checkouts caused by payment, tax, or billing friction.</div><div class="r-value"><span class="vtag arr">New ARR</span></div></div>
+    </div>
+  </div>
+
+  <div class="dom d-sales">
+    <div class="dom-h"><span class="dom-dot"></span><span class="dom-name">Sales — acquisition</span></div>
+    <div class="rows">
+      <div class="row"><div class="r-name">Pre-Call Intelligence</div><div class="r-desc">Assembles an account brief before a call — from Account 360 + trusted enrichment.</div><div class="r-value"><span class="vtag sales">Sales productivity</span></div></div>
+      <div class="row"><div class="r-name">Post-Call Agent</div><div class="r-desc">Turns a call into summary, action items, CRM updates, and a follow-up draft.</div><div class="r-value"><span class="vtag sales">Sales productivity</span></div></div>
+      <div class="row"><div class="r-name">Deal Risk Agent</div><div class="r-desc">Flags stalled deals with no activity before the close date, with a next step.</div><div class="r-value"><span class="vtag sales">Win rate</span></div></div>
+      <div class="row"><div class="r-name">Proposal / Quote Agent</div><div class="r-desc">Builds a tailored quote and an ROI business case from the prospect's needs.</div><div class="r-value"><span class="vtag sales">Win rate</span></div></div>
+      <div class="row"><div class="r-name">Competitor Intelligence</div><div class="r-desc">Detects competitor mentions in calls and emails; surfaces the right positioning.</div><div class="r-value"><span class="vtag sales">Win rate</span></div></div>
+    </div>
+  </div>
+
+  <div class="dom d-pre">
+    <div class="dom-h"><span class="dom-dot"></span><span class="dom-name">Presales</span></div>
+    <div class="rows">
+      <div class="row"><div class="r-name">Demo Builder Agent</div><div class="r-desc">From a prospect profile, builds a tailored demo org + script via MCP tools.</div><div class="r-value"><span class="vtag sales">Win rate</span></div></div>
+      <div class="row"><div class="r-name">Solution Recommendation</div><div class="r-desc">Recommends the right products and architecture for a stated business need.</div><div class="r-value"><span class="vtag sales">Win rate</span></div></div>
+      <div class="row"><div class="r-name">POC Monitoring Agent</div><div class="r-desc">Tracks proof-of-concept engagement and flags when a trial is going cold.</div><div class="r-value"><span class="vtag sales">Win rate</span></div></div>
+    </div>
+  </div>
+
+  <div class="dom d-sup">
+    <div class="dom-h"><span class="dom-dot"></span><span class="dom-name">Support</span></div>
+    <div class="rows">
+      <div class="row"><div class="r-name">Escalation Agent</div><div class="r-desc">Routes and prioritises escalations by account value and risk.</div><div class="r-value"><span class="vtag supp">Support efficiency</span></div></div>
+      <div class="row"><div class="r-name">Ticket Pattern Agent</div><div class="r-desc">Detects recurring issues and ticket spikes that signal churn risk.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
+      <div class="row"><div class="r-name">Account Risk Agent</div><div class="r-desc">Feeds support-driven risk signals back into the revenue side of the platform.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
+    </div>
+  </div>
+
+  <div class="dom d-cs">
+    <div class="dom-h"><span class="dom-dot"></span><span class="dom-name">Customer Success</span></div>
+    <div class="rows">
+      <div class="row"><div class="r-name">Adoption Agent</div><div class="r-desc">Drives feature adoption that keeps healthy accounts growing.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
+      <div class="row"><div class="r-name">Health Monitoring Agent</div><div class="r-desc">Watches account health and triggers proactive outreach on early slips.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
+      <div class="row"><div class="r-name">Expansion Readiness Agent</div><div class="r-desc">Flags accounts that are ready to grow and hands them to the right team.</div><div class="r-value"><span class="vtag arr">Expansion ARR</span></div></div>
+    </div>
+  </div>
+
+  <div class="dom d-cust">
+    <div class="dom-h"><span class="dom-dot"></span><span class="dom-name">Customer-facing</span></div>
+    <div class="rows">
+      <div class="row"><div class="r-name">Solution Advisor</div><div class="r-desc">A Zia-like advisor guiding customers to the right setup — hands off for anything binding.</div><div class="r-value"><span class="vtag supp">Support efficiency</span></div></div>
+      <div class="row"><div class="r-name">Product Recommendation</div><div class="r-desc">Suggests relevant products in-product, at the moment of need.</div><div class="r-value"><span class="vtag arr">Expansion ARR</span></div></div>
+      <div class="row"><div class="r-name">Onboarding Guide</div><div class="r-desc">Walks new customers through setup and first value.</div><div class="r-value"><span class="vtag arr">New ARR</span></div></div>
+    </div>
+  </div>
+
+  <div class="dom d-risk">
+    <div class="dom-h"><span class="dom-dot"></span><span class="dom-name">Risk &amp; platform protection</span></div>
+    <div class="rows">
+      <div class="row"><div class="r-name">Fraud Investigation Agent</div><div class="r-desc">Fuses Stripe Radar, device and geo signals into approve / review / block.</div><div class="r-value"><span class="vtag risk">Risk reduction</span></div></div>
+      <div class="row"><div class="r-name">Payment Risk Agent</div><div class="r-desc">Predicts and pre-empts payment failures before they happen.</div><div class="r-value"><span class="vtag risk">Risk reduction</span></div></div>
+      <div class="row"><div class="r-name">Tax Compliance Agent</div><div class="r-desc">Pre-empts tax-exempt customers to avoid the charge-then-refund cycle.</div><div class="r-value"><span class="vtag risk">Risk reduction</span></div></div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span><span class="p1">Phase 1</span> in scope today</span>
+    <span><span class="vtag arr">ARR</span> direct revenue</span>
+    <span><span class="vtag sales">Sales</span> productivity / win rate</span>
+    <span><span class="vtag supp">Support</span> efficiency</span>
+    <span><span class="vtag risk">Risk</span> protection</span>
+  </div>
+</div>
+<div class="pagenav"><a class="prev" href="di-glossary.html"><span class="dir">&larr; Previous</span><span class="nm">Glossary</span></a><span class="pn-spacer"></span></div>
+</body>
+</html>
