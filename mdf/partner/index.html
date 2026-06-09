@@ -611,6 +611,13 @@ const FundField = ({label, children, hint, half})=>(
 );
 const RvRow = ({l,v,strong})=>(<div style={{display:'flex',justifyContent:'space-between',padding:'10px 0',borderBottom:`1px solid ${EDI.lineSoft}`,fontSize:14}}><span style={{color:EDI.sub}}>{l}</span><span style={{fontWeight:strong?700:600,textAlign:'right',maxWidth:'60%'}}>{v||'—'}</span></div>);
 
+/* FundOpts — outside PPFund for stable identity, receives fRef + onChoice */
+const FundOpts = ({field, list, fRef, onChoice})=>(
+  <div style={{display:'flex',gap:9,flexWrap:'wrap'}}>
+    {list.map(o=>(<button key={o.v||o} className={'pp-opt'+(fRef.current[field]===(o.v||o)?' is-sel':'')} onClick={()=>onChoice(field,o.v||o)}>{o.l||o}</button>))}
+  </div>
+);
+
 /* ── PARTNER PORTAL · FUND AN ACTIVITY (side-rail stepper) ──── */
 function PPFund({go, route}){
   const b = PARTNER.budget;
@@ -643,7 +650,7 @@ function PPFund({go, route}){
   const over = requested>b.available;
 
   const detailsValid = f.name.trim() && f.date && (f.type!=='event' || (f.format && f.evType));
-  const stepValid = {1:!!f.type, 2:!!detailsValid, 3:(total>0 && !!f.pct), 4:true}[step];
+  const stepValid = {1:!!fRef.current.type, 2:!!detailsValid, 3:(total>0 && !!fRef.current.pct), 4:true}[step];
   const STEPS = [
     {n:1, t:'What are you planning?', s:'Pick an activity'},
     {n:2, t:'Tell us about it', s:'A few details'},
@@ -652,12 +659,7 @@ function PPFund({go, route}){
   ];
   const next = ()=> step<4? setStep(step+1) : go('success',{name:f.name,fund:requested,type:f.type});
 
-  // Opts uses setChoice — chip clicks always need re-render, no focus concern
-  const Opts = ({field, list})=>(
-    <div style={{display:'flex',gap:9,flexWrap:'wrap'}}>
-      {list.map(o=>(<button key={o.v||o} className={'pp-opt'+(f[field]===(o.v||o)?' is-sel':'')} onClick={()=>setChoice(field,o.v||o)}>{o.l||o}</button>))}
-    </div>
-  );
+  // Opts is defined outside as FundOpts for stable component identity
 
   return (
     <div className="pp-wrap" style={{paddingTop:36,paddingBottom:70}}>
@@ -692,15 +694,15 @@ function PPFund({go, route}){
           {step===1 && (
             <div>
               <h2 className="pp-serif" style={{fontSize:25,fontWeight:500,margin:'0 0 18px'}}>What are you planning?</h2>
-              <div className="pp-picks">
+              <div className="pp-picks" key={tick}>
                 {ACT_TYPES.map(t=>(
-                  <button key={t.id} className={'pp-pick'+(f.type===t.id?' is-sel':'')} disabled={t.soon}
+                  <button key={t.id} className={'pp-pick'+(fRef.current.type===t.id?' is-sel':'')} disabled={t.soon}
                     onClick={()=>!t.soon&&setChoice('type',t.id)} style={{opacity:t.soon?.5:1,position:'relative'}}>
                     {t.soon&&<span style={{position:'absolute',top:14,right:14,fontSize:10.5,fontWeight:700,color:EDI.faint,background:'#EFEADF',padding:'2px 8px',borderRadius:5}}>Coming soon</span>}
-                    <div style={{fontSize:26,marginBottom:10,color:f.type===t.id?EDI.clay:EDI.gold}}>{t.icon}</div>
+                    <div style={{fontSize:26,marginBottom:10,color:fRef.current.type===t.id?EDI.clay:EDI.gold}}>{t.icon}</div>
                     <div className="pp-serif" style={{fontSize:19,fontWeight:500}}>{t.title}</div>
                     <div style={{fontSize:13,color:EDI.sub,marginTop:4,lineHeight:1.45}}>{t.sub}</div>
-                    <div style={{fontSize:12,fontWeight:700,color:f.type===t.id?EDI.clay:EDI.gold,marginTop:10}}>{t.cofund} co-funded</div>
+                    <div style={{fontSize:12,fontWeight:700,color:fRef.current.type===t.id?EDI.clay:EDI.gold,marginTop:10}}>{t.cofund} co-funded</div>
                   </button>
                 ))}
               </div>
@@ -717,11 +719,11 @@ function PPFund({go, route}){
                     <input className="pp-input" defaultValue={f.name} placeholder={f.type==='gtm'?'e.g. Healthcare Vertical Play':'e.g. Montréal SMB Tech Expo'} onBlur={e=>{fRef.current.name=e.target.value;}} onInput={e=>{fRef.current.name=e.target.value;}}/>
                   </FundField>
                   {f.type==='event' && <>
-                    <FundField label="Format" half><Opts field="format" list={['In-person','Online','Hybrid']}/></FundField>
-                    <FundField label="Event type" half><Opts field="evType" list={['Self-hosted','Third-party']}/></FundField>
-                    {f.evType==='Third-party' && <FundField label="Your role"><Opts field="participation" list={['Organizer','Sponsor','Exhibitor','Speaker']}/></FundField>}
+                    <FundField label="Format" half><FundOpts field="format" list={['In-person','Online','Hybrid']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Event type" half><FundOpts field="evType" list={['Self-hosted','Third-party']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    {f.evType==='Third-party' && <FundField label="Your role"><FundOpts field="participation" list={['Organizer','Sponsor','Exhibitor','Speaker']} fRef={fRef} onChoice={setChoice}/></FundField>}
                   </>}
-                  {f.type==='webinar' && <FundField label="Promotion" half><Opts field="format" list={['Organic only','Paid promotion']}/></FundField>}
+                  {f.type==='webinar' && <FundField label="Promotion" half><FundOpts field="format" list={['Organic only','Paid promotion']} fRef={fRef} onChoice={setChoice}/></FundField>}
                   {f.type==='gtm' && <>
                     <FundField label="Territory focus" half><input className="pp-input" defaultValue={f.territory} placeholder="e.g. Québec" onInput={e=>{fRef.current.territory=e.target.value;}}/></FundField>
                     <FundField label="Industry focus"><div style={{display:'flex',gap:9,flexWrap:'wrap'}}>{['SaaS','Healthcare','Real Estate','Manufacturing','Pro Services'].map(i=>(<button key={i} className={'pp-opt'+(f.industries.includes(i)?' is-sel':'')} onClick={()=>toggleInd(i)}>{i}</button>))}</div></FundField>
@@ -749,7 +751,7 @@ function PPFund({go, route}){
                 <div className="pp-f2">
                   <FundField label="Total activity budget (CAD)" half><input className="pp-input" type="number" defaultValue={f.total} placeholder="0" onInput={e=>{fRef.current.total=e.target.value; bump();}}/></FundField>
                   <FundField label="Zoho co-funding requested" half hint={typeMeta?`${typeMeta.cofund} for ${typeMeta.title.toLowerCase()}.`:''}>
-                    <div style={{display:'flex',gap:9}}>{pcts.map(p=>(<button key={p} className={'pp-opt'+(f.pct===p?' is-sel':'')} onClick={()=>setChoice('pct',p)}>{p}%</button>))}</div>
+                    <div style={{display:'flex',gap:9}}>{pcts.map(p=>(<button key={p} className={'pp-opt'+(fRef.current.pct===p?' is-sel':'')} onClick={()=>setChoice('pct',p)}>{p}%</button>))}</div>
                   </FundField>
                   <FundField label="Supporting documents" hint="Quotes, agendas, media plans — optional but speeds things up.">
                     <button className="pp-btn pp-btn--ghost pp-btn--sm" onClick={()=>setChoice('files',[...f.files,{name:`Document_${f.files.length+1}.pdf`}])}>＋ Attach a file</button>
