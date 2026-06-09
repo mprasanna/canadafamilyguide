@@ -1097,7 +1097,8 @@ function go(screen){
   if(target) target.classList.add('active');
   const r = {
     dashboard:renderDashboard, queue:renderQueue, approved:renderApproved,
-    payouts:renderPayouts, partners:renderPartners, reports:renderReports, config:renderConfig
+    payouts:renderPayouts, partners:renderPartners, reports:renderReports, config:renderConfig,
+    sla:renderSLA, exceptions:renderExceptions, duplicates:renderDuplicates
   }[screen];
   if(typeof r==='function') r();
   const lc = $('.screen.active .list-col'); if(lc) lc.scrollTop = 0;
@@ -2013,24 +2014,37 @@ function renderReports(){
   const totalCommitted = approved.reduce((a,r)=>a+(r.approvedAmount||0),0);
   const totalPaid = rs.filter(r=>r.status==='paid').reduce((a,r)=>a+(r.payout?.payoutAmount||0),0);
 
-  // by tier
   const byTier = {authorized:0,advanced:0,premium:0};
   approved.forEach(r=> byTier[partnerOf(r).tier]+=(r.approvedAmount||0));
   const maxTier = Math.max(1,...Object.values(byTier));
-  // by territory
+
   const byTerr = {};
   approved.forEach(r=>{const t=partnerOf(r).territory; byTerr[t]=(byTerr[t]||0)+(r.approvedAmount||0);});
   const maxTerr = Math.max(1,...Object.values(byTerr),1);
-  // by status
+
   const byStatus = {};
   active.forEach(r=> byStatus[r.status]=(byStatus[r.status]||0)+1);
   const maxStatus = Math.max(1,...Object.values(byStatus));
 
-  // PAM workload
   const pams = {};
   rs.forEach(r=>{ const pam=partnerOf(r).pam; if(!pams[pam])pams[pam]={open:0,breach:0,total:0}; if(r.status!=='draft')pams[pam].total++; if(OPEN_STATES.includes(r.status)){pams[pam].open++; const s=slaInfo(r); if(s&&s.sev===3)pams[pam].breach++;} });
 
   const tierColor={authorized:'#71717A',advanced:'#1A4F8A',premium:'#5B21B6'};
+
+  const cycleData = [
+    ['Submission → PAM action', 2, 'var(--blue)'],
+    ['PAM action → Final approval', 1, 'var(--purple)'],
+    ['Approval → Execution', 18, 'var(--amber)'],
+    ['Execution → Payout', 4, 'var(--teal)'],
+  ];
+  const actTypeData = [['Events (self-hosted)',88,'var(--teal)'],['Events (third-party)',72,'var(--blue)'],['Webinar',91,'var(--green)'],['Custom GTM',67,'var(--amber)']];
+  const rejData = [
+    ['Attendee-only / no lead capture', 3, 'var(--red)'],
+    ['Missing documentation / media plan', 2, 'var(--amber)'],
+    ['Duplicate within detection window', 1, 'var(--amber)'],
+    ['Budget exhausted', 1, 'var(--red)'],
+  ];
+
   $('#screen-reports').innerHTML = `<div class="list-col"><div class="list-pad">
     <div class="kpi-row kpi-4">
       <div class="kpi accent-blue"><div class="kpi-lbl">Active Requests</div><div class="kpi-val tabnum">${active.length}</div><div class="kpi-meta">FY2026</div></div>
@@ -2038,85 +2052,49 @@ function renderReports(){
       <div class="kpi accent-amber"><div class="kpi-lbl">Total Committed</div><div class="kpi-val tabnum">${money0(totalCommitted)}</div><div class="kpi-meta">across program</div></div>
       <div class="kpi accent-teal"><div class="kpi-lbl">Total Paid</div><div class="kpi-val tabnum">${money0(totalPaid)}</div><div class="kpi-meta">disbursed</div></div>
     </div>
+
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start">
       <div class="card"><div class="card-hd"><div class="ch-title">Committed funds by tier</div></div><div class="card-bd"><div class="bars">
-        ${Object.entries(byTier).map(([t,v])=>`<div class="bar-row"><div><span class="tier ${t}">${t}</span></div><div class="bar-track"><div class="bar-fill" style="width:${Math.max(6,v/maxTier*100)}%;background:${tierColor[t]}"></div></div><div class="bar-val">${money0(v)}</div></div>`).join('')}
+        ${Object.entries(byTier).map(([t,v])=>`<div class="bar-row"><div><span class="tier ${t}">${t}</span></div><div class="bar-track"><div class="bar-fill" style="width:${Math.max(6,v/maxTier*100)}%;background:${tierColor[t]}">${v?money0(v):''}</div></div><div class="bar-val">${money0(v)}</div></div>`).join('')}
       </div></div></div>
+
       <div class="card"><div class="card-hd"><div class="ch-title">Committed funds by territory</div></div><div class="card-bd"><div class="bars">
         ${Object.entries(byTerr).sort((a,b)=>b[1]-a[1]).map(([t,v])=>`<div class="bar-row" style="grid-template-columns:140px 1fr 64px"><div style="font-size:12px">${t}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.max(6,v/maxTerr*100)}%;background:var(--teal)"></div></div><div class="bar-val">${money0(v)}</div></div>`).join('')}
       </div></div></div>
+
       <div class="card"><div class="card-hd"><div class="ch-title">Requests by status</div></div><div class="card-bd"><div class="bars">
         ${Object.entries(byStatus).sort((a,b)=>b[1]-a[1]).map(([s,v])=>`<div class="bar-row" style="grid-template-columns:140px 1fr 44px"><div>${statusBadge(s)}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.max(6,v/maxStatus*100)}%;background:var(--blue)"></div></div><div class="bar-val">${v}</div></div>`).join('')}
       </div></div></div>
+
       <div class="card"><div class="card-hd"><div class="ch-title">PAM workload</div></div><div class="card-bd pad0" style="padding:0">
         <div class="qt-head" style="grid-template-columns:1fr 80px 80px 90px"><div>PAM</div><div class="qt-cell-r">Total</div><div class="qt-cell-r">Open</div><div class="qt-cell-r">Breached</div></div>
-        ${Object.entries(pams).map(([pam,w])=>`<div class="qt-row" style="grid-template-columns:1fr 80px 80px 90px;cursor:default"><div class="qt-partner">${pam}</div><div class="qt-cell-r mono">${w.total}</div><div class="qt-cell-r mono">${w.open}</div><div class="qt-cell-r mono" style="color:${w.breach?'var(--red)':'var(--text)'};font-weight:${w.breach?700:400}">${w.breach}</div></div>`).join('')}
+        ${Object.entries(pams).map(([p,w])=>`<div class="qt-row" style="grid-template-columns:1fr 80px 80px 90px;cursor:default"><div class="qt-partner">${p}</div><div class="qt-cell-r mono">${w.total}</div><div class="qt-cell-r mono">${w.open}</div><div class="qt-cell-r mono" style="color:${w.breach?'var(--red)':'var(--text)'};font-weight:${w.breach?700:400}">${w.breach}</div></div>`).join('')}
       </div></div>
     </div>
-  </div></div>`;
 
-  // Append ROI section
-  const roi_html = `
     <div style="margin-top:24px">
       <div class="sec-label">Program Effectiveness & ROI</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
-        <div class="card"><div class="card-hd"><div class="ch-title">Average cycle time</div><div class="ch-side">Submission → Paid</div></div><div class="card-bd">
-          <div class="bars">
-            ${[
-              ['Submission → PAM action', Math.round(Math.random()*2+1.5), 'var(--blue)'],
-              ['PAM action → Final approval', Math.round(Math.random()*1.5+0.5), 'var(--purple)'],
-              ['Approval → Execution', Math.round(Math.random()*20+12), 'var(--amber)'],
-              ['Execution → Payout', Math.round(Math.random()*5+3), 'var(--teal)'],
-            ].map(([l,v,c])=>`<div class="bar-row" style="grid-template-columns:190px 1fr 50px"><div style="font-size:12px">${l}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.min(100,v/30*100)}%;background:${c}">${v}d</div></div><div class="bar-val">${v}d</div></div>`).join('')}
-          </div>
-        </div></div>
-        <div class="card"><div class="card-hd"><div class="ch-title">Which activity types perform</div><div class="ch-side">Approval rate by type</div></div><div class="card-bd">
-          <div class="bars">
-            ${[['Events (self-hosted)',88,'var(--teal)'],['Events (third-party)',72,'var(--blue)'],['Webinar',91,'var(--green)'],['Custom GTM',67,'var(--amber)']].map(([l,v,c])=>`
-            <div class="bar-row"><div style="font-size:12px">${l}</div><div class="bar-track"><div class="bar-fill" style="width:${v}%;background:${c}">${v}%</div></div><div class="bar-val">${v}%</div></div>`).join('')}
-          </div>
-        </div></div>
-        <div class="card" style="grid-column:1/-1"><div class="card-hd"><div class="ch-title">Top rejection reasons</div><div class="ch-side">Why requests don't get approved</div></div><div class="card-bd">
-          <div class="bars">
-            ${[
-              ['Attendee-only / no lead capture mechanism', 3, 'var(--red)'],
-              ['Missing documentation / media plan', 2, 'var(--amber)'],
-              ['Duplicate activity within detection window', 1, 'var(--amber)'],
-              ['Budget exhausted — no available balance', 1, 'var(--red)'],
-            ].map(([l,v,c])=>`<div class="bar-row" style="grid-template-columns:minmax(0,2fr) 1fr 24px"><div style="font-size:12px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l}</div><div class="bar-track"><div class="bar-fill" style="width:${v/4*100}%;background:${c}"></div></div><div class="bar-val">${v}</div></div>`).join('')}
-          </div>
-        </div></div>
+        <div class="card"><div class="card-hd"><div class="ch-title">Average cycle time</div><div class="ch-side">Submission → Paid</div></div><div class="card-bd"><div class="bars">
+          ${cycleData.map(([l,v,c])=>`<div class="bar-row" style="grid-template-columns:190px 1fr 50px"><div style="font-size:12px">${l}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.min(100,v/30*100)}%;background:${c}">${v}d</div></div><div class="bar-val">${v}d</div></div>`).join('')}
+        </div></div></div>
+
+        <div class="card"><div class="card-hd"><div class="ch-title">Which activity types perform</div><div class="ch-side">Approval rate by type</div></div><div class="card-bd"><div class="bars">
+          ${actTypeData.map(([l,v,c])=>`<div class="bar-row"><div style="font-size:12px">${l}</div><div class="bar-track"><div class="bar-fill" style="width:${v}%;background:${c}">${v}%</div></div><div class="bar-val">${v}%</div></div>`).join('')}
+        </div></div></div>
+
+        <div class="card" style="grid-column:1/-1"><div class="card-hd"><div class="ch-title">Top rejection reasons</div></div><div class="card-bd"><div class="bars">
+          ${rejData.map(([l,v,c])=>`<div class="bar-row" style="grid-template-columns:minmax(0,2fr) 1fr 24px"><div style="font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l}</div><div class="bar-track"><div class="bar-fill" style="width:${v/4*100}%;background:${c}"></div></div><div class="bar-val">${v}</div></div>`).join('')}
+        </div></div></div>
       </div>
-    </div>`;
-  $('#screen-reports').innerHTML = $('#screen-reports').innerHTML.replace('</div></div>','') + roi_html + '</div></div>';
-}
-
-/* ── ADMIN CONFIGURATION ─────────────────────────── */
-function renderConfig(){
-  if(APP.role!=='admin'){ $('#screen-config').innerHTML=`<div class="list-col"><div class="list-pad">${emptyState('🔒','Admin access required','Switch to the MDF Administrator role to manage configuration.')}</div></div>`; return; }
-  const groups = {};
-  Object.entries(CONFIG_META).forEach(([k,m])=>{ (groups[m.group]=groups[m.group]||[]).push(k); });
-  const groupCards = Object.entries(groups).map(([g,keys])=>`
-    <div class="card"><div class="card-hd"><div class="ch-title">${g}</div></div><div class="card-bd pad0" style="padding:0">
-      ${keys.map(k=>{const m=CONFIG_META[k];return `<div class="cfg-row">
-        <div><div class="cfg-name">${m.label}</div><div class="cfg-desc">${m.desc}</div><div class="cfg-key">${k}</div></div>
-        <div class="row" style="gap:8px">
-          ${m.text
-            ? `<input class="fi" id="cfg-${k}" value="${CONFIG[k]}" oninput="markDirty()"/>`
-            : `<input class="fi mono" id="cfg-${k}" type="number" value="${CONFIG[k]}" oninput="markDirty()" style="text-align:right"/>${m.unit?`<span class="muted" style="font-size:12px;min-width:34px">${m.unit}</span>`:''}`}
-        </div>
-      </div>`;}).join('')}
-    </div></div>`).join('');
-
-  $('#screen-config').innerHTML = `<div class="list-col"><div class="list-pad">
-    <div class="banner banner-blue" style="margin-bottom:18px"><div class="banner-icon">i</div><div><div class="banner-title">Live policy values</div><div class="banner-body">These drive validation and budget math across both portals — no code deploy required. Every change writes an audit-log entry. Budget-cap percentages recalculate partner caps on the next sync.</div></div></div>
-    ${groupCards}
-    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:18px">
-      <button class="btn btn-ghost" id="cfg-reset" onclick="renderConfig()">Discard changes</button>
-      <button class="btn btn-primary" id="cfg-save" onclick="saveConfig()" disabled>Save configuration</button>
     </div>
+
   </div></div>`;
 }
+
+
+/* ── ADMIN CONFIGURATION ─────────────────────────── */
+/* renderConfig replaced by admin portal override below */
 let cfgDirty=false;
 function markDirty(){ cfgDirty=true; const b=$('#cfg-save'); if(b)b.disabled=false; }
 function saveConfig(){
