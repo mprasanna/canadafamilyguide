@@ -695,7 +695,7 @@ function PPFund({go, route}){
               <div className="pp-picks">
                 {ACT_TYPES.map(t=>(
                   <button key={t.id} className={'pp-pick'+(f.type===t.id?' is-sel':'')} disabled={t.soon}
-                    onClick={()=>!t.soon&&set('type',t.id)} style={{opacity:t.soon?.5:1,position:'relative'}}>
+                    onClick={()=>!t.soon&&setChoice('type',t.id)} style={{opacity:t.soon?.5:1,position:'relative'}}>
                     {t.soon&&<span style={{position:'absolute',top:14,right:14,fontSize:10.5,fontWeight:700,color:EDI.faint,background:'#EFEADF',padding:'2px 8px',borderRadius:5}}>Coming soon</span>}
                     <div style={{fontSize:26,marginBottom:10,color:f.type===t.id?EDI.clay:EDI.gold}}>{t.icon}</div>
                     <div className="pp-serif" style={{fontSize:19,fontWeight:500}}>{t.title}</div>
@@ -749,7 +749,7 @@ function PPFund({go, route}){
                 <div className="pp-f2">
                   <FundField label="Total activity budget (CAD)" half><input className="pp-input" type="number" defaultValue={f.total} placeholder="0" onInput={e=>{fRef.current.total=e.target.value; bump();}}/></FundField>
                   <FundField label="Zoho co-funding requested" half hint={typeMeta?`${typeMeta.cofund} for ${typeMeta.title.toLowerCase()}.`:''}>
-                    <div style={{display:'flex',gap:9}}>{pcts.map(p=>(<button key={p} className={'pp-opt'+(f.pct===p?' is-sel':'')} onClick={()=>set('pct',p)}>{p}%</button>))}</div>
+                    <div style={{display:'flex',gap:9}}>{pcts.map(p=>(<button key={p} className={'pp-opt'+(f.pct===p?' is-sel':'')} onClick={()=>setChoice('pct',p)}>{p}%</button>))}</div>
                   </FundField>
                   <FundField label="Supporting documents" hint="Quotes, agendas, media plans — optional but speeds things up.">
                     <button className="pp-btn pp-btn--ghost pp-btn--sm" onClick={()=>setChoice('files',[...f.files,{name:`Document_${f.files.length+1}.pdf`}])}>＋ Attach a file</button>
