@@ -654,7 +654,7 @@ const REQUESTS = [
       {state:'submitted', title:'Request submitted', who:'Marc Tremblay (Partner)', when:'2026-06-03 10:41', cls:'done'},
       {state:'under_review', title:'Picked up for review', who:'Daniel Roy (PAM)', when:'2026-06-05 09:20', cls:'current'},
     ],
-    notes:[{author:'Daniel Roy', initials:'DR', when:'2026-06-05', body:'Strong fit. Confirming the lead-scan package is included in the sponsorship tier before approving.'}],
+    notes:[{author:'Daniel Roy', initials:'DR', when:'2026-06-05', body:`Strong fit. Confirming the lead-scan package is included in the sponsorship tier before approving.`}],
   },
 
   /* 3 — PENDING INFO, missing documentation */
@@ -696,7 +696,7 @@ const REQUESTS = [
       {state:'pam_approved', title:'PAM approved — $8,000', who:'Daniel Roy (PAM)', when:'2026-05-23 15:42', cls:'done', note:'Approved at $8,000 vs $10,000 requested — trimming the ad-spend line to match prior campaign efficiency. Escalated to Marketing for final sign-off.'},
       {state:'approved', title:'Awaiting Marketing final approval', who:'Priya Anand (Marketing)', when:null, cls:'future'},
     ],
-    notes:[{author:'Daniel Roy', initials:'DR', when:'2026-05-23', body:'Reduced from $10K to $8K. Strong vertical motion with real references. Recommend approval.'}],
+    notes:[{author:'Daniel Roy', initials:'DR', when:'2026-05-23', body:`Reduced from $10K to $8K. Strong vertical motion with real references. Recommend approval.`}],
   },
 
   /* 5 — APPROVED, not yet executed (approved-but-unpaid pipeline) */
@@ -872,7 +872,7 @@ const REQUESTS = [
       {state:'pam_approved', title:'PAM approved — $2,450', who:'Daniel Roy (PAM)', when:'2026-05-29 10:30', cls:'done', note:'Media plan documented, 70% tier justified. Recommend final approval.'},
       {state:'approved', title:'Awaiting Marketing final approval', who:'Priya Anand (Marketing)', when:null, cls:'future'},
     ],
-    notes:[{author:'Daniel Roy', initials:'DR', when:'2026-05-29', body:'Clean request, all docs present. Quick approve.'}],
+    notes:[{author:'Daniel Roy', initials:'DR', when:'2026-05-29', body:`Clean request, all docs present. Quick approve.`}],
   },
 
   /* 14 — DRAFT (partner hasn't submitted) — visible to admin only */
@@ -2144,58 +2144,22 @@ const FISCAL_YEARS = [
 const NOTIF_TEMPLATES = [
   { id:'submitted', trigger:'Request submitted', recipient:'PAM', channel:'Email + Cliq',
     subject:'New MDF request — {ref} from {partner}',
-    body:'Hi {pam},
-
-{partner} submitted a new {category} request ({ref}) for {activity}. Co-fund requested: {amount}. Please review within {sla} business days.
-
-Open in portal → {link}' },
+    body:`Hi {pam},\n\n{partner} submitted a new {category} request ({ref}) for {activity}. Co-fund requested: {amount}. Please review within {sla} business days.\n\nOpen in portal → {link}` },
   { id:'pam_approved', trigger:'PAM approved', recipient:'Marketing Exec', channel:'Email',
     subject:'MDF request {ref} ready for final approval',
-    body:'Hi {marketing_exec},
-
-{pam} has approved {ref} ({partner}) at {approved_amount} and escalated for your final sign-off.
-
-PAM notes: {notes}
-
-Approve in portal → {link}' },
+    body:`Hi {marketing_exec},\n\n{pam} has approved {ref} ({partner}) at {approved_amount} and escalated for your final sign-off.\n\nPAM notes: {notes}\n\nApprove in portal → {link}` },
   { id:'approved', trigger:'Final approval', recipient:'Partner', channel:'Email',
     subject:'Your activity is funded — {ref}',
-    body:'Hi {contact},
-
-Great news — your plan "{activity}" has been approved! Zoho will co-fund {approved_amount} for this activity.
-
-Your event is on. Once it\'s complete, log back in to submit your results and claim your reimbursement.
-
-Track in portal → {link}' },
+    body:`Hi {contact},\n\nGreat news — your plan "{activity}" has been approved! Zoho will co-fund {approved_amount} for this activity.\n\nYour event is on. Once it\'s complete, log back in to submit your results and claim your reimbursement.\n\nTrack in portal → {link}` },
   { id:'rejected', trigger:'Request rejected', recipient:'Partner', channel:'Email',
     subject:'Update on your MDF request — {ref}',
-    body:'Hi {contact},
-
-Your request "{activity}" ({ref}) wasn\'t approved this time.
-
-Reason: {rejection_reason}
-
-If you\'d like to resubmit or discuss, reply to this email or reach out to {pam} directly.
-
-Portal → {link}' },
+    body:`Hi {contact},\n\nYour request "{activity}" ({ref}) wasn\'t approved this time.\n\nReason: {rejection_reason}\n\nIf you\'d like to resubmit or discuss, reply to this email or reach out to {pam} directly.\n\nPortal → {link}` },
   { id:'claim_due', trigger:'Event date + 7 days (no claim submitted)', recipient:'Partner', channel:'Email',
     subject:'Reminder: submit your results for {activity}',
-    body:'Hi {contact},
-
-Your activity "{activity}" wrapped up recently — time to submit your results and claim your reimbursement of up to {approved_amount}.
-
-You have until {deadline} to submit. After that, the funds return to your annual balance.
-
-Submit claim → {link}' },
+    body:`Hi {contact},\n\nYour activity "{activity}" wrapped up recently — time to submit your results and claim your reimbursement of up to {approved_amount}.\n\nYou have until {deadline} to submit. After that, the funds return to your annual balance.\n\nSubmit claim → {link}` },
   { id:'paid', trigger:'Payout processed', recipient:'Partner', channel:'Email',
     subject:'Your reimbursement is on its way — {ref}',
-    body:'Hi {contact},
-
-{pam} has processed your reimbursement of {payout_amount} for "{activity}". The funds will appear in your Partner Store account within a few business days.
-
-Thank you for investing in growing with Zoho.
-
-Portal → {link}' },
+    body:`Hi {contact},\n\n{pam} has processed your reimbursement of {payout_amount} for "{activity}". The funds will appear in your Partner Store account within a few business days.\n\nThank you for investing in growing with Zoho.\n\nPortal → {link}` },
 ];
 
 let editingTemplate = null;
