@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Zoho Partner Growth Hub — Feature Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --paper:#F4EEE3; --paper-alt:#EFE7D8; --ink:#221C15; --sub:#6B5F4E; --faint:#9C8F79;
+  --clay:#A8432E; --clay-d:#8A331F; --gold:#C98A36; --gold-d:#9A6500; --gold-l:#FBEFD8;
+  --sage:#4F6B50; --sage-d:#3E5640; --sage-l:#E7F0E6;
+  --card:#FFFDF8; --line:#E5DCC9; --line-soft:#EFE8D9;
+  --nav:#1C1812;
+  --serif:"'Newsreader', Georgia, serif"; --sans:"'Manrope', system-ui, sans-serif";
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',system-ui,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.6}
+
+/* ── TOPBAR ── */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(244,238,227,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:0 48px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:11px}
+.brand-mark{width:32px;height:32px;border-radius:8px;background:var(--clay);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+.brand-name{font-family:'Newsreader',Georgia,serif;font-size:18px;font-weight:500;letter-spacing:-.01em}
+.brand-sub{font-size:12px;color:var(--faint);margin-left:6px}
+.top-links{display:flex;gap:24px}
+.top-link{font-size:13.5px;font-weight:600;color:var(--sub);text-decoration:none;transition:color .14s}
+.top-link:hover{color:var(--clay)}
+
+/* ── HERO ── */
+.hero{padding:72px 48px 56px;max-width:1100px;margin:0 auto;text-align:center}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.hero h1{font-family:'Newsreader',Georgia,serif;font-size:56px;font-weight:500;letter-spacing:-.02em;line-height:1.06;margin-bottom:18px;color:var(--ink)}
+.hero h1 em{font-style:italic;color:var(--clay)}
+.hero p{font-size:17px;color:var(--sub);max-width:580px;margin:0 auto 32px;line-height:1.65}
+.hero-pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:7px;padding:7px 16px;border-radius:20px;font-size:13px;font-weight:600;border:1.5px solid var(--line);color:var(--sub);background:var(--card)}
+.pill-dot{width:8px;height:8px;border-radius:50%}
+
+/* ── SECTION ── */
+.section{max-width:1100px;margin:0 auto;padding:0 48px 80px}
+.section-hdr{display:flex;align-items:flex-end;gap:20px;margin-bottom:32px;padding-top:56px;border-top:1px solid var(--line)}
+.section-num{font-family:'Newsreader',Georgia,serif;font-size:64px;font-weight:500;color:var(--line);line-height:1;flex-shrink:0}
+.section-title-wrap{}
+.section-eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--clay);margin-bottom:5px}
+.section-title{font-family:'Newsreader',Georgia,serif;font-size:34px;font-weight:500;letter-spacing:-.015em;color:var(--ink)}
+.section-sub{font-size:15px;color:var(--sub);margin-top:4px;max-width:620px;line-height:1.6}
+
+/* ── PORTAL HEADER STRIP ── */
+.portal-strip{display:flex;align-items:center;gap:14px;padding:16px 22px;border-radius:14px;margin-bottom:24px}
+.portal-strip.partner{background:linear-gradient(105deg,#F7E9D4,#FBF3E5);border:1px solid var(--line)}
+.portal-strip.pam{background:linear-gradient(105deg,#1C1812,#2A2319);border:1px solid #3A3025}
+.portal-strip-mark{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;flex-shrink:0}
+.portal-strip.partner .portal-strip-mark{background:var(--clay);color:#fff}
+.portal-strip.pam .portal-strip-mark{background:var(--card);color:var(--clay-d)}
+.portal-strip-label{font-size:16px;font-weight:700}
+.portal-strip.partner .portal-strip-label{color:var(--ink)}
+.portal-strip.pam .portal-strip-label{color:#F5ECE0}
+.portal-strip-desc{font-size:13px;margin-top:2px}
+.portal-strip.partner .portal-strip-desc{color:var(--sub)}
+.portal-strip.pam .portal-strip-desc{color:#8C7D6A}
+.portal-strip-tech{margin-left:auto;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:6px}
+.portal-strip.partner .portal-strip-tech{background:var(--gold-l);color:var(--gold-d)}
+.portal-strip.pam .portal-strip-tech{background:rgba(255,255,255,.08);color:#C4B39E}
+
+/* ── FEATURE CARDS ── */
+.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:720px){.feature-grid{grid-template-columns:1fr}}
+.fcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px;transition:box-shadow .16s,transform .16s}
+.fcard:hover{box-shadow:0 10px 32px rgba(80,60,30,.10);transform:translateY(-2px)}
+.fcard-top{display:flex;align-items:flex-start;gap:13px}
+.fcard-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.fcard-icon.clay{background:var(--gold-l)}
+.fcard-icon.sage{background:var(--sage-l)}
+.fcard-icon.ink{background:#F0EBE0}
+.fcard-icon.red{background:#FDEAEA}
+.fcard-icon.blue{background:#EBF3FC}
+.fcard-title{font-family:'Newsreader',Georgia,serif;font-size:20px;font-weight:500;letter-spacing:-.01em;line-height:1.2}
+.fcard-oneliner{font-size:13px;font-weight:700;color:var(--clay);margin-top:1px}
+.fcard-body{font-size:14px;color:var(--sub);line-height:1.6}
+.fcard-details{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.fcard-detail{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--sub);line-height:1.45}
+.fcard-detail::before{content:'→';color:var(--clay);font-weight:700;font-size:12px;margin-top:1px;flex-shrink:0}
+
+/* PAM cards slightly different bg */
+.fcard.pam-card{background:#FAF8F4;border-color:var(--line-soft)}
+
+/* ── STATUS LIFECYCLE ── */
+.lifecycle{display:flex;align-items:flex-start;gap:0;overflow-x:auto;padding-bottom:8px;margin-bottom:32px}
+.lc-step{display:flex;flex-direction:column;align-items:center;flex:1;min-width:90px;position:relative}
+.lc-step:not(:last-child)::after{content:'';position:absolute;top:16px;left:50%;width:100%;height:2px;background:var(--line)}
+.lc-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;z-index:1;position:relative;border:2px solid var(--line);margin-bottom:8px}
+.lc-label{font-size:11px;font-weight:700;text-align:center;line-height:1.3}
+.lc-sub{font-size:10px;color:var(--faint);text-align:center;margin-top:3px;line-height:1.3}
+.lcs-draft{background:#F4F4F5;color:#71717A;border-color:#D4D4D4}
+.lcs-sub{background:#EBF3FC;color:#1A4F8A;border-color:#C2D9F4}
+.lcs-rev{background:#FDF2DC;color:#9A6500;border-color:#F0C46B}
+.lcs-pam{background:#EDE9FE;color:#5B21B6;border-color:#C4B5FD}
+.lcs-app{background:#E3F5EC;color:#1A7A4A;border-color:#9BD5C0}
+.lcs-exec{background:#E2F4EE;color:#0B7B5E;border-color:#9BD5C0}
+.lcs-pay{background:#EBF3FC;color:#1A4F8A;border-color:#C2D9F4}
+.lcs-paid{background:#E3F5EC;color:#1A7A4A;border-color:#9BD5C0}
+.lcs-rej{background:#FDEAEA;color:#B52A2A;border-color:#F4AEAE}
+
+/* ── ROLES TABLE ── */
+.role-table{width:100%;border-collapse:collapse;background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.role-table th{padding:11px 16px;background:var(--paper-alt);font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);text-align:left;border-bottom:1px solid var(--line)}
+.role-table td{padding:11px 16px;font-size:13px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+.role-table tr:last-child td{border-bottom:none}
+.role-table td:first-child{font-weight:700;color:var(--ink)}
+.yes{color:var(--sage-d);font-weight:700}
+.own{color:var(--gold-d);font-weight:700}
+.no{color:var(--faint)}
+
+/* ── BUDGET FORMULA ── */
+.formula-block{background:var(--nav);border-radius:16px;padding:28px 32px;margin-bottom:14px}
+.formula-row{display:flex;align-items:baseline;gap:12px;font-size:15px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.formula-row:last-child{border-bottom:none;padding-top:14px;margin-top:4px}
+.f-label{color:#C4B39E;flex:1}
+.f-val{font-family:'Newsreader',Georgia,serif;font-size:18px;color:#F5ECE0;font-weight:500}
+.f-op{color:#8C7D6A;font-size:18px;min-width:24px;text-align:center}
+.f-desc{font-size:12px;color:#7A6B59;margin-top:2px;max-width:320px;line-height:1.45}
+
+/* ── PHASE TABLE ── */
+.phase-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:720px){.phase-grid{grid-template-columns:1fr}}
+.phase-card{border-radius:14px;padding:22px 24px}
+.phase-card.p1{background:var(--card);border:1.5px solid var(--clay);border-top:4px solid var(--clay)}
+.phase-card.p2{background:var(--card);border:1.5px solid var(--line);border-top:4px solid var(--sage)}
+.phase-num{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.phase-card.p1 .phase-num{color:var(--clay)}
+.phase-card.p2 .phase-num{color:var(--sage-d)}
+.phase-title{font-family:'Newsreader',Georgia,serif;font-size:20px;font-weight:500;margin-bottom:14px}
+.phase-items{display:flex;flex-direction:column;gap:6px}
+.phase-item{font-size:13px;color:var(--sub);display:flex;align-items:flex-start;gap:8px;line-height:1.45}
+.phase-item.done::before{content:'✓';color:var(--sage-d);font-weight:800;font-size:12px;margin-top:1px;flex-shrink:0}
+.phase-item.todo::before{content:'○';color:var(--faint);font-size:12px;margin-top:1px;flex-shrink:0}
+
+/* ── FOOTER ── */
+.footer{background:var(--nav);color:#C4B39E;padding:40px 48px;margin-top:40px;text-align:center;font-size:13px}
+.footer strong{color:#F5ECE0}
+</style>
+
+<style>
+/* ── MDF SHARED SHELL ──────────────────────────────────────── */
+:root{
+  --sh-ink:#221C15;--sh-sub:#6B5F4E;--sh-faint:#9C8F79;
+  --sh-clay:#A8432E;--sh-clay-d:#8A331F;
+  --sh-gold:#C98A36;--sh-gold-l:#FBEFD8;--sh-gold-d:#9A6500;
+  --sh-sage:#4F6B50;--sh-sage-l:#E7F0E6;
+  --sh-paper:#F4EEE3;--sh-paper-alt:#EFE7D8;
+  --sh-card:#FFFDF8;--sh-line:#E5DCC9;--sh-line-soft:#EFE8D9;
+  --sh-nav:#1C1812;
+}
+.sh-topbar{
+  position:sticky;top:0;z-index:200;
+  background:rgba(244,238,227,.94);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--sh-line);
+  height:56px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;font-family:'Manrope',system-ui,sans-serif;
+}
+.sh-brand{display:flex;align-items:center;gap:11px;text-decoration:none;cursor:pointer}
+.sh-mark{width:30px;height:30px;background:var(--sh-clay);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;flex-shrink:0}
+.sh-brand-name{font-size:15px;font-weight:500;font-family:'Newsreader',Georgia,serif;color:var(--sh-ink);letter-spacing:-.01em;line-height:1}
+.sh-brand-sub{font-size:10.5px;color:var(--sh-faint);letter-spacing:.02em;margin-top:1px}
+.sh-nav{display:flex;align-items:center;gap:4px}
+.sh-nav-link{font-size:13px;font-weight:600;color:var(--sh-sub);text-decoration:none;padding:6px 12px;border-radius:8px;transition:all .13s;cursor:pointer;background:none;border:none;font-family:inherit}
+.sh-nav-link:hover{background:var(--sh-paper-alt);color:var(--sh-ink)}
+.sh-nav-link.active{background:var(--sh-gold-l);color:var(--sh-gold-d)}
+.sh-nav-sep{color:var(--sh-line);font-size:16px;margin:0 2px;user-select:none}
+.sh-portal-badge{font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:.03em;text-transform:uppercase;margin-left:8px}
+.sh-portal-badge.partner{background:var(--sh-gold-l);color:var(--sh-gold-d)}
+.sh-portal-badge.pam{background:rgba(28,24,18,.08);color:var(--sh-nav)}
+.sh-portal-badge.guide{background:var(--sh-sage-l);color:var(--sh-sage)}
+
+/* breadcrumb */
+.sh-breadcrumb{
+  font-family:'Manrope',system-ui,sans-serif;
+  font-size:12px;color:var(--sh-faint);
+  display:flex;align-items:center;gap:7px;
+  padding:8px 40px;
+  background:var(--sh-paper-alt);
+  border-bottom:1px solid var(--sh-line-soft);
+}
+.sh-bc-item{color:var(--sh-sub);text-decoration:none;font-weight:500;cursor:pointer}
+.sh-bc-item:hover{color:var(--sh-clay)}
+.sh-bc-sep{opacity:.45;font-size:10px}
+.sh-bc-current{color:var(--sh-ink);font-weight:600}
+
+/* footer */
+.sh-footer{
+  background:var(--sh-nav);
+  color:#8C7D6A;
+  padding:32px 40px;
+  font-family:'Manrope',system-ui,sans-serif;
+  font-size:12.5px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:16px;
+  margin-top:auto;
+}
+.sh-footer-brand{display:flex;align-items:center;gap:10px}
+.sh-footer-links{display:flex;gap:20px;flex-wrap:wrap}
+.sh-footer-link{color:#8C7D6A;text-decoration:none;font-weight:600;transition:color .13s}
+.sh-footer-link:hover{color:#F5ECE0}
+.sh-footer-right{font-size:11.5px;color:#5A4E40}
+
+/* Hide guide's own topbar — using MDF shell */
+.topbar { display:none !important; }
+body { padding-top:0; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-mark">Z</div>
+    <div class="brand-name">Zoho Partner Growth</div>
+    <span class="brand-sub">Partner Growth Hub — Feature Guide</span>
+  </div>
+  <div class="top-links">
+    <a class="top-link" href="#partner">Partner Portal</a>
+    <a class="top-link" href="#pam">PAM Portal</a>
+    <a class="top-link" href="#lifecycle">Status Flow</a>
+    <a class="top-link" href="#budget">Budget Engine</a>
+    <a class="top-link" href="#roles">Roles</a>
+    <a class="top-link" href="#phases">Phases</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="eyebrow">Product Feature Guide · v1.0</div>
+  <h1>Everything the MDF system<br>can <em>do for you.</em></h1>
+  <p>A complete reference for both portals — what each screen does, what it shows, and how it works. Built for Zoho Canada partners and the PAM/Marketing team.</p>
+  <div class="hero-pills">
+    <div class="pill"><div class="pill-dot" style="background:var(--clay)"></div>Partner Portal — 7 screens</div>
+    <div class="pill"><div class="pill-dot" style="background:var(--sage)"></div>PAM Portal — 8 screens</div>
+    <div class="pill"><div class="pill-dot" style="background:var(--gold)"></div>Hosted on Zoho Catalyst</div>
+    <div class="pill"><div class="pill-dot" style="background:#1A4F8A"></div>Zoho OAuth + Partner Store auth</div>
+  </div>
+</div>
+
+<!-- ══ PARTNER PORTAL ══ -->
+<div class="section" id="partner">
+  <div class="section-hdr">
+    <div class="section-num">01</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">Partner-facing</div>
+      <div class="section-title">Partner Portal</div>
+      <div class="section-sub">What a Zoho channel partner sees after logging in with their Zoho account. Warm editorial design — cream background, Newsreader serif headings, Manrope sans body.</div>
+    </div>
+  </div>
+
+  <div class="portal-strip partner">
+    <div class="portal-strip-mark">Z</div>
+    <div>
+      <div class="portal-strip-label">Zoho Partner Growth — MDF</div>
+      <div class="portal-strip-desc">partner-portal.html · React 18 · Warm editorial · #F4EEE3 cream</div>
+    </div>
+    <div class="portal-strip-tech">React + Babel CDN</div>
+  </div>
+
+  <div class="feature-grid">
+    <div class="fcard">
+      <div class="fcard-top">
+        <div class="fcard-icon clay">🏠</div>
+        <div>
+          <div class="fcard-title">Home</div>
+          <div class="fcard-oneliner">Your funding at a glance — act, don't read.</div>
+        </div>
+      </div>
+      <div class="fcard-body">The dashboard-first landing screen. Partners see their available MDF balance instantly, along with active plans in motion and curated co-marketing opportunities.</div>
+      <div class="fcard-details">
+        <div class="fcard-detail">Live budget card showing Cap / Committed / Reimbursed / Available with animated utilisation bar</div>
+        <div class="fcard-detail">Claim nudge banner appears when an event is complete and ready for reimbursement</div>
+        <div class="fcard-detail">Active plans list — click any row to go straight to Activity Detail</div>
+        <div class="fcard-detail">Growth opportunities — 3 personalised recommendations for the partner's tier and territory</div>
+        <div class="fcard-detail">Upcoming Zoho co-marketing events with co-fund percentage shown upfront</div>
+      </div>
+    </div>
+
+    <div class="fcard">
+      <div class="fcard-top">
+        <div class="fcard-icon clay">📋</div>
+        <div>
+          <div class="fcard-title">Fund an Activity</div>
+          <div class="fcard-oneliner">4-step wizard — submit a co-funding plan in under 5 minutes.</div>
+        </div>
+      </div>
+      <div class="fcard-body">The main application form. Partners pick an activity type and fill in details. Zoho's co-fund share is calculated and shown live in a right-hand rail as they type.</div>
+      <div class="fcard-details">
+        <div class="fcard-detail"><strong>Step 1</strong> — Choose activity type: Event / Webinar / GTM Campaign / Certification (coming soon)</div>
+        <div class="fcard-detail"><strong>Step 2</strong> — Activity details: name, date, format, location, goal. Fields adapt per activity type</div>
+        <div class="fcard-detail"><strong>Step 3</strong> — Budget: total spend, co-fund % (30/50/70%). Live funding rail updates as they type</div>
+        <div class="fcard-detail"><strong>Step 4</strong> — Review and submit. Left stepper rail shows progress; completed steps are clickable</div>
+        <div class="fcard-detail">Save & finish later persists draft state across sessions</div>
+        <div class="fcard-detail">Over-budget warning shown inline — partner can still submit, PAM decides</div>
+      </div>
+    </div>
+
+    <div class="fcard">
+      <div class="fcard-top">
+        <div class="fcard-icon sage">📁</div>
+        <div>
+          <div class="fcard-title">My Programs</div>
+          <div class="fcard-oneliner">Every plan you've submitted, filterable by what needs attention.</div>
+        </div>
+      </div>
+      <div class="fcard-body">Full history of all funding submissions. Filter chips reduce the list to what matters right now.</div>
+      <div class="fcard-details">
+        <div class="fcard-detail">Filter by: All / In Review / Funded / Needs You / Completed</div>
+        <div class="fcard-detail">Inline nudge for "Pending Info" items: "Daniel needs a little more info →"</div>
+        <div class="fcard-detail">Inline nudge for "Executed" items: "Ready to claim up to $X →"</div>
+        <div class="fcard-detail">Left accent border on cards that need partner action</div>
+        <div class="fcard-detail">Click any card to go to Activity Detail</div>
+      </div>
+    </div>
+
+    <div class="fcard">
+      <div class="fcard-top">
+        <div class="fcard-icon sage">🔍</div>
+        <div>
+          <div class="fcard-title">Activity Detail</div>
+          <div class="fcard-oneliner">The full story of one plan — where it is, what happened, what's next.</div>
+        </div>
+      </div>
+      <div class="fcard-body">Dedicated page for each funding submission. The partner sees everything about their plan, including PAM feedback and next steps.</div>
+      <div class="fcard-details">
+        <div class="fcard-detail">Status tag + activity type shown prominently at the top</div>
+        <div class="fcard-detail">Info request banner: shows PAM's message, text area to reply, attach file button</div>
+        <div class="fcard-detail">Rejection banner: shows PAM's reason in full with option to start a new plan</div>
+        <div class="fcard-detail">Plan description + funding breakdown (total, Zoho %, partner contribution)</div>
+        <div class="fcard-detail">Journey timeline: every stage with date, who actioned it, and PAM notes</div>
+        <div class="fcard-detail">"Submit a Claim →" CTA appears only when status is Executed</div>
+      </div>
+    </div>
+
+    <div class="fcard">
+      <div class="fcard-top">
+        <div class="fcard-icon ink">🧾</div>
+        <div>
+          <div class="fcard-title">Claims</div>
+          <div class="fcard-oneliner">Submit your results, get reimbursed — usually within days.</div>
+        </div>
+      </div>
+      <div class="fcard-body">The post-event reimbursement flow. Partners submit actual spend, outcomes, and receipts after their event is complete. Reimbursement is calculated live.</div>
+      <div class="fcard-details">
+        <div class="fcard-detail">Claims hub shows: Ready to Claim / In Review / Reimbursed sections</div>
+        <div class="fcard-detail">Claim form fields: actual spend, actual attendance, leads generated, outcomes narrative</div>
+        <div class="fcard-detail">Receipt upload (required before submit is enabled)</div>
+        <div class="fcard-detail">Live reimbursement rail: shows min(actual × %, approved cap) as partner types</div>
+        <div class="fcard-detail">Submit disabled until spend, outcomes, and at least one receipt are provided</div>
+        <div class="fcard-detail">Success screen confirms reimbursement amount going to Partner Store account</div>
+      </div>
+    </div>
+
+    <div class="fcard">
+      <div class="fcard-top">
+        <div class="fcard-icon clay">💰</div>
+        <div>
+          <div class="fcard-title">Budget</div>
+          <div class="fcard-oneliner">Your 2026 growth fund — where every dollar is, instantly.</div>
+        </div>
+      </div>
+      <div class="fcard-body">Full visibility into the partner's annual MDF allocation. No hidden numbers — the partner sees the same figures as their PAM.</div>
+      <div class="fcard-details">
+        <div class="fcard-detail">4 KPI cards: Fund Cap / Committed / Reimbursed / Available</div>
+        <div class="fcard-detail">Utilisation bar: gold = committed to active plans, green = already reimbursed</div>
+        <div class="fcard-detail">Committed breakdown — list of active plans with amounts, click to view detail</div>
+        <div class="fcard-detail">Reimbursed breakdown — paid activities with dates</div>
+        <div class="fcard-detail">Nudge card if significant balance remains: "Funds don't roll over — let's put them to work"</div>
+        <div class="fcard-detail">CTA: Fund a Marketing Activity direct from budget page</div>
+      </div>
+    </div>
+
+    <div class="fcard" style="grid-column:1/-1">
+      <div class="fcard-top">
+        <div class="fcard-icon ink">❓</div>
+        <div>
+          <div class="fcard-title">Help</div>
+          <div class="fcard-oneliner">Program rules and FAQs — everything in plain English.</div>
+        </div>
+      </div>
+      <div class="fcard-body">A non-technical explainer of how the MDF program works. Four rule cards cover timing, eligibility, co-funding rates, and how claims work. A FAQ section handles the most common questions, and a contact card connects the partner directly to their PAM.</div>
+      <div class="fcard-details">
+        <div class="fcard-detail">Rule cards: Plan ahead (30 days) · How much we co-fund (up to 70%) · What's eligible · Claiming reimbursement</div>
+        <div class="fcard-detail">FAQ: rollover, editing after submit, payout timing, who is your PAM</div>
+        <div class="fcard-detail">Contact CTA: "Message [PAM name] →" personalised to the partner</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PAM PORTAL ══ -->
+<div class="section" id="pam">
+  <div class="section-hdr">
+    <div class="section-num">02</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">Internal — PAM / Marketing / Admin</div>
+      <div class="section-title">PAM Portal</div>
+      <div class="section-sub">What Zoho's internal team sees. Dark warm-ink left nav, clean warm-cream content area. Role-aware: PAM, Marketing Exec, and MDF Admin each see a different view of the same data.</div>
+    </div>
+  </div>
+
+  <div class="portal-strip pam">
+    <div class="portal-strip-mark">ZM</div>
+    <div>
+      <div class="portal-strip-label">Zoho MDF — Internal Portal</div>
+      <div class="portal-strip-desc">pam-portal.html · Vanilla JS · Warm editorial tones · Dark #1C1812 nav</div>
+    </div>
+    <div class="portal-strip-tech">Vanilla JS + CSS</div>
+  </div>
+
+  <div style="background:var(--paper-alt);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:24px;display:flex;gap:24px;font-size:13px;flex-wrap:wrap">
+    <div><strong>Role switcher</strong> — top-right toggle lets you flip between PAM / Marketing / Admin instantly. The nav, queue, and data scope all adapt.</div>
+    <div style="color:var(--faint)">·</div>
+    <div>Info <strong>ⓘ</strong> icons on nav items and KPI cards explain what each metric means on hover.</div>
+  </div>
+
+  <div class="feature-grid">
+    <div class="fcard pam-card">
+      <div class="fcard-top">
+        <div class="fcard-icon blue">⬛</div>
+        <div>
+          <div class="fcard-title">Dashboard</div>
+          <div class="fcard-oneliner">Your command centre — what needs action right now.</div>
+        </div>
+      </div>
+      <div class="fcard-body">The first screen on login. Shows a live snapshot of what's urgent, what's pending, and how the program budget is tracking.</div>
+      <div class="fcard-details">
+        <div class="fcard-detail">4 KPI cards: Awaiting Action · SLA Breached · Payouts Pending · Available Budget (all with ⓘ tooltips)</div>
+        <div class="fcard-detail">Top 6 action items from the queue, sorted by SLA urgency — click to open right panel</div>
+        <div class="fcard-detail">Program Budget block: Cap / Committed / Paid / Available with utilisation bar across all visible partners</div>
+        <div class="fcard-detail">Recent activity timeline: last 6 state changes across all requests, with who and when</div>
+        <div class="fcard-detail">Marketing Exec sees "Awaiting final approval" instead of full queue</div>
+      </div>
+    </div>
+
+    <div class="fcard pam-card">
+      <div class="fcard-top">
+        <div class="fcard-icon red">📥</div>
+        <div>
+          <div class="fcard-title">Review Queue</div>
+          <div class="fcard-oneliner">All open requests sorted by SLA — act before the clock runs out.</div>
+        </div>
+      </div>
+      <div class="fcard-body">The primary working screen for PAMs. Every request needing action, with SLA traffic-light pills and a slide-in quick panel so you can act without leaving the list.</div>
+      <div class="fcard-details">
+        <div class="fcard-detail">Table view (dense, 7 columns) or Card view (visual cards) — toggle top-right</div>
+        <div class="fcard-detail">Filter chips: Needs Action / SLA Breached / New / Under Review / Pending Info</div>
+        <div class="fcard-detail">SLA pills: green (days left) → amber (due today/tomorrow) → red pulsing (breached)</div>
+        <div class="fcard-detail">Flag badges: Duplicate · Over Budget · Missing Docs</div>
+        <div class="fcard-detail">Click any row → right-side panel slides in with key details + action buttons</div>
+        <div class="fcard-detail">Panel actions: Approve / Request Info / Reject (role-aware — shows what you can do)</div>
+        <div class="fcard-detail">"Open full detail →" link goes to the complete detail page</div>
+      </div>
+    </div>
+
+    <div class="fcard pam-card">
+      <div class="fcard-top">
+        <div class="fcard-icon sage">✅</div>
+        <div>
+          <div class="fcard-title">Request Detail</div>
+          <div class="fcard-oneliner">The full picture — every field, every note, every decision.</div>
+        </div>
+      </div>
+      <div class="fcard-body">Full-screen view of a single request. Everything the PAM needs to make a decision: submission data, flags, budget impact, attachments, timeline, and internal notes.</div>
+      <div class="fcard-details">
+        <div class="fcard-detail">Status banners for rejection reason, pending info message, and duplicate/over-budget flags</div>
+        <div class="fcard-detail">Activity card: all form fields, including GTM-specific fields when applicable</div>
+        <div class="fcard-detail">Budget request card: requested vs approved amounts, with live budget impact calculation</div>
+        <div class="fcard-detail">Attachments: downloadable with signed URL (simulated), flagged if missing</div>
+        <div class="fcard-detail">Internal notes: PAM can add notes (not visible to partner)</div>
+        <div class="fcard-detail">Right column: partner budget block + activity timeline</div>
+        <div class="fcard-detail">Action buttons in hero: Approve / Reject / Request Info / Process Payout (context-aware)</div>
+      </div>
+    </div>
+
+    <div class="fcard pam-card">
+      <div class="fcard-top">
+        <div class="fcard-icon ink">🔔</div>
+        <div>
+          <div class="fcard-title">Action Modals</div>
+          <div class="fcard-oneliner">Approve, reject, request info — with guardrails at every step.</div>
+        </div>
+      </div>
+      <div class="fcard-body">Every action opens a focused modal so PAMs don't accidentally approve or reject. Each modal shows relevant context and requires mandatory fields where appropriate.</div>
+      <div class="fcard-details">
+        <div class="fcard-detail">Approve (PAM): editable amount field, over-balance warning updates live as you type</div>
+        <div class="fcard-detail">Approve (Marketing): shows PAM-approved amount, confirms commit to budget</div>
+        <div class="fcard-detail">Reject: reason field is mandatory, shown prominently to partner</div>
+        <div class="fcard-detail">Request Info: message field mandatory, SLA clock pauses on pending info</div>
+        <div class="fcard-detail">Process Payout: auto-calculates min(actual × %, approved cap, available), Partner Store API or manual CSV fallback</div>
+      </div>
+    </div>
+
+    <div class="fcard pam-card">
+      <div class="fcard-top">
+        <div class="fcard-icon blue">📊</div>
+        <div>
+          <div class="fcard-title">Approved / Payouts</div>
+          <div class="fcard-oneliner">Track what's been funded — from approval through to disbursement.</div>
+        </div>
+      </div>
+      <div class="fcard-body">Two separate screens tracking the downstream lifecycle of approved requests.</div>
+      <div class="fcard-details">
+        <div class="fcard-detail"><strong>Approved:</strong> all approved requests with KPIs (count, committed unpaid, total paid)</div>
+        <div class="fcard-detail"><strong>Payouts:</strong> 3-stage view — awaiting post-event form / ready to process / paid</div>
+        <div class="fcard-detail">Payout screen shows actual spend vs approved cap vs calculated payout side-by-side</div>
+        <div class="fcard-detail">Partner Store sync status pill: Synced / Syncing / Manual Disbursement / Failed</div>
+        <div class="fcard-detail">Info banner explains manual CSV fallback when Partner Store API is unavailable</div>
+      </div>
+    </div>
+
+    <div class="fcard pam-card">
+      <div class="fcard-top">
+        <div class="fcard-icon clay">👥</div>
+        <div>
+          <div class="fcard-title">Partners</div>
+          <div class="fcard-oneliner">Budget health across all your partners — spot problems early.</div>
+        </div>
+      </div>
+      <div class="fcard-body">One card per partner showing their full FY2026 budget state. PAMs see only their assigned territory; Marketing and Admin see all partners.</div>
+      <div class="fcard-details">
+        <div class="fcard-detail">Budget block per partner: Cap / Committed / Paid / Available with utilisation bar</div>
+        <div class="fcard-detail">"Exhausted" badge when available balance hits zero</div>
+        <div class="fcard-detail">"Low balance" badge when below the configured alert threshold (default 20%)</div>
+        <div class="fcard-detail">Commissionable revenue, open request count, total request count per partner</div>
+        <div class="fcard-detail">PAM name shown on each card for cross-territory visibility</div>
+      </div>
+    </div>
+
+    <div class="fcard pam-card">
+      <div class="fcard-top">
+        <div class="fcard-icon sage">📈</div>
+        <div>
+          <div class="fcard-title">Reports</div>
+          <div class="fcard-oneliner">Program performance at a glance — no spreadsheet required.</div>
+        </div>
+      </div>
+      <div class="fcard-body">Analytics dashboard aggregated from live Datastore data. PAMs see their territory; Marketing and Admin see the full program.</div>
+      <div class="fcard-details">
+        <div class="fcard-detail">KPI row: Active Requests · Approval Rate · Total Committed · Total Paid</div>
+        <div class="fcard-detail">Committed funds by tier (Authorized / Advanced / Premium) — horizontal bar chart</div>
+        <div class="fcard-detail">Committed funds by territory — horizontal bar chart</div>
+        <div class="fcard-detail">Requests by status — horizontal bar chart</div>
+        <div class="fcard-detail">PAM workload table: total / open / SLA-breached count per PAM</div>
+      </div>
+    </div>
+
+    <div class="fcard pam-card">
+      <div class="fcard-top">
+        <div class="fcard-icon ink">⚙️</div>
+        <div>
+          <div class="fcard-title">Configuration</div>
+          <div class="fcard-oneliner">Change policy without a code deploy — live, audited, safe.</div>
+        </div>
+      </div>
+      <div class="fcard-body">Admin-only screen. Every MDF policy value lives here as an editable field. Changing a value updates all validations and calculations instantly — no engineering needed.</div>
+      <div class="fcard-details">
+        <div class="fcard-detail"><strong>Budget group:</strong> Cap % by tier (Authorized 30% / Advanced 40% / Premium 20%), low-balance alert threshold</div>
+        <div class="fcard-detail"><strong>Policy group:</strong> Duplicate detection window (90 days), SLA review window (5 days), post-event form deadline (30 days), file retention (7 years)</div>
+        <div class="fcard-detail"><strong>Uploads group:</strong> Max file size (10 MB), max files per upload (5), allowed file types</div>
+        <div class="fcard-detail">Save writes an audit log entry — every config change is traceable</div>
+        <div class="fcard-detail">Discard changes resets to last-saved values</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STATUS LIFECYCLE ══ -->
+<div class="section" id="lifecycle">
+  <div class="section-hdr">
+    <div class="section-num">03</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">Workflow</div>
+      <div class="section-title">Request Status Lifecycle</div>
+      <div class="section-sub">Every MDF request moves through these stages. Budget reservation happens at PAM Approved — not at submission, so uncommitted drafts don't consume budget.</div>
+    </div>
+  </div>
+
+  <div class="lifecycle">
+    <div class="lc-step"><div class="lc-dot lcs-draft">D</div><div class="lc-label">Draft</div><div class="lc-sub">Partner started form</div></div>
+    <div class="lc-step"><div class="lc-dot lcs-sub">S</div><div class="lc-label">Submitted</div><div class="lc-sub">PAM notified</div></div>
+    <div class="lc-step"><div class="lc-dot lcs-rev">R</div><div class="lc-label">Under Review</div><div class="lc-sub">PAM reviewing</div></div>
+    <div class="lc-step"><div class="lc-dot lcs-pam">P</div><div class="lc-label">PAM Approved</div><div class="lc-sub">Budget reserved ★</div></div>
+    <div class="lc-step"><div class="lc-dot lcs-app">A</div><div class="lc-label">Approved</div><div class="lc-sub">Marketing sign-off</div></div>
+    <div class="lc-step"><div class="lc-dot lcs-exec">E</div><div class="lc-label">Executed</div><div class="lc-sub">Event complete</div></div>
+    <div class="lc-step"><div class="lc-dot lcs-pay">W</div><div class="lc-label">Payout Pending</div><div class="lc-sub">Actuals submitted</div></div>
+    <div class="lc-step"><div class="lc-dot lcs-paid">✓</div><div class="lc-label">Paid</div><div class="lc-sub">Disbursed</div></div>
+  </div>
+
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:4px">
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--sub)"><div class="lc-dot lcs-rev" style="width:24px;height:24px;font-size:9px;margin:0">PI</div>Pending Info — SLA paused, partner must respond</div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--sub)"><div class="lc-dot lcs-rej" style="width:24px;height:24px;font-size:9px;margin:0">✕</div>Rejected — budget released back to Available</div>
+  </div>
+</div>
+
+<!-- ══ BUDGET ENGINE ══ -->
+<div class="section" id="budget">
+  <div class="section-hdr">
+    <div class="section-num">04</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">Finance</div>
+      <div class="section-title">Budget Engine</div>
+      <div class="section-sub">How each partner's MDF allocation is calculated and tracked. Every figure is live — no manual spreadsheets.</div>
+    </div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-row">
+      <div class="f-label">Budget Cap<div class="f-desc">Set once per fiscal year based on prior-year commissionable revenue</div></div>
+      <div class="f-op">=</div>
+      <div class="f-val">Revenue × Tier %</div>
+    </div>
+    <div class="formula-row">
+      <div class="f-label">Tier rates (configurable)<div class="f-desc">Authorized 30% · Advanced 40% · Premium 20%</div></div>
+      <div class="f-op"></div>
+      <div class="f-val"></div>
+    </div>
+    <div class="formula-row">
+      <div class="f-label">Committed Amount<div class="f-desc">Sum of approved amounts where status is PAM Approved / Approved / Executed / Payout Pending</div></div>
+      <div class="f-op">=</div>
+      <div class="f-val">Σ approved requests</div>
+    </div>
+    <div class="formula-row">
+      <div class="f-label">Paid Amount<div class="f-desc">Sum of disbursed payouts from mdf_payouts where status = paid</div></div>
+      <div class="f-op">=</div>
+      <div class="f-val">Σ paid payouts</div>
+    </div>
+    <div class="formula-row" style="border-top:1px solid rgba(255,255,255,.15);margin-top:4px">
+      <div class="f-label" style="color:#F5ECE0;font-weight:700">Available Balance<div class="f-desc" style="color:#8C7D6A;font-weight:400">Recalculated on every status change</div></div>
+      <div class="f-op" style="color:#C98A36">=</div>
+      <div class="f-val" style="color:#C98A36">Cap − Committed − Paid</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+    <div class="fcard"><div class="fcard-title" style="font-size:16px;margin-bottom:8px">Over-balance rule</div><div class="fcard-body">If a request exceeds Available Balance, a warning shows on the partner's form and on the PAM's review screen. PAM must actively acknowledge before approving. Request is not blocked at submission.</div></div>
+    <div class="fcard"><div class="fcard-title" style="font-size:16px;margin-bottom:8px">Zero-balance rule</div><div class="fcard-body">If Available Balance = $0, the partner cannot submit. They see: "Your MDF balance is fully committed. Contact your PAM." PAM or Admin can manually override the cap.</div></div>
+    <div class="fcard"><div class="fcard-title" style="font-size:16px;margin-bottom:8px">Payout calculation</div><div class="fcard-body">Payout = min(actual spend × co-fund %, approved cap, available balance). Ensures the partner can never receive more than what was approved or what remains.</div></div>
+  </div>
+</div>
+
+<!-- ══ ROLES ══ -->
+<div class="section" id="roles">
+  <div class="section-hdr">
+    <div class="section-num">05</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">Access Control</div>
+      <div class="section-title">Roles & Permissions</div>
+      <div class="section-sub">Four roles with distinct access scopes. Partner isolation is enforced at the data query level, not just the UI.</div>
+    </div>
+  </div>
+
+  <table class="role-table">
+    <thead>
+      <tr>
+        <th>Action</th>
+        <th>Partner</th>
+        <th>PAM</th>
+        <th>Marketing Exec</th>
+        <th>MDF Admin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>View requests</td><td class="own">Own only</td><td class="own">Assigned territory</td><td class="yes">All</td><td class="yes">All</td></tr>
+      <tr><td>Submit new request</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td><td class="no">No</td></tr>
+      <tr><td>Edit draft request</td><td class="own">Own drafts</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+      <tr><td>Approve (PAM stage)</td><td class="no">No</td><td class="yes">Yes</td><td class="no">No</td><td class="yes">Yes</td></tr>
+      <tr><td>Approve (final stage)</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+      <tr><td>Reject request</td><td class="no">No</td><td class="yes">With reason</td><td class="yes">With reason</td><td class="yes">Yes</td></tr>
+      <tr><td>Request more info</td><td class="no">No</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+      <tr><td>View budget balances</td><td class="own">Own only</td><td class="own">Assigned partners</td><td class="yes">All</td><td class="yes">All</td></tr>
+      <tr><td>Override budget cap</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+      <tr><td>Process payout</td><td class="no">No</td><td class="yes">Yes</td><td class="no">No</td><td class="yes">Yes</td></tr>
+      <tr><td>View audit log</td><td class="no">No</td><td class="own">Own actions</td><td class="yes">All</td><td class="yes">All</td></tr>
+      <tr><td>Edit configuration</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></div></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══ PHASES ══ -->
+<div class="section" id="phases">
+  <div class="section-hdr">
+    <div class="section-num">06</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">Build Roadmap</div>
+      <div class="section-title">Phase Split</div>
+      <div class="section-sub">Phase 1 closes the core loop. Phase 2 closes the money loop. Both portals are fully interactive as HTML prototypes — backend wiring begins in Phase 0.</div>
+    </div>
+  </div>
+
+  <div class="phase-grid">
+    <div class="phase-card p1">
+      <div class="phase-num">Phase 1 — Core loop</div>
+      <div class="phase-title">Apply, track, and review</div>
+      <div class="phase-items">
+        <div class="phase-item done">Partner Portal — Home + budget snapshot</div>
+        <div class="phase-item done">Partner Portal — Fund application (all steps)</div>
+        <div class="phase-item done">Partner Portal — My Programs list</div>
+        <div class="phase-item done">Partner Portal — Activity Detail page</div>
+        <div class="phase-item done">PAM Portal — Review Queue + Request Detail</div>
+        <div class="phase-item done">PAM Portal — Approve / Reject / Request Info modals</div>
+        <div class="phase-item done">PAM Portal — Dashboard + Partners + Reports + Config</div>
+        <div class="phase-item todo">Catalyst Datastore schema + Node.js API functions</div>
+        <div class="phase-item todo">Zoho OAuth + Partner Store email validation</div>
+        <div class="phase-item todo">CRM read: partner name, tier, territory, revenue</div>
+        <div class="phase-item todo">SLA cron job + PAM email notifications</div>
+      </div>
+    </div>
+    <div class="phase-card p2">
+      <div class="phase-num">Phase 2 — Money loop</div>
+      <div class="phase-title">Claims, payouts, and operations</div>
+      <div class="phase-items">
+        <div class="phase-item done">Partner Portal — Claims (post-event form)</div>
+        <div class="phase-item done">Partner Portal — Budget page</div>
+        <div class="phase-item done">Partner Portal — Help screen</div>
+        <div class="phase-item done">PAM Portal — Payouts screen</div>
+        <div class="phase-item todo">Partner Store payout API integration</div>
+        <div class="phase-item todo">Catalyst File Store — upload + signed download URLs</div>
+        <div class="phase-item todo">Audit log — append-only, all state changes</div>
+        <div class="phase-item todo">Budget engine — committed/paid/available auto-calc</div>
+        <div class="phase-item todo">Low-balance alerts + event date reminders (cron)</div>
+        <div class="phase-item todo">Post-event form deadline enforcement</div>
+        <div class="phase-item todo">Ecosystem Building + Capability Building categories</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer" style="display:none">
+  <strong>Zoho Canada · Partner Programs</strong> &nbsp;·&nbsp; Partner Growth Hub — Feature Guide v1.0 &nbsp;·&nbsp; June 2026 &nbsp;·&nbsp; Built for Zoho Canada internal use
+</div>
+
+<script>
+window.MDF_PAGE = {
+  id: "guide",
+  breadcrumbs: [{label:"Feature Guide", href:"./index.html"}]
+};
+</script>
+<script>
+
+/* ── MDF SHARED SHELL JS ───────────────────────────────────── */
+(function(){
+  const P = window.MDF_PAGE || {};
+  const pages = [
+    {id:'home',   label:'Home',            href:'../index.html',       badge:null},
+    {id:'partner',label:'Partner Portal',  href:'../partner/index.html', badge:'partner'},
+    {id:'pam',    label:'PAM Portal',      href:'../pam/index.html',   badge:'pam'},
+    {id:'guide',  label:'Feature Guide',   href:'../guide/index.html', badge:'guide'},
+  ];
+  const isRoot = P.isRoot;
+  // Adjust hrefs for root-level index
+  if(isRoot) pages.forEach(p=>{
+    p.href = p.href.replace('../','./');
+  });
+
+  // ── TOPBAR
+  const tb = document.createElement('div');
+  tb.className = 'sh-topbar';
+  tb.innerHTML = `
+    <a class="sh-brand" href="${isRoot?'./index.html':'../index.html'}">
+      <div class="sh-mark">Z</div>
+      <div>
+        <div class="sh-brand-name">Zoho Partner Growth</div>
+        <div class="sh-brand-sub">MDF Portal</div>
+      </div>
+    </a>
+    <nav class="sh-nav">
+      ${pages.filter(p=>p.id!=='home').map(p=>`
+        <a class="sh-nav-link ${P.id===p.id?'active':''}" href="${p.href}">${p.label}</a>
+        ${p.badge?`<span class="sh-portal-badge ${p.badge}" style="display:none">${p.badge}</span>`:''}
+      `).join('<span class="sh-nav-sep">·</span>')}
+    </nav>`;
+  document.body.insertBefore(tb, document.body.firstChild);
+
+  // ── BREADCRUMB
+  if(P.breadcrumbs && P.breadcrumbs.length){
+    const bc = document.createElement('div');
+    bc.className = 'sh-breadcrumb';
+    bc.innerHTML = [
+      `<a class="sh-bc-item" href="${isRoot?'./index.html':'../index.html'}">MDF</a>`,
+      ...P.breadcrumbs.map((b,i)=>
+        i===P.breadcrumbs.length-1
+          ? `<span class="sh-bc-sep">›</span><span class="sh-bc-current">${b.label}</span>`
+          : `<span class="sh-bc-sep">›</span><a class="sh-bc-item" href="${b.href}">${b.label}</a>`
+      )
+    ].join('');
+    document.body.insertBefore(bc, tb.nextSibling);
+  }
+
+  // ── FOOTER
+  const ft = document.createElement('div');
+  ft.className = 'sh-footer';
+  ft.innerHTML = `
+    <div class="sh-footer-brand">
+      <div style="width:26px;height:26px;background:var(--sh-clay);border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#fff">Z</div>
+      <span style="color:#C4B39E;font-weight:600">Zoho Partner Growth — MDF</span>
+    </div>
+    <div class="sh-footer-links">
+      ${pages.map(p=>`<a class="sh-footer-link" href="${p.href}">${p.label}</a>`).join('')}
+    </div>
+    <div class="sh-footer-right">Zoho Canada · Partner Programs · v1.0 · June 2026</div>`;
+  document.body.appendChild(ft);
+})();
+
+</script>
+</body>
+</html>

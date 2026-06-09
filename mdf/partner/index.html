@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Zoho Partner Growth Hub</title>
+<style>html,body{margin:0;background:#F4EEE3}</style>
+
+<style>
+/* ── MDF SHARED SHELL ──────────────────────────────────────── */
+:root{
+  --sh-ink:#221C15;--sh-sub:#6B5F4E;--sh-faint:#9C8F79;
+  --sh-clay:#A8432E;--sh-clay-d:#8A331F;
+  --sh-gold:#C98A36;--sh-gold-l:#FBEFD8;--sh-gold-d:#9A6500;
+  --sh-sage:#4F6B50;--sh-sage-l:#E7F0E6;
+  --sh-paper:#F4EEE3;--sh-paper-alt:#EFE7D8;
+  --sh-card:#FFFDF8;--sh-line:#E5DCC9;--sh-line-soft:#EFE8D9;
+  --sh-nav:#1C1812;
+}
+.sh-topbar{
+  position:sticky;top:0;z-index:200;
+  background:rgba(244,238,227,.94);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--sh-line);
+  height:56px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;font-family:'Manrope',system-ui,sans-serif;
+}
+.sh-brand{display:flex;align-items:center;gap:11px;text-decoration:none;cursor:pointer}
+.sh-mark{width:30px;height:30px;background:var(--sh-clay);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;flex-shrink:0}
+.sh-brand-name{font-size:15px;font-weight:500;font-family:'Newsreader',Georgia,serif;color:var(--sh-ink);letter-spacing:-.01em;line-height:1}
+.sh-brand-sub{font-size:10.5px;color:var(--sh-faint);letter-spacing:.02em;margin-top:1px}
+.sh-nav{display:flex;align-items:center;gap:4px}
+.sh-nav-link{font-size:13px;font-weight:600;color:var(--sh-sub);text-decoration:none;padding:6px 12px;border-radius:8px;transition:all .13s;cursor:pointer;background:none;border:none;font-family:inherit}
+.sh-nav-link:hover{background:var(--sh-paper-alt);color:var(--sh-ink)}
+.sh-nav-link.active{background:var(--sh-gold-l);color:var(--sh-gold-d)}
+.sh-nav-sep{color:var(--sh-line);font-size:16px;margin:0 2px;user-select:none}
+.sh-portal-badge{font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:.03em;text-transform:uppercase;margin-left:8px}
+.sh-portal-badge.partner{background:var(--sh-gold-l);color:var(--sh-gold-d)}
+.sh-portal-badge.pam{background:rgba(28,24,18,.08);color:var(--sh-nav)}
+.sh-portal-badge.guide{background:var(--sh-sage-l);color:var(--sh-sage)}
+
+/* breadcrumb */
+.sh-breadcrumb{
+  font-family:'Manrope',system-ui,sans-serif;
+  font-size:12px;color:var(--sh-faint);
+  display:flex;align-items:center;gap:7px;
+  padding:8px 40px;
+  background:var(--sh-paper-alt);
+  border-bottom:1px solid var(--sh-line-soft);
+}
+.sh-bc-item{color:var(--sh-sub);text-decoration:none;font-weight:500;cursor:pointer}
+.sh-bc-item:hover{color:var(--sh-clay)}
+.sh-bc-sep{opacity:.45;font-size:10px}
+.sh-bc-current{color:var(--sh-ink);font-weight:600}
+
+/* footer */
+.sh-footer{
+  background:var(--sh-nav);
+  color:#8C7D6A;
+  padding:32px 40px;
+  font-family:'Manrope',system-ui,sans-serif;
+  font-size:12.5px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:16px;
+  margin-top:auto;
+}
+.sh-footer-brand{display:flex;align-items:center;gap:10px}
+.sh-footer-links{display:flex;gap:20px;flex-wrap:wrap}
+.sh-footer-link{color:#8C7D6A;text-decoration:none;font-weight:600;transition:color .13s}
+.sh-footer-link:hover{color:#F5ECE0}
+.sh-footer-right{font-size:11.5px;color:#5A4E40}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+<script type="text/babel" data-presets="react">
+/* ═══════════════════════════════════════════════════════════
+   PARTNER PORTAL · WARM EDITORIAL — SHARED KIT
+   Theme tokens · injected stylesheet (fonts, responsive, hover) ·
+   primitive components · partner data · helpers.  All on window.
+   ═══════════════════════════════════════════════════════════ */
+
+const EDI = {
+  paper:'#F4EEE3', paperAlt:'#EFE7D8', ink:'#221C15', sub:'#6B5F4E', faint:'#9C8F79',
+  clay:'#A8432E', clayD:'#8A331F', gold:'#C98A36', goldD:'#9A6500', goldL:'#FBEFD8',
+  sage:'#4F6B50', sageD:'#3E5640', sageL:'#E7F0E6', card:'#FFFDF8', line:'#E5DCC9',
+  lineSoft:'#EFE8D9', redL:'#F7E4DC', red:'#A8432E',
+  serif:"'Newsreader', Georgia, serif", sans:"'Manrope', system-ui, sans-serif",
+};
+
+/* ── inject global stylesheet once ───────────────── */
+(function injectKit(){
+  if(document.getElementById('pp-kit')) return;
+  const s = document.createElement('style'); s.id='pp-kit';
+  s.textContent = `
+  @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Manrope:wght@400;500;600;700;800&display=swap');
+  *{box-sizing:border-box}
+  .pp-app{font-family:${EDI.sans};color:${EDI.ink};background:${EDI.paper};-webkit-font-smoothing:antialiased;min-height:100vh}
+  .pp-app ::selection{background:${EDI.goldL}}
+  .pp-serif{font-family:${EDI.serif}}
+  .pp-wrap{max-width:1180px;margin:0 auto;padding:0 40px}
+  .pp-eyebrow{font-family:${EDI.sans};font-size:12.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+
+  /* nav */
+  .pp-nav-link{font-size:14.5px;font-weight:600;color:${EDI.sub};cursor:pointer;background:none;border:none;font-family:inherit;padding:0;position:relative;transition:color .14s}
+  .pp-nav-link:hover{color:${EDI.ink}}
+  .pp-nav-link.active{color:${EDI.ink}}
+  .pp-nav-link.active::after{content:'';position:absolute;left:0;right:0;bottom:-22px;height:2px;background:${EDI.clay}}
+
+  /* buttons */
+  .pp-btn{font-family:${EDI.sans};font-size:15px;font-weight:700;border-radius:12px;padding:13px 24px;cursor:pointer;border:1.5px solid transparent;transition:transform .12s,background .14s,box-shadow .14s;display:inline-flex;align-items:center;justify-content:center;gap:8px;line-height:1;white-space:nowrap}
+  .pp-btn:active{transform:translateY(1px)}
+  .pp-btn--clay{background:${EDI.clay};color:#fff;box-shadow:0 8px 22px rgba(168,67,46,.22)}
+  .pp-btn--clay:hover{background:${EDI.clayD}}
+  .pp-btn--ink{background:${EDI.ink};color:#fff}
+  .pp-btn--ink:hover{background:#000}
+  .pp-btn--ghost{background:transparent;color:${EDI.ink};border-color:${EDI.line}}
+  .pp-btn--ghost:hover{background:${EDI.card};border-color:${EDI.faint}}
+  .pp-btn--soft{background:${EDI.goldL};color:${EDI.goldD};border-color:transparent}
+  .pp-btn--soft:hover{background:#F8E6C8}
+  .pp-btn--sm{font-size:13.5px;padding:10px 17px;border-radius:10px}
+  .pp-btn--lg{font-size:16px;padding:15px 28px}
+  .pp-btn--block{width:100%}
+  .pp-btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+
+  /* tags */
+  .pp-tag{display:inline-flex;align-items:center;gap:6px;padding:3px 11px;border-radius:20px;font-family:${EDI.sans};font-size:12px;font-weight:700;letter-spacing:.01em;white-space:nowrap}
+  .pp-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.9}
+  .pp-tag--gold{background:${EDI.goldL};color:${EDI.goldD}}
+  .pp-tag--sage{background:${EDI.sageL};color:${EDI.sageD}}
+  .pp-tag--clay{background:${EDI.redL};color:${EDI.clayD}}
+  .pp-tag--muted{background:#EFEADF;color:${EDI.sub}}
+  .pp-tag--plain{background:#F3EADB;color:${EDI.gold}}
+  .pp-tag--plain::before{display:none}
+
+  /* cards */
+  .pp-card{background:${EDI.card};border:1px solid ${EDI.line};border-radius:18px}
+  .pp-clickable{cursor:pointer;transition:transform .16s,box-shadow .16s,border-color .16s}
+  .pp-clickable:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(80,60,30,.10);border-color:${EDI.gold}}
+
+  /* inputs */
+  .pp-input,.pp-textarea,.pp-select{width:100%;font-family:${EDI.sans};font-size:15px;color:${EDI.ink};background:${EDI.card};border:1.5px solid ${EDI.line};border-radius:11px;padding:12px 14px;outline:none;transition:border-color .14s,box-shadow .14s}
+  .pp-input:focus,.pp-textarea:focus,.pp-select:focus{border-color:${EDI.clay};box-shadow:0 0 0 3px rgba(168,67,46,.12)}
+  .pp-textarea{resize:vertical;min-height:96px;line-height:1.55}
+  .pp-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239C8F79' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+  .pp-flabel{font-family:${EDI.sans};font-size:12px;font-weight:700;color:${EDI.sub};text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;display:block}
+
+  /* selectable chip-cards (activity type / options) */
+  .pp-pick{background:${EDI.card};border:1.5px solid ${EDI.line};border-radius:16px;padding:22px;cursor:pointer;transition:all .15s;text-align:left}
+  .pp-pick:hover{border-color:${EDI.gold};transform:translateY(-2px);box-shadow:0 10px 26px rgba(80,60,30,.08)}
+  .pp-pick.is-sel{border-color:${EDI.clay};background:#FCF4EC;box-shadow:0 0 0 3px rgba(168,67,46,.12)}
+  .pp-opt{background:${EDI.card};border:1.5px solid ${EDI.line};border-radius:11px;padding:11px 16px;cursor:pointer;font-family:${EDI.sans};font-size:14px;font-weight:600;color:${EDI.sub};transition:all .13s}
+  .pp-opt:hover{border-color:${EDI.faint};color:${EDI.ink}}
+  .pp-opt.is-sel{background:${EDI.clay};border-color:${EDI.clay};color:#fff}
+
+  .pp-link{font-family:${EDI.sans};font-weight:700;color:${EDI.clay};cursor:pointer;background:none;border:none;font-size:14px}
+  .pp-link:hover{color:${EDI.clayD}}
+  .pp-rowlink{transition:background .12s}
+  .pp-rowlink:hover{background:#FBF7EE}
+
+  /* fade transition (translate-only — never gates visibility) */
+  .pp-fade{animation:ppFade .26s ease}
+  @keyframes ppFade{from{transform:translateY(8px)}to{transform:translateY(0)}}
+
+  /* responsive */
+  .pp-grid-2{display:grid;grid-template-columns:1fr 420px;gap:48px}
+  .pp-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .pp-fund{display:grid;grid-template-columns:1fr 340px;gap:36px;align-items:start}
+  .pp-hide-narrow{display:flex}
+  @media(max-width:920px){
+    .pp-wrap{padding:0 22px}
+    .pp-grid-2{grid-template-columns:1fr;gap:30px}
+    .pp-grid-3{grid-template-columns:1fr}
+    .pp-fund{grid-template-columns:1fr}
+    .pp-fund .pp-rail{position:static!important}
+    .pp-hide-narrow{display:none}
+    .pp-h1{font-size:38px!important}
+  }
+  .pp-sticky{position:sticky;top:88px}
+
+  /* fund stepper layout */
+  .pp-stepwrap{display:grid;grid-template-columns:194px 1fr 290px;gap:30px;align-items:start}
+  .pp-picks{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  .pp-f2{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:0 18px}
+  @media(max-width:900px){
+    .pp-stepwrap{grid-template-columns:1fr}
+    .pp-steprail .pp-sticky{position:static!important}
+    .pp-stepside .pp-sticky{position:static!important}
+    .pp-picks{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:560px){.pp-picks{grid-template-columns:1fr}}
+  `;
+  document.head.appendChild(s);
+})();
+
+/* ── status mapping (partner-friendly language) ──── */
+function statusMeta(key){
+  const m = {
+    submitted:    {label:'In review',       tone:'gold'},
+    under_review: {label:'In review',       tone:'gold'},
+    pending_info: {label:'Needs your input',tone:'clay'},
+    pam_approved: {label:'Funded',          tone:'sage'},
+    approved:     {label:'Funded',          tone:'sage'},
+    upcoming:     {label:'Funded · upcoming',tone:'sage'},
+    executed:     {label:'Ready to claim',  tone:'gold'},
+    payout_pending:{label:'Claim in review',tone:'gold'},
+    paid:         {label:'Reimbursed',      tone:'sage'},
+    rejected:     {label:'Not approved',    tone:'muted'},
+    draft:        {label:'Draft',           tone:'muted'},
+  };
+  return m[key] || {label:key, tone:'muted'};
+}
+const fmtMoney = (n)=> n==null?'—':'$'+Number(n).toLocaleString('en-CA');
+const fmtDate = (d)=>{ if(!d) return '—'; const dt=new Date(d+'T00:00:00'); return dt.toLocaleDateString('en-CA',{month:'short',day:'numeric',year:'numeric'}); };
+const fmtDateShort = (d)=>{ if(!d) return ''; const dt=new Date(d+'T00:00:00'); return dt.toLocaleDateString('en-CA',{month:'short',day:'numeric'}); };
+
+/* ── PARTNER + BUDGET (continuity w/ Cascade Digital) ── */
+const PARTNER = {
+  name:'Cascade Digital', contact:'Marc Tremblay', first:'Marc', initials:'MT',
+  tier:'Advanced', territory:'Québec', pam:'Daniel Roy',
+  budget:{ cap:40800, committed:18500, paid:6200, available:16100 },
+};
+
+/* ── ACTIVITY TYPES (activity-driven, not category) ── */
+const ACT_TYPES = [
+  {id:'event',        title:'Run an Event',        sub:'Summits, expos, sponsorships, in-person meetups', icon:'◆', cofund:'Up to 50%'},
+  {id:'webinar',      title:'Host a Webinar',      sub:'Online sessions, demo series, co-hosted with Zoho', icon:'◉', cofund:'Up to 70%'},
+  {id:'gtm',          title:'Launch a GTM Campaign',sub:'Vertical plays, ABM, case-study programs', icon:'✦', cofund:'Up to 50%'},
+  {id:'certification',title:'Fund Certification',  sub:'Team training & enablement', icon:'✚', cofund:'Coming soon', soon:true},
+  {id:'other',        title:'Something else',      sub:'Tell us what you have in mind', icon:'＋', cofund:'Let\'s talk'},
+];
+
+/* ── PARTNER ACTIVITIES (their funding programs) ───── */
+const ACTIVITIES = [
+  { id:'a1', title:'SaaS North 2026 — Gold Sponsor', type:'event', typeLabel:'Sponsorship', format:'Hybrid · Third-party',
+    location:'Ottawa', date:'2026-08-14', submitted:'2026-06-03', total:11000, cofundPct:50, fund:5500, status:'submitted',
+    desc:'Gold sponsorship of SaaS North — booth, speaking slot, and lead-scan package targeting Québec & Ontario SMB software buyers.',
+    timeline:[ {k:'submitted',t:'You submitted this plan',w:'2026-06-03',done:true},
+               {k:'review',t:'Daniel (your PAM) is reviewing',w:'2026-06-05',current:true},
+               {k:'funded',t:'Funding decision',done:false},
+               {k:'event',t:'Run your event',done:false},
+               {k:'claim',t:'Claim your reimbursement',done:false} ] },
+
+  { id:'a2', title:'Bilingual Product Demo Webinar', type:'webinar', typeLabel:'Webinar', format:'Online · Self-hosted',
+    location:'Online', date:'2026-07-02', submitted:'2026-05-26', total:3500, cofundPct:70, fund:2450, status:'approved',
+    desc:'French + English product demo webinar with paid promotion across Québec.',
+    timeline:[ {k:'submitted',t:'You submitted this plan',w:'2026-05-26',done:true},
+               {k:'review',t:'Reviewed by your PAM',w:'2026-05-29',done:true},
+               {k:'funded',t:'Funded — $2,450 approved',w:'2026-06-01',done:true,note:'Media plan documented, 70% tier approved.'},
+               {k:'event',t:'Host your webinar',w:'2026-07-02',current:true},
+               {k:'claim',t:'Claim your reimbursement',done:false} ] },
+
+  { id:'a3', title:'Cloud Migration Webinar Series', type:'webinar', typeLabel:'Webinar series', format:'Online · Self-hosted',
+    location:'Online', date:'2026-07-09', submitted:'2026-05-30', total:4000, cofundPct:70, fund:2800, status:'pending_info',
+    desc:'Three-part webinar series on migrating legacy CRMs to Zoho, with paid LinkedIn + email promotion.',
+    infoRequest:'Could you attach your media plan / ad-spend breakdown and confirm which Zoho products are featured? The 70% co-fund tier needs a documented promotion budget — once we have it, we can move quickly.',
+    timeline:[ {k:'submitted',t:'You submitted this plan',w:'2026-05-30',done:true},
+               {k:'review',t:'Reviewed by your PAM',w:'2026-06-01',done:true},
+               {k:'info',t:'Daniel asked for a little more',w:'2026-06-01',current:true,note:'Media plan / ad-spend breakdown.'},
+               {k:'funded',t:'Funding decision',done:false},
+               {k:'claim',t:'Claim your reimbursement',done:false} ] },
+
+  { id:'a4', title:'Montréal SMB Tech Expo', type:'event', typeLabel:'Event', format:'In-person · Self-hosted',
+    location:'Montréal', date:'2026-06-26', submitted:'2026-05-12', total:8500, cofundPct:50, fund:4250, status:'upcoming',
+    desc:'Booth + breakout session at the Montréal SMB Tech Expo with bilingual demo stations.',
+    timeline:[ {k:'submitted',t:'You submitted this plan',w:'2026-05-12',done:true},
+               {k:'funded',t:'Funded — $4,250 approved',w:'2026-05-16',done:true},
+               {k:'event',t:'Your event is coming up',w:'2026-06-26',current:true},
+               {k:'claim',t:'Claim your reimbursement',done:false} ] },
+
+  { id:'a5', title:'Ottawa Public Sector Briefing', type:'event', typeLabel:'Event', format:'In-person · Self-hosted',
+    location:'Ottawa', date:'2026-05-21', submitted:'2026-04-10', total:9000, cofundPct:50, fund:4500, status:'executed', claimable:true, claimMax:4500,
+    desc:'Executive briefing for public-sector procurement leads on Zoho compliance posture.',
+    timeline:[ {k:'submitted',t:'You submitted this plan',w:'2026-04-10',done:true},
+               {k:'funded',t:'Funded — $4,500 approved',w:'2026-04-15',done:true},
+               {k:'event',t:'Event complete',w:'2026-05-21',done:true},
+               {k:'claim',t:'Submit your results to get reimbursed',current:true} ] },
+
+  { id:'a6', title:'GTA FinServ Roundtable', type:'event', typeLabel:'Exhibitor', format:'In-person · Third-party',
+    location:'Toronto', date:'2026-04-24', submitted:'2026-03-15', total:4500, cofundPct:50, fund:2250, status:'paid', reimbursed:2250,
+    roi:{leads:22, attendees:58, opps:6, pipeline:320000},
+    desc:'Invite-only roundtable for FinServ CIOs.',
+    timeline:[ {k:'submitted',t:'You submitted this plan',w:'2026-03-15',done:true},
+               {k:'funded',t:'Funded — $2,250 approved',w:'2026-03-19',done:true},
+               {k:'event',t:'Event complete',w:'2026-04-24',done:true},
+               {k:'claim',t:'Reimbursed — $2,250 paid',w:'2026-05-30',done:true,note:'Disbursed to your Partner Store account.'} ] },
+
+  { id:'a7', title:'Calgary Tech Mixer', type:'event', typeLabel:'Networking', format:'In-person · Third-party',
+    location:'Calgary', date:'2026-06-18', submitted:'2026-05-18', total:2200, cofundPct:50, fund:1100, status:'rejected',
+    desc:'Attending a local tech networking mixer to build relationships.',
+    rejectionReason:'Attendee-only networking events aren\'t eligible for co-funding yet — there\'s no measurable pipeline or lead-capture mechanism. If you\'d like, resubmit as a sponsor or exhibitor with a lead-scan plan and we\'ll take another look.',
+    timeline:[ {k:'submitted',t:'You submitted this plan',w:'2026-05-18',done:true},
+               {k:'review',t:'Reviewed by your PAM',w:'2026-05-20',done:true},
+               {k:'rejected',t:'Not approved this time',w:'2026-05-21',current:true} ] },
+];
+
+/* recommendations */
+const RECOS = [
+  {id:'r1', tag:'Popular', t:'Co-host a webinar with Zoho', d:'We bring the audience and a product expert. You bring the story. Up to 70% co-funded.', type:'webinar'},
+  {id:'r2', tag:'New', t:'Build a customer case study', d:'Turn a happy customer into a referencible win — great for your healthcare push.', type:'gtm'},
+  {id:'r3', tag:'For you', t:'Run a vertical GTM play', d:'A focused campaign for one industry. Cascade qualifies as an Advanced partner.', type:'gtm'},
+];
+
+const COFUND_BY_TYPE = { event:[30,50], webinar:[50,70], gtm:[30,50], certification:[50], other:[30,50,70] };
+
+Object.assign(window, { EDI, statusMeta, fmtMoney, fmtDate, fmtDateShort, PARTNER, ACT_TYPES, ACTIVITIES, RECOS, COFUND_BY_TYPE });
+
+/* ── PARTNER PORTAL · SHELL (top nav, reused everywhere) ───── */
+(function injectShellCSS(){
+  if(document.getElementById('pp-shell-css')) return;
+  const s=document.createElement('style'); s.id='pp-shell-css';
+  s.textContent=`
+  .pp-topbar{position:sticky;top:0;z-index:50;background:rgba(244,238,227,.86);backdrop-filter:blur(10px);border-bottom:1px solid ${EDI.line}}
+  .pp-menu-btn{display:none}
+  .pp-mobmenu{display:none}
+  @media(max-width:920px){
+    .pp-topnav-links{display:none!important}
+    .pp-menu-btn{display:inline-flex!important}
+  }`;
+  document.head.appendChild(s);
+})();
+
+function NotifPanel({onClose}){
+  const notifs = [
+    {id:1, icon:'✓', tone:'sage', title:'Bilingual Webinar approved', body:'Your $2,450 funding has been approved by the Marketing team.', time:'2 hours ago', read:true},
+    {id:2, icon:'?', tone:'gold', title:'More info needed — Cloud Migration Webinar', body:'Daniel has asked for your media plan before approving.', time:'Yesterday', read:false, action:'Reply now'},
+    {id:3, icon:'🧾', tone:'clay', title:'Ottawa Briefing — ready to claim', body:"Your event is complete. Submit receipts to claim up to $4,500.", time:'3 days ago', read:false, action:'Submit claim'},
+    {id:4, icon:'✓', tone:'sage', title:'GTA Roundtable reimbursed', body:'$2,250 has been disbursed to your Partner Store account.', time:'May 30', read:true},
+  ];
+  const colors = {sage:{bg:EDI.sageL,text:EDI.sageD,dot:EDI.sage},gold:{bg:EDI.goldL,text:EDI.goldD,dot:EDI.gold},clay:{bg:EDI.redL,text:EDI.clayD,dot:EDI.clay}};
+  return (
+    <div style={{position:'fixed',top:56,right:0,width:340,height:'calc(100vh - 56px)',background:EDI.card,borderLeft:`1px solid ${EDI.line}`,zIndex:100,display:'flex',flexDirection:'column',boxShadow:'-8px 0 32px rgba(80,60,30,.12)',animation:'ppFade .18s ease'}}>
+      <div style={{padding:'16px 18px',borderBottom:`1px solid ${EDI.lineSoft}`,display:'flex',alignItems:'center',justifyContent:'space-between',flexShrink:0}}>
+        <div className="pp-serif" style={{fontSize:18,fontWeight:500}}>Notifications</div>
+        <button className="pp-link" style={{fontSize:12.5}} onClick={onClose}>Close</button>
+      </div>
+      <div style={{flex:1,overflowY:'auto'}}>
+        {notifs.map(n=>{const c=colors[n.tone];return(
+          <div key={n.id} style={{padding:'14px 18px',borderBottom:`1px solid ${EDI.lineSoft}`,background:n.read?EDI.card:EDI.paperAlt,display:'flex',gap:12,alignItems:'flex-start'}}>
+            <div style={{width:34,height:34,borderRadius:10,background:c.bg,color:c.text,display:'flex',alignItems:'center',justifyContent:'center',fontSize:14,flexShrink:0,fontWeight:700}}>{n.icon}</div>
+            <div style={{flex:1,minWidth:0}}>
+              <div style={{fontWeight:n.read?600:700,fontSize:13.5,color:EDI.ink,lineHeight:1.3}}>{n.title}</div>
+              <div style={{fontSize:12.5,color:EDI.sub,marginTop:3,lineHeight:1.45}}>{n.body}</div>
+              <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginTop:7}}>
+                <span style={{fontSize:11,color:EDI.faint}}>{n.time}</span>
+                {n.action && <span style={{fontSize:12,fontWeight:700,color:EDI.clay,cursor:'pointer'}}>{n.action} →</span>}
+              </div>
+            </div>
+            {!n.read && <div style={{width:7,height:7,borderRadius:'50%',background:EDI.clay,flexShrink:0,marginTop:4}}/>}
+          </div>
+        );})}
+      </div>
+    </div>
+  );
+}
+
+function PPBell(){
+  const [showNotif,setShowNotif]=React.useState(false);
+  const unread = 2; // In real app: fetch from API
+  return (
+    <>
+      <div style={{position:'relative',cursor:'pointer'}} onClick={()=>setShowNotif(s=>!s)}>
+        <div style={{width:36,height:36,borderRadius:10,background:showNotif?EDI.goldL:EDI.paperAlt,border:`1.5px solid ${showNotif?EDI.gold:EDI.line}`,display:'flex',alignItems:'center',justifyContent:'center',fontSize:15,transition:'all .13s'}}>🔔</div>
+        {unread>0 && <div style={{position:'absolute',top:-3,right:-3,width:16,height:16,borderRadius:'50%',background:EDI.clay,color:'#fff',fontSize:9,fontWeight:800,display:'flex',alignItems:'center',justifyContent:'center',border:`2px solid ${EDI.paper}`}}>{unread}</div>}
+      </div>
+      {showNotif && <NotifPanel onClose={()=>setShowNotif(false)}/>}
+    </>
+  );
+}
+
+function PPTopBar({route, go}){
+  const [open,setOpen]=React.useState(false);
+  const items=[['home','Home'],['fund','Fund an Activity'],['programs','My Programs'],['claims','Claims'],['budget','Budget'],['help','Help']];
+  const activeOf={home:'home',fund:'fund',success:'fund',programs:'programs',activity:'programs',claims:'claims',budget:'budget',help:'help'}[route.name]||'home';
+  return (
+    <div className="pp-topbar">
+      <div className="pp-wrap" style={{display:'flex',alignItems:'center',justifyContent:'space-between',height:64}}>
+        <div style={{display:'flex',alignItems:'center',gap:34}}>
+          <div onClick={()=>go('home')} style={{display:'flex',alignItems:'center',gap:11,cursor:'pointer'}}>
+            <div style={{width:32,height:32,borderRadius:9,background:EDI.clay,color:'#fff',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:800,fontSize:14}}>Z</div>
+            <div className="pp-serif" style={{fontSize:18,fontWeight:500,letterSpacing:'-.01em'}}>Zoho Partner Growth</div>
+          </div>
+          <div className="pp-topnav-links" style={{display:'flex',gap:24}}>
+            {items.map(([k,l])=>(
+              <button key={k} className={'pp-nav-link'+(activeOf===k?' active':'')} onClick={()=>go(k)}>{l}</button>
+            ))}
+          </div>
+        </div>
+        <div style={{display:'flex',alignItems:'center',gap:14}}>
+          <div className="pp-hide-narrow" style={{textAlign:'right',flexDirection:'column'}}>
+            <div style={{fontSize:13,fontWeight:700,lineHeight:1.2}}>{PARTNER.name}</div>
+            <div style={{fontSize:11.5,color:EDI.sub}}>{PARTNER.tier} Partner · {PARTNER.territory}</div>
+          </div>
+          {/* Bell icon */}
+          <PPBell/>
+          <div style={{width:38,height:38,borderRadius:'50%',background:EDI.sage,color:'#fff',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:700,fontSize:14,flexShrink:0}}>{PARTNER.initials}</div>
+          <button className="pp-menu-btn pp-btn pp-btn--ghost pp-btn--sm" style={{padding:'8px 12px'}} onClick={()=>setOpen(o=>!o)}>☰</button>
+        </div>
+      </div>
+      {open && (
+        <div className="pp-wrap" style={{paddingBottom:14}}>
+          <div className="pp-card" style={{padding:8,display:'flex',flexDirection:'column'}}>
+            {items.map(([k,l])=>(
+              <button key={k} className="pp-nav-link" style={{padding:'11px 12px',textAlign:'left',color:activeOf===k?EDI.clay:EDI.ink}} onClick={()=>{go(k);setOpen(false);}}>{l}</button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function PPShell({route, go, children}){
+  return (
+    <div className="pp-app">
+      <PPTopBar route={route} go={go}/>
+      <div key={route.name+(route.params&&route.params.id||'')} className="pp-fade">{children}</div>
+    </div>
+  );
+}
+Object.assign(window,{PPTopBar, PPShell});
+
+/* ── PARTNER PORTAL · HOME (dashboard-first) ──────────────── */
+function PPHome({go}){
+  const b = PARTNER.budget;
+  const pctCommit = b.committed/b.cap*100, pctPaid = b.paid/b.cap*100;
+  const active = ACTIVITIES.filter(a=>['submitted','approved','pending_info','upcoming'].includes(a.status));
+  const claimable = ACTIVITIES.find(a=>a.claimable);
+  const EVENTS = [
+    {mon:'Sep', day:'17', t:'Zoholics Canada — Toronto', loc:'Metro Toronto Convention Centre', tag:'Booth co-funding available'},
+    {mon:'Oct', day:'02', t:'Partner GTM Lab — Montréal', loc:'In-person · half day', tag:'Travel + venue co-funded'},
+    {mon:'Nov', day:'12', t:'SMB Cloud Webinar Series', loc:'Online · co-hosted with Zoho', tag:'Up to 70% co-funded'},
+  ];
+
+  const Label = ({children,color})=>(
+    <div className="pp-eyebrow" style={{color:color||EDI.clay,marginBottom:14}}>{children}</div>
+  );
+
+  return (
+    <div>
+      {/* HERO */}
+      <div className="pp-wrap" style={{paddingTop:52,paddingBottom:40}}>
+        <div className="pp-grid-2" style={{alignItems:'center'}}>
+          <div>
+            <div className="pp-eyebrow" style={{color:EDI.gold,marginBottom:18}}>Welcome back, {PARTNER.first}</div>
+            <h1 className="pp-serif pp-h1" style={{fontSize:52,lineHeight:1.06,fontWeight:500,letterSpacing:'-.015em',margin:0,maxWidth:600}}>
+              Let's grow {PARTNER.name} — <em style={{fontStyle:'italic',color:EDI.clay}}>together.</em>
+            </h1>
+            <p style={{fontSize:17,lineHeight:1.6,color:EDI.sub,maxWidth:500,margin:'20px 0 30px'}}>
+              You have funding ready to put to work. Co-invest with Zoho on the marketing that grows your pipeline — we'll help you plan it, fund it, and prove it worked.
+            </p>
+            <div style={{display:'flex',gap:14,alignItems:'center',flexWrap:'wrap'}}>
+              <button className="pp-btn pp-btn--clay pp-btn--lg" onClick={()=>go('fund')}>Fund a Marketing Activity →</button>
+              <button className="pp-btn pp-btn--ghost" onClick={()=>go('help')}>See what's eligible</button>
+            </div>
+          </div>
+
+          {/* available-to-invest card */}
+          <div className="pp-card" style={{padding:30,boxShadow:'0 18px 50px rgba(80,60,30,.10)',position:'relative',overflow:'hidden'}}>
+            <div style={{position:'absolute',top:-40,right:-40,width:140,height:140,borderRadius:'50%',background:EDI.goldL}}/>
+            <div style={{position:'relative'}}>
+              <div className="pp-eyebrow" style={{color:EDI.sub,fontSize:12.5,letterSpacing:'.1em'}}>Available growth funds</div>
+              <div className="pp-serif" style={{fontSize:56,fontWeight:500,letterSpacing:'-.02em',lineHeight:1,margin:'10px 0 4px',color:EDI.clayD}}>{fmtMoney(b.available)}</div>
+              <div style={{fontSize:14,color:EDI.sub}}>of your <strong style={{color:EDI.ink}}>{fmtMoney(b.cap)}</strong> FY2026 fund</div>
+              <div style={{height:10,borderRadius:6,background:'#F0E8D8',overflow:'hidden',display:'flex',margin:'22px 0 14px'}}>
+                <div style={{width:pctCommit+'%',background:EDI.gold}}/><div style={{width:pctPaid+'%',background:EDI.sage}}/>
+              </div>
+              {[['Committed to active plans',b.committed,EDI.gold],['Already reimbursed',b.paid,EDI.sage],['Ready to invest',b.available,EDI.clay]].map(([l,v,dot])=>(
+                <div key={l} style={{display:'flex',alignItems:'center',justifyContent:'space-between',fontSize:13.5,padding:'5px 0'}}>
+                  <span style={{display:'flex',alignItems:'center',gap:9,color:EDI.sub}}><span style={{width:9,height:9,borderRadius:3,background:dot}}/>{l}</span>
+                  <strong style={{fontVariantNumeric:'tabular-nums'}}>{fmtMoney(v)}</strong>
+                </div>
+              ))}
+              <button className="pp-link" style={{marginTop:10}} onClick={()=>go('budget')}>View budget & usage →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* CLAIM NUDGE */}
+      {claimable && (
+        <div className="pp-wrap" style={{paddingBottom:6}}>
+          <div style={{background:'linear-gradient(100deg,#F7E9D4,#FBF4E6)',border:`1px solid ${EDI.line}`,borderRadius:18,padding:'22px 28px',display:'flex',alignItems:'center',gap:22,flexWrap:'wrap'}}>
+            <div style={{width:48,height:48,borderRadius:14,background:EDI.gold,color:'#fff',display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,flexShrink:0}}>★</div>
+            <div style={{flex:1,minWidth:240}}>
+              <div className="pp-serif" style={{fontSize:21,fontWeight:500,letterSpacing:'-.01em'}}>Your {claimable.location} briefing is done — let's get you reimbursed</div>
+              <div style={{fontSize:14.5,color:EDI.sub,marginTop:3}}>Share how it went and upload your receipts to claim up to <strong style={{color:EDI.ink}}>{fmtMoney(claimable.claimMax)}</strong>. Takes about 5 minutes.</div>
+            </div>
+            <button className="pp-btn pp-btn--ink" onClick={()=>go('claims',{id:claimable.id})}>Submit results →</button>
+          </div>
+        </div>
+      )}
+
+
+      {/* ACTION CENTER — items needing partner attention */}
+      {(()=>{
+        const actions = [];
+        ACTIVITIES.forEach(a=>{
+          if(a.status==='pending_info') actions.push({id:a.id, icon:'💬', urgency:'clay',
+            title:'Clarification needed', sub:a.title,
+            body:a.infoRequest, cta:'Reply to your PAM', route:'activity'});
+          if(a.status==='executed' && a.claimable) actions.push({id:a.id, icon:'🧾', urgency:'gold',
+            title:'Ready to claim — submit receipts', sub:a.title,
+            body:`Upload your receipts and outcomes to claim up to ${fmtMoney(a.claimMax)}.`, cta:'Submit claim now', route:'claims'});
+          if(a.status==='submitted'){
+            const daysSince = Math.round((new Date()-new Date(a.submitted+'T00:00:00'))/86400000);
+            if(daysSince>6) actions.push({id:a.id, icon:'⏱', urgency:'gold',
+              title:'Waiting on Zoho review', sub:a.title,
+              body:`Submitted ${daysSince} days ago. Your PAM typically responds within 5 business days.`, cta:'View request', route:'activity'});
+          }
+        });
+        if(!actions.length) return null;
+        return (
+          <div className="pp-wrap" style={{paddingTop:28,paddingBottom:4}}>
+            <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:14}}>
+              <div style={{width:22,height:22,borderRadius:'50%',background:EDI.clay,color:'#fff',display:'flex',alignItems:'center',justifyContent:'center',fontSize:11,fontWeight:800,flexShrink:0}}>{actions.length}</div>
+              <div className="pp-eyebrow" style={{color:EDI.clay,marginBottom:0}}>Action required</div>
+            </div>
+            <div style={{display:'flex',flexDirection:'column',gap:10}}>
+              {actions.map((ac,i)=>(
+                <div key={i} style={{background:ac.urgency==='clay'?EDI.redL:EDI.goldL,border:`1px solid ${ac.urgency==='clay'?'#E6C3B5':EDI.line}`,borderRadius:14,padding:'16px 20px',display:'flex',gap:16,alignItems:'flex-start',cursor:'pointer'}} onClick={()=>go(ac.route,{id:ac.id})}>
+                  <div style={{width:40,height:40,borderRadius:11,background:ac.urgency==='clay'?EDI.clay:EDI.gold,color:'#fff',display:'flex',alignItems:'center',justifyContent:'center',fontSize:18,flexShrink:0}}>{ac.icon}</div>
+                  <div style={{flex:1,minWidth:0}}>
+                    <div style={{fontWeight:700,fontSize:14,color:ac.urgency==='clay'?EDI.clayD:EDI.goldD}}>{ac.title}</div>
+                    <div style={{fontWeight:600,fontSize:13.5,color:EDI.ink,marginTop:1}}>{ac.sub}</div>
+                    <div style={{fontSize:13,color:EDI.sub,marginTop:4,lineHeight:1.5}}>{ac.body}</div>
+                  </div>
+                  <div style={{fontWeight:700,fontSize:13,color:ac.urgency==='clay'?EDI.clayD:EDI.goldD,whiteSpace:'nowrap',marginTop:2}}>{ac.cta} →</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })()}
+      {/* ACTIVE ACTIVITIES */
+      <div className="pp-wrap" style={{paddingTop:40,paddingBottom:8}}>
+        <div style={{display:'flex',alignItems:'flex-end',justifyContent:'space-between',marginBottom:18,gap:16}}>
+          <div><Label>Your active activities</Label><div className="pp-serif" style={{fontSize:28,fontWeight:500,letterSpacing:'-.01em',marginTop:-6}}>Plans in motion</div></div>
+          <button className="pp-link" onClick={()=>go('programs')}>View all programs →</button>
+        </div>
+        <div className="pp-card" style={{overflow:'hidden'}}>
+          {active.map((a,i)=>{ const sm=statusMeta(a.status); return (
+            <div key={a.id} className="pp-rowlink" onClick={()=>go('activity',{id:a.id})}
+              style={{display:'grid',gridTemplateColumns:'1fr 140px 160px',alignItems:'center',gap:18,padding:'20px 26px',borderTop:i?`1px solid ${EDI.lineSoft}`:'none',cursor:'pointer'}}>
+              <div style={{minWidth:0}}>
+                <div className="pp-serif" style={{fontSize:20,fontWeight:500,letterSpacing:'-.01em'}}>{a.title}</div>
+                <div style={{fontSize:13.5,color:EDI.sub,marginTop:3}}>{a.typeLabel} · {a.location} · {fmtDate(a.date)}</div>
+              </div>
+              <div style={{fontSize:18,fontWeight:800,fontVariantNumeric:'tabular-nums'}}>{fmtMoney(a.fund)}</div>
+              <div style={{justifySelf:'end'}}><span className={'pp-tag pp-tag--'+sm.tone}>{sm.label}</span></div>
+            </div>
+          );})}
+        </div>
+      </div>
+
+      {/* GROWTH OPPORTUNITIES */}
+      <div className="pp-wrap" style={{paddingTop:34,paddingBottom:18}}>
+        <Label>Growth opportunities</Label>
+        <div style={{fontSize:14.5,color:EDI.sub,margin:'-4px 0 18px',maxWidth:560}}>Ideas worth funding — picked for an Advanced partner in {PARTNER.territory}.</div>
+        <div className="pp-grid-3">
+          {RECOS.map(r=>(
+            <div key={r.id} className="pp-card pp-clickable" onClick={()=>go('fund',{type:r.type})} style={{padding:24,display:'flex',flexDirection:'column'}}>
+              <div style={{alignSelf:'flex-start',marginBottom:14}}><span className="pp-tag pp-tag--plain">{r.tag}</span></div>
+              <div className="pp-serif" style={{fontSize:21,fontWeight:500,letterSpacing:'-.01em',lineHeight:1.2}}>{r.t}</div>
+              <p style={{fontSize:14,lineHeight:1.55,color:EDI.sub,margin:'10px 0 20px',flex:1}}>{r.d}</p>
+              <span className="pp-link">Fund this →</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* UPCOMING ZOHO EVENTS */}
+      <div className="pp-wrap" style={{paddingTop:6,paddingBottom:60}}>
+        <div className="pp-card" style={{padding:'24px 28px'}}>
+          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:10}}>
+            <div><div className="pp-eyebrow" style={{color:EDI.gold,fontSize:12,marginBottom:6}}>Co-marketing</div><div className="pp-serif" style={{fontSize:22,fontWeight:500}}>Upcoming Zoho events you can join</div></div>
+            <span style={{fontSize:13,color:EDI.sub}}>We co-fund partner participation</span>
+          </div>
+          <div className="pp-grid-3">
+            {EVENTS.map(ev=>(
+              <div key={ev.t} className="pp-clickable" onClick={()=>go('fund',{type:'event'})} style={{border:`1px solid ${EDI.line}`,borderRadius:14,padding:18,display:'flex',gap:14,alignItems:'flex-start',background:EDI.paperAlt}}>
+                <div style={{width:48,height:54,borderRadius:10,background:EDI.card,border:`1px solid ${EDI.line}`,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+                  <span style={{fontSize:10.5,fontWeight:800,color:EDI.clay,textTransform:'uppercase',letterSpacing:'.05em'}}>{ev.mon}</span>
+                  <span className="pp-serif" style={{fontSize:22,fontWeight:500,lineHeight:1}}>{ev.day}</span>
+                </div>
+                <div style={{minWidth:0}}>
+                  <div style={{fontWeight:700,fontSize:14.5,lineHeight:1.25}}>{ev.t}</div>
+                  <div style={{fontSize:12.5,color:EDI.sub,marginTop:3}}>{ev.loc}</div>
+                  <div style={{fontSize:12.5,fontWeight:700,color:EDI.gold,marginTop:8}}>{ev.tag}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+window.PPHome = PPHome;
+
+/* ── SHARED FORM PRIMITIVES — defined OUTSIDE PPFund so component identity is
+   stable across re-renders. If defined inside, React sees a new function on
+   every render, unmounts+remounts the input, and focus is lost. ────────── */
+const FundField = ({label, children, hint, half})=>(
+  <div style={{marginBottom:18, gridColumn: half?'span 1':'1 / -1'}}>
+    <label className="pp-flabel">{label}</label>{children}
+    {hint && <div style={{fontSize:12,color:EDI.faint,marginTop:6,lineHeight:1.5}}>{hint}</div>}
+  </div>
+);
+const RvRow = ({l,v,strong})=>(<div style={{display:'flex',justifyContent:'space-between',padding:'10px 0',borderBottom:`1px solid ${EDI.lineSoft}`,fontSize:14}}><span style={{color:EDI.sub}}>{l}</span><span style={{fontWeight:strong?700:600,textAlign:'right',maxWidth:'60%'}}>{v||'—'}</span></div>);
+
+/* ── PARTNER PORTAL · FUND AN ACTIVITY (side-rail stepper) ──── */
+function PPFund({go, route}){
+  const b = PARTNER.budget;
+  const [step,setStep] = React.useState(1);
+  const [saved,setSaved] = React.useState(false);
+  // fRef holds ALL form values. Text inputs write here directly (no re-render).
+  // Only chip/select/file changes call bump() to trigger a re-render.
+  const fRef = React.useRef({
+    type: (route.params&&route.params.type)||null,
+    name:'', format:'', evType:'', participation:'', date:'', location:'',
+    attendees:'', total:'', pct:null, desc:'',
+    territory:'', industries:[], icp:'', files:[],
+  });
+  const [tick,setTick] = React.useState(0);
+  const bump = ()=>setTick(t=>t+1);
+
+  React.useEffect(()=>{ if(route.params&&route.params.type){ fRef.current.type=route.params.type; setStep(2); } },[]);
+
+  const f = fRef.current;
+  // setChoice: for chips, dropdowns, file list — needs a re-render
+  const setChoice = (k,v)=>{ fRef.current[k]=v; bump(); };
+  const toggleInd = (v)=>{ const arr=f.industries; fRef.current.industries=arr.includes(v)?arr.filter(x=>x!==v):[...arr,v]; bump(); };
+  const saveDraft = ()=>{ setSaved(true); setTimeout(()=>setSaved(false),2400); };
+
+  const typeMeta = ACT_TYPES.find(t=>t.id===f.type);
+  const pcts = COFUND_BY_TYPE[f.type]||[30,50];
+  const total = parseFloat(f.total)||0;
+  const requested = f.pct? Math.round(total*f.pct/100):0;
+  const remaining = b.available - requested;
+  const over = requested>b.available;
+
+  const detailsValid = f.name.trim() && f.date && (f.type!=='event' || (f.format && f.evType));
+  const stepValid = {1:!!f.type, 2:!!detailsValid, 3:(total>0 && !!f.pct), 4:true}[step];
+  const STEPS = [
+    {n:1, t:'What are you planning?', s:'Pick an activity'},
+    {n:2, t:'Tell us about it', s:'A few details'},
+    {n:3, t:'Funding request', s:'How much you need'},
+    {n:4, t:'Review & submit', s:'Confirm & send'},
+  ];
+  const next = ()=> step<4? setStep(step+1) : go('success',{name:f.name,fund:requested,type:f.type});
+
+  // Opts uses setChoice — chip clicks always need re-render, no focus concern
+  const Opts = ({field, list})=>(
+    <div style={{display:'flex',gap:9,flexWrap:'wrap'}}>
+      {list.map(o=>(<button key={o.v||o} className={'pp-opt'+(f[field]===(o.v||o)?' is-sel':'')} onClick={()=>setChoice(field,o.v||o)}>{o.l||o}</button>))}
+    </div>
+  );
+
+  return (
+    <div className="pp-wrap" style={{paddingTop:36,paddingBottom:70}}>
+      <button className="pp-link" style={{marginBottom:14}} onClick={()=>go('home')}>← Back to home</button>
+      <div className="pp-eyebrow" style={{color:EDI.gold,marginBottom:10}}>New funding plan</div>
+      <h1 className="pp-serif pp-h1" style={{fontSize:40,fontWeight:500,letterSpacing:'-.015em',margin:'0 0 6px'}}>Fund a Marketing Activity</h1>
+      <p style={{fontSize:16,color:EDI.sub,maxWidth:560,marginBottom:30}}>Tell us what you're planning. We'll show you exactly how much Zoho can co-invest as you go — and you can save and finish later.</p>
+
+      <div className="pp-stepwrap">
+        {/* LEFT — step rail */}
+        <div className="pp-steprail">
+          <div className="pp-sticky">
+            {STEPS.map((s,i)=>{ const active=step===s.n, done=s.n<step;
+              return (
+              <button key={s.n} onClick={()=> (done||s.n<step)&&setStep(s.n)} disabled={s.n>step}
+                style={{display:'flex',gap:13,alignItems:'flex-start',width:'100%',textAlign:'left',background:'none',border:'none',cursor:s.n<=step?'pointer':'default',padding:'0 0 22px',position:'relative',fontFamily:EDI.sans}}>
+                {i<STEPS.length-1 && <div style={{position:'absolute',left:14,top:30,bottom:0,width:2,background:done?EDI.clay:EDI.line}}/>}
+                <div style={{width:29,height:29,borderRadius:'50%',flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',fontWeight:800,fontSize:13,zIndex:1,
+                  background:done?EDI.clay:active?'#fff':'#fff',color:done?'#fff':active?EDI.clay:EDI.faint,
+                  border:`2px solid ${done||active?EDI.clay:EDI.line}`,boxShadow:active?`0 0 0 4px ${EDI.redL}`:'none'}}>{done?'✓':s.n}</div>
+                <div style={{paddingTop:2}}>
+                  <div style={{fontSize:13.5,fontWeight:active?700:600,color:s.n<=step?EDI.ink:EDI.faint,lineHeight:1.3}}>{s.t}</div>
+                  <div style={{fontSize:11.5,color:EDI.faint,marginTop:3,lineHeight:1.3}}>{s.s}</div>
+                </div>
+              </button>
+            );})}
+          </div>
+        </div>
+
+        {/* CENTER — active step */}
+        <div className="pp-stepbody">
+          {step===1 && (
+            <div>
+              <h2 className="pp-serif" style={{fontSize:25,fontWeight:500,margin:'0 0 18px'}}>What are you planning?</h2>
+              <div className="pp-picks">
+                {ACT_TYPES.map(t=>(
+                  <button key={t.id} className={'pp-pick'+(f.type===t.id?' is-sel':'')} disabled={t.soon}
+                    onClick={()=>!t.soon&&set('type',t.id)} style={{opacity:t.soon?.5:1,position:'relative'}}>
+                    {t.soon&&<span style={{position:'absolute',top:14,right:14,fontSize:10.5,fontWeight:700,color:EDI.faint,background:'#EFEADF',padding:'2px 8px',borderRadius:5}}>Coming soon</span>}
+                    <div style={{fontSize:26,marginBottom:10,color:f.type===t.id?EDI.clay:EDI.gold}}>{t.icon}</div>
+                    <div className="pp-serif" style={{fontSize:19,fontWeight:500}}>{t.title}</div>
+                    <div style={{fontSize:13,color:EDI.sub,marginTop:4,lineHeight:1.45}}>{t.sub}</div>
+                    <div style={{fontSize:12,fontWeight:700,color:f.type===t.id?EDI.clay:EDI.gold,marginTop:10}}>{t.cofund} co-funded</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {step===2 && (
+            <div>
+              <h2 className="pp-serif" style={{fontSize:25,fontWeight:500,margin:'0 0 4px'}}>Tell us about it</h2>
+              <p style={{fontSize:14,color:EDI.sub,margin:'0 0 22px'}}>A few details so {PARTNER.pam.split(' ')[0]} can say yes quickly.</p>
+              <div className="pp-card" style={{padding:24}}>
+                <div className="pp-f2">
+                  <FundField label={f.type==='gtm'?'Campaign name':f.type==='webinar'?'Webinar title':'Activity name'}>
+                    <input className="pp-input" defaultValue={f.name} placeholder={f.type==='gtm'?'e.g. Healthcare Vertical Play':'e.g. Montréal SMB Tech Expo'} onBlur={e=>{fRef.current.name=e.target.value;}} onInput={e=>{fRef.current.name=e.target.value;}}/>
+                  </FundField>
+                  {f.type==='event' && <>
+                    <FundField label="Format" half><Opts field="format" list={['In-person','Online','Hybrid']}/></FundField>
+                    <FundField label="Event type" half><Opts field="evType" list={['Self-hosted','Third-party']}/></FundField>
+                    {f.evType==='Third-party' && <FundField label="Your role"><Opts field="participation" list={['Organizer','Sponsor','Exhibitor','Speaker']}/></FundField>}
+                  </>}
+                  {f.type==='webinar' && <FundField label="Promotion" half><Opts field="format" list={['Organic only','Paid promotion']}/></FundField>}
+                  {f.type==='gtm' && <>
+                    <FundField label="Territory focus" half><input className="pp-input" defaultValue={f.territory} placeholder="e.g. Québec" onInput={e=>{fRef.current.territory=e.target.value;}}/></FundField>
+                    <FundField label="Industry focus"><div style={{display:'flex',gap:9,flexWrap:'wrap'}}>{['SaaS','Healthcare','Real Estate','Manufacturing','Pro Services'].map(i=>(<button key={i} className={'pp-opt'+(f.industries.includes(i)?' is-sel':'')} onClick={()=>toggleInd(i)}>{i}</button>))}</div></FundField>
+                    <FundField label="Ideal customer profile"><textarea className="pp-textarea" defaultValue={f.icp} placeholder="Who are you trying to reach?" onInput={e=>{fRef.current.icp=e.target.value;}}/></FundField>
+                  </>}
+                  <FundField label={f.type==='gtm'?'Campaign start date':'Date'} half><input className="pp-input" type="date" defaultValue={f.date} onChange={e=>{fRef.current.date=e.target.value; bump();}}/></FundField>
+                  {f.type!=='gtm' && <FundField label={f.type==='webinar'?'Expected registrations':'Location'} half>
+                    {f.type==='webinar'
+                      ? <input className="pp-input" type="number" defaultValue={f.attendees} placeholder="e.g. 250" onInput={e=>{fRef.current.attendees=e.target.value;}}/>
+                      : <input className="pp-input" defaultValue={f.location} placeholder="City or venue" onInput={e=>{fRef.current.location=e.target.value;}}/>}
+                  </FundField>}
+                  <FundField label="What's the goal?" hint="A sentence on how this builds your pipeline helps a lot.">
+                    <textarea className="pp-textarea" defaultValue={f.desc} placeholder="What do you want this activity to achieve?" onInput={e=>{fRef.current.desc=e.target.value;}}/>
+                  </FundField>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {step===3 && (
+            <div>
+              <h2 className="pp-serif" style={{fontSize:25,fontWeight:500,margin:'0 0 4px'}}>Funding request</h2>
+              <p style={{fontSize:14,color:EDI.sub,margin:'0 0 22px'}}>We'll calculate Zoho's share live, on the right.</p>
+              <div className="pp-card" style={{padding:24}}>
+                <div className="pp-f2">
+                  <FundField label="Total activity budget (CAD)" half><input className="pp-input" type="number" defaultValue={f.total} placeholder="0" onInput={e=>{fRef.current.total=e.target.value; bump();}}/></FundField>
+                  <FundField label="Zoho co-funding requested" half hint={typeMeta?`${typeMeta.cofund} for ${typeMeta.title.toLowerCase()}.`:''}>
+                    <div style={{display:'flex',gap:9}}>{pcts.map(p=>(<button key={p} className={'pp-opt'+(f.pct===p?' is-sel':'')} onClick={()=>set('pct',p)}>{p}%</button>))}</div>
+                  </FundField>
+                  <FundField label="Supporting documents" hint="Quotes, agendas, media plans — optional but speeds things up.">
+                    <button className="pp-btn pp-btn--ghost pp-btn--sm" onClick={()=>setChoice('files',[...f.files,{name:`Document_${f.files.length+1}.pdf`}])}>＋ Attach a file</button>
+                    {f.files.length>0 && <div style={{marginTop:10,display:'flex',flexDirection:'column',gap:7}}>{f.files.map((file,i)=>(
+                      <div key={i} style={{display:'flex',alignItems:'center',gap:9,fontSize:13,background:EDI.paperAlt,border:`1px solid ${EDI.line}`,borderRadius:8,padding:'8px 12px'}}>
+                        <span style={{color:EDI.clay}}>▣</span><span style={{fontWeight:600}}>{file.name}</span>
+                        <button className="pp-link" style={{marginLeft:'auto',fontSize:13}} onClick={()=>setChoice('files',f.files.filter((_,j)=>j!==i))}>Remove</button>
+                      </div>))}</div>}
+                  </FundField>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {step===4 && (
+            <div>
+              <h2 className="pp-serif" style={{fontSize:25,fontWeight:500,margin:'0 0 4px'}}>Review &amp; submit</h2>
+              <p style={{fontSize:14,color:EDI.sub,margin:'0 0 22px'}}>One last look before this goes to {PARTNER.pam}.</p>
+              <div className="pp-card" style={{padding:'8px 24px 18px'}}>
+                <RvRow l="Activity type" v={typeMeta&&typeMeta.title}/>
+                <RvRow l={f.type==='gtm'?'Campaign name':'Activity name'} v={f.name}/>
+                {f.type==='event' && <RvRow l="Format" v={[f.format,f.evType,f.participation].filter(Boolean).join(' · ')}/>}
+                {f.type==='gtm' && <RvRow l="Industries" v={f.industries.join(', ')}/>}
+                <RvRow l={f.type==='gtm'?'Start date':'Date'} v={fmtDate(f.date)}/>
+                {f.location && <RvRow l="Location" v={f.location}/>}
+                <RvRow l="Total activity budget" v={fmtMoney(total)}/>
+                <RvRow l="Co-funding requested" v={f.pct?f.pct+'%':'—'}/>
+                <RvRow l="Documents" v={f.files.length?`${f.files.length} attached`:'None'}/>
+                <div style={{display:'flex',justifyContent:'space-between',padding:'14px 0 4px'}}>
+                  <span style={{fontWeight:700,fontSize:15}}>Funding you're requesting</span>
+                  <span className="pp-serif" style={{fontSize:24,fontWeight:500,color:EDI.clay}}>{fmtMoney(requested)}</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* footer controls */}
+          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginTop:26,gap:12,flexWrap:'wrap'}}>
+            <button className="pp-btn pp-btn--ghost" style={{visibility:step>1?'visible':'hidden'}} onClick={()=>setStep(step-1)}>← Back</button>
+            <div style={{display:'flex',gap:10,alignItems:'center'}}>
+              {saved && <span style={{fontSize:13,color:EDI.sage,fontWeight:700}}>✓ Saved — finish anytime</span>}
+              <button className="pp-btn pp-btn--soft pp-btn--sm" onClick={saveDraft}>Save &amp; finish later</button>
+              <button className="pp-btn pp-btn--clay" disabled={!stepValid} onClick={next}>{step===4?'Request Funding →':'Continue →'}</button>
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT — live funding rail */}
+        <div className="pp-stepside">
+          <div className="pp-sticky pp-card" style={{padding:22,boxShadow:'0 14px 40px rgba(80,60,30,.10)'}}>
+            <div className="pp-eyebrow" style={{color:EDI.sub,fontSize:11.5,letterSpacing:'.08em',marginBottom:14}}>Your funding, live</div>
+            {[['Available growth funds', b.available, EDI.ink],['This request', requested, EDI.clay]].map(([l,v,c])=>(
+              <div key={l} style={{display:'flex',justifyContent:'space-between',alignItems:'baseline',padding:'8px 0',borderBottom:`1px solid ${EDI.lineSoft}`}}>
+                <span style={{fontSize:13,color:EDI.sub}}>{l}</span>
+                <span className="pp-serif" style={{fontSize:20,fontWeight:500,color:c,fontVariantNumeric:'tabular-nums'}}>{fmtMoney(v)}</span>
+              </div>
+            ))}
+            <div style={{display:'flex',justifyContent:'space-between',alignItems:'baseline',padding:'12px 0 4px'}}>
+              <span style={{fontSize:13,fontWeight:700}}>Remaining after approval</span>
+              <span className="pp-serif" style={{fontSize:23,fontWeight:500,color:over?EDI.red:EDI.sage,fontVariantNumeric:'tabular-nums'}}>{fmtMoney(remaining)}</span>
+            </div>
+            {f.pct && total>0 && <div style={{fontSize:12,color:EDI.sub,marginTop:6}}>You contribute {fmtMoney(total-requested)} · Zoho co-funds {f.pct}%</div>}
+            {over && <div style={{background:EDI.redL,border:`1px solid ${EDI.line}`,borderRadius:10,padding:'10px 13px',fontSize:12,color:EDI.clayD,marginTop:13,lineHeight:1.5}}>This is more than your available funds. You can still submit — {PARTNER.pam.split(' ')[0]} will review before approving.</div>}
+            <div style={{display:'flex',gap:9,alignItems:'flex-start',marginTop:16,fontSize:12,color:EDI.sub,lineHeight:1.5}}>
+              <span style={{color:EDI.gold,fontSize:14,lineHeight:1}}>✦</span>
+              <span><strong style={{color:EDI.ink}}>What's next:</strong> {PARTNER.pam} reviews within 5 business days. We'll help you make it land.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+window.PPFund = PPFund;
+
+/* ── PARTNER PORTAL · MY ACTIVITIES (list) + DETAIL + SUCCESS ── */
+
+function PPPrograms({go}){
+  const [filter,setFilter] = React.useState('all');
+  const groups = {
+    all:()=>true,
+    review:a=>['submitted','pending_info'].includes(a.status),
+    funded:a=>['approved','upcoming'].includes(a.status),
+    action:a=>['pending_info','executed','rejected'].includes(a.status),
+    done:a=>a.status==='paid',
+  };
+  const chips = [['all','All'],['review','In review'],['funded','Funded'],['action','Needs you'],['done','Completed']];
+  const list = ACTIVITIES.filter(groups[filter]);
+  const counts = {}; chips.forEach(([k])=> counts[k]=ACTIVITIES.filter(groups[k]).length);
+
+  return (
+    <div className="pp-wrap" style={{paddingTop:46,paddingBottom:64}}>
+      <div style={{display:'flex',alignItems:'flex-end',justifyContent:'space-between',gap:16,flexWrap:'wrap',marginBottom:22}}>
+        <div>
+          <div className="pp-eyebrow" style={{color:EDI.clay,marginBottom:12}}>My programs</div>
+          <h1 className="pp-serif pp-h1" style={{fontSize:40,fontWeight:500,letterSpacing:'-.015em',margin:0}}>Every plan, in one place</h1>
+        </div>
+        <button className="pp-btn pp-btn--clay" onClick={()=>go('fund')}>Fund a Marketing Activity →</button>
+      </div>
+
+      <div style={{display:'flex',gap:9,flexWrap:'wrap',marginBottom:20}}>
+        {chips.map(([k,l])=>(
+          <button key={k} className={'pp-opt'+(filter===k?' is-sel':'')} onClick={()=>setFilter(k)}>{l} <span style={{opacity:.6,marginLeft:4}}>{counts[k]}</span></button>
+        ))}
+      </div>
+
+      <div style={{display:'flex',flexDirection:'column',gap:14}}>
+        {list.map(a=>{ const sm=statusMeta(a.status); const needs = a.status==='pending_info'||a.status==='executed';
+          return (
+          <div key={a.id} className="pp-card pp-clickable" onClick={()=>go('activity',{id:a.id})} style={{padding:'22px 26px',display:'grid',gridTemplateColumns:'1fr auto',gap:18,alignItems:'center',borderLeft:needs?`3px solid ${EDI.gold}`:`1px solid ${EDI.line}`}}>
+            <div style={{minWidth:0}}>
+              <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:6,flexWrap:'wrap'}}>
+                <span className={'pp-tag pp-tag--'+sm.tone}>{sm.label}</span>
+                <span style={{fontSize:12.5,color:EDI.faint,fontWeight:600,textTransform:'uppercase',letterSpacing:'.04em'}}>{a.typeLabel}</span>
+              </div>
+              <div className="pp-serif" style={{fontSize:22,fontWeight:500,letterSpacing:'-.01em'}}>{a.title}</div>
+              <div style={{fontSize:13.5,color:EDI.sub,marginTop:4}}>{[a.format,(a.location&&!a.format.includes(a.location))?a.location:null,fmtDate(a.date)].filter(Boolean).join(' · ')}</div>
+              {a.status==='pending_info' && <div style={{fontSize:13,color:EDI.clayD,fontWeight:600,marginTop:8}}>Daniel needs a little more info to move forward →</div>}
+              {a.status==='executed' && <div style={{fontSize:13,color:EDI.goldD,fontWeight:600,marginTop:8}}>Ready to claim up to {fmtMoney(a.claimMax)} →</div>}
+            </div>
+            <div style={{textAlign:'right'}}>
+              <div style={{fontSize:11.5,color:EDI.faint,fontWeight:700,textTransform:'uppercase',letterSpacing:'.05em'}}>{a.status==='paid'?'Reimbursed':'Zoho co-fund'}</div>
+              <div className="pp-serif" style={{fontSize:26,fontWeight:500,fontVariantNumeric:'tabular-nums',color:a.status==='rejected'?EDI.faint:EDI.ink}}>{fmtMoney(a.status==='paid'?a.reimbursed:a.fund)}</div>
+            </div>
+          </div>
+        );})}
+      </div>
+    </div>
+  );
+}
+
+/* ── ACTIVITY DETAIL ─────────────────────────────── */
+function PPActivity({go, route}){
+  const a = ACTIVITIES.find(x=>x.id===(route.params&&route.params.id));
+  const [responded,setResponded] = React.useState(false);
+  const [msg,setMsg] = React.useState('');
+  if(!a) return <div className="pp-wrap" style={{padding:60}}>Activity not found. <button className="pp-link" onClick={()=>go('programs')}>Back</button></div>;
+  const sm = statusMeta(a.status);
+
+  return (
+    <div className="pp-wrap" style={{paddingTop:34,paddingBottom:70}}>
+      <button className="pp-link" style={{marginBottom:16}} onClick={()=>go('programs')}>← My programs</button>
+      <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',gap:20,flexWrap:'wrap'}}>
+        <div style={{maxWidth:680}}>
+          <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:10}}>
+            <span className={'pp-tag pp-tag--'+sm.tone}>{sm.label}</span>
+            <span style={{fontSize:12.5,color:EDI.faint,fontWeight:600,textTransform:'uppercase',letterSpacing:'.04em'}}>{a.typeLabel}</span>
+          </div>
+          <h1 className="pp-serif pp-h1" style={{fontSize:34,fontWeight:500,letterSpacing:'-.015em',margin:0,lineHeight:1.18}}>{a.title}</h1>
+          <div style={{fontSize:14.5,color:EDI.sub,marginTop:12}}>{[a.format, (a.location && !a.format.includes(a.location))?a.location:null, fmtDate(a.date)].filter(Boolean).join(' · ')}</div>
+        </div>
+        {a.status==='executed' && <button className="pp-btn pp-btn--clay" onClick={()=>go('claims',{id:a.id})}>Submit a Claim →</button>}
+        {a.status==='rejected' && <button className="pp-btn pp-btn--ghost" onClick={()=>go('fund',{type:a.type})}>Start a new plan</button>}
+      </div>
+
+      {/* state banners */}
+      {a.status==='pending_info' && !responded && (
+        <div style={{background:'#FCF1E8',border:`1px solid ${EDI.gold}`,borderRadius:16,padding:'22px 24px',marginTop:24}}>
+          <div style={{display:'flex',gap:14,alignItems:'flex-start'}}>
+            <div style={{width:40,height:40,borderRadius:12,background:EDI.gold,color:'#fff',display:'flex',alignItems:'center',justifyContent:'center',fontSize:20,flexShrink:0}}>?</div>
+            <div style={{flex:1}}>
+              <div className="pp-serif" style={{fontSize:20,fontWeight:500}}>Daniel needs a little more to move forward</div>
+              <p style={{fontSize:14.5,color:EDI.sub,lineHeight:1.6,margin:'8px 0 16px'}}>{a.infoRequest}</p>
+              <textarea className="pp-textarea" placeholder="Reply to Daniel, or describe what you're attaching…" value={msg} onChange={e=>setMsg(e.target.value)}/>
+              <div style={{display:'flex',gap:10,marginTop:12,alignItems:'center',flexWrap:'wrap'}}>
+                <button className="pp-btn pp-btn--ghost pp-btn--sm">＋ Attach media plan</button>
+                <button className="pp-btn pp-btn--clay pp-btn--sm" disabled={!msg.trim()} onClick={()=>setResponded(true)}>Send to Daniel →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {a.status==='pending_info' && responded && (
+        <div style={{background:EDI.sageL,border:`1px solid ${EDI.line}`,borderRadius:16,padding:'18px 22px',marginTop:24,display:'flex',gap:13,alignItems:'center'}}>
+          <div style={{width:34,height:34,borderRadius:'50%',background:EDI.sage,color:'#fff',display:'flex',alignItems:'center',justifyContent:'center',fontSize:16,flexShrink:0}}>✓</div>
+          <div><div style={{fontWeight:700,fontSize:14.5}}>Thanks — sent to Daniel.</div><div style={{fontSize:13.5,color:EDI.sub}}>He'll review and you'll hear back within 2 business days.</div></div>
+        </div>
+      )}
+      {a.status==='rejected' && (
+        <div style={{background:EDI.redL,border:`1px solid #E6C3B5`,borderRadius:16,padding:'22px 24px',marginTop:24,display:'flex',gap:14,alignItems:'flex-start'}}>
+          <div style={{width:40,height:40,borderRadius:12,background:EDI.clay,color:'#fff',display:'flex',alignItems:'center',justifyContent:'center',fontSize:18,flexShrink:0}}>!</div>
+          <div><div className="pp-serif" style={{fontSize:20,fontWeight:500,color:EDI.clayD}}>Not approved this time</div><p style={{fontSize:14.5,color:'#7A3322',lineHeight:1.6,margin:'6px 0 0'}}>{a.rejectionReason}</p></div>
+        </div>
+      )}
+
+      {/* two columns */}
+      <div className="pp-grid-2" style={{gridTemplateColumns:'1fr 360px',marginTop:28,alignItems:'start'}}>
+        <div>
+          <div className="pp-card" style={{padding:26,marginBottom:18}}>
+            <div className="pp-eyebrow" style={{color:EDI.faint,fontSize:11.5,marginBottom:12}}>The plan</div>
+            <p style={{fontSize:16,lineHeight:1.65,color:EDI.ink,margin:0}}>{a.desc}</p>
+          </div>
+          {/* funding summary */}
+          <div className="pp-card" style={{padding:26}}>
+            <div className="pp-eyebrow" style={{color:EDI.faint,fontSize:11.5,marginBottom:14}}>Funding</div>
+            {[['Total activity budget',a.total],['Zoho co-funding ('+a.cofundPct+'%)',a.fund]].map(([l,v])=>(
+              <div key={l} style={{display:'flex',justifyContent:'space-between',padding:'9px 0',borderBottom:`1px solid ${EDI.lineSoft}`,fontSize:14.5}}>
+                <span style={{color:EDI.sub}}>{l}</span><span style={{fontWeight:700,fontVariantNumeric:'tabular-nums'}}>{fmtMoney(v)}</span>
+              </div>
+            ))}
+            <div style={{display:'flex',justifyContent:'space-between',padding:'12px 0 0',fontSize:14.5}}>
+              <span style={{fontWeight:700}}>{a.status==='paid'?'Reimbursed to you':'Your contribution'}</span>
+              <span className="pp-serif" style={{fontSize:22,fontWeight:500,color:a.status==='paid'?EDI.sage:EDI.ink,fontVariantNumeric:'tabular-nums'}}>{fmtMoney(a.status==='paid'?a.reimbursed:a.total-a.fund)}</span>
+            </div>
+          </div>
+
+          {/* ROI / outcomes card — shown for executed + paid activities */}
+          {(a.status==='paid'||a.status==='executed'||a.status==='payout_pending') && (()=>{
+            const roi = a.roi || (a.status==='paid'?{leads:22,attendees:58,pipeline:320000,opps:6}:null);
+            if(!roi) return null;
+            return (
+              <div className="pp-card" style={{padding:26,marginTop:18}}>
+                <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:16}}>
+                  <div className="pp-eyebrow" style={{color:EDI.faint,fontSize:11.5,marginBottom:0}}>Results & impact</div>
+                  {a.status==='paid' && <span className="pp-tag pp-tag--sage">Reimbursed</span>}
+                </div>
+                <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:1,background:EDI.line,border:`1px solid ${EDI.line}`,borderRadius:12,overflow:'hidden',marginBottom:16}}>
+                  {[
+                    ['Actual attendance',roi.attendees?.toLocaleString(),'👥'],
+                    ['Leads generated',roi.leads,'🎯'],
+                    ['Opportunities created',roi.opps,'🤝'],
+                    ['Pipeline influenced',roi.pipeline?fmtMoney(roi.pipeline):'—','📈'],
+                  ].map(([l,v,ic])=>(
+                    <div key={l} style={{background:EDI.card,padding:'14px 16px'}}>
+                      <div style={{fontSize:11.5,fontWeight:700,color:EDI.faint,textTransform:'uppercase',letterSpacing:'.05em',marginBottom:6}}>{ic} {l}</div>
+                      <div className="pp-serif" style={{fontSize:24,fontWeight:500,color:EDI.ink,fontVariantNumeric:'tabular-nums'}}>{v||'—'}</div>
+                    </div>
+                  ))}
+                </div>
+                {roi.pipeline && (
+                  <div style={{background:EDI.sageL,borderRadius:10,padding:'12px 16px',fontSize:13.5,color:EDI.sageD,lineHeight:1.55}}>
+                    <strong>ROI:</strong> Zoho co-invested {fmtMoney(a.reimbursed||a.fund)} and your team influenced {fmtMoney(roi.pipeline)} in pipeline — <strong>{Math.round(roi.pipeline/(a.reimbursed||a.fund))}× return</strong> on marketing spend.
+                  </div>
+                )}
+              </div>
+            );
+          })()}
+        </div>
+
+        {/* progress rail */}
+        <div className="pp-card" style={{padding:'24px 26px'}}>
+          <div className="pp-eyebrow" style={{color:EDI.faint,fontSize:11.5,marginBottom:18}}>Your journey</div>
+          <div style={{position:'relative'}}>
+            {a.timeline.map((t,i)=>{ const last=i===a.timeline.length-1; const reject=t.k==='rejected';
+              return (
+              <div key={i} style={{position:'relative',paddingLeft:30,paddingBottom:last?0:20}}>
+                {!last && <div style={{position:'absolute',left:8,top:18,bottom:-2,width:2,background:t.done?EDI.sage:EDI.line}}/>}
+                <div style={{position:'absolute',left:0,top:1,width:18,height:18,borderRadius:'50%',
+                  background:t.done?EDI.sage:t.current?(reject?EDI.clay:EDI.gold):'#fff',
+                  border:`2px solid ${t.done?EDI.sage:t.current?(reject?EDI.clay:EDI.gold):EDI.line}`,
+                  boxShadow:t.current?`0 0 0 4px ${reject?EDI.redL:EDI.goldL}`:'none'}}/>
+                <div style={{fontSize:14,fontWeight:t.current?700:600,color:t.done||t.current?EDI.ink:EDI.faint,lineHeight:1.3}}>{t.t}</div>
+                {t.w && <div style={{fontSize:12,color:EDI.faint,marginTop:2}}>{fmtDate(t.w)}</div>}
+                {t.note && <div style={{fontSize:12.5,color:EDI.sub,marginTop:6,background:EDI.paperAlt,border:`1px solid ${EDI.lineSoft}`,borderRadius:9,padding:'8px 11px',lineHeight:1.5}}>{t.note}</div>}
+              </div>
+            );})}
+          </div>
+          <div style={{marginTop:20,paddingTop:16,borderTop:`1px solid ${EDI.lineSoft}`,display:'flex',alignItems:'center',gap:10}}>
+            <div style={{width:30,height:30,borderRadius:'50%',background:EDI.ink,color:'#fff',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:700,fontSize:12}}>DR</div>
+            <div style={{fontSize:12.5,color:EDI.sub}}>Your PAM is <strong style={{color:EDI.ink}}>{PARTNER.pam}</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── SUCCESS ─────────────────────────────────────── */
+function PPSuccess({go, route}){
+  const p = route.params||{};
+  const ref = 'MDF-2026-'+String(Math.floor(Math.random()*9000)+1000);
+  return (
+    <div className="pp-wrap" style={{maxWidth:620,paddingTop:80,paddingBottom:90,textAlign:'center'}}>
+      <div style={{width:84,height:84,borderRadius:'50%',background:EDI.sageL,display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto 24px',fontSize:38,color:EDI.sage}}>✓</div>
+      <div className="pp-eyebrow" style={{color:EDI.gold,marginBottom:14}}>Plan submitted</div>
+      <h1 className="pp-serif" style={{fontSize:42,fontWeight:500,letterSpacing:'-.02em',margin:0,lineHeight:1.1}}>We've got it, {PARTNER.first} — <em style={{color:EDI.clay}}>nice plan.</em></h1>
+      <p style={{fontSize:17,color:EDI.sub,lineHeight:1.65,margin:'18px auto 26px',maxWidth:480}}>
+        {p.name?`"${p.name}" is`:'Your plan is'} on its way to {PARTNER.pam}, your PAM. You'll hear back within <strong style={{color:EDI.ink}}>5 business days</strong> — and we're here to help make it land.
+      </p>
+      <div style={{display:'inline-flex',gap:24,background:EDI.card,border:`1px solid ${EDI.line}`,borderRadius:14,padding:'16px 28px',marginBottom:28}}>
+        <div><div style={{fontSize:11.5,color:EDI.faint,fontWeight:700,textTransform:'uppercase',letterSpacing:'.05em'}}>Reference</div><div style={{fontWeight:700,fontVariantNumeric:'tabular-nums',marginTop:3}}>{ref}</div></div>
+        {p.fund>0 && <div style={{borderLeft:`1px solid ${EDI.line}`,paddingLeft:24}}><div style={{fontSize:11.5,color:EDI.faint,fontWeight:700,textTransform:'uppercase',letterSpacing:'.05em'}}>Requested</div><div style={{fontWeight:700,fontVariantNumeric:'tabular-nums',marginTop:3,color:EDI.clay}}>{fmtMoney(p.fund)}</div></div>}
+      </div>
+      <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
+        <button className="pp-btn pp-btn--ghost" onClick={()=>go('programs')}>Track my activities</button>
+        <button className="pp-btn pp-btn--clay" onClick={()=>go('home')}>Back to home</button>
+      </div>
+    </div>
+  );
+}
+Object.assign(window,{PPPrograms, PPActivity, PPSuccess});
+
+/* ── PARTNER PORTAL · CLAIMS & REIMBURSEMENTS ─────────────── */
+function PPClaims({go, route}){
+  const claimables = ACTIVITIES.filter(a=>a.status==='executed');
+  const reimbursed = ACTIVITIES.filter(a=>a.status==='paid');
+  const inReview = ACTIVITIES.filter(a=>a.status==='payout_pending');
+  const sel = route.params&&route.params.id ? ACTIVITIES.find(a=>a.id===route.params.id) : null;
+
+  if(sel && sel.status==='executed') return <ClaimForm a={sel} go={go}/>;
+
+  return (
+    <div className="pp-wrap" style={{paddingTop:46,paddingBottom:64}}>
+      <div className="pp-eyebrow" style={{color:EDI.clay,marginBottom:12}}>Claims &amp; reimbursements</div>
+      <h1 className="pp-serif pp-h1" style={{fontSize:40,fontWeight:500,letterSpacing:'-.015em',margin:'0 0 6px'}}>Get reimbursed for what you ran</h1>
+      <p style={{fontSize:16,color:EDI.sub,maxWidth:560,marginBottom:34}}>Once an activity is complete, share how it went and upload your receipts. We'll reimburse Zoho's agreed share — usually within days.</p>
+
+      {claimables.length>0 && <>
+        <div className="pp-eyebrow" style={{color:EDI.gold,fontSize:12,marginBottom:14}}>Ready to claim</div>
+        <div style={{display:'flex',flexDirection:'column',gap:14,marginBottom:34}}>
+          {claimables.map(a=>(
+            <div key={a.id} className="pp-card" style={{padding:'22px 26px',display:'grid',gridTemplateColumns:'1fr auto',gap:18,alignItems:'center',borderLeft:`3px solid ${EDI.gold}`}}>
+              <div>
+                <div className="pp-serif" style={{fontSize:22,fontWeight:500}}>{a.title}</div>
+                <div style={{fontSize:13.5,color:EDI.sub,marginTop:4}}>{a.typeLabel} · {a.location} · completed {fmtDate(a.date)}</div>
+                <div style={{fontSize:13.5,color:EDI.goldD,fontWeight:600,marginTop:8}}>Claim up to {fmtMoney(a.claimMax)}</div>
+              </div>
+              <button className="pp-btn pp-btn--clay" onClick={()=>go('claims',{id:a.id})}>Start claim →</button>
+            </div>
+          ))}
+        </div>
+      </>}
+
+      {inReview.length>0 && <>
+        <div className="pp-eyebrow" style={{color:EDI.faint,fontSize:12,marginBottom:14}}>In review</div>
+        <div style={{display:'flex',flexDirection:'column',gap:12,marginBottom:34}}>
+          {inReview.map(a=>(
+            <div key={a.id} className="pp-card" style={{padding:'18px 24px',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+              <div><div style={{fontWeight:700,fontSize:15.5}}>{a.title}</div><div style={{fontSize:13,color:EDI.sub,marginTop:2}}>Submitted · your PAM is reviewing the payout</div></div>
+              <span className="pp-tag pp-tag--gold">Claim in review</span>
+            </div>
+          ))}
+        </div>
+      </>}
+
+      <div className="pp-eyebrow" style={{color:EDI.faint,fontSize:12,marginBottom:14}}>Reimbursed</div>
+      <div style={{display:'flex',flexDirection:'column',gap:12}}>
+        {reimbursed.map(a=>(
+          <div key={a.id} className="pp-card" style={{padding:'18px 24px',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+            <div><div style={{fontWeight:700,fontSize:15.5}}>{a.title}</div><div style={{fontSize:13,color:EDI.sub,marginTop:2}}>Paid {fmtDate(a.timeline[a.timeline.length-1].w)} · to your Partner Store account</div></div>
+            <div style={{display:'flex',alignItems:'center',gap:14}}><span className="pp-serif" style={{fontSize:22,fontWeight:500,color:EDI.sage,fontVariantNumeric:'tabular-nums'}}>{fmtMoney(a.reimbursed)}</span><span className="pp-tag pp-tag--sage">Reimbursed</span></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ClaimForm({a, go}){
+  const [c,setC] = React.useState({spend:'',attendees:'',leads:'',outcomes:'',files:[]});
+  const [done,setDone] = React.useState(false);
+  const set=(k,v)=>setC(p=>({...p,[k]:v}));
+  const spend = parseFloat(c.spend)||0;
+  const calc = Math.min(Math.round(spend*a.cofundPct/100), a.fund);
+  const valid = spend>0 && c.outcomes.trim() && c.files.length>0;
+
+  if(done) return (
+    <div className="pp-wrap" style={{maxWidth:640,paddingTop:64,paddingBottom:90}}>
+      <div style={{textAlign:'center',marginBottom:40}}>
+        <div style={{width:72,height:72,borderRadius:'50%',background:EDI.sageL,display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto 18px',fontSize:32,color:EDI.sage}}>✓</div>
+        <div className="pp-eyebrow" style={{color:EDI.gold,marginBottom:12}}>Claim submitted</div>
+        <h1 className="pp-serif" style={{fontSize:36,fontWeight:500,letterSpacing:'-.02em',margin:'0 0 10px',lineHeight:1.15}}>Your claim is in, {PARTNER.first}.</h1>
+        <p style={{fontSize:15.5,color:EDI.sub,lineHeight:1.65,maxWidth:460,margin:'0 auto'}}>{PARTNER.pam} will verify your receipts and confirm your reimbursement. Here's what happens next.</p>
+      </div>
+
+      {/* 4-stage claim journey */}
+      <div className="pp-card" style={{padding:'28px 32px',marginBottom:24}}>
+        <div className="pp-eyebrow" style={{color:EDI.faint,fontSize:11.5,marginBottom:22}}>Your claim journey</div>
+        {[
+          {icon:'✓', tone:EDI.sage, bg:EDI.sageL, label:'Claim submitted', desc:'Your receipts and outcomes are in.', time:'Just now', done:true, current:false},
+          {icon:'👀', tone:EDI.gold, bg:EDI.goldL, label:'Under review', desc:`${PARTNER.pam} is verifying your actual spend against receipts. Usually 2–3 days.`, time:'Next', done:false, current:true},
+          {icon:'⚖', tone:EDI.faint, bg:EDI.paperAlt, label:'Reimbursement calculated', desc:`We'll confirm the final amount — min(actual spend × ${a.cofundPct}%, approved cap). You'll be notified if there's any adjustment.`, time:'', done:false, current:false},
+          {icon:'💰', tone:EDI.sage, bg:EDI.sageL, label:'Payment sent', desc:'Funds disbursed to your Zoho Partner Store account. Usually within a few business days of approval.', time:'', done:false, current:false},
+        ].map((step,i,arr)=>(
+          <div key={i} style={{display:'flex',gap:16,paddingBottom:i<arr.length-1?22:0,position:'relative'}}>
+            {i<arr.length-1 && <div style={{position:'absolute',left:18,top:38,bottom:0,width:2,background:step.done?EDI.sage:EDI.lineSoft}}/>}
+            <div style={{width:36,height:36,borderRadius:'50%',background:step.bg,display:'flex',alignItems:'center',justifyContent:'center',fontSize:15,flexShrink:0,zIndex:1,border:`2px solid ${step.done||step.current?step.tone:EDI.line}`,boxShadow:step.current?`0 0 0 4px ${step.bg}`:'none'}}>{step.icon}</div>
+            <div style={{flex:1,paddingTop:4}}>
+              <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:3}}>
+                <div style={{fontWeight:step.current?700:600,fontSize:14.5,color:step.done||step.current?EDI.ink:EDI.faint}}>{step.label}</div>
+                {step.time && <div style={{fontSize:11.5,color:step.done?EDI.sage:step.current?EDI.goldD:EDI.faint,fontWeight:600}}>{step.time}</div>}
+              </div>
+              <div style={{fontSize:13.5,color:step.done||step.current?EDI.sub:EDI.faint,lineHeight:1.5}}>{step.desc}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Reimbursement preview */}
+      <div style={{background:EDI.goldL,border:`1px solid ${EDI.line}`,borderRadius:14,padding:'18px 22px',marginBottom:24,display:'flex',alignItems:'center',gap:16}}>
+        <div style={{flex:1}}>
+          <div style={{fontSize:12.5,fontWeight:700,color:EDI.goldD,textTransform:'uppercase',letterSpacing:'.05em',marginBottom:4}}>Expected reimbursement</div>
+          <div className="pp-serif" style={{fontSize:32,fontWeight:500,color:EDI.clayD,fontVariantNumeric:'tabular-nums'}}>{fmtMoney(calc)}</div>
+          <div style={{fontSize:13,color:EDI.sub,marginTop:3}}>Based on {fmtMoney(parseFloat(c.spend)||0)} actual spend × {a.cofundPct}%, capped at {fmtMoney(a.fund)}</div>
+        </div>
+        <div style={{fontSize:36,opacity:.4}}>⏱</div>
+      </div>
+
+      <div style={{display:'flex',gap:12,justifyContent:'center'}}>
+        <button className="pp-btn pp-btn--ghost" onClick={()=>go('claims')}>Back to claims</button>
+        <button className="pp-btn pp-btn--clay" onClick={()=>go('home')}>Back to home</button>
+      </div>
+    </div>
+  );
+
+  const Field=({label,children,hint})=>(<div style={{marginBottom:18}}><label className="pp-flabel">{label}</label>{children}{hint&&<div style={{fontSize:12,color:EDI.faint,marginTop:6,lineHeight:1.5}}>{hint}</div>}</div>);
+
+  return (
+    <div className="pp-wrap" style={{paddingTop:36,paddingBottom:70}}>
+      <button className="pp-link" style={{marginBottom:14}} onClick={()=>go('claims')}>← Claims</button>
+      <div className="pp-eyebrow" style={{color:EDI.gold,marginBottom:10}}>Post-event claim</div>
+      <h1 className="pp-serif pp-h1" style={{fontSize:38,fontWeight:500,letterSpacing:'-.015em',margin:'0 0 4px'}}>{a.title}</h1>
+      <p style={{fontSize:15.5,color:EDI.sub,marginBottom:34}}>Tell us how it went. Be honest — outcomes help us fund your next plan faster.</p>
+
+      <div className="pp-fund">
+        <div>
+          <div className="pp-card" style={{padding:26}}>
+            <div className="pp-f2">
+              <Field label="Actual amount spent (CAD)"><input className="pp-input" type="number" value={c.spend} placeholder="0" onChange={e=>set('spend',e.target.value)}/></Field>
+              <Field label="Actual attendance"><input className="pp-input" type="number" value={c.attendees} placeholder="e.g. 165" onChange={e=>set('attendees',e.target.value)}/></Field>
+              <Field label="Leads generated"><input className="pp-input" type="number" value={c.leads} placeholder="e.g. 54" onChange={e=>set('leads',e.target.value)}/></Field>
+              <div/>
+              <div style={{gridColumn:'1 / -1'}}><Field label="How did it go?" hint="Attendance, leads, opportunities, any wins worth sharing."><textarea className="pp-textarea" value={c.outcomes} placeholder="Tell the story of your event…" onChange={e=>set('outcomes',e.target.value)}/></Field></div>
+              <div style={{gridColumn:'1 / -1'}}><Field label="Receipts & evidence" hint="Invoices, receipts, attendee export, photos. Required for reimbursement.">
+                <button className="pp-btn pp-btn--ghost pp-btn--sm" onClick={()=>set('files',[...c.files,{name:`Receipt_${c.files.length+1}.pdf`}])}>＋ Upload receipt</button>
+                {c.files.length>0 && <div style={{marginTop:10,display:'flex',flexDirection:'column',gap:7}}>{c.files.map((file,i)=>(
+                  <div key={i} style={{display:'flex',alignItems:'center',gap:9,fontSize:13,background:EDI.paperAlt,border:`1px solid ${EDI.line}`,borderRadius:8,padding:'8px 12px'}}>
+                    <span style={{color:EDI.clay}}>▣</span><span style={{fontWeight:600}}>{file.name}</span>
+                    <button className="pp-link" style={{marginLeft:'auto',fontSize:13}} onClick={()=>set('files',c.files.filter((_,j)=>j!==i))}>Remove</button>
+                  </div>))}</div>}
+              </Field></div>
+            </div>
+          </div>
+        </div>
+
+        {/* live reimbursement rail */}
+        <div className="pp-rail pp-sticky">
+          <div className="pp-card" style={{padding:24,boxShadow:'0 14px 40px rgba(80,60,30,.10)'}}>
+            <div className="pp-eyebrow" style={{color:EDI.sub,fontSize:12,letterSpacing:'.08em',marginBottom:16}}>Your reimbursement</div>
+            {[['Approved co-fund cap',a.fund,EDI.ink],['Actual spend × '+a.cofundPct+'%',Math.round(spend*a.cofundPct/100),EDI.sub]].map(([l,v,col])=>(
+              <div key={l} style={{display:'flex',justifyContent:'space-between',alignItems:'baseline',padding:'9px 0',borderBottom:`1px solid ${EDI.lineSoft}`}}>
+                <span style={{fontSize:13.5,color:EDI.sub}}>{l}</span><span style={{fontSize:16,fontWeight:700,color:col,fontVariantNumeric:'tabular-nums'}}>{fmtMoney(v)}</span>
+              </div>
+            ))}
+            <div style={{display:'flex',justifyContent:'space-between',alignItems:'baseline',padding:'14px 0 4px'}}>
+              <span style={{fontSize:13.5,fontWeight:700}}>You'll be reimbursed</span>
+              <span className="pp-serif" style={{fontSize:28,fontWeight:500,color:EDI.sage,fontVariantNumeric:'tabular-nums'}}>{fmtMoney(calc)}</span>
+            </div>
+            <div style={{fontSize:12.5,color:EDI.sub,marginTop:6,lineHeight:1.5}}>We reimburse the lower of your actual spend at {a.cofundPct}% and the approved cap.</div>
+            <button className="pp-btn pp-btn--clay pp-btn--block" style={{marginTop:18}} disabled={!valid} onClick={()=>setDone(true)}>{valid?'Submit claim →':'Add spend, outcomes & a receipt'}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+Object.assign(window,{PPClaims});
+
+/* ── PARTNER PORTAL · BUDGET & USAGE + HELP ───────────────── */
+function PPBudget({go}){
+  const b = PARTNER.budget;
+  const pctCommit=b.committed/b.cap*100, pctPaid=b.paid/b.cap*100, util=Math.round((b.committed+b.paid)/b.cap*100);
+  const committedActs = ACTIVITIES.filter(a=>['approved','upcoming','executed','payout_pending'].includes(a.status));
+  const paidActs = ACTIVITIES.filter(a=>a.status==='paid');
+
+  const KPI=({label,val,col,dot,tip})=>(
+    <div className="pp-card" style={{padding:'18px 20px'}}>
+      <div style={{display:'flex',alignItems:'center',gap:7}}>
+        <span style={{width:9,height:9,borderRadius:3,background:dot,flexShrink:0}}/>
+        <span style={{fontSize:11.5,fontWeight:700,letterSpacing:'.05em',textTransform:'uppercase',color:EDI.faint,flex:1}}>{label}</span>
+        {tip && <span title={tip} style={{width:15,height:15,borderRadius:'50%',background:EDI.line,color:EDI.faint,fontSize:9,fontWeight:800,display:'flex',alignItems:'center',justifyContent:'center',cursor:'default',flexShrink:0}}>i</span>}
+      </div>
+      <div className="pp-serif" style={{fontSize:30,fontWeight:500,letterSpacing:'-.02em',marginTop:8,color:col||EDI.ink,fontVariantNumeric:'tabular-nums'}}>{fmtMoney(val)}</div>
+    </div>
+  );
+
+  return (
+    <div className="pp-wrap" style={{paddingTop:46,paddingBottom:64}}>
+      <div className="pp-eyebrow" style={{color:EDI.clay,marginBottom:12}}>Budget &amp; usage</div>
+      <h1 className="pp-serif pp-h1" style={{fontSize:40,fontWeight:500,letterSpacing:'-.015em',margin:'0 0 6px'}}>Your 2026 growth fund</h1>
+      <p style={{fontSize:16,color:EDI.sub,maxWidth:560,marginBottom:30}}>As an <strong style={{color:EDI.ink}}>{PARTNER.tier}</strong> partner, your fund is set at a share of your prior-year commissionable revenue. Here's where it stands.</p>
+
+      {(()=>{
+        const inReview = ACTIVITIES.filter(a=>['submitted','under_review','pending_info'].includes(a.status)).reduce((s,a)=>s+a.fund,0);
+        return (
+          <div style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:14,marginBottom:18}} className="pp-grid-3">
+            <KPI label="Fund cap" val={b.cap} dot={EDI.ink}/>
+            <KPI label="In review" val={inReview} col={EDI.faint} dot={EDI.faint} tip="Sum of co-fund amounts for plans currently awaiting PAM or Marketing approval — not yet committed"/>
+            <KPI label="Committed" val={b.committed} col={EDI.goldD} dot={EDI.gold} tip="Approved plans — funds reserved, not yet disbursed"/>
+            <KPI label="Reimbursed" val={b.paid} col={EDI.sageD} dot={EDI.sage}/>
+            <KPI label="Available" val={b.available} col={EDI.clay} dot={EDI.clay}/>
+          </div>
+        );
+      })()}
+
+      <div className="pp-card" style={{padding:26,marginBottom:28}}>
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'baseline',marginBottom:14}}>
+          <div className="pp-serif" style={{fontSize:20,fontWeight:500}}>Fund utilisation</div>
+          <div style={{fontSize:14,color:EDI.sub}}><strong style={{color:EDI.ink}}>{util}%</strong> allocated</div>
+        </div>
+        <div style={{height:16,borderRadius:9,background:'#F0E8D8',overflow:'hidden',display:'flex',border:`1px solid ${EDI.line}`}}>
+          <div style={{width:pctCommit+'%',background:EDI.gold}}/><div style={{width:pctPaid+'%',background:EDI.sage}}/>
+        </div>
+        <div style={{display:'flex',gap:22,marginTop:14,flexWrap:'wrap'}}>
+          {[['Committed to active plans',EDI.gold],['Reimbursed',EDI.sage],['Available to invest','#F0E8D8']].map(([l,c])=>(
+            <div key={l} style={{display:'flex',alignItems:'center',gap:8,fontSize:13,color:EDI.sub}}><span style={{width:11,height:11,borderRadius:3,background:c,border:c==='#F0E8D8'?`1px solid ${EDI.line}`:'none'}}/>{l}</div>
+          ))}
+        </div>
+      </div>
+
+      <div className="pp-grid-2" style={{gridTemplateColumns:'1fr 1fr',alignItems:'start'}}>
+        <div>
+          <div className="pp-eyebrow" style={{color:EDI.gold,fontSize:12,marginBottom:14}}>Committed to active plans</div>
+          <div className="pp-card" style={{overflow:'hidden'}}>
+            {committedActs.map((a,i)=>(
+              <div key={a.id} className="pp-rowlink" onClick={()=>go('activity',{id:a.id})} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'15px 20px',borderTop:i?`1px solid ${EDI.lineSoft}`:'none',cursor:'pointer'}}>
+                <div style={{minWidth:0}}><div style={{fontWeight:700,fontSize:14.5}}>{a.title}</div><div style={{fontSize:12.5,color:EDI.sub,marginTop:2}}>{statusMeta(a.status).label} · {fmtDate(a.date)}</div></div>
+                <span style={{fontWeight:700,fontVariantNumeric:'tabular-nums',color:EDI.goldD}}>{fmtMoney(a.fund)}</span>
+              </div>
+            ))}
+            <div style={{display:'flex',justifyContent:'space-between',padding:'15px 20px',borderTop:`1px solid ${EDI.line}`,background:EDI.paperAlt}}>
+              <span style={{fontWeight:700}}>Total committed</span><span className="pp-serif" style={{fontWeight:500,fontSize:18,color:EDI.goldD}}>{fmtMoney(b.committed)}</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className="pp-eyebrow" style={{color:EDI.sage,fontSize:12,marginBottom:14}}>Reimbursed this year</div>
+          <div className="pp-card" style={{overflow:'hidden'}}>
+            {paidActs.map((a,i)=>(
+              <div key={a.id} className="pp-rowlink" onClick={()=>go('activity',{id:a.id})} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'15px 20px',borderTop:i?`1px solid ${EDI.lineSoft}`:'none',cursor:'pointer'}}>
+                <div style={{minWidth:0}}><div style={{fontWeight:700,fontSize:14.5}}>{a.title}</div><div style={{fontSize:12.5,color:EDI.sub,marginTop:2}}>Paid · {fmtDate(a.date)}</div></div>
+                <span style={{fontWeight:700,fontVariantNumeric:'tabular-nums',color:EDI.sageD}}>{fmtMoney(a.reimbursed)}</span>
+              </div>
+            ))}
+            <div style={{display:'flex',justifyContent:'space-between',padding:'15px 20px',borderTop:`1px solid ${EDI.line}`,background:EDI.paperAlt}}>
+              <span style={{fontWeight:700}}>Total reimbursed</span><span className="pp-serif" style={{fontWeight:500,fontSize:18,color:EDI.sageD}}>{fmtMoney(b.paid)}</span>
+            </div>
+          </div>
+          <div style={{background:EDI.goldL,border:`1px solid ${EDI.line}`,borderRadius:14,padding:'16px 18px',marginTop:16,display:'flex',gap:12,alignItems:'flex-start'}}>
+            <span style={{color:EDI.gold,fontSize:18}}>✦</span>
+            <div style={{fontSize:13.5,color:'#6B4500',lineHeight:1.55}}>You have <strong>{fmtMoney(b.available)}</strong> still to invest this year. Funds don't roll over — let's put them to work.</div>
+          </div>
+          <button className="pp-btn pp-btn--clay pp-btn--block" style={{marginTop:14}} onClick={()=>go('fund')}>Fund a Marketing Activity →</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── HELP & GUIDELINES ───────────────────────────── */
+function PPHelp({go}){
+  const rules = [
+    {t:'Plan ahead', d:'Submit your plan at least 30 days before the activity starts. Your PAM responds within 5 business days.'},
+    {t:'How much we co-fund', d:'Events & GTM campaigns: up to 50%. Webinars with a documented promotion budget: up to 70%. Your tier sets your annual fund cap.'},
+    {t:'What\'s eligible', d:'Activities with a measurable pipeline outcome — events you sponsor or host, webinars, and GTM campaigns. Attendee-only networking isn\'t eligible (no lead capture).'},
+    {t:'Claiming reimbursement', d:'After your activity, submit actual spend, outcomes, and receipts within 30 days. We reimburse the lower of your actual spend at the agreed % and the approved cap.'},
+  ];
+  const faqs = [
+    {q:'Do unused funds roll over?',a:'No — your fund resets each fiscal year, so it\'s worth planning activities that use it.'},
+    {q:'Can I change a plan after submitting?',a:'While it\'s in review, your PAM can adjust it with you. Just reply on the activity or reach out directly.'},
+    {q:'When do I get paid?',a:'Once your claim and receipts are approved, funds are disbursed to your Partner Store account — usually within a few days.'},
+    {q:'Who is my PAM?',a:`Your Partner Account Manager is ${PARTNER.pam}. They review your plans and are your go-to for anything MDF.`},
+  ];
+  return (
+    <div className="pp-wrap" style={{paddingTop:46,paddingBottom:70,maxWidth:920}}>
+      <div className="pp-eyebrow" style={{color:EDI.clay,marginBottom:12}}>Help &amp; guidelines</div>
+      <h1 className="pp-serif pp-h1" style={{fontSize:40,fontWeight:500,letterSpacing:'-.015em',margin:'0 0 6px'}}>How the program works</h1>
+      <p style={{fontSize:16,color:EDI.sub,maxWidth:560,marginBottom:34}}>The MDF program exists to help you grow. Here are the essentials — and we're always a message away.</p>
+
+      <div className="pp-grid-2" style={{gridTemplateColumns:'1fr 1fr',gap:18,marginBottom:40}}>
+        {rules.map((r,i)=>(
+          <div key={i} className="pp-card" style={{padding:24}}>
+            <div style={{width:32,height:32,borderRadius:9,background:EDI.goldL,color:EDI.goldD,display:'flex',alignItems:'center',justifyContent:'center',fontWeight:800,marginBottom:13,fontFamily:EDI.sans}}>{i+1}</div>
+            <div className="pp-serif" style={{fontSize:20,fontWeight:500,letterSpacing:'-.01em'}}>{r.t}</div>
+            <p style={{fontSize:14,lineHeight:1.6,color:EDI.sub,margin:'8px 0 0'}}>{r.d}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="pp-eyebrow" style={{color:EDI.gold,fontSize:12,marginBottom:16}}>Common questions</div>
+      <div className="pp-card" style={{overflow:'hidden',marginBottom:34}}>
+        {faqs.map((f,i)=>(
+          <div key={i} style={{padding:'18px 24px',borderTop:i?`1px solid ${EDI.lineSoft}`:'none'}}>
+            <div style={{fontWeight:700,fontSize:15.5}}>{f.q}</div>
+            <p style={{fontSize:14,lineHeight:1.6,color:EDI.sub,margin:'6px 0 0'}}>{f.a}</p>
+          </div>
+        ))}
+      </div>
+
+      <div style={{background:'linear-gradient(100deg,#F7E9D4,#FBF4E6)',border:`1px solid ${EDI.line}`,borderRadius:18,padding:'26px 28px',display:'flex',alignItems:'center',gap:20,flexWrap:'wrap'}}>
+        <div style={{width:46,height:46,borderRadius:'50%',background:EDI.ink,color:'#fff',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:700}}>DR</div>
+        <div style={{flex:1,minWidth:240}}><div className="pp-serif" style={{fontSize:21,fontWeight:500}}>Still have a question?</div><div style={{fontSize:14.5,color:EDI.sub,marginTop:2}}>{PARTNER.pam}, your PAM, is here to help you plan and get funded.</div></div>
+        <button className="pp-btn pp-btn--ink">Message {PARTNER.pam.split(' ')[0]} →</button>
+      </div>
+    </div>
+  );
+}
+Object.assign(window,{PPBudget, PPHelp});
+
+
+function App(){
+  const [route,setRoute] = React.useState({name:'home',params:{}});
+  const go = (name,params={})=>{ setRoute({name,params}); window.scrollTo({top:0,behavior:'auto'}); };
+  const screens = { home:PPHome, fund:PPFund, success:PPSuccess, programs:PPPrograms, activity:PPActivity, claims:PPClaims, budget:PPBudget, help:PPHelp };
+  const Screen = screens[route.name] || PPHome;
+  return (
+    <PPShell route={route} go={go}>
+      <Screen go={go} route={route}/>
+    </PPShell>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+<script>
+window.MDF_PAGE = {
+  id: "partner",
+  breadcrumbs: [{label:"Partner Portal", href:"./index.html"}]
+};
+</script>
+<script>
+
+/* ── MDF SHARED SHELL JS ───────────────────────────────────── */
+(function(){
+  const P = window.MDF_PAGE || {};
+  const pages = [
+    {id:'home',   label:'Home',            href:'../index.html',       badge:null},
+    {id:'partner',label:'Partner Portal',  href:'../partner/index.html', badge:'partner'},
+    {id:'pam',    label:'PAM Portal',      href:'../pam/index.html',   badge:'pam'},
+    {id:'guide',  label:'Feature Guide',   href:'../guide/index.html', badge:'guide'},
+  ];
+  const isRoot = P.isRoot;
+  // Adjust hrefs for root-level index
+  if(isRoot) pages.forEach(p=>{
+    p.href = p.href.replace('../','./');
+  });
+
+  // ── TOPBAR
+  const tb = document.createElement('div');
+  tb.className = 'sh-topbar';
+  tb.innerHTML = `
+    <a class="sh-brand" href="${isRoot?'./index.html':'../index.html'}">
+      <div class="sh-mark">Z</div>
+      <div>
+        <div class="sh-brand-name">Zoho Partner Growth</div>
+        <div class="sh-brand-sub">MDF Portal</div>
+      </div>
+    </a>
+    <nav class="sh-nav">
+      ${pages.filter(p=>p.id!=='home').map(p=>`
+        <a class="sh-nav-link ${P.id===p.id?'active':''}" href="${p.href}">${p.label}</a>
+        ${p.badge?`<span class="sh-portal-badge ${p.badge}" style="display:none">${p.badge}</span>`:''}
+      `).join('<span class="sh-nav-sep">·</span>')}
+    </nav>`;
+  document.body.insertBefore(tb, document.body.firstChild);
+
+  // ── BREADCRUMB
+  if(P.breadcrumbs && P.breadcrumbs.length){
+    const bc = document.createElement('div');
+    bc.className = 'sh-breadcrumb';
+    bc.innerHTML = [
+      `<a class="sh-bc-item" href="${isRoot?'./index.html':'../index.html'}">MDF</a>`,
+      ...P.breadcrumbs.map((b,i)=>
+        i===P.breadcrumbs.length-1
+          ? `<span class="sh-bc-sep">›</span><span class="sh-bc-current">${b.label}</span>`
+          : `<span class="sh-bc-sep">›</span><a class="sh-bc-item" href="${b.href}">${b.label}</a>`
+      )
+    ].join('');
+    document.body.insertBefore(bc, tb.nextSibling);
+  }
+
+  // ── FOOTER
+  const ft = document.createElement('div');
+  ft.className = 'sh-footer';
+  ft.innerHTML = `
+    <div class="sh-footer-brand">
+      <div style="width:26px;height:26px;background:var(--sh-clay);border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#fff">Z</div>
+      <span style="color:#C4B39E;font-weight:600">Zoho Partner Growth — MDF</span>
+    </div>
+    <div class="sh-footer-links">
+      ${pages.map(p=>`<a class="sh-footer-link" href="${p.href}">${p.label}</a>`).join('')}
+    </div>
+    <div class="sh-footer-right">Zoho Canada · Partner Programs · v1.0 · June 2026</div>`;
+  document.body.appendChild(ft);
+})();
+
+</script>
+</body>
+</html>
