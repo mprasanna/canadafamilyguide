@@ -532,11 +532,23 @@ const PARTNER = {
 
 /* ── ACTIVITY TYPES (activity-driven, not category) ── */
 const ACT_TYPES = [
-  {id:'event',        title:'Run an Event',        sub:'Summits, expos, sponsorships, in-person meetups', icon:'◆', cofund:'Up to 50%'},
-  {id:'webinar',      title:'Host a Webinar',      sub:'Online sessions, demo series, co-hosted with Zoho', icon:'◉', cofund:'Up to 70%'},
-  {id:'gtm',          title:'Launch a GTM Campaign',sub:'Vertical plays, ABM, case-study programs', icon:'✦', cofund:'Up to 50%'},
-  {id:'certification',title:'Fund Certification',  sub:'Team training & enablement', icon:'✚', cofund:'Coming soon', soon:true},
-  {id:'other',        title:'Something else',      sub:'Tell us what you have in mind', icon:'＋', cofund:'Let\'s talk'},
+  // ── PIPELINE (active) ────────────────────────────────────────
+  {id:'event',          cat:'pipeline', title:'Run an Event',          sub:'Summits, expos, sponsorships, in-person meetups',          icon:'◆', cofund:'Up to 50%'},
+  {id:'webinar',        cat:'pipeline', title:'Host a Webinar',        sub:'Online sessions, demo series, co-hosted with Zoho',        icon:'◉', cofund:'Up to 70%'},
+  {id:'gtm',            cat:'pipeline', title:'Launch a GTM Campaign', sub:'Vertical plays, ABM, case-study programs',                icon:'✦', cofund:'Up to 50%'},
+  {id:'other',          cat:'pipeline', title:'Something else',        sub:'Tell us what you have in mind',                           icon:'＋', cofund:'Let\'s talk'},
+  // ── ECOSYSTEM (coming soon) ───────────────────────────────────
+  {id:'referral',       cat:'ecosystem', title:'Partner referral',          sub:'Refer another Zoho partner into a deal',                              icon:'🤝', cofund:'Up to 30%'},
+  {id:'marketplace',    cat:'ecosystem', title:'Marketplace listing',       sub:'Build or promote an app on Zoho Marketplace',                         icon:'🛒', cofund:'Up to 50%', tierMin:'advanced'},
+  {id:'association',    cat:'ecosystem', title:'Association sponsorship',   sub:'Sponsor an industry body in your vertical',                           icon:'🏛', cofund:'Up to 40%'},
+  {id:'channel_event',  cat:'ecosystem', title:'Channel/partner event',     sub:'Host a summit or training day for other Zoho partners',               icon:'🌐', cofund:'Up to 50%', tierMin:'advanced'},
+  {id:'isv_gtm',        cat:'ecosystem', title:'ISV co-GTM',               sub:'Joint campaign with a complementary technology vendor',               icon:'🔗', cofund:'Up to 50%', tierMin:'advanced'},
+  // ── CAPABILITY (coming soon) ──────────────────────────────────
+  {id:'certification',  cat:'capability', title:'Zoho certification',       sub:'Fund exam fees and training for your team',                           icon:'🏅', cofund:'Up to 70%'},
+  {id:'tech_enablement',cat:'capability', title:'Technical enablement',     sub:'Build a demo environment or vertical solution',                       icon:'🔧', cofund:'Up to 50%', tierMin:'advanced'},
+  {id:'sales_enablement',cat:'capability',title:'Sales enablement',         sub:'Playbooks, pitch decks, battlecards, case studies',                  icon:'📊', cofund:'Up to 50%'},
+  {id:'team_training',  cat:'capability', title:'Team training',            sub:'Structured Zoho product training for your team',                     icon:'📚', cofund:'Up to 60%'},
+  {id:'hiring',         cat:'capability', title:'Hiring support',           sub:'Partial salary co-fund for a dedicated Zoho practice hire',          icon:'👤', cofund:'Up to 25%', tierMin:'premium'},
 ];
 
 /* ── PARTNER ACTIVITIES (their funding programs) ───── */
@@ -608,9 +620,18 @@ const RECOS = [
   {id:'r1', tag:'Popular', t:'Co-host a webinar with Zoho', d:'We bring the audience and a product expert. You bring the story. Up to 70% co-funded.', type:'webinar'},
   {id:'r2', tag:'New', t:'Build a customer case study', d:'Turn a happy customer into a referencible win — great for your healthcare push.', type:'gtm'},
   {id:'r3', tag:'For you', t:'Run a vertical GTM play', d:'A focused campaign for one industry. Cascade qualifies as an Advanced partner.', type:'gtm'},
+  {id:'r4', tag:'New', t:'Get your team Zoho certified', d:'Up to 70% co-funded. Fund exam fees, training, and prep. Reimbursed per person who passes.', type:'certification'},
+  {id:'r5', tag:'New', t:'Sponsor an industry association', d:'Build Zoho brand in your vertical — up to 40% co-funded. CREA, CFIB, Chambers of Commerce.', type:'association'},
 ];
 
-const COFUND_BY_TYPE = { event:[30,50], webinar:[50,70], gtm:[30,50], certification:[50], other:[30,50,70] };
+const COFUND_BY_TYPE = {
+  // Pipeline
+  event:[30,50], webinar:[50,70], gtm:[30,50], other:[30,50,70],
+  // Ecosystem
+  referral:[30], marketplace:[50], association:[40], channel_event:[50], isv_gtm:[50],
+  // Capability
+  certification:[70], tech_enablement:[50], sales_enablement:[50], team_training:[60], hiring:[25],
+};
 
 Object.assign(window, { EDI, statusMeta, fmtMoney, fmtDate, fmtDateShort, PARTNER, ACT_TYPES, ACTIVITIES, RECOS, COFUND_BY_TYPE });
 
@@ -801,6 +822,47 @@ function PPHome({go}){
       )}
 
 
+
+      {/* WHAT'S FUNDABLE — 3-category orientation strip */}
+      <div className="pp-wrap" style={{paddingTop:28,paddingBottom:0}}>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:10}}>
+          {[
+            {
+              id:'pipeline', icon:'📈', label:'Pipeline Building', active:true,
+              line:'Events, webinars, GTM campaigns — generate net-new leads',
+              types:['Run an Event','Host a Webinar','GTM Campaign','Something else'],
+              cofund:'Up to 70% co-funded',
+            },
+            {
+              id:'ecosystem', icon:'🌐', label:'Ecosystem Building', active:true,
+              line:'Referrals, Marketplace listings, ISV co-GTM, association sponsorships',
+              types:['Partner referral','Marketplace listing','Association sponsorship','ISV co-GTM'],
+              cofund:'Up to 50% co-funded',
+            },
+            {
+              id:'capability', icon:'🎓', label:'Capability Building', active:true,
+              line:'Certifications, technical enablement, training, sales assets',
+              types:['Zoho certification','Technical enablement','Team training','Sales enablement'],
+              cofund:'Up to 70% co-funded',
+            },
+          ].map(cat=>(
+            <div key={cat.id} onClick={()=>cat.active&&go('fund',{cat:cat.id})}
+              className={cat.active?'pp-card pp-clickable':'pp-card'}
+              style={{padding:'18px 20px',opacity:cat.active?1:.7,position:'relative',overflow:'hidden'}}>
+              {!cat.active && <div style={{position:'absolute',top:10,right:12,fontSize:10,fontWeight:700,letterSpacing:'.06em',color:EDI.faint,textTransform:'uppercase'}}>Coming soon</div>}
+              <div style={{fontSize:20,marginBottom:8}}>{cat.icon}</div>
+              <div style={{fontWeight:700,fontSize:14,color:cat.active?EDI.ink:EDI.faint,marginBottom:4}}>{cat.label}</div>
+              <div style={{fontSize:12.5,color:EDI.sub,lineHeight:1.5,marginBottom:10}}>{cat.line}</div>
+              <div style={{display:'flex',flexWrap:'wrap',gap:5,marginBottom:10}}>
+                {cat.types.map(t=>(<span key={t} style={{fontSize:11,fontWeight:600,background:cat.active?EDI.goldL:EDI.paperAlt,color:cat.active?EDI.goldD:EDI.faint,padding:'2px 8px',borderRadius:20}}>{t}</span>))}
+              </div>
+              <div style={{fontSize:12,fontWeight:700,color:cat.active?EDI.clay:EDI.faint}}>{cat.cofund}</div>
+              {cat.active && <div style={{fontSize:12.5,color:EDI.clay,marginTop:8,fontWeight:600}}>Fund an activity →</div>}
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* ACTION CENTER — items needing partner attention */}
       {(()=>{
         const actions = [];
@@ -934,14 +996,52 @@ function PPFund({go, route}){
   // Only chip/select/file changes call bump() to trigger a re-render.
   const fRef = React.useRef({
     type: (route.params&&route.params.type)||null,
-    name:'', format:'', evType:'', participation:'', date:'', location:'',
-    attendees:'', total:'', pct:null, desc:'',
-    territory:'', industries:[], icp:'', files:[],
+    // shared
+    name:'', date:'', location:'', attendees:'', total:'', pct:null, desc:'', files:[],
+    // event
+    format:'', evType:'', participation:'', targetAudience:'', leadCapture:'',
+    eventOrganizer:'', sponsorTier:'', brandPlacement:'',
+    // webinar
+    webinarFormat:'', coHosted:'', seName:'', platform:'', promoChannels:'',
+    // gtm
+    territory:'', industries:[], icp:'', campaignType:'', channelMix:'', resourceType:'', duration:'',
+    // custom
+    pipelineImpact:'', customReason:'',
+    // ecosystem — referral
+    referredPartner:'', referredPartnerId:'', dealName:'', dealSize:'', incentiveType:'', incentiveAmount:'',
+    // ecosystem — marketplace
+    appName:'', marketplaceUrl:'', devOrPromo:'', zohoProducts:[], expectedInstalls:'', devAgency:'',
+    // ecosystem — association
+    assocName:'', assocUrl:'', sponsorshipTier:'', sponsorshipDeliverables:[], assocVertical:'', assocReach:'',
+    // ecosystem — channel event
+    channelEventFormat:'', expectedPartnerAttendees:'', partnerCompanies:'', agenda:'',
+    // ecosystem — ISV co-GTM
+    isvName:'', isvProduct:'', jointValueProp:'', campaignTypeIsv:'', targetAudienceIsv:'',
+    totalBudgetIsv:'', partnerShareIsv:'',
+    // capability — certification
+    certName:'', certLevel:'', numPeople:'', examFeePerPerson:'', trainingCost:'', targetExamDate:'', currentCertStatus:'',
+    // capability — tech enablement
+    buildDesc:'', buildVertical:'', buildZohoProducts:[], buildStack:'', devResource:'', buildHours:'', buildQuote:'', buildReuse:'',
+    // capability — sales enablement
+    assetType:'', assetProduct:'', assetIndustry:'', assetResource:'', assetCost:'', assetUsage:'', shareWithZoho:'',
+    // capability — team training
+    trainingProduct:'', trainingProvider:'', trainingFormat:'', numTrainees:'', trainingLevel:'', costPerSeat:'', completionDate:'',
+    // capability — hiring
+    roleTitle:'', roleDesc:'', salary:'', cofundDuration:'', currentZohoHeadcount:'', revenueTarget3m:'', revenueTarget6m:'',
   });
   const [tick,setTick] = React.useState(0);
   const bump = ()=>setTick(t=>t+1);
 
-  React.useEffect(()=>{ if(route.params&&route.params.type){ fRef.current.type=route.params.type; setStep(2); } },[]);
+  React.useEffect(()=>{
+    if(route.params&&route.params.type){ fRef.current.type=route.params.type; setStep(2); }
+    if(route.params&&route.params.cat && route.params.cat!=='pipeline'){
+      // Small delay so the DOM has rendered the wizard before scrolling
+      setTimeout(()=>{
+        const el = document.getElementById('cat-group-'+route.params.cat);
+        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      }, 120);
+    }
+  },[]);
 
   const f = fRef.current;
   // setChoice: for chips, dropdowns, file list — needs a re-render
@@ -956,7 +1056,19 @@ function PPFund({go, route}){
   const remaining = b.available - requested;
   const over = requested>b.available;
 
-  const detailsValid = f.name.trim() && f.date && (f.type!=='event' || (f.format && f.evType));
+  const ecosystemTypes = ['referral','marketplace','association','channel_event','isv_gtm'];
+  const capabilityTypes = ['certification','tech_enablement','sales_enablement','team_training','hiring'];
+  const detailsValid = f.name.trim() && f.date && (f.type!=='event' || (f.format && f.evType)) ||
+    f.type==='referral' && f.referredPartner.trim() && f.dealName.trim() ||
+    f.type==='marketplace' && f.appName.trim() && f.devOrPromo ||
+    f.type==='association' && f.assocName.trim() && f.sponsorshipTier ||
+    f.type==='channel_event' && f.name.trim() && f.channelEventFormat ||
+    f.type==='isv_gtm' && f.isvName.trim() && f.campaignTypeIsv ||
+    f.type==='certification' && f.certName.trim() && f.numPeople ||
+    f.type==='tech_enablement' && f.buildDesc.trim() && f.buildVertical ||
+    f.type==='sales_enablement' && f.assetType && f.assetProduct ||
+    f.type==='team_training' && f.trainingProduct && f.trainingProvider ||
+    f.type==='hiring' && f.roleTitle.trim() && f.salary.trim();
   const stepValid = {1:!!fRef.current.type, 2:!!detailsValid, 3:(total>0 && !!fRef.current.pct), 4:true}[step];
   const STEPS = [
     {n:1, t:'What are you planning?', s:'Pick an activity'},
@@ -1001,16 +1113,58 @@ function PPFund({go, route}){
           {step===1 && (
             <div>
               <h2 className="pp-serif" style={{fontSize:25,fontWeight:500,margin:'0 0 18px'}}>What are you planning?</h2>
-              <div className="pp-picks" key={tick}>
-                {ACT_TYPES.map(t=>(
-                  <button key={t.id} className={'pp-pick'+(fRef.current.type===t.id?' is-sel':'')} disabled={t.soon}
-                    onClick={()=>!t.soon&&setChoice('type',t.id)} style={{opacity:t.soon?.5:1,position:'relative'}}>
-                    {t.soon&&<span style={{position:'absolute',top:14,right:14,fontSize:10.5,fontWeight:700,color:EDI.faint,background:'#EFEADF',padding:'2px 8px',borderRadius:5}}>Coming soon</span>}
-                    <div style={{fontSize:26,marginBottom:10,color:fRef.current.type===t.id?EDI.clay:EDI.gold}}>{t.icon}</div>
-                    <div className="pp-serif" style={{fontSize:19,fontWeight:500}}>{t.title}</div>
-                    <div style={{fontSize:13,color:EDI.sub,marginTop:4,lineHeight:1.45}}>{t.sub}</div>
-                    <div style={{fontSize:12,fontWeight:700,color:fRef.current.type===t.id?EDI.clay:EDI.gold,marginTop:10}}>{t.cofund} co-funded</div>
-                  </button>
+              <div key={tick}>
+                {/* PIPELINE BUILDING — Active */}
+                <div id="cat-group-pipeline" style={{marginBottom:8}}>
+                  <div style={{fontSize:11,fontWeight:700,letterSpacing:'.10em',textTransform:'uppercase',color:EDI.clay,marginBottom:10,display:'flex',alignItems:'center',gap:8}}>
+                    <span style={{width:18,height:18,borderRadius:'50%',background:EDI.clay,color:'#fff',display:'inline-flex',alignItems:'center',justifyContent:'center',fontSize:9,fontWeight:800,flexShrink:0}}>1</span>
+                    Pipeline Building
+                  </div>
+                  <div className="pp-picks">
+                    {ACT_TYPES.filter(t=>t.cat==='pipeline').map(t=>(
+                      <button key={t.id} className={'pp-pick'+(fRef.current.type===t.id?' is-sel':'')}
+                        onClick={()=>setChoice('type',t.id)}>
+                        <div style={{fontSize:22,marginBottom:10,color:fRef.current.type===t.id?EDI.clay:EDI.gold}}>{t.icon}</div>
+                        <div style={{fontWeight:700,fontSize:15,marginBottom:5}}>{t.title}</div>
+                        <div style={{fontSize:13,color:EDI.sub,lineHeight:1.5,marginBottom:8}}>{t.sub}</div>
+                        <div style={{fontSize:12.5,fontWeight:700,color:fRef.current.type===t.id?EDI.clay:EDI.gold,marginTop:10}}>{t.cofund} co-funded</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                {/* ECOSYSTEM + CAPABILITY — fully active */}
+                {[
+                  {id:'ecosystem',num:'2',label:'Ecosystem Building',sub:'Grow your Zoho ecosystem',col:'#4F6B50',items:[
+                    {ic:'🤝',t:'Partner referral',   id:'referral',       r:'Up to 30%'},
+                    {ic:'🛒',t:'Marketplace listing', id:'marketplace',    r:'Up to 50%'},
+                    {ic:'🏛',t:'Association sponsorship',id:'association', r:'Up to 40%'},
+                    {ic:'🌐',t:'Channel/partner event',id:'channel_event', r:'Up to 50%'},
+                    {ic:'🔗',t:'ISV co-GTM',          id:'isv_gtm',        r:'Up to 50%'},
+                  ]},
+                  {id:'capability',num:'3',label:'Capability Building',sub:'Invest in your Zoho practice',col:'#1A4F8A',items:[
+                    {ic:'🏅',t:'Zoho certification',  id:'certification',  r:'Up to 70%'},
+                    {ic:'🔧',t:'Technical enablement',id:'tech_enablement',r:'Up to 50%'},
+                    {ic:'📊',t:'Sales enablement',    id:'sales_enablement',r:'Up to 50%'},
+                    {ic:'📚',t:'Team training',       id:'team_training',  r:'Up to 60%'},
+                    {ic:'👤',t:'Hiring support',      id:'hiring',         r:'Up to 25%'},
+                  ]},
+                ].map(group=>(
+                  <div key={group.label} id={'cat-group-'+group.id} style={{marginTop:22}}>
+                    <div style={{fontSize:11,fontWeight:700,letterSpacing:'.10em',textTransform:'uppercase',color:group.col,marginBottom:10,display:'flex',alignItems:'center',gap:8,flexWrap:'wrap'}}>
+                      <span style={{width:18,height:18,borderRadius:'50%',background:group.col,color:'#fff',display:'inline-flex',alignItems:'center',justifyContent:'center',fontSize:9,fontWeight:800,flexShrink:0}}>{group.num}</span>
+                      {group.label} <span style={{fontSize:11,color:EDI.sub}}>— {group.sub}</span>
+                    </div>
+                    <div className="pp-picks">
+                      {group.items.map(item=>(
+                        <button key={item.t} className={'pp-pick'+(fRef.current.type===item.id?' is-sel':'')}
+                          onClick={()=>setChoice('type',item.id)}>
+                          <div style={{fontSize:22,marginBottom:10,color:fRef.current.type===item.id?EDI.clay:EDI.gold}}>{item.ic}</div>
+                          <div style={{fontWeight:700,fontSize:15,marginBottom:5}}>{item.t}</div>
+                          <div style={{fontSize:12.5,fontWeight:700,color:fRef.current.type===item.id?EDI.clay:EDI.gold,marginTop:10}}>{item.r} co-funded</div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
@@ -1028,13 +1182,149 @@ function PPFund({go, route}){
                   {f.type==='event' && <>
                     <FundField label="Format" half><FundOpts field="format" list={['In-person','Online','Hybrid']} fRef={fRef} onChoice={setChoice}/></FundField>
                     <FundField label="Event type" half><FundOpts field="evType" list={['Self-hosted','Third-party']} fRef={fRef} onChoice={setChoice}/></FundField>
-                    {f.evType==='Third-party' && <FundField label="Your role"><FundOpts field="participation" list={['Organizer','Sponsor','Exhibitor','Speaker']} fRef={fRef} onChoice={setChoice}/></FundField>}
+                    {fRef.current.evType==='Third-party' && <>
+                      <FundField label="Event organizer" half><input className="pp-input" defaultValue={f.eventOrganizer} placeholder="e.g. Collision, CREA" onInput={e=>{fRef.current.eventOrganizer=e.target.value;}}/></FundField>
+                      <FundField label="Your participation role" half><FundOpts field="participation" list={['Sponsor','Exhibitor','Speaker','Attendee (networking)']} fRef={fRef} onChoice={setChoice}/></FundField>
+                      <FundField label="Sponsorship tier or booth size" half><input className="pp-input" defaultValue={f.sponsorTier} placeholder="e.g. Gold sponsor, 10×10 booth" onInput={e=>{fRef.current.sponsorTier=e.target.value;}}/></FundField>
+                      <FundField label="Zoho brand placement" half hint="Where will the Zoho logo or name appear?"><input className="pp-input" defaultValue={f.brandPlacement} placeholder="e.g. Stage banner, app, program" onInput={e=>{fRef.current.brandPlacement=e.target.value;}}/></FundField>
+                    </>}
+                    <FundField label="Target audience" half hint="Industry and job titles you expect to attend"><input className="pp-input" defaultValue={f.targetAudience} placeholder="e.g. CFOs in manufacturing" onInput={e=>{fRef.current.targetAudience=e.target.value;}}/></FundField>
+                    <FundField label="Lead capture mechanism" half hint="Required — attendee-only events are not eligible"><FundOpts field="leadCapture" list={['Registration form','Badge scan','Business cards','Sign-up sheet']} fRef={fRef} onChoice={setChoice}/></FundField>
                   </>}
-                  {f.type==='webinar' && <FundField label="Promotion" half><FundOpts field="format" list={['Organic only','Paid promotion']} fRef={fRef} onChoice={setChoice}/></FundField>}
+                  {f.type==='webinar' && <>
+                    <FundField label="Webinar format" half><FundOpts field="webinarFormat" list={['Single session','Multi-part series','On-demand / recorded']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Co-hosted with Zoho?" half hint="Co-hosted sessions qualify for up to 70% co-fund"><FundOpts field="coHosted" list={['Yes — with Zoho SE','No — partner only']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    {fRef.current.coHosted==='Yes — with Zoho SE' && <FundField label="Zoho SE name" half hint="Confirm with your PAM if unsure"><input className="pp-input" defaultValue={f.seName} placeholder="e.g. Sarah Chen" onInput={e=>{fRef.current.seName=e.target.value;}}/></FundField>}
+                    <FundField label="Webinar platform" half><FundOpts field="platform" list={['Zoho Meeting','Zoom','Teams','GoTo']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Promotion plan" hint="How will you drive registrations?"><FundOpts field="promoChannels" list={['Email to existing list','LinkedIn organic','Paid LinkedIn/Meta','Zoho co-promotion','All of the above']} fRef={fRef} onChoice={setChoice}/></FundField>
+                  </>}
                   {f.type==='gtm' && <>
-                    <FundField label="Territory focus" half><input className="pp-input" defaultValue={f.territory} placeholder="e.g. Québec" onInput={e=>{fRef.current.territory=e.target.value;}}/></FundField>
-                    <FundField label="Industry focus"><div style={{display:'flex',gap:9,flexWrap:'wrap'}}>{['SaaS','Healthcare','Real Estate','Manufacturing','Pro Services'].map(i=>(<button key={i} className={'pp-opt'+(f.industries.includes(i)?' is-sel':'')} onClick={()=>toggleInd(i)}>{i}</button>))}</div></FundField>
-                    <FundField label="Ideal customer profile"><textarea className="pp-textarea" defaultValue={f.icp} placeholder="Who are you trying to reach?" onInput={e=>{fRef.current.icp=e.target.value;}}/></FundField>
+                    <FundField label="Campaign type" half><FundOpts field="campaignType" list={['Vertical play','ABM','Paid digital','Content marketing','Email nurture','Case study']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Territory / geographic focus" half><input className="pp-input" defaultValue={f.territory} placeholder="e.g. Québec, Western Canada" onInput={e=>{fRef.current.territory=e.target.value;}}/></FundField>
+                    <FundField label="Industry focus"><div style={{display:'flex',gap:9,flexWrap:'wrap'}}>{['SaaS','Healthcare','Real Estate','Manufacturing','Pro Services','Finance','Legal','Other'].map(i=>(<button key={i} className={'pp-opt'+(f.industries.includes(i)?' is-sel':'')} onClick={()=>toggleInd(i)}>{i}</button>))}</div></FundField>
+                    <FundField label="Target job titles / ICP" half><input className="pp-input" defaultValue={f.icp} placeholder="e.g. CFOs, Ops Managers, IT Directors" onInput={e=>{fRef.current.icp=e.target.value;}}/></FundField>
+                    <FundField label="Channel mix"><FundOpts field="channelMix" list={['Email','Paid digital','Content/SEO','Events','Direct outreach','Multi-channel']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Resource" half><FundOpts field="resourceType" list={['In-house team','External agency','Freelancer']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Campaign duration" half><FundOpts field="duration" list={['2–4 weeks','1–2 months','3+ months']} fRef={fRef} onChoice={setChoice}/></FundField>
+                  </>}
+                  {f.type==='other' && <>
+                    <FundField label="Describe the activity" hint="Explain what you're planning and why it doesn't fit the standard categories."><textarea className="pp-textarea" defaultValue={f.desc} placeholder="What are you planning and how does it build Zoho pipeline?" onInput={e=>{fRef.current.desc=e.target.value;}}/></FundField>
+                    <FundField label="Estimated pipeline impact" half><input className="pp-input" defaultValue={f.pipelineImpact} placeholder="e.g. 10 new opps, $200K influenced" onInput={e=>{fRef.current.pipelineImpact=e.target.value;}}/></FundField>
+                    <FundField label="Why doesn't this fit existing categories?" half hint="This helps your PAM review faster"><input className="pp-input" defaultValue={f.customReason} placeholder="Brief explanation" onInput={e=>{fRef.current.customReason=e.target.value;}}/></FundField>
+                  </>}
+
+                  {/* ── ECOSYSTEM ──────────────────────────────────── */}
+                  {f.type==='referral' && <>
+                    <FundField label="Referred partner company name"><input className="pp-input" defaultValue={f.referredPartner} placeholder="e.g. Nexus Business Solutions" onInput={e=>{fRef.current.referredPartner=e.target.value;}}/></FundField>
+                    <FundField label="Their Zoho Partner Store ID" half hint="Find it in the Partner Portal or ask them directly"><input className="pp-input" defaultValue={f.referredPartnerId} placeholder="e.g. PST-5678" onInput={e=>{fRef.current.referredPartnerId=e.target.value;}}/></FundField>
+                    <FundField label="Deal / opportunity name" half><input className="pp-input" defaultValue={f.dealName} placeholder="e.g. Acme Corp Zoho CRM migration" onInput={e=>{fRef.current.dealName=e.target.value;}}/></FundField>
+                    <FundField label="Zoho products involved"><FundOpts field="zohoProducts" list={['Zoho CRM','Zoho One','Zoho Books','Zoho Analytics','Zoho Creator','Multiple products']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Expected deal size (CAD)" half><input className="pp-input" type="number" defaultValue={f.dealSize} placeholder="e.g. 24000" onInput={e=>{fRef.current.dealSize=e.target.value;}}/></FundField>
+                    <FundField label="Incentive type" half><FundOpts field="incentiveType" list={['Finder fee (flat)','Revenue share %','Co-sell split']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Agreed incentive amount (CAD)" half hint="The amount you've agreed with the referred partner"><input className="pp-input" type="number" defaultValue={f.incentiveAmount} placeholder="e.g. 1500" onInput={e=>{fRef.current.incentiveAmount=e.target.value;}}/></FundField>
+                  </>}
+
+                  {f.type==='marketplace' && <>
+                    <FundField label="App or integration name"><input className="pp-input" defaultValue={f.appName} placeholder="e.g. Zoho CRM ↔ QuickBooks Sync" onInput={e=>{fRef.current.appName=e.target.value;}}/></FundField>
+                    <FundField label="Marketplace URL" half hint="Leave blank if not yet listed"><input className="pp-input" defaultValue={f.marketplaceUrl} placeholder="marketplace.zoho.com/app/..." onInput={e=>{fRef.current.marketplaceUrl=e.target.value;}}/></FundField>
+                    <FundField label="This request covers" half><FundOpts field="devOrPromo" list={['Development (build the app)','Promotion (market the app)']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Target Zoho products"><FundOpts field="zohoProducts" list={['Zoho CRM','Zoho One','Zoho Books','Zoho Analytics','Zoho Creator','Zoho Flow','Other']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Developer resource" half><FundOpts field="devAgency" list={['Internal team','External agency','Freelancer']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Expected installs in 12 months" half><input className="pp-input" type="number" defaultValue={f.expectedInstalls} placeholder="e.g. 50" onInput={e=>{fRef.current.expectedInstalls=e.target.value;}}/></FundField>
+                    <FundField label="What problem does this app solve?" hint="A sentence on the use case and why it matters for Zoho customers"><textarea className="pp-textarea" defaultValue={f.desc} placeholder="e.g. Syncs Zoho CRM contacts to QuickBooks in real time, eliminating double-entry for SMB accounting firms." onInput={e=>{fRef.current.desc=e.target.value;}}/></FundField>
+                  </>}
+
+                  {f.type==='association' && <>
+                    <FundField label="Association name"><input className="pp-input" defaultValue={f.assocName} placeholder="e.g. CREA, CFIB, CPA Canada" onInput={e=>{fRef.current.assocName=e.target.value;}}/></FundField>
+                    <FundField label="Association website" half><input className="pp-input" defaultValue={f.assocUrl} placeholder="https://..." onInput={e=>{fRef.current.assocUrl=e.target.value;}}/></FundField>
+                    <FundField label="Industry vertical" half><FundOpts field="assocVertical" list={['Real Estate','Healthcare','Finance','Manufacturing','Legal','Non-profit','Other']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Sponsorship tier"><FundOpts field="sponsorshipTier" list={['Platinum / Title','Gold','Silver','Bronze / Supporting','Custom package']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Sponsorship deliverables"><FundOpts field="sponsorshipDeliverables" list={['Logo on website','Newsletter feature','Speaking slot','Event booth','Social media mention','Dedicated email blast']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Association membership size / reach" half hint="How many members or followers does this association have?"><input className="pp-input" defaultValue={f.assocReach} placeholder="e.g. 12,000 members" onInput={e=>{fRef.current.assocReach=e.target.value;}}/></FundField>
+                    <FundField label="How does this build Zoho presence?" hint="Where will the Zoho brand appear and who will see it?"><textarea className="pp-textarea" defaultValue={f.desc} placeholder="e.g. Zoho logo on the CREA annual conference program reaching 8,000 Ontario realtors, plus a speaking slot at the tech stage." onInput={e=>{fRef.current.desc=e.target.value;}}/></FundField>
+                  </>}
+
+                  {f.type==='channel_event' && <>
+                    <FundField label="Event name"><input className="pp-input" defaultValue={f.name} placeholder="e.g. Western Canada Zoho Partner Summit" onBlur={e=>{fRef.current.name=e.target.value;}} onInput={e=>{fRef.current.name=e.target.value;}}/></FundField>
+                    <FundField label="Event format" half><FundOpts field="channelEventFormat" list={['Partner summit','Reseller training day','Partner kickoff','Awards night','Technical bootcamp']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Expected partner attendees" half hint="Minimum 5 required"><input className="pp-input" type="number" defaultValue={f.expectedPartnerAttendees} placeholder="e.g. 12" onInput={e=>{fRef.current.expectedPartnerAttendees=e.target.value;}}/></FundField>
+                    <FundField label="Partner companies you expect to attend" hint="Name or describe the partner firms — helps PAM validate the event"><textarea className="pp-textarea" defaultValue={f.partnerCompanies} placeholder="e.g. 3 MSPs, 2 Zoho resellers, 1 ISV from BC and Alberta" onInput={e=>{fRef.current.partnerCompanies=e.target.value;}}/></FundField>
+                    <FundField label="Agenda overview" hint="What will partners learn or do?"><textarea className="pp-textarea" defaultValue={f.agenda} placeholder="e.g. Morning: Zoho product roadmap. Afternoon: Partner co-selling workshop. Evening: Networking dinner." onInput={e=>{fRef.current.agenda=e.target.value;}}/></FundField>
+                  </>}
+
+                  {f.type==='isv_gtm' && <>
+                    <FundField label="ISV / partner company name"><input className="pp-input" defaultValue={f.isvName} placeholder="e.g. MoveWorks (migration tool)" onInput={e=>{fRef.current.isvName=e.target.value;}}/></FundField>
+                    <FundField label="Their complementary product" half><input className="pp-input" defaultValue={f.isvProduct} placeholder="e.g. Legacy ERP migration tool" onInput={e=>{fRef.current.isvProduct=e.target.value;}}/></FundField>
+                    <FundField label="Campaign type" half><FundOpts field="campaignTypeIsv" list={['Co-hosted webinar','Joint event','Email campaign','Co-branded content','Paid digital']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Target audience" half><input className="pp-input" defaultValue={f.targetAudienceIsv} placeholder="e.g. Mid-market manufacturers migrating from SAP" onInput={e=>{fRef.current.targetAudienceIsv=e.target.value;}}/></FundField>
+                    <FundField label="Why do these two products work together?" hint="The joint value proposition for prospects"><textarea className="pp-textarea" defaultValue={f.jointValueProp} placeholder="e.g. MoveWorks migrates their legacy SAP data, and Zoho One is the modern ERP they migrate to. Together we cover the full transition story." onInput={e=>{fRef.current.jointValueProp=e.target.value;}}/></FundField>
+                    <FundField label="Total campaign budget (CAD)" half><input className="pp-input" type="number" defaultValue={f.totalBudgetIsv} placeholder="e.g. 20000" onInput={e=>{fRef.current.totalBudgetIsv=e.target.value;}}/></FundField>
+                    <FundField label="Your share of that budget (CAD)" half hint="Co-fund applies to your portion only, not the ISV's"><input className="pp-input" type="number" defaultValue={f.partnerShareIsv} placeholder="e.g. 10000" onInput={e=>{fRef.current.partnerShareIsv=e.target.value;}}/></FundField>
+                  </>}
+
+                  {/* ── CAPABILITY ─────────────────────────────────── */}
+                  {f.type==='certification' && <>
+                    <FundField label="Certification name and level"><input className="pp-input" defaultValue={f.certName} placeholder="e.g. Zoho CRM Certified Consultant — Level 2" onInput={e=>{fRef.current.certName=e.target.value;}}/></FundField>
+                    <FundField label="Number of team members enrolling" half><input className="pp-input" type="number" defaultValue={f.numPeople} placeholder="e.g. 3" onInput={e=>{fRef.current.numPeople=e.target.value;}}/></FundField>
+                    <FundField label="Current certification status" half><FundOpts field="currentCertStatus" list={['None — first time','Renewal / re-certification','Upgrading to next level']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Exam fee per person (CAD)" half hint="From Zoho Academy pricing"><input className="pp-input" type="number" defaultValue={f.examFeePerPerson} placeholder="e.g. 250" onInput={e=>{fRef.current.examFeePerPerson=e.target.value;}}/></FundField>
+                    <FundField label="Training / prep cost (CAD)" half hint="Zoho Academy course or approved prep material"><input className="pp-input" type="number" defaultValue={f.trainingCost} placeholder="e.g. 500" onInput={e=>{fRef.current.trainingCost=e.target.value;}}/></FundField>
+                    <FundField label="Target exam date" half><input className="pp-input" type="date" defaultValue={f.targetExamDate} onChange={e=>{fRef.current.targetExamDate=e.target.value; bump();}}/></FundField>
+                    <div style={{background:EDI.sageL,borderRadius:10,padding:'12px 16px',fontSize:13,color:EDI.sageD,lineHeight:1.55,gridColumn:'1/-1'}}>
+                      <strong>How reimbursement works:</strong> Co-fund covers only team members who pass. If 3 enrol and 2 pass, you're reimbursed for 2 people's costs. Upload pass certificates when claiming.
+                    </div>
+                  </>}
+
+                  {f.type==='tech_enablement' && <>
+                    <FundField label="What are you building?"><input className="pp-input" defaultValue={f.buildDesc} placeholder="e.g. Healthcare CRM demo environment on Zoho One" onInput={e=>{fRef.current.buildDesc=e.target.value;}}/></FundField>
+                    <FundField label="Target vertical or use case" half><FundOpts field="buildVertical" list={['Healthcare','Real Estate','Manufacturing','Finance','Legal','SaaS','Other']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Zoho products involved" half><FundOpts field="buildZohoProducts" list={['Zoho CRM','Zoho One','Zoho Creator','Zoho Analytics','Zoho Books','Zoho Flow','Multiple']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Developer resource" half><FundOpts field="devResource" list={['Internal team','External agency','Freelancer']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Estimated build cost (CAD)" half><input className="pp-input" type="number" defaultValue={f.buildQuote} placeholder="e.g. 8000" onInput={e=>{fRef.current.buildQuote=e.target.value;}}/></FundField>
+                    <FundField label="How will this asset be reused?" hint="Demos, proposals, client onboarding — the more specific the better"><textarea className="pp-textarea" defaultValue={f.buildReuse} placeholder="e.g. We'll use this demo in every healthcare prospect meeting. It will replace our current generic CRM demo and should cut our sales cycle by 2 weeks." onInput={e=>{fRef.current.buildReuse=e.target.value;}}/></FundField>
+                    <div style={{background:EDI.goldL,borderRadius:10,padding:'12px 16px',fontSize:13,color:EDI.goldD,lineHeight:1.55,gridColumn:'1/-1'}}>
+                      <strong>Note:</strong> You'll need to demo this asset to your PAM within 60 days of completion. It must be a reusable Zoho-based asset — not a build for a specific client project.
+                    </div>
+                  </>}
+
+                  {f.type==='sales_enablement' && <>
+                    <FundField label="Asset type"><FundOpts field="assetType" list={['Sales playbook','Pitch deck','Battlecard','Case study','Video testimonial','ROI calculator']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Target Zoho product or solution" half><FundOpts field="assetProduct" list={['Zoho CRM','Zoho One','Zoho Books','Zoho Analytics','Zoho Creator','Full suite']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Target industry" half><FundOpts field="assetIndustry" list={['Healthcare','Real Estate','Manufacturing','Finance','Legal','General SMB','Other']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Resource" half><FundOpts field="assetResource" list={['In-house team','External agency','Freelancer']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Production cost (CAD)" half><input className="pp-input" type="number" defaultValue={f.assetCost} placeholder="e.g. 3500" onInput={e=>{fRef.current.assetCost=e.target.value;}}/></FundField>
+                    <FundField label="Intended use"><FundOpts field="assetUsage" list={['Internal sales team only','Partner-facing','Customer-facing','All of the above']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Share a copy with Zoho Canada?" half hint="Zoho may request this as a condition of co-funding"><FundOpts field="shareWithZoho" list={['Yes — happy to share','Open to discussing','Prefer to keep internal']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    {f.assetType==='Case study' && <div style={{background:EDI.goldL,borderRadius:10,padding:'12px 16px',fontSize:13,color:EDI.goldD,lineHeight:1.55,gridColumn:'1/-1'}}>
+                      <strong>Case study note:</strong> You'll need written customer consent before approval. We'll ask you to attach it when you submit.
+                    </div>}
+                  </>}
+
+                  {f.type==='team_training' && <>
+                    <FundField label="Zoho product line"><FundOpts field="trainingProduct" list={['Zoho CRM','Zoho One','Zoho Analytics','Zoho Books','Zoho Creator','Zoho Finance Plus','Multiple products']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Training provider" half><FundOpts field="trainingProvider" list={['Zoho Academy','Approved partner trainer','Third-party training firm','Internal (partner trains own team)']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Training format" half><FundOpts field="trainingFormat" list={['Online self-paced','Live virtual instructor','In-person classroom','Blended']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Number of team members" half><input className="pp-input" type="number" defaultValue={f.numTrainees} placeholder="e.g. 6" onInput={e=>{fRef.current.numTrainees=e.target.value;}}/></FundField>
+                    <FundField label="Training level" half><FundOpts field="trainingLevel" list={['Beginner / foundations','Intermediate','Advanced / admin','Mixed levels']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Cost per seat (CAD)" half><input className="pp-input" type="number" defaultValue={f.costPerSeat} placeholder="e.g. 350" onInput={e=>{fRef.current.costPerSeat=e.target.value;}}/></FundField>
+                    <FundField label="Target completion date" half><input className="pp-input" type="date" defaultValue={f.completionDate} onChange={e=>{fRef.current.completionDate=e.target.value; bump();}}/></FundField>
+                    <div style={{background:EDI.sageL,borderRadius:10,padding:'12px 16px',fontSize:13,color:EDI.sageD,lineHeight:1.55,gridColumn:'1/-1'}}>
+                      <strong>Reimbursement note:</strong> Co-fund is tied to completion, not enrollment. Upload a completion certificate per team member when you claim.
+                    </div>
+                  </>}
+
+                  {f.type==='hiring' && <>
+                    <div style={{background:EDI.goldL,border:`1px solid ${EDI.line}`,borderRadius:10,padding:'14px 16px',fontSize:13,color:EDI.goldD,lineHeight:1.6,gridColumn:'1/-1',marginBottom:4}}>
+                      <strong>Premium tier — Hiring support</strong><br/>
+                      This co-funds a net-new hire dedicated to your Zoho practice. Up to 25% of base salary for up to 6 months. Disbursed monthly. Revenue targets are set at approval and reviewed at 3 and 6 months.
+                    </div>
+                    <FundField label="Role title"><input className="pp-input" defaultValue={f.roleTitle} placeholder="e.g. Zoho Practice Lead, Zoho Pre-Sales Engineer" onInput={e=>{fRef.current.roleTitle=e.target.value;}}/></FundField>
+                    <FundField label="Annual salary band (CAD)" half><input className="pp-input" defaultValue={f.salary} placeholder="e.g. $75,000–$85,000" onInput={e=>{fRef.current.salary=e.target.value;}}/></FundField>
+                    <FundField label="Duration requested" half hint="Maximum 6 months"><FundOpts field="cofundDuration" list={['3 months','4 months','5 months','6 months']} fRef={fRef} onChoice={setChoice}/></FundField>
+                    <FundField label="Current Zoho-dedicated headcount" half hint="How many people on your team are currently focused on Zoho?"><input className="pp-input" type="number" defaultValue={f.currentZohoHeadcount} placeholder="e.g. 2" onInput={e=>{fRef.current.currentZohoHeadcount=e.target.value;}}/></FundField>
+                    <FundField label="Expected Zoho ARR at 3 months (CAD)" half><input className="pp-input" type="number" defaultValue={f.revenueTarget3m} placeholder="e.g. 40000" onInput={e=>{fRef.current.revenueTarget3m=e.target.value;}}/></FundField>
+                    <FundField label="Expected Zoho ARR at 6 months (CAD)" half><input className="pp-input" type="number" defaultValue={f.revenueTarget6m} placeholder="e.g. 90000" onInput={e=>{fRef.current.revenueTarget6m=e.target.value;}}/></FundField>
+                    <FundField label="Role description" hint="What will this person actually do — Zoho-specific responsibilities"><textarea className="pp-textarea" defaultValue={f.roleDesc} placeholder="e.g. Own the full Zoho CRM sales cycle from demo to close. Build vertical demos. Train delivery team on new product lines." onInput={e=>{fRef.current.roleDesc=e.target.value;}}/></FundField>
                   </>}
                   <FundField label={f.type==='gtm'?'Campaign start date':'Date'} half><input className="pp-input" type="date" defaultValue={f.date} onChange={e=>{fRef.current.date=e.target.value; bump();}}/></FundField>
                   {f.type!=='gtm' && <FundField label={f.type==='webinar'?'Expected registrations':'Location'} half>
@@ -1078,10 +1368,92 @@ function PPFund({go, route}){
               <h2 className="pp-serif" style={{fontSize:25,fontWeight:500,margin:'0 0 4px'}}>Review &amp; submit</h2>
               <p style={{fontSize:14,color:EDI.sub,margin:'0 0 22px'}}>One last look before this goes to {PARTNER.pam}.</p>
               <div className="pp-card" style={{padding:'8px 24px 18px'}}>
+                <RvRow l="Category" v={ecosystemTypes.includes(f.type)?'Ecosystem Building':capabilityTypes.includes(f.type)?'Capability Building':'Pipeline Building'}/>
                 <RvRow l="Activity type" v={typeMeta&&typeMeta.title}/>
-                <RvRow l={f.type==='gtm'?'Campaign name':'Activity name'} v={f.name}/>
-                {f.type==='event' && <RvRow l="Format" v={[f.format,f.evType,f.participation].filter(Boolean).join(' · ')}/>}
-                {f.type==='gtm' && <RvRow l="Industries" v={f.industries.join(', ')}/>}
+                {/* Pipeline review rows */}
+                <RvRow l={f.type==='gtm'?'Campaign name':f.type==='webinar'?'Webinar title':'Activity name'} v={f.name}/>
+                {f.type==='event' && <>
+                  <RvRow l="Format" v={[f.format,f.evType].filter(Boolean).join(' · ')}/>
+                  {f.evType==='Third-party' && <RvRow l="Role / tier" v={[f.participation,f.sponsorTier].filter(Boolean).join(' · ')}/>}
+                  {f.targetAudience && <RvRow l="Target audience" v={f.targetAudience}/>}
+                  {f.leadCapture && <RvRow l="Lead capture" v={f.leadCapture}/>}
+                </>}
+                {f.type==='webinar' && <>
+                  {f.webinarFormat && <RvRow l="Format" v={f.webinarFormat}/>}
+                  <RvRow l="Co-hosted with Zoho" v={f.coHosted||'—'}/>
+                  {f.platform && <RvRow l="Platform" v={f.platform}/>}
+                </>}
+                {f.type==='gtm' && <>
+                  {f.campaignType && <RvRow l="Campaign type" v={f.campaignType}/>}
+                  {f.territory && <RvRow l="Territory" v={f.territory}/>}
+                  <RvRow l="Industries" v={f.industries.join(', ')||'—'}/>
+                  {f.channelMix && <RvRow l="Channel mix" v={f.channelMix}/>}
+                  {f.resourceType && <RvRow l="Resource" v={f.resourceType}/>}
+                </>}
+                {/* Ecosystem review rows */}
+                {f.type==='referral' && <>
+                  <RvRow l="Referred partner" v={f.referredPartner}/>
+                  <RvRow l="Partner Store ID" v={f.referredPartnerId}/>
+                  <RvRow l="Deal name" v={f.dealName}/>
+                  <RvRow l="Expected deal size" v={f.dealSize?fmtMoney(f.dealSize):'—'}/>
+                  <RvRow l="Incentive type" v={f.incentiveType}/>
+                  <RvRow l="Incentive amount" v={f.incentiveAmount?fmtMoney(f.incentiveAmount):'—'}/>
+                </>}
+                {f.type==='marketplace' && <>
+                  <RvRow l="App name" v={f.appName}/>
+                  <RvRow l="Request covers" v={f.devOrPromo}/>
+                  {f.marketplaceUrl && <RvRow l="Marketplace URL" v={f.marketplaceUrl}/>}
+                  <RvRow l="Expected installs" v={f.expectedInstalls||'—'}/>
+                </>}
+                {f.type==='association' && <>
+                  <RvRow l="Association" v={f.assocName}/>
+                  <RvRow l="Vertical" v={f.assocVertical}/>
+                  <RvRow l="Sponsorship tier" v={f.sponsorshipTier}/>
+                  <RvRow l="Membership reach" v={f.assocReach}/>
+                </>}
+                {f.type==='channel_event' && <>
+                  <RvRow l="Event format" v={f.channelEventFormat}/>
+                  <RvRow l="Expected partner attendees" v={f.expectedPartnerAttendees}/>
+                </>}
+                {f.type==='isv_gtm' && <>
+                  <RvRow l="ISV / partner" v={f.isvName}/>
+                  <RvRow l="Their product" v={f.isvProduct}/>
+                  <RvRow l="Campaign type" v={f.campaignTypeIsv}/>
+                  <RvRow l="Total budget" v={f.totalBudgetIsv?fmtMoney(f.totalBudgetIsv):'—'}/>
+                  <RvRow l="Your share" v={f.partnerShareIsv?fmtMoney(f.partnerShareIsv):'—'}/>
+                </>}
+                {/* Capability review rows */}
+                {f.type==='certification' && <>
+                  <RvRow l="Certification" v={f.certName}/>
+                  <RvRow l="Team members enrolling" v={f.numPeople}/>
+                  <RvRow l="Target exam date" v={fmtDate(f.targetExamDate)}/>
+                  <RvRow l="Exam fee per person" v={f.examFeePerPerson?fmtMoney(f.examFeePerPerson):'—'}/>
+                </>}
+                {f.type==='tech_enablement' && <>
+                  <RvRow l="What's being built" v={f.buildDesc}/>
+                  <RvRow l="Vertical" v={f.buildVertical}/>
+                  <RvRow l="Developer" v={f.devResource}/>
+                  <RvRow l="Build cost" v={f.buildQuote?fmtMoney(f.buildQuote):'—'}/>
+                </>}
+                {f.type==='sales_enablement' && <>
+                  <RvRow l="Asset type" v={f.assetType}/>
+                  <RvRow l="Zoho product" v={f.assetProduct}/>
+                  <RvRow l="Industry" v={f.assetIndustry}/>
+                  <RvRow l="Share with Zoho Canada" v={f.shareWithZoho||'—'}/>
+                </>}
+                {f.type==='team_training' && <>
+                  <RvRow l="Product line" v={f.trainingProduct}/>
+                  <RvRow l="Provider" v={f.trainingProvider}/>
+                  <RvRow l="Team members" v={f.numTrainees}/>
+                  <RvRow l="Cost per seat" v={f.costPerSeat?fmtMoney(f.costPerSeat):'—'}/>
+                </>}
+                {f.type==='hiring' && <>
+                  <RvRow l="Role" v={f.roleTitle}/>
+                  <RvRow l="Salary band" v={f.salary}/>
+                  <RvRow l="Duration" v={f.cofundDuration}/>
+                  <RvRow l="ARR target (3 months)" v={f.revenueTarget3m?fmtMoney(f.revenueTarget3m):'—'}/>
+                  <RvRow l="ARR target (6 months)" v={f.revenueTarget6m?fmtMoney(f.revenueTarget6m):'—'}/>
+                </>}
                 <RvRow l={f.type==='gtm'?'Start date':'Date'} v={fmtDate(f.date)}/>
                 {f.location && <RvRow l="Location" v={f.location}/>}
                 <RvRow l="Total activity budget" v={fmtMoney(total)}/>
