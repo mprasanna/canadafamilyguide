@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Flow — Zoho One Operating Layer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/design.css">
+<style></style>
+</head>
+<body>
+<div class="app-shell">
+<aside class="sidebar"><div class="sidebar-brand"><div class="sidebar-logo"><div class="sidebar-logo-grid"><span class="sidebar-logo-dot"></span><span class="sidebar-logo-dot dim"></span><span class="sidebar-logo-dot dim"></span><span class="sidebar-logo-dot"></span></div></div><div><div class="sidebar-brand-name">Zoho One</div><div class="sidebar-brand-sub">Operating Layer</div></div></div><nav class="sidebar-nav"><div class="nav-section-label">Executive Experience</div><a href="00-overview.html" class="nav-item"><span class="nav-num">00</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Overview</span></a><a href="01-ceo-brief.html" class="nav-item"><span class="nav-num">01</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">CEO Daily Brief</span><span class="nav-dot" style="background:#E0432F"></span></a><a href="02-growth.html" class="nav-item"><span class="nav-num">02</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Growth</span></a><a href="03-customers.html" class="nav-item"><span class="nav-num">03</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Customers</span><span class="nav-dot" style="background:#D14343"></span></a><a href="04-execution.html" class="nav-item"><span class="nav-num">04</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Execution</span></a><a href="05-people.html" class="nav-item"><span class="nav-num">05</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">People</span></a><a href="06-cash.html" class="nav-item"><span class="nav-num">06</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Cash</span></a><a href="0x-what-changed.html" class="nav-item"><span class="nav-num">+</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">What Changed</span></a><a href="0x-meeting-prep.html" class="nav-item"><span class="nav-num">+</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Meeting Prep</span></a><a href="0x-cliq-mobile.html" class="nav-item"><span class="nav-num">+</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Cliq & Mobile</span></a><div class="nav-section-label">Signal Intelligence</div><a href="07-signal-explorer.html" class="nav-item"><span class="nav-num">07</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Signal Explorer</span><span class="nav-dot" style="background:#C8841C"></span></a><a href="08-signal-detail.html" class="nav-item"><span class="nav-num">08</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Signal Detail</span></a><a href="09-business-graph.html" class="nav-item"><span class="nav-num">09</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Business Graph</span></a><a href="0x-thresholds.html" class="nav-item"><span class="nav-num">+</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Signal Thresholds</span></a><div class="nav-section-label">Recommendation & Action</div><a href="10-recommendations.html" class="nav-item"><span class="nav-num">10</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Recommendation Center</span></a><a href="11-approval-center.html" class="nav-item"><span class="nav-num">11</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Approval Center</span></a><a href="12-delegation.html" class="nav-item"><span class="nav-num">12</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Delegation Center</span></a><a href="0x-outcomes.html" class="nav-item"><span class="nav-num">+</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Outcomes</span></a><div class="nav-section-label">Role Cascade</div><a href="13-vp-sales.html" class="nav-item"><span class="nav-num">13</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">VP Sales Brief</span></a><a href="14-cfo.html" class="nav-item"><span class="nav-num">14</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">CFO Brief</span></a><div class="nav-section-label">Platform Story</div><a href="15-architecture.html" class="nav-item"><span class="nav-num">15</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Architecture</span></a><a href="0x-data-flow.html" class="nav-item active"><span class="nav-num">+</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Data Flow</span></a><a href="0x-metrics.html" class="nav-item"><span class="nav-num">+</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Success Metrics</span></a><a href="0x-maturity.html" class="nav-item"><span class="nav-num">+</span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Maturity & Roadmap</span></a></nav><div class="sidebar-user"><div class="sidebar-avatar">MF</div><div><div class="sidebar-user-name">Mark Francis</div><div class="sidebar-user-role">Chief Executive Officer</div></div></div></aside>
+<main class="main">
+<header class="topbar"><div class="topbar-title"><h1>Data Flow</h1><p>Event → Signal Processor → Brief → Delivery</p></div><div class="topbar-search"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>Ask the Operating Layer…</div>
+      <button onclick="ZOLTour.start('full')" style="display:flex;align-items:center;gap:7px;background:#1A1C22;color:#fff;border-radius:9px;padding:8px 14px;cursor:pointer;font-size:12.5px;font-weight:600;white-space:nowrap;border:none;font-family:inherit"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Guided tour</button><div style="position:relative"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span style="position:absolute;top:-3px;right:-3px;width:7px;height:7px;border-radius:50%;background:#E0432F;border:1.5px solid #fff"></span></div><span class="topbar-time">7:02 AM</span></header>
+<div class="content"><div class="content-inner">
+<p style="font-size:14px;color:#54565C;line-height:1.55;max-width:680px;margin-bottom:20px">The path a signal travels, end to end. Phase 1 is scheduled batch. Phase 2 introduces near-real-time event triggers. This is the diagram engineers need to assess build complexity.</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start"><div style="display:flex;flex-direction:column;gap:2px"><div class="card" style="display:flex;gap:14px;align-items:flex-start"><div style="width:28px;height:28px;border-radius:50%;background:#2D6FB8;display:flex;align-items:center;justify-content:center;font-family:'Geist Mono',monospace;font-size:11px;font-weight:600;color:#fff;flex-shrink:0">1</div><div><div style="font-weight:600;font-size:14px">Application event fires</div><div style="font-size:12px;color:#6E7077;margin-top:3px">CRM deal goes quiet · Books invoice ages · Desk ticket escalates</div></div></div><div style="display:flex;justify-content:center;padding:2px 0"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2D6FB8" stroke-width="2.2" opacity="0.35"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div><div class="card" style="display:flex;gap:14px;align-items:flex-start"><div style="width:28px;height:28px;border-radius:50%;background:#6E5BD0;display:flex;align-items:center;justify-content:center;font-family:'Geist Mono',monospace;font-size:11px;font-weight:600;color:#fff;flex-shrink:0">2</div><div><div style="font-weight:600;font-size:14px">Event bus receives</div><div style="font-size:12px;color:#6E7077;margin-top:3px">Entity ID · timestamp · event type · source application</div></div></div><div style="display:flex;justify-content:center;padding:2px 0"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6E5BD0" stroke-width="2.2" opacity="0.35"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div><div class="card" style="display:flex;gap:14px;align-items:flex-start"><div style="width:28px;height:28px;border-radius:50%;background:#C8841C;display:flex;align-items:center;justify-content:center;font-family:'Geist Mono',monospace;font-size:11px;font-weight:600;color:#fff;flex-shrink:0">3</div><div><div style="font-weight:600;font-size:14px">Signal processor evaluates</div><div style="font-size:12px;color:#6E7077;margin-top:3px">Queries related entities · applies weighted scoring per signal type</div></div></div><div style="display:flex;justify-content:center;padding:2px 0"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#C8841C" stroke-width="2.2" opacity="0.35"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div><div class="card" style="display:flex;gap:14px;align-items:flex-start"><div style="width:28px;height:28px;border-radius:50%;background:#C8841C;display:flex;align-items:center;justify-content:center;font-family:'Geist Mono',monospace;font-size:11px;font-weight:600;color:#fff;flex-shrink:0">4</div><div><div style="font-weight:600;font-size:14px">Signal store writes</div><div style="font-size:12px;color:#6E7077;margin-top:3px">Signal type · confidence score · inputs · impact value</div></div></div><div style="display:flex;justify-content:center;padding:2px 0"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#C8841C" stroke-width="2.2" opacity="0.35"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div><div class="card" style="display:flex;gap:14px;align-items:flex-start"><div style="width:28px;height:28px;border-radius:50%;background:#E0432F;display:flex;align-items:center;justify-content:center;font-family:'Geist Mono',monospace;font-size:11px;font-weight:600;color:#fff;flex-shrink:0">5</div><div><div style="font-weight:600;font-size:14px">Recommendation engine reads</div><div style="font-size:12px;color:#6E7077;margin-top:3px">Active signals · matches rules · generates ranked action output</div></div></div><div style="display:flex;justify-content:center;padding:2px 0"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E0432F" stroke-width="2.2" opacity="0.35"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div><div class="card" style="display:flex;gap:14px;align-items:flex-start"><div style="width:28px;height:28px;border-radius:50%;background:#E0432F;display:flex;align-items:center;justify-content:center;font-family:'Geist Mono',monospace;font-size:11px;font-weight:600;color:#fff;flex-shrink:0">6</div><div><div style="font-weight:600;font-size:14px">Brief generator assembles</div><div style="font-size:12px;color:#6E7077;margin-top:3px">Top signals per mental model · top recommendation · approvals</div></div></div><div style="display:flex;justify-content:center;padding:2px 0"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#E0432F" stroke-width="2.2" opacity="0.35"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div><div class="card" style="display:flex;gap:14px;align-items:flex-start"><div style="width:28px;height:28px;border-radius:50%;background:#1F8A5B;display:flex;align-items:center;justify-content:center;font-family:'Geist Mono',monospace;font-size:11px;font-weight:600;color:#fff;flex-shrink:0">7</div><div><div style="font-weight:600;font-size:14px">Delivery layer pushes</div><div style="font-size:12px;color:#6E7077;margin-top:3px">Cliq · mobile push · email · 7:00 AM scheduled</div></div></div><div style="display:flex;justify-content:center;padding:2px 0"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1F8A5B" stroke-width="2.2" opacity="0.35"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div><div class="card" style="display:flex;gap:14px;align-items:flex-start"><div style="width:28px;height:28px;border-radius:50%;background:#1F8A5B;display:flex;align-items:center;justify-content:center;font-family:'Geist Mono',monospace;font-size:11px;font-weight:600;color:#fff;flex-shrink:0">8</div><div><div style="font-weight:600;font-size:14px">User acts</div><div style="font-size:12px;color:#6E7077;margin-top:3px">Approves · delegates · defers — written back via workflow engine</div></div></div><div style="display:flex;justify-content:center;padding:2px 0"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1F8A5B" stroke-width="2.2" opacity="0.35"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div><div class="card" style="display:flex;gap:14px;align-items:flex-start"><div style="width:28px;height:28px;border-radius:50%;background:#1F8A5B;display:flex;align-items:center;justify-content:center;font-family:'Geist Mono',monospace;font-size:11px;font-weight:600;color:#fff;flex-shrink:0">9</div><div><div style="font-weight:600;font-size:14px">Outcome tracker monitors</div><div style="font-size:12px;color:#6E7077;margin-top:3px">Did the risk resolve? Signal history updated. Loop closed.</div></div></div></div><div><div class="card card-dark" style="margin-bottom:12px"><div class="mono-label" style="color:rgba(255,255,255,0.38)">Phase 1 — Scheduled batch</div><div style="font-size:13.5px;color:rgba(255,255,255,0.8);line-height:1.55;margin-top:10px">Signal processor runs on a scheduled cadence — daily for the morning brief, hourly for critical signals. No streaming infrastructure required to launch.</div></div><div class="card card-dark"><div class="mono-label" style="color:rgba(255,255,255,0.38)">Phase 2 — Near-real-time events</div><div style="font-size:13.5px;color:rgba(255,255,255,0.8);line-height:1.55;margin-top:10px">Application events trigger the signal processor immediately. A ticket escalation fires within minutes, not hours. Built on Zoho Flow or Qntrl event hooks already available in the platform.</div></div></div></div>
+</div></div>
+</main>
+</div>
+<script>
+
+</script>
+
+<!-- Tour overlay -->
+<div id="zol-tour" style="display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);width:620px;max-width:calc(100vw - 48px);z-index:999">
+  <div id="zol-tour-inner" style="background:linear-gradient(140deg,#1C1E24,#2A2C34);color:#fff;border-radius:18px;padding:20px 24px;box-shadow:0 24px 60px rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.08)"></div>
+</div>
+
+<script>
+
+// ── Zoho One Operating Layer — Guided Tour System ────────────────────────────
+(function() {
+  var FULL = [
+  {sid:'overview',file:'00-overview.html',title:'The one idea',body:'Before opening a single application, a leader should know the five things that matter most — and act on them in one tap. Everything here builds on that sentence.'},
+  {sid:'ceo',file:'01-ceo-brief.html',title:'The Daily Operating Brief',body:'The hero surface. Five business signals — Growth, Customers, Execution, People, Cash — plus the single most important action, delivered at 7 AM.'},
+  {sid:'changed',file:'0x-what-changed.html',title:'What changed since yesterday',body:'Executives ask what moved, not what the status is. Every signal is tracked against its own history — churn and revenue both escalated overnight.'},
+  {sid:'customers',file:'03-customers.html',title:'Drill into a signal',body:'Each card opens a focused view. Customers surfaces the churn story on ABC Manufacturing: collapsing logins, rising tickets, a renewal inside the danger window.'},
+  {sid:'explorer',file:'07-signal-explorer.html',title:'Every compound signal',body:'The signal command centre. Each of the five is impossible to compute from one application — they require the cross-app chain only Zoho One owns.'},
+  {sid:'signal-ev',file:'08-signal-detail.html',title:'Explainability — the evidence',body:'Why am I seeing this? Three cross-application inputs, each with its own threshold and weight. This is the trust-building screen.'},
+  {sid:'signal-tr',file:'08-signal-detail.html',title:'What changed — the 30-day trend',body:'Was this building for weeks or did it fire today? The trend answers the question every executive asks next.'},
+  {sid:'signal-en',file:'08-signal-detail.html',title:'The trust mechanic — what we chose NOT to surface',body:'Most AI dashboards only show what fired. This one also shows what it considered and held back — Vertex Pharma at 61/70, below threshold. That transparency is the answer to \'how do we know it isn\'t hallucinating signals?\''},
+  {sid:'graph',file:'09-business-graph.html',title:'The chain only Zoho owns',body:'Customer → Deal → Invoice → Payment → Support → Renewal. The visual proof this needs Zoho One specifically — it cannot be built on CRM alone.'},
+  {sid:'approval',file:'11-approval-center.html',title:'Act without leaving the brief',body:'One-tap approval with full impact analysis: what happens if ignored versus if approved — resolved without opening CRM, Desk, or Books.'},
+  {sid:'outcomes',file:'0x-outcomes.html',title:'Close the loop',body:'Signal → Action → Value. What actually happened after the call: renewal secured, $120K ARR protected, signal resolved.'},
+  {sid:'architecture',file:'15-architecture.html',title:'Built on what exists',body:'No new database, platform, or SKU. Apps → Business Graph → Signal Engine → Operating Layer → Actions, with live connection status.'},
+  {sid:'dataflow',file:'0x-data-flow.html',title:'How it works — for architects',body:'Phase 1 is scheduled batch at a sensible frequency; Phase 2 introduces near-real-time event triggers. The path a signal travels, end to end.'},
+  {sid:'metrics',file:'0x-metrics.html',title:'How we know it works',body:'The five success metrics, each trending to target inside a quarter — the ROI question answered before it is asked.'},
+  {sid:'maturity',file:'0x-maturity.html',title:'An evolution, not a moonshot',body:'Brief → Recommend → Approve → Delegate → Execute. A sequenced path to the Business Operating System. This is the close.'}
+];
+  var QUICK = [
+  {sid:'overview',file:'00-overview.html',title:'The problem, in one sentence',body:'Today a CEO opens five apps to answer one question: \'how is my business doing?\' The Operating Layer answers it before they open any.'},
+  {sid:'ceo',file:'01-ceo-brief.html',title:'The daily experience',body:'Before / after. Before, you open five applications. After, you read one brief at 7 AM — five signals and the one action that matters.'},
+  {sid:'changed',file:'0x-what-changed.html',title:'What changed since yesterday',body:'What a CEO actually wants Monday morning: five directional signals and one line each on what moved — not a status page.'},
+  {sid:'signal-ev',file:'08-signal-detail.html',title:'Why you can trust it',body:'The intelligence layer, made legible. Three cross-application inputs converge on one account — impossible from any single app.'},
+  {sid:'outcomes',file:'0x-outcomes.html',title:'The proof of close',body:'Signal → Action → Outcome. The executive call was made, the renewal saved, $120K ARR protected. That is the whole story in four minutes.'}
+];
+
+  function getState() {
+    try {
+      var s = sessionStorage.getItem('zol_tour');
+      return s ? JSON.parse(s) : null;
+    } catch(e) { return null; }
+  }
+  function setState(obj) {
+    try { sessionStorage.setItem('zol_tour', JSON.stringify(obj)); } catch(e) {}
+  }
+  function clearState() {
+    try { sessionStorage.removeItem('zol_tour'); } catch(e) {}
+  }
+
+  function steps() {
+    var s = getState();
+    return (s && s.mode === 'quick') ? QUICK : FULL;
+  }
+
+  function render() {
+    var s = getState();
+    if (!s || !s.active) {
+      var el = document.getElementById('zol-tour');
+      if (el) el.style.display = 'none';
+      return;
+    }
+    var list  = steps();
+    var idx   = Math.min(s.step, list.length - 1);
+    var step  = list[idx];
+    var total = list.length;
+    var mode  = s.mode === 'quick' ? 'Quick tour' : 'Full tour';
+    var nextLabel = (idx === total - 1) ? 'Finish tour' : 'Next';
+
+    // dots
+    var dots = '';
+    for (var i = 0; i < total; i++) {
+      var w = (i === idx) ? '18px' : '7px';
+      var bg = (i === idx) ? '#E0432F' : 'rgba(255,255,255,0.28)';
+      dots += '<span style="height:7px;border-radius:4px;width:' + w +
+              ';background:' + bg + ';transition:width .2s,background .2s;display:inline-block"></span>';
+    }
+
+    var backBtn = (idx > 0)
+      ? '<button onclick="ZOLTour.prev()" style="padding:10px 18px;border-radius:10px;font-weight:600;font-size:13.5px;cursor:pointer;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.16);color:#fff;font-family:inherit">Back</button>'
+      : '';
+
+    document.getElementById('zol-tour').style.display = 'block';
+    document.getElementById('zol-tour-inner').innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:14px">' +
+        '<div style="display:inline-flex;align-items:center;gap:8px;font-family:\'Geist Mono\',monospace;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:#FF8C78">' +
+          '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>' +
+          mode + ' · Step ' + (idx + 1) + ' of ' + total +
+        '</div>' +
+        '<button onclick="ZOLTour.end()" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.5);padding:4px;display:flex">' +
+          '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6L6 18M6 6l12 12"/></svg>' +
+        '</button>' +
+      '</div>' +
+      '<div style="font-family:\'Schibsted Grotesk\',system-ui,sans-serif;font-weight:700;font-size:20px;letter-spacing:-0.01em;margin-top:12px">' + step.title + '</div>' +
+      '<div style="font-size:13.5px;color:rgba(255,255,255,0.72);line-height:1.55;margin-top:7px">' + step.body + '</div>' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:18px">' +
+        '<div style="display:flex;align-items:center;gap:5px">' + dots + '</div>' +
+        '<div style="display:flex;align-items:center;gap:10px">' +
+          backBtn +
+          '<button onclick="ZOLTour.next()" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;font-weight:600;font-size:13.5px;cursor:pointer;background:#E0432F;color:#fff;border:none;font-family:inherit;box-shadow:0 6px 18px rgba(224,67,47,0.4)">' +
+            nextLabel +
+            '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>' +
+          '</button>' +
+        '</div>' +
+      '</div>';
+  }
+
+  window.ZOLTour = {
+    start: function(mode) {
+      setState({ active: true, mode: mode || 'full', step: 0 });
+      var list = (mode === 'quick') ? QUICK : FULL;
+      window.location.href = list[0].file;
+    },
+    next: function() {
+      var s = getState();
+      if (!s) return;
+      var list = steps();
+      var next = s.step + 1;
+      if (next >= list.length) {
+        clearState();
+        render();
+        return;
+      }
+      var curFile = list[s.step].file;
+      var nextFile = list[next].file;
+      s.step = next;
+      setState(s);
+      if (curFile !== nextFile) {
+        window.location.href = nextFile;
+      } else {
+        // same file — handle tab switching for signal-detail
+        var sid = list[next].sid;
+        if (sid === 'signal-tr' && typeof showTab === 'function') showTab('trend');
+        if (sid === 'signal-en' && typeof showTab === 'function') showTab('engine');
+        if (sid === 'signal-ev' && typeof showTab === 'function') showTab('evidence');
+        render();
+      }
+    },
+    prev: function() {
+      var s = getState();
+      if (!s || s.step <= 0) return;
+      var list = steps();
+      var prev = s.step - 1;
+      var curFile = list[s.step].file;
+      var prevFile = list[prev].file;
+      s.step = prev;
+      setState(s);
+      if (curFile !== prevFile) {
+        window.location.href = prevFile;
+      } else {
+        var sid = list[prev].sid;
+        if (sid === 'signal-tr' && typeof showTab === 'function') showTab('trend');
+        if (sid === 'signal-en' && typeof showTab === 'function') showTab('engine');
+        if (sid === 'signal-ev' && typeof showTab === 'function') showTab('evidence');
+        render();
+      }
+    },
+    end: function() {
+      clearState();
+      render();
+    }
+  };
+
+  // Auto-render on page load
+  window.addEventListener('DOMContentLoaded', function() {
+    var s = getState();
+    if (s && s.active) {
+      // Check if we're on the right file for the current step
+      var list = steps();
+      var step = list[Math.min(s.step, list.length - 1)];
+      var curFile = window.location.pathname.split('/').pop();
+      // If file matches, render. If signal-detail tabs, set correct tab.
+      if (curFile === step.file || step.file === curFile) {
+        if (step.sid === 'signal-tr' && typeof showTab === 'function') showTab('trend');
+        if (step.sid === 'signal-en' && typeof showTab === 'function') showTab('engine');
+      }
+      render();
+    }
+  });
+})();
+
+</script>
+</body>
+</html>

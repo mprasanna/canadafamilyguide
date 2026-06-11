@@ -69,21 +69,42 @@ h1.title{font-size:30px;font-weight:600;letter-spacing:-.025em;margin-bottom:10p
 .pagenav .dir{font-family:var(--f-mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink4)}
 .pagenav .nm{font-size:13px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
 .pn-spacer{flex:1 1 0;max-width:300px}
+
+/* ── BREADCRUMB ── */
+.breadcrumb{max-width:900px;margin:0 auto;padding:10px 32px 0;display:flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;color:var(--ink4)}
+.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--ink2)}
+.breadcrumb .sep{color:var(--ink5)}
+.breadcrumb .current{color:var(--ink2)}
+/* ── FOOTER ── */
+.site-footer{background:var(--surface);border-top:1px solid var(--border);margin-top:0;padding:22px 32px}
+.site-footer-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-brand{display:flex;align-items:center;gap:8px}
+.footer-mark{width:20px;height:20px;border-radius:4px;background:var(--brand);color:var(--bg);display:grid;place-items:center;font-family:var(--f-mono);font-size:7px;font-weight:600}
+.footer-name{font-size:12px;font-weight:600;color:var(--ink2)}
+.footer-links{display:flex;gap:0;background:var(--s3);border:1px solid var(--border);border-radius:5px;padding:2px;flex-wrap:wrap}
+.footer-link{font-family:var(--f-mono);font-size:9.5px;color:var(--ink4);text-decoration:none;padding:3px 9px;border-radius:3px;white-space:nowrap;transition:.12s}
+.footer-link:hover{color:var(--ink2);background:var(--surface)}
+.footer-copy{font-family:var(--f-mono);font-size:9px;color:var(--ink5)}
+
 </style>
 </head>
 <body>
-<div class="chrome"><div class="brand"><div class="brand-mark">DI</div><span class="brand-name">Zoho Store</span><span class="brand-div">·</span><span class="brand-doc">Decision Intelligence — Architecture Story</span></div><div class="chrome-tabs"><a class="chrome-tab" href="di-document-map.html">Map</a><span class="chrome-tab active">Story</span><a class="chrome-tab" href="decision-intelligence-data-flow.html">Flow</a><a class="chrome-tab" href="di-signals-to-intelligence.html">Signals</a><a class="chrome-tab" href="di-score-reference.html">Scores</a><a class="chrome-tab" href="di-nba-decision.html">NBA</a><a class="chrome-tab" href="di-output-surfaces.html">Surfaces</a><a class="chrome-tab" href="di-glossary.html">Glossary</a><a class="chrome-tab" href="di-agent-catalog.html">Catalog</a></div></div>
+<div class="chrome"><div class="brand"><div class="brand-mark">DI</div><span class="brand-name">Zoho Store</span><span class="brand-div">·</span><span class="brand-doc">Decision Intelligence — Architecture Story</span></div><div class="chrome-tabs"><a class="chrome-tab" href="di-full-platform-demo.html">Demo</a>
+    <a class="chrome-tab" href="di-document-map.html">Map</a><span class="chrome-tab active">Story</span><a class="chrome-tab" href="decision-intelligence-data-flow.html">Flow</a><a class="chrome-tab" href="di-signals-to-intelligence.html">Signals</a><a class="chrome-tab" href="di-score-reference.html">Scores</a><a class="chrome-tab" href="di-nba-decision.html">NBA</a><a class="chrome-tab" href="di-output-surfaces.html">Surfaces</a><a class="chrome-tab" href="di-glossary.html">Glossary</a><a class="chrome-tab" href="di-example-walkthrough.html">Example</a>
+    <a class="chrome-tab" href="di-agent-catalog.html">Catalog</a></div></div>
+
+<div class="breadcrumb"><a href="di-document-map.html">DI Suite</a><span class="sep">/</span><span class="current">Architecture story</span></div>
 <div class="page">
   <div class="eyebrow">Narrative · The platform in plain language</div>
-  <h1 class="title">Today Zoho knows everything.<br>Tomorrow it knows what to do next.</h1>
-  <p class="subtitle">The whole platform as a story — no formulas, no jargon. What it takes in, what it does, and what comes out.</p>
-  <div class="abc">Told through one customer — <b>ABC Corp</b>: $24,000 ARR · CRM + Books + Projects · renewal in 15 days · payment failed yesterday · usage down 30% · 3 open support tickets.</div>
+  <h1 class="title">What happens when a customer<br>falls through the cracks?</h1>
+  <p class="subtitle">The whole platform as a story — told through one customer, one failing payment, and the question no existing system answers.</p>
+  <div class="abc">Follow <b>ABC Corp</b> through every layer: $24,000 ARR · CRM + Books + Projects · renewal in 15 days · payment failed yesterday · usage down 30% · 3 open support tickets.</div>
 
   <div class="layer">
-    <div class="layer-num"><span class="dot"></span>Layer 01 · The problem today</div>
-    <h2>All the information exists. Nobody answers "what next?"</h2>
-    <p>Store knows ABC Corp's renewal is near. Books knows the payment failed. Desk knows the tickets are piling up. Analytics can chart all of it. Each system holds a piece of the truth.</p>
-    <p>But no system answers the only question that matters: <b>what should happen next, and who should do it?</b> Today a human is expected to stitch the pieces together — across thousands of accounts they'll never get to.</p>
+    <div class="layer-num"><span class="dot"></span>Layer 01 · The moment it goes wrong</div>
+    <h2>Yesterday, ABC Corp's payment failed. Nobody noticed.</h2>
+    <p>Store logged the failure. Books recorded the missed invoice. Desk has three open tickets, the oldest fourteen days old. Analytics could chart all of it if someone ran the report. But nobody did — because with thousands of accounts, nobody could.</p>
+    <p>This is not a data problem. Zoho has all the data. This is a <b>decision problem</b>: which account needs attention right now, what should happen, and who should do it? That question has no system to answer it today.</p>
   </div>
 
   <div class="layer">

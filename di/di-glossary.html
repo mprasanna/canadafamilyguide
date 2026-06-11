@@ -61,11 +61,32 @@ h1.title{font-size:30px;font-weight:600;letter-spacing:-.025em;margin-bottom:8px
 .pagenav .dir{font-family:var(--f-mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink4)}
 .pagenav .nm{font-size:13px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
 .pn-spacer{flex:1 1 0;max-width:300px}
+
+/* ── BREADCRUMB ── */
+.breadcrumb{max-width:900px;margin:0 auto;padding:10px 32px 0;display:flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;color:var(--ink4)}
+.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--ink2)}
+.breadcrumb .sep{color:var(--ink5)}
+.breadcrumb .current{color:var(--ink2)}
+/* ── FOOTER ── */
+.site-footer{background:var(--surface);border-top:1px solid var(--border);margin-top:0;padding:22px 32px}
+.site-footer-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-brand{display:flex;align-items:center;gap:8px}
+.footer-mark{width:20px;height:20px;border-radius:4px;background:var(--brand);color:var(--bg);display:grid;place-items:center;font-family:var(--f-mono);font-size:7px;font-weight:600}
+.footer-name{font-size:12px;font-weight:600;color:var(--ink2)}
+.footer-links{display:flex;gap:0;background:var(--s3);border:1px solid var(--border);border-radius:5px;padding:2px;flex-wrap:wrap}
+.footer-link{font-family:var(--f-mono);font-size:9.5px;color:var(--ink4);text-decoration:none;padding:3px 9px;border-radius:3px;white-space:nowrap;transition:.12s}
+.footer-link:hover{color:var(--ink2);background:var(--surface)}
+.footer-copy{font-family:var(--f-mono);font-size:9px;color:var(--ink5)}
+
 </style>
 </head>
 <body>
-<div class="chrome"><div class="brand"><div class="brand-mark">DI</div><span class="brand-name">Zoho Store</span><span class="brand-div">·</span><span class="brand-doc">Decision Intelligence — Glossary</span></div><div class="chrome-tabs"><a class="chrome-tab" href="di-document-map.html">Map</a><a class="chrome-tab" href="di-architecture-story.html">Story</a><a class="chrome-tab" href="decision-intelligence-data-flow.html">Flow</a><a class="chrome-tab" href="di-signals-to-intelligence.html">Signals</a><a class="chrome-tab" href="di-score-reference.html">Scores</a><a class="chrome-tab" href="di-nba-decision.html">NBA</a><a class="chrome-tab" href="di-output-surfaces.html">Surfaces</a><span class="chrome-tab active">Glossary</span><a class="chrome-tab" href="di-agent-catalog.html">Catalog</a></div></div>
+<div class="chrome"><div class="brand"><div class="brand-mark">DI</div><span class="brand-name">Zoho Store</span><span class="brand-div">·</span><span class="brand-doc">Decision Intelligence — Glossary</span></div><div class="chrome-tabs"><a class="chrome-tab" href="di-full-platform-demo.html">Demo</a>
+    <a class="chrome-tab" href="di-document-map.html">Map</a><a class="chrome-tab" href="di-architecture-story.html">Story</a><a class="chrome-tab" href="decision-intelligence-data-flow.html">Flow</a><a class="chrome-tab" href="di-signals-to-intelligence.html">Signals</a><a class="chrome-tab" href="di-score-reference.html">Scores</a><a class="chrome-tab" href="di-nba-decision.html">NBA</a><a class="chrome-tab" href="di-output-surfaces.html">Surfaces</a><span class="chrome-tab active">Glossary</span><a class="chrome-tab" href="di-example-walkthrough.html">Example</a>
+    <a class="chrome-tab" href="di-agent-catalog.html">Catalog</a></div></div>
 
+
+<div class="breadcrumb"><a href="di-document-map.html">DI Suite</a><span class="sep">/</span><span class="current">Glossary</span></div>
 <div class="page">
   <div class="eyebrow">Reference · Shared language</div>
   <h1 class="title">Glossary</h1>

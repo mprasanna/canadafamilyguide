@@ -22,31 +22,54 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--f-sans);background:var(--bg);color:var(--ink);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
-.chrome{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;height:52px;display:flex;align-items:center;gap:14px}
+
+/* ── CHROME ── */
+.chrome{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;height:auto;min-height:52px;flex-wrap:wrap;gap:10px;padding-top:8px;padding-bottom:8px;display:flex;align-items:center}
 .brand{display:flex;align-items:center;gap:10px}
 .brand-mark{width:28px;height:28px;border-radius:5px;background:var(--brand);color:var(--bg);display:grid;place-items:center;font-family:var(--f-mono);font-size:9px;font-weight:600;letter-spacing:-.04em}
 .brand-name{font-size:13px;font-weight:600}.brand-div{color:var(--border2)}.brand-doc{font-size:12px;color:var(--ink3)}
-.page{max-width:860px;margin:0 auto;padding:48px 32px 90px}
+.chrome-tabs{display:flex;align-items:center;gap:0;margin-left:auto;background:var(--s3);border:1px solid var(--border);border-radius:6px;padding:3px;flex-wrap:wrap}
+.chrome-tab{padding:4px 10px;border-radius:4px;font-size:11px;font-weight:500;color:var(--ink4);white-space:nowrap;text-decoration:none;transition:.12s}
+.chrome-tab:hover{color:var(--ink2)}
+.chrome-tab.active{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.07)}
+
+/* ── PAGE ── */
+.page{max-width:900px;margin:0 auto;padding:48px 32px 90px}
 .eyebrow{font-family:var(--f-mono);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:10px;display:flex;align-items:center;gap:10px}
 .eyebrow::after{content:'';flex:1;height:1px;background:var(--border)}
 h1.title{font-size:30px;font-weight:600;letter-spacing:-.025em;margin-bottom:8px}
 .subtitle{font-family:var(--f-serif);font-size:15px;color:var(--ink3);font-style:italic;line-height:1.6;max-width:620px;margin-bottom:18px}
-.note{display:flex;gap:9px;align-items:flex-start;background:var(--s2);border:1px solid var(--border);border-left:3px solid var(--brand);border-radius:6px;padding:10px 13px;margin-bottom:34px;font-size:11.5px;color:var(--ink2);line-height:1.55}
+.note{display:flex;gap:9px;align-items:flex-start;background:var(--s2);border:1px solid var(--border);border-left:3px solid var(--brand);border-radius:6px;padding:10px 13px;margin-bottom:24px;font-size:11.5px;color:var(--ink2);line-height:1.55}
 .note b{color:var(--ink);font-weight:600}
-.dom{margin-bottom:24px}
-.dom-h{display:flex;align-items:center;gap:9px;margin-bottom:9px}
-.dom-dot{width:8px;height:8px;border-radius:50%}
+
+/* ── MODE TOGGLE ── */
+.mode-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;gap:12px;flex-wrap:wrap}
+.mode-bar-label{font-family:var(--f-mono);font-size:10px;color:var(--ink4);letter-spacing:.05em}
+.toggle{display:flex;background:var(--s3);border:1px solid var(--border);border-radius:6px;padding:3px;gap:0}
+.toggle-btn{font-family:var(--f-mono);font-size:10px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;padding:5px 14px;border-radius:4px;cursor:pointer;color:var(--ink4);background:transparent;border:none;transition:.12s;white-space:nowrap}
+.toggle-btn:hover{color:var(--ink2)}
+.toggle-btn.active{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.07)}
+
+/* ── DOMAIN HEADER (shared both modes) ── */
+.dom{margin-bottom:28px}
+.dom-h{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.dom-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .dom-name{font-family:var(--f-mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
 .dom-h::after{content:'';flex:1;height:1px;background:var(--border)}
-.d-rev .dom-dot{background:var(--green)} .d-sales .dom-dot{background:var(--blue)}
-.d-pre .dom-dot{background:var(--violet)} .d-sup .dom-dot{background:var(--amber)}
-.d-cs .dom-dot{background:var(--brand)} .d-cust .dom-dot{background:var(--ink4)}
+.d-rev .dom-dot{background:var(--green)}
+.d-sales .dom-dot{background:var(--blue)}
+.d-pre .dom-dot{background:var(--violet)}
+.d-sup .dom-dot{background:var(--amber)}
+.d-cs .dom-dot{background:var(--brand)}
+.d-cust .dom-dot{background:var(--ink4)}
 .d-risk .dom-dot{background:var(--red)}
-.rows{border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--surface);box-shadow:0 1px 2px rgba(24,22,19,.04)}
-.row{display:grid;grid-template-columns:198px 1fr 138px;border-bottom:1px solid var(--border)}
-.row:last-child{border-bottom:none}
+
+/* ── LEADERSHIP VIEW ── */
+.lv-rows{border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--surface);box-shadow:0 1px 2px rgba(24,22,19,.04)}
+.lv-row{display:grid;grid-template-columns:200px 1fr 140px;border-bottom:1px solid var(--border)}
+.lv-row:last-child{border-bottom:none}
 .r-name{padding:10px 14px;background:var(--s2);border-right:1px solid var(--border);font-weight:600;font-size:12px;letter-spacing:-.01em;display:flex;align-items:center;gap:7px}
-.r-desc{padding:10px 14px;font-size:12px;color:var(--ink2);display:flex;align-items:center}
+.r-desc{padding:10px 14px;font-size:12px;color:var(--ink2);display:flex;align-items:center;line-height:1.5}
 .r-value{padding:10px 12px;border-left:1px solid var(--border);display:flex;align-items:center}
 .vtag{font-family:var(--f-mono);font-size:8.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;border-radius:100px;padding:2px 8px;border:1px solid;white-space:nowrap}
 .vtag.arr{background:var(--green-s);color:var(--green);border-color:var(--green-bd)}
@@ -54,102 +77,675 @@ h1.title{font-size:30px;font-weight:600;letter-spacing:-.025em;margin-bottom:8px
 .vtag.supp{background:var(--amber-s);color:var(--amber);border-color:var(--amber-bd)}
 .vtag.risk{background:var(--red-s);color:var(--red);border-color:var(--red-bd)}
 .p1{font-family:var(--f-mono);font-size:8px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;background:var(--green-s);color:var(--green);border:1px solid var(--green-bd);border-radius:100px;padding:1px 6px;white-space:nowrap}
-@media(max-width:600px){.row{grid-template-columns:1fr}.r-name,.r-value{border-right:none;border-left:none;border-bottom:1px solid var(--border)}}
+
+/* ── BUILDER VIEW ── */
+.bv-rows{border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--surface);box-shadow:0 1px 2px rgba(24,22,19,.04)}
+.bv-row{border-bottom:1px solid var(--border)}
+.bv-row:last-child{border-bottom:none}
+.bv-header{display:grid;grid-template-columns:200px 1fr 140px;cursor:pointer;transition:background .1s}
+.bv-header:hover{background:var(--s2)}
+.bv-header.open{background:var(--s2)}
+.bv-h-name{padding:10px 14px;background:var(--s2);border-right:1px solid var(--border);font-weight:600;font-size:12px;letter-spacing:-.01em;display:flex;align-items:center;gap:7px}
+.bv-header.open .bv-h-name{background:var(--s3)}
+.bv-h-desc{padding:10px 14px;font-size:12px;color:var(--ink2);display:flex;align-items:center;line-height:1.5;gap:8px}
+.bv-h-right{padding:10px 12px;border-left:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:6px}
+.chevron{font-family:var(--f-mono);font-size:14px;color:var(--ink4);transition:transform .18s;line-height:1;flex-shrink:0}
+.chevron.open{transform:rotate(180deg)}
+
+.bv-body{display:none;border-top:1px solid var(--border)}
+.bv-body.open{display:block}
+.ipo-grid{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border)}
+.ipo-col{padding:13px 16px;border-right:1px solid var(--border)}
+.ipo-col:last-child{border-right:none}
+.ipo-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:9px}
+.ipo-chips{display:flex;flex-wrap:wrap;gap:4px}
+.chip{font-family:var(--f-mono);font-size:9.5px;border-radius:4px;padding:2px 7px;border:1px solid var(--border);background:var(--s3);color:var(--ink3);white-space:nowrap;line-height:1.5}
+.improve-row{padding:10px 16px;background:var(--s2)}
+.improve-label{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:4px}
+.improve-val{font-size:12px;color:var(--ink);font-weight:600}
+
+/* ── LEGEND ── */
 .legend{margin-top:28px;border-top:1px solid var(--border);padding-top:14px;font-family:var(--f-mono);font-size:10px;color:var(--ink3);display:flex;gap:16px;flex-wrap:wrap;align-items:center}
 .legend span{display:flex;align-items:center;gap:6px}
-.legend .vtag{cursor:default}
 
-/* ── SUITE NAV ── */
-.chrome{height:auto;min-height:52px;flex-wrap:wrap;gap:10px;padding-top:8px;padding-bottom:8px}
-.chrome-tabs{display:flex;align-items:center;gap:0;margin-left:auto;background:var(--s3);border:1px solid var(--border);border-radius:6px;padding:3px;flex-wrap:wrap}
-.chrome-tab{padding:4px 10px;border-radius:4px;font-size:11px;font-weight:500;color:var(--ink4);white-space:nowrap;text-decoration:none;transition:.12s}
-.chrome-tab:hover{color:var(--ink2)}
-.chrome-tab.active{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.07)}
-.pagenav{max-width:880px;margin:0 auto;padding:8px 32px 64px;display:flex;align-items:stretch;gap:12px;justify-content:space-between}
+/* ── PAGENAV ── */
+.pagenav{max-width:900px;margin:0 auto;padding:8px 32px 64px;display:flex;align-items:stretch;gap:12px;justify-content:space-between}
 .pagenav a{flex:1 1 0;text-decoration:none;border:1px solid var(--border);border-radius:8px;padding:11px 15px;background:var(--surface);transition:border-color .12s,box-shadow .12s;display:flex;flex-direction:column;gap:3px;max-width:300px}
 .pagenav a:hover{border-color:var(--border2);box-shadow:0 2px 8px rgba(24,22,19,.06)}
 .pagenav a.next{text-align:right;align-items:flex-end}
 .pagenav .dir{font-family:var(--f-mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink4)}
 .pagenav .nm{font-size:13px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
 .pn-spacer{flex:1 1 0;max-width:300px}
+
+@media(max-width:640px){
+  .lv-row,.bv-header{grid-template-columns:1fr}
+  .r-name,.bv-h-name,.r-value,.bv-h-right{border-right:none;border-left:none}
+  .ipo-grid{grid-template-columns:1fr}
+  .ipo-col{border-right:none;border-bottom:1px solid var(--border)}
+  .ipo-col:last-child{border-bottom:none}
+}
+
+/* ── BREADCRUMB ── */
+.breadcrumb{max-width:900px;margin:0 auto;padding:10px 32px 0;display:flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;color:var(--ink4)}
+.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--ink2)}
+.breadcrumb .sep{color:var(--ink5)}
+.breadcrumb .current{color:var(--ink2)}
+/* ── FOOTER ── */
+.site-footer{background:var(--surface);border-top:1px solid var(--border);margin-top:0;padding:22px 32px}
+.site-footer-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-brand{display:flex;align-items:center;gap:8px}
+.footer-mark{width:20px;height:20px;border-radius:4px;background:var(--brand);color:var(--bg);display:grid;place-items:center;font-family:var(--f-mono);font-size:7px;font-weight:600}
+.footer-name{font-size:12px;font-weight:600;color:var(--ink2)}
+.footer-links{display:flex;gap:0;background:var(--s3);border:1px solid var(--border);border-radius:5px;padding:2px;flex-wrap:wrap}
+.footer-link{font-family:var(--f-mono);font-size:9.5px;color:var(--ink4);text-decoration:none;padding:3px 9px;border-radius:3px;white-space:nowrap;transition:.12s}
+.footer-link:hover{color:var(--ink2);background:var(--surface)}
+.footer-copy{font-family:var(--f-mono);font-size:9px;color:var(--ink5)}
+
 </style>
 </head>
 <body>
-<div class="chrome"><div class="brand"><div class="brand-mark">DI</div><span class="brand-name">Zoho Store</span><span class="brand-div">·</span><span class="brand-doc">Decision Intelligence — Agent Catalog</span></div><div class="chrome-tabs"><a class="chrome-tab" href="di-document-map.html">Map</a><a class="chrome-tab" href="di-architecture-story.html">Story</a><a class="chrome-tab" href="decision-intelligence-data-flow.html">Flow</a><a class="chrome-tab" href="di-signals-to-intelligence.html">Signals</a><a class="chrome-tab" href="di-score-reference.html">Scores</a><a class="chrome-tab" href="di-nba-decision.html">NBA</a><a class="chrome-tab" href="di-output-surfaces.html">Surfaces</a><a class="chrome-tab" href="di-glossary.html">Glossary</a><span class="chrome-tab active">Catalog</span></div></div>
+
+<div class="chrome">
+  <div class="brand">
+    <div class="brand-mark">DI</div>
+    <span class="brand-name">Zoho Store</span>
+    <span class="brand-div">·</span>
+    <span class="brand-doc">Decision Intelligence — Agent Catalog</span>
+  </div>
+  <div class="chrome-tabs">
+    <a class="chrome-tab" href="di-full-platform-demo.html">Demo</a>
+    <a class="chrome-tab" href="di-document-map.html">Map</a>
+    <a class="chrome-tab" href="di-architecture-story.html">Story</a>
+    <a class="chrome-tab" href="decision-intelligence-data-flow.html">Flow</a>
+    <a class="chrome-tab" href="di-signals-to-intelligence.html">Signals</a>
+    <a class="chrome-tab" href="di-score-reference.html">Scores</a>
+    <a class="chrome-tab" href="di-nba-decision.html">NBA</a>
+    <a class="chrome-tab" href="di-output-surfaces.html">Surfaces</a>
+    <a class="chrome-tab" href="di-glossary.html">Glossary</a>
+    <span class="chrome-tab active">Catalog</span>
+  </div>
+</div>
+
+
+<div class="breadcrumb"><a href="di-document-map.html">DI Suite</a><span class="sep">/</span><span class="current">Agent catalog</span></div>
 <div class="page">
   <div class="eyebrow">Document B · Idea repository</div>
   <h1 class="title">Agent Catalog</h1>
   <p class="subtitle">Everything that could plug into the Decision Intelligence platform over time — an app store for the brain. Same engine, more specialists — each mapped to the lever it moves.</p>
-  <div class="note"><div><b>This is not the pitch.</b> The platform and the Phase-1 agents are what you ask funding for; this list is the parking lot that grows forever. Keep it separate — in the room it's one blurred "future agents" slide, nothing more. Only the agents marked <span class="p1" style="display:inline-flex">Phase 1</span> are in scope today.</div></div>
+  <div class="note">
+    <div><b>This is not the pitch.</b> The platform and the Phase-1 agents are what you ask funding for; this list is the parking lot that grows forever. Keep it separate — in the room it's one blurred "future agents" slide, nothing more. Only the agents marked <span class="p1" style="display:inline-flex">Phase 1</span> are in scope today.</div>
+  </div>
 
+  <div class="mode-bar">
+    <span class="mode-bar-label">View</span>
+    <div class="toggle">
+      <button class="toggle-btn active" id="btn-lv" onclick="setMode('lv')">Leadership</button>
+      <button class="toggle-btn" id="btn-bv" onclick="setMode('bv')">Builder</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       DATA: all agents
+       Each agent: id, name, p1, desc, vtag-class, vtag-label,
+       input[], processing[], output[], improve
+  ════════════════════════════════════════════════ -->
+
+  <!-- REVENUE -->
   <div class="dom d-rev">
     <div class="dom-h"><span class="dom-dot"></span><span class="dom-name">Revenue — retention &amp; expansion</span></div>
-    <div class="rows">
-      <div class="row"><div class="r-name">Recovery Agent <span class="p1">Phase 1</span></div><div class="r-desc">Recovers failed payments — retry, card updater, alternative method, AM escalation.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
-      <div class="row"><div class="r-name">Cancellation Rescue <span class="p1">Phase 1</span></div><div class="r-desc">Intervenes at cancellation with a save offer matched to the stated reason.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
-      <div class="row"><div class="r-name">Renewal Agent</div><div class="r-desc">Optimises renewal collection — best timing and channel per customer.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
-      <div class="row"><div class="r-name">Churn Prevention Agent</div><div class="r-desc">Catches decline weeks before the cancel page, when saves are cheaper.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
-      <div class="row"><div class="r-name">Bundle Economics Agent</div><div class="r-desc">Detects when Zoho One is cheaper than the standalone stack and proves it.</div><div class="r-value"><span class="vtag arr">Expansion ARR</span></div></div>
-      <div class="row"><div class="r-name">Next Best Product Agent</div><div class="r-desc">Cross-sells the most relevant product — only to healthy, growing accounts.</div><div class="r-value"><span class="vtag arr">Expansion ARR</span></div></div>
-      <div class="row"><div class="r-name">Wallet Optimization Agent</div><div class="r-desc">Uses wallet credits and incentives to tip fence-sitters, sized per opportunity.</div><div class="r-value"><span class="vtag arr">Expansion ARR</span></div></div>
-      <div class="row"><div class="r-name">Trial Conversion Agent</div><div class="r-desc">Converts trials by removing the next activation blocker, not by sending more email.</div><div class="r-value"><span class="vtag arr">New ARR</span></div></div>
-      <div class="row"><div class="r-name">Checkout Completion Agent</div><div class="r-desc">Recovers stalled checkouts caused by payment, tax, or billing friction.</div><div class="r-value"><span class="vtag arr">New ARR</span></div></div>
+    <div class="lv-rows lv-block">
+      <div class="lv-row"><div class="r-name">Recovery Agent <span class="p1">Phase 1</span></div><div class="r-desc">Recovers failed payments — retry, card updater, alternative method, AM escalation.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
+      <div class="lv-row"><div class="r-name">Cancellation Rescue <span class="p1">Phase 1</span></div><div class="r-desc">Intervenes at cancellation with a save offer matched to the stated reason.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
+      <div class="lv-row"><div class="r-name">Renewal Agent</div><div class="r-desc">Optimises renewal collection — best timing and channel per customer.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
+      <div class="lv-row"><div class="r-name">Churn Prevention Agent</div><div class="r-desc">Catches decline weeks before the cancel page, when saves are cheaper.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
+      <div class="lv-row"><div class="r-name">Bundle Economics Agent</div><div class="r-desc">Detects when Zoho One is cheaper than the standalone stack and proves it.</div><div class="r-value"><span class="vtag arr">Expansion ARR</span></div></div>
+      <div class="lv-row"><div class="r-name">Next Best Product Agent</div><div class="r-desc">Cross-sells the most relevant product — only to healthy, growing accounts.</div><div class="r-value"><span class="vtag arr">Expansion ARR</span></div></div>
+      <div class="lv-row"><div class="r-name">Wallet Optimization Agent</div><div class="r-desc">Uses wallet credits and incentives to tip fence-sitters, sized per opportunity.</div><div class="r-value"><span class="vtag arr">Expansion ARR</span></div></div>
+      <div class="lv-row"><div class="r-name">Trial Conversion Agent</div><div class="r-desc">Converts trials by removing the next activation blocker, not by sending more email.</div><div class="r-value"><span class="vtag arr">New ARR</span></div></div>
+      <div class="lv-row"><div class="r-name">Checkout Completion Agent</div><div class="r-desc">Recovers stalled checkouts caused by payment, tax, or billing friction.</div><div class="r-value"><span class="vtag arr">New ARR</span></div></div>
+    </div>
+    <div class="bv-rows bv-block" style="display:none">
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Recovery Agent <span class="p1">Phase 1</span></div>
+          <div class="bv-h-desc">Recovers failed payments — retry, card updater, alternative method, AM escalation.</div>
+          <div class="bv-h-right"><span class="vtag arr">Retained ARR</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">failed payment event</span><span class="chip">failure code</span><span class="chip">card metadata</span><span class="chip">account ARR &amp; tier</span><span class="chip">retry history</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">classify failure type</span><span class="chip">smart retry timing</span><span class="chip">card updater lookup</span><span class="chip">fallback alt method</span><span class="chip">escalate to AM if all fail</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">auto-resolved payment</span><span class="chip">customer notification</span><span class="chip">AM task in CRM</span><span class="chip">recovery rate in Analytics</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Involuntary churn rate — ARR recovered vs. lost to failed payments</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Cancellation Rescue <span class="p1">Phase 1</span></div>
+          <div class="bv-h-desc">Intervenes at cancellation with a save offer matched to the stated reason.</div>
+          <div class="bv-h-right"><span class="vtag arr">Retained ARR</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">cancel page visit event</span><span class="chip">stated reason</span><span class="chip">health score</span><span class="chip">churn score</span><span class="chip">tenure &amp; ARR</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">classify reason</span><span class="chip">match to save offer library</span><span class="chip">score offer fit</span><span class="chip">present in-session before cancel confirms</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">in-product save offer</span><span class="chip">CSM task if high-ARR declines</span><span class="chip">outcome logged to Analytics</span><span class="chip">reason taxonomy report</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Save rate at cancellation — % of cancel intents converted to retained accounts</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Renewal Agent</div>
+          <div class="bv-h-desc">Optimises renewal collection — best timing and channel per customer.</div>
+          <div class="bv-h-right"><span class="vtag arr">Retained ARR</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">renewal date</span><span class="chip">health score</span><span class="chip">channel responsiveness history</span><span class="chip">ARR &amp; product mix</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">predict optimal timing per customer</span><span class="chip">select best channel</span><span class="chip">compose renewal message</span><span class="chip">escalate at-risk renewals to AM</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">timed renewal communication</span><span class="chip">AM queue for high-value renewals</span><span class="chip">renewal collection rate report</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">On-time renewal rate — % of ARR renewed without late lapse</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Churn Prevention Agent</div>
+          <div class="bv-h-desc">Catches decline weeks before the cancel page, when saves are cheaper.</div>
+          <div class="bv-h-right"><span class="vtag arr">Retained ARR</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">churn score at critical threshold</span><span class="chip">health score declining trend</span><span class="chip">login frequency drop</span><span class="chip">support ticket spike</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">confirm threshold crossed</span><span class="chip">prioritise by ARR &amp; urgency</span><span class="chip">generate outreach brief for CSM</span><span class="chip">recommend intervention type</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">CSM alert in Desk or CRM</span><span class="chip">outreach brief with recommended script</span><span class="chip">at-risk pipeline view in Analytics</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Early-stage save rate — % of flagged at-risk accounts retained before cancel intent</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Bundle Economics Agent</div>
+          <div class="bv-h-desc">Detects when Zoho One is cheaper than the standalone stack and proves it.</div>
+          <div class="bv-h-right"><span class="vtag arr">Expansion ARR</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">active standalone products</span><span class="chip">spend per product</span><span class="chip">Zoho One pricing for account size</span><span class="chip">renewal proximity</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">calculate standalone total vs Zoho One</span><span class="chip">flag accounts where bundle is cheaper</span><span class="chip">build cost comparison proof</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">AM alert with cost comparison card</span><span class="chip">customer-facing savings summary</span><span class="chip">expansion opportunity list in CRM</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Bundle conversion rate — standalone accounts converted to Zoho One</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Next Best Product Agent</div>
+          <div class="bv-h-desc">Cross-sells the most relevant product — only to healthy, growing accounts.</div>
+          <div class="bv-h-right"><span class="vtag arr">Expansion ARR</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">expansion readiness score</span><span class="chip">current product stack</span><span class="chip">vertical &amp; company size</span><span class="chip">usage growth signals</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">filter to healthy accounts only</span><span class="chip">score product adjacency</span><span class="chip">select highest-fit recommendation</span><span class="chip">route to CSM or in-product</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">CSM task in CRM</span><span class="chip">in-product banner (healthy accounts only)</span><span class="chip">cross-sell conversion report</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Expansion revenue per account — additional ARR per cross-sell conversion</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Wallet Optimization Agent</div>
+          <div class="bv-h-desc">Uses wallet credits and incentives to tip fence-sitters, sized per opportunity.</div>
+          <div class="bv-h-right"><span class="vtag arr">Expansion ARR</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">fence-sitter signal</span><span class="chip">opportunity value (ARR delta)</span><span class="chip">wallet credit balance</span><span class="chip">upgrade page visit</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">identify undecided accounts on upgrade path</span><span class="chip">size incentive proportional to opportunity</span><span class="chip">apply credit at decision moment</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">targeted incentive in-product or email</span><span class="chip">upgrade conversion event logged</span><span class="chip">credit utilisation report</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Fence-sitter conversion rate — % of stalled upgrade intents converted</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Trial Conversion Agent</div>
+          <div class="bv-h-desc">Converts trials by removing the next activation blocker, not by sending more email.</div>
+          <div class="bv-h-right"><span class="vtag arr">New ARR</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">trial activation score</span><span class="chip">blocker classification</span><span class="chip">features activated vs not</span><span class="chip">time in trial</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">identify specific next blocker</span><span class="chip">route to fix: guide / support / AM</span><span class="chip">single targeted action — not drip</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">in-product nudge to exact blocker</span><span class="chip">support ticket if human needed</span><span class="chip">trial activation funnel report</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Trial-to-paid conversion rate — % of trials converting after blocker removal</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Checkout Completion Agent</div>
+          <div class="bv-h-desc">Recovers stalled checkouts caused by payment, tax, or billing friction.</div>
+          <div class="bv-h-right"><span class="vtag arr">New ARR</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">stalled checkout event</span><span class="chip">payment failure reason code</span><span class="chip">tax or billing error type</span><span class="chip">session context</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">classify friction type</span><span class="chip">auto-resolve if possible</span><span class="chip">surface fix to customer</span><span class="chip">escalate if systemic</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">in-checkout fix prompt or retry</span><span class="chip">resolved checkout confirmation</span><span class="chip">abandonment reason report</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Checkout completion rate — % of stalled sessions recovered to paid</div></div>
+        </div>
+      </div>
     </div>
   </div>
 
+  <!-- SALES -->
   <div class="dom d-sales">
     <div class="dom-h"><span class="dom-dot"></span><span class="dom-name">Sales — acquisition</span></div>
-    <div class="rows">
-      <div class="row"><div class="r-name">Pre-Call Intelligence</div><div class="r-desc">Assembles an account brief before a call — from Account 360 + trusted enrichment.</div><div class="r-value"><span class="vtag sales">Sales productivity</span></div></div>
-      <div class="row"><div class="r-name">Post-Call Agent</div><div class="r-desc">Turns a call into summary, action items, CRM updates, and a follow-up draft.</div><div class="r-value"><span class="vtag sales">Sales productivity</span></div></div>
-      <div class="row"><div class="r-name">Deal Risk Agent</div><div class="r-desc">Flags stalled deals with no activity before the close date, with a next step.</div><div class="r-value"><span class="vtag sales">Win rate</span></div></div>
-      <div class="row"><div class="r-name">Proposal / Quote Agent</div><div class="r-desc">Builds a tailored quote and an ROI business case from the prospect's needs.</div><div class="r-value"><span class="vtag sales">Win rate</span></div></div>
-      <div class="row"><div class="r-name">Competitor Intelligence</div><div class="r-desc">Detects competitor mentions in calls and emails; surfaces the right positioning.</div><div class="r-value"><span class="vtag sales">Win rate</span></div></div>
+    <div class="lv-rows lv-block">
+      <div class="lv-row"><div class="r-name">Pre-Call Intelligence</div><div class="r-desc">Assembles an account brief before a call — from Account 360 + trusted enrichment.</div><div class="r-value"><span class="vtag sales">Sales productivity</span></div></div>
+      <div class="lv-row"><div class="r-name">Post-Call Agent</div><div class="r-desc">Turns a call into summary, action items, CRM updates, and a follow-up draft.</div><div class="r-value"><span class="vtag sales">Sales productivity</span></div></div>
+      <div class="lv-row"><div class="r-name">Deal Risk Agent</div><div class="r-desc">Flags stalled deals with no activity before the close date, with a next step.</div><div class="r-value"><span class="vtag sales">Win rate</span></div></div>
+      <div class="lv-row"><div class="r-name">Proposal / Quote Agent</div><div class="r-desc">Builds a tailored quote and an ROI business case from the prospect's needs.</div><div class="r-value"><span class="vtag sales">Win rate</span></div></div>
+      <div class="lv-row"><div class="r-name">Competitor Intelligence</div><div class="r-desc">Detects competitor mentions in calls and emails; surfaces the right positioning.</div><div class="r-value"><span class="vtag sales">Win rate</span></div></div>
+    </div>
+    <div class="bv-rows bv-block" style="display:none">
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Pre-Call Intelligence</div>
+          <div class="bv-h-desc">Assembles an account brief before a call — from Account 360 + trusted enrichment.</div>
+          <div class="bv-h-right"><span class="vtag sales">Sales productivity</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">Account 360 data</span><span class="chip">trusted enrichment</span><span class="chip">open deal context</span><span class="chip">scheduled call time</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">pull: usage, complaints, unused features</span><span class="chip">pull: growth signals, open tickets</span><span class="chip">format to 2-min read</span><span class="chip">deliver before call time</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">pre-call brief card in CRM</span><span class="chip">email to rep if preferred</span><span class="chip">upsell flags &amp; risk indicators</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Discovery quality — deal velocity after briefed calls vs. unbriefed</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Post-Call Agent</div>
+          <div class="bv-h-desc">Turns a call into summary, action items, CRM updates, and a follow-up draft.</div>
+          <div class="bv-h-right"><span class="vtag sales">Sales productivity</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">call transcript or recording</span><span class="chip">open deal context</span><span class="chip">attendee list</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">structured call summary</span><span class="chip">extract action items with owners</span><span class="chip">update CRM stage &amp; next step</span><span class="chip">draft follow-up email</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">call summary in CRM</span><span class="chip">tasks on deal record</span><span class="chip">draft email for rep review</span><span class="chip">saves 20–30 min admin</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">CRM data completeness — % of calls with structured notes and next step logged</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Deal Risk Agent</div>
+          <div class="bv-h-desc">Flags stalled deals with no activity before the close date, with a next step.</div>
+          <div class="bv-h-right"><span class="vtag sales">Win rate</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">deal activity log</span><span class="chip">close date</span><span class="chip">deal value</span><span class="chip">days since last touch</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">detect inactivity gap vs close date</span><span class="chip">score urgency by size &amp; days-to-close</span><span class="chip">generate recommended next step</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">deal risk alert in CRM</span><span class="chip">Cliq notification to rep &amp; manager</span><span class="chip">at-risk deals pipeline view</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Pipeline hygiene — % of at-risk deals rescued before close date passes</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Proposal / Quote Agent</div>
+          <div class="bv-h-desc">Builds a tailored quote and an ROI business case from the prospect's needs.</div>
+          <div class="bv-h-right"><span class="vtag sales">Win rate</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">prospect need statement</span><span class="chip">company size &amp; vertical</span><span class="chip">product eligibility &amp; pricing</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">map needs to product configuration</span><span class="chip">build ROI business case</span><span class="chip">generate tailored quote document</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">quote PDF or shareable link</span><span class="chip">ROI summary in email or doc</span><span class="chip">proposal sent event logged to CRM</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Quote-to-close rate — % of proposals progressing to signed deal</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Competitor Intelligence</div>
+          <div class="bv-h-desc">Detects competitor mentions in calls and emails; surfaces the right positioning.</div>
+          <div class="bv-h-right"><span class="vtag sales">Win rate</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">call transcripts</span><span class="chip">email threads</span><span class="chip">competitor name mentions</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">named-entity recognition</span><span class="chip">match competitor to battlecard</span><span class="chip">surface in-context during or after call</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">real-time or post-call battlecard</span><span class="chip">competitor mention log on deal</span><span class="chip">win/loss by competitor report</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Win rate vs. named competitors — deal outcomes where competitor was mentioned</div></div>
+        </div>
+      </div>
     </div>
   </div>
 
+  <!-- PRESALES -->
   <div class="dom d-pre">
     <div class="dom-h"><span class="dom-dot"></span><span class="dom-name">Presales</span></div>
-    <div class="rows">
-      <div class="row"><div class="r-name">Demo Builder Agent</div><div class="r-desc">From a prospect profile, builds a tailored demo org + script via MCP tools.</div><div class="r-value"><span class="vtag sales">Win rate</span></div></div>
-      <div class="row"><div class="r-name">Solution Recommendation</div><div class="r-desc">Recommends the right products and architecture for a stated business need.</div><div class="r-value"><span class="vtag sales">Win rate</span></div></div>
-      <div class="row"><div class="r-name">POC Monitoring Agent</div><div class="r-desc">Tracks proof-of-concept engagement and flags when a trial is going cold.</div><div class="r-value"><span class="vtag sales">Win rate</span></div></div>
+    <div class="lv-rows lv-block">
+      <div class="lv-row"><div class="r-name">Demo Builder Agent</div><div class="r-desc">From a prospect profile, builds a tailored demo org + script via MCP tools.</div><div class="r-value"><span class="vtag sales">Win rate</span></div></div>
+      <div class="lv-row"><div class="r-name">Solution Recommendation</div><div class="r-desc">Recommends the right products and architecture for a stated business need.</div><div class="r-value"><span class="vtag sales">Win rate</span></div></div>
+      <div class="lv-row"><div class="r-name">POC Monitoring Agent</div><div class="r-desc">Tracks proof-of-concept engagement and flags when a trial is going cold.</div><div class="r-value"><span class="vtag sales">Win rate</span></div></div>
+      <div class="lv-row"><div class="r-name">RFP / Questionnaire Agent</div><div class="r-desc">Drafts RFP, RFI, and security-questionnaire answers from a maintained answer library; flags gaps and routes binding items to a human.</div><div class="r-value"><span class="vtag sales">Win rate</span></div></div>
+    </div>
+    <div class="bv-rows bv-block" style="display:none">
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Demo Builder Agent</div>
+          <div class="bv-h-desc">From a prospect profile, builds a tailored demo org + script via MCP tools.</div>
+          <div class="bv-h-right"><span class="vtag sales">Win rate</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">prospect profile</span><span class="chip">vertical &amp; use case</span><span class="chip">selected product modules</span><span class="chip">MCP access to demo org</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">generate org config via MCP tools</span><span class="chip">populate industry sample data</span><span class="chip">build demo script to prospect pain points</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">ready demo org in Zoho</span><span class="chip">demo script doc for SE</span><span class="chip">setup time: hours → minutes</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Demo-to-POC conversion rate — % of tailored demos advancing to proof of concept</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Solution Recommendation</div>
+          <div class="bv-h-desc">Recommends the right products and architecture for a stated business need.</div>
+          <div class="bv-h-right"><span class="vtag sales">Win rate</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">business need or pain statement</span><span class="chip">industry vertical</span><span class="chip">existing tech stack</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">map pain to Zoho capabilities</span><span class="chip">recommend stack &amp; configuration</span><span class="chip">flag integration complexity or gaps</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">recommended architecture document</span><span class="chip">partner or SE briefing card</span><span class="chip">handed to rep with rationale</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Presales accuracy — % of recommendations accepted without major revision</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">POC Monitoring Agent</div>
+          <div class="bv-h-desc">Tracks proof-of-concept engagement and flags when a trial is going cold.</div>
+          <div class="bv-h-right"><span class="vtag sales">Win rate</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">POC login events</span><span class="chip">features touched vs scoped</span><span class="chip">support requests during POC</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">track engagement vs milestones</span><span class="chip">detect cold POC (low logins, features untouched)</span><span class="chip">trigger intervention if engagement drops</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">SE or CSM alert when POC cold</span><span class="chip">POC health dashboard</span><span class="chip">recommended re-engagement action</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">POC-to-close conversion rate — % of POCs converting to paid</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">RFP / Questionnaire Agent</div>
+          <div class="bv-h-desc">Drafts RFP, RFI, and security-questionnaire answers from a maintained answer library; flags gaps and routes binding items to a human.</div>
+          <div class="bv-h-right"><span class="vtag sales">Win rate</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">RFP / RFI document</span><span class="chip">security questionnaire</span><span class="chip">maintained answer library</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">match questions to answer library</span><span class="chip">draft responses for known answers</span><span class="chip">flag gaps for human review</span><span class="chip">route binding items — never auto-submit</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">draft RFP response document</span><span class="chip">gap list for SE or legal review</span><span class="chip">response time report</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">RFP response time and completeness — hours saved per response, gap rate reduction</div></div>
+        </div>
+      </div>
     </div>
   </div>
 
+  <!-- SUPPORT -->
   <div class="dom d-sup">
     <div class="dom-h"><span class="dom-dot"></span><span class="dom-name">Support</span></div>
-    <div class="rows">
-      <div class="row"><div class="r-name">Escalation Agent</div><div class="r-desc">Routes and prioritises escalations by account value and risk.</div><div class="r-value"><span class="vtag supp">Support efficiency</span></div></div>
-      <div class="row"><div class="r-name">Ticket Pattern Agent</div><div class="r-desc">Detects recurring issues and ticket spikes that signal churn risk.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
-      <div class="row"><div class="r-name">Account Risk Agent</div><div class="r-desc">Feeds support-driven risk signals back into the revenue side of the platform.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
+    <div class="lv-rows lv-block">
+      <div class="lv-row"><div class="r-name">Escalation Agent</div><div class="r-desc">Routes and prioritises escalations by account value and risk.</div><div class="r-value"><span class="vtag supp">Support efficiency</span></div></div>
+      <div class="lv-row"><div class="r-name">Ticket Pattern Agent</div><div class="r-desc">Detects recurring issues and ticket spikes that signal churn risk.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
+      <div class="lv-row"><div class="r-name">Account Risk Agent</div><div class="r-desc">Feeds support-driven risk signals back into the revenue side of the platform.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
+    </div>
+    <div class="bv-rows bv-block" style="display:none">
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Escalation Agent</div>
+          <div class="bv-h-desc">Routes and prioritises escalations by account value and risk.</div>
+          <div class="bv-h-right"><span class="vtag supp">Support efficiency</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">incoming escalation or high-severity ticket</span><span class="chip">account ARR &amp; health score</span><span class="chip">open deal context</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">score urgency: ARR × severity × churn risk</span><span class="chip">route to appropriate tier &amp; owner</span><span class="chip">set SLA by account tier</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">priority-routed ticket in Desk</span><span class="chip">AM or CSM alert for high-ARR accounts</span><span class="chip">escalation resolution time report</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Escalation resolution time — hours to resolution by account tier</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Ticket Pattern Agent</div>
+          <div class="bv-h-desc">Detects recurring issues and ticket spikes that signal churn risk.</div>
+          <div class="bv-h-right"><span class="vtag arr">Retained ARR</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">ticket stream across all accounts</span><span class="chip">issue classification &amp; tags</span><span class="chip">recurrence by product area</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">detect repeating issue clusters</span><span class="chip">detect volume spikes</span><span class="chip">correlate with churn signal data</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">weekly pattern report to product team</span><span class="chip">CS alert: accounts at churn risk</span><span class="chip">systemic issue flag for engineering</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Tickets per account per month — reduction as systemic issues are fixed</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Account Risk Agent</div>
+          <div class="bv-h-desc">Feeds support-driven risk signals back into the revenue side of the platform.</div>
+          <div class="bv-h-right"><span class="vtag arr">Retained ARR</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">escalation severity history</span><span class="chip">unresolved ticket count &amp; age</span><span class="chip">repeated contact events</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">score support-derived risk per account</span><span class="chip">feed into health score</span><span class="chip">ensure CSM &amp; AM visibility</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">risk signal on CRM account record</span><span class="chip">CSM alert in Desk or Cliq</span><span class="chip">support-to-revenue risk bridge report</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">At-risk identification lag — time from support distress to CSM awareness</div></div>
+        </div>
+      </div>
     </div>
   </div>
 
+  <!-- CUSTOMER SUCCESS -->
   <div class="dom d-cs">
     <div class="dom-h"><span class="dom-dot"></span><span class="dom-name">Customer Success</span></div>
-    <div class="rows">
-      <div class="row"><div class="r-name">Adoption Agent</div><div class="r-desc">Drives feature adoption that keeps healthy accounts growing.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
-      <div class="row"><div class="r-name">Health Monitoring Agent</div><div class="r-desc">Watches account health and triggers proactive outreach on early slips.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
-      <div class="row"><div class="r-name">Expansion Readiness Agent</div><div class="r-desc">Flags accounts that are ready to grow and hands them to the right team.</div><div class="r-value"><span class="vtag arr">Expansion ARR</span></div></div>
+    <div class="lv-rows lv-block">
+      <div class="lv-row"><div class="r-name">Adoption Agent</div><div class="r-desc">Drives feature adoption that keeps healthy accounts growing.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
+      <div class="lv-row"><div class="r-name">Health Monitoring Agent</div><div class="r-desc">Watches account health and triggers proactive outreach on early slips.</div><div class="r-value"><span class="vtag arr">Retained ARR</span></div></div>
+      <div class="lv-row"><div class="r-name">Expansion Readiness Agent</div><div class="r-desc">Flags accounts that are ready to grow and hands them to the right team.</div><div class="r-value"><span class="vtag arr">Expansion ARR</span></div></div>
+    </div>
+    <div class="bv-rows bv-block" style="display:none">
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Adoption Agent</div>
+          <div class="bv-h-desc">Drives feature adoption that keeps healthy accounts growing.</div>
+          <div class="bv-h-right"><span class="vtag arr">Retained ARR</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">feature activation map per account</span><span class="chip">features activated vs licensed</span><span class="chip">account health score</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">identify high-value unactivated features</span><span class="chip">select appropriate nudge channel</span><span class="chip">trigger in-product or CSM-led push</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">in-product feature spotlight</span><span class="chip">CSM task to drive activation</span><span class="chip">feature adoption rate report by cohort</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Feature adoption depth — % of licensed features actively used per account</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Health Monitoring Agent</div>
+          <div class="bv-h-desc">Watches account health and triggers proactive outreach on early slips.</div>
+          <div class="bv-h-right"><span class="vtag arr">Retained ARR</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">health score components</span><span class="chip">trend over 30/60/90 days</span><span class="chip">CSM ownership</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">detect early negative trend in any component</span><span class="chip">score urgency by ARR &amp; trajectory</span><span class="chip">trigger proactive outreach recommendation</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">CSM alert in CRM with health trend</span><span class="chip">recommended outreach action</span><span class="chip">portfolio health dashboard</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Proactive save rate — % of declining accounts recovered before churn risk stage</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Expansion Readiness Agent</div>
+          <div class="bv-h-desc">Flags accounts that are ready to grow and hands them to the right team.</div>
+          <div class="bv-h-right"><span class="vtag arr">Expansion ARR</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">usage volume growth signals</span><span class="chip">team or headcount growth</span><span class="chip">feature depth</span><span class="chip">ARR vs peer cohort</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">score readiness across dimensions</span><span class="chip">identify best expansion vector</span><span class="chip">route to CSM or AM with recommendation</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">expansion-ready flag in CRM</span><span class="chip">CSM or AM task with rationale</span><span class="chip">expansion pipeline report</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Net Revenue Retention — ARR expansion from existing accounts</div></div>
+        </div>
+      </div>
     </div>
   </div>
 
+  <!-- CUSTOMER-FACING -->
   <div class="dom d-cust">
     <div class="dom-h"><span class="dom-dot"></span><span class="dom-name">Customer-facing</span></div>
-    <div class="rows">
-      <div class="row"><div class="r-name">Solution Advisor</div><div class="r-desc">A Zia-like advisor guiding customers to the right setup — hands off for anything binding.</div><div class="r-value"><span class="vtag supp">Support efficiency</span></div></div>
-      <div class="row"><div class="r-name">Product Recommendation</div><div class="r-desc">Suggests relevant products in-product, at the moment of need.</div><div class="r-value"><span class="vtag arr">Expansion ARR</span></div></div>
-      <div class="row"><div class="r-name">Onboarding Guide</div><div class="r-desc">Walks new customers through setup and first value.</div><div class="r-value"><span class="vtag arr">New ARR</span></div></div>
+    <div class="lv-rows lv-block">
+      <div class="lv-row"><div class="r-name">Solution Advisor</div><div class="r-desc">A Zia-like advisor guiding customers to the right setup — hands off for anything binding.</div><div class="r-value"><span class="vtag supp">Support efficiency</span></div></div>
+      <div class="lv-row"><div class="r-name">Product Recommendation</div><div class="r-desc">Suggests relevant products in-product, at the moment of need.</div><div class="r-value"><span class="vtag arr">Expansion ARR</span></div></div>
+      <div class="lv-row"><div class="r-name">Onboarding Guide</div><div class="r-desc">Walks new customers through setup and first value.</div><div class="r-value"><span class="vtag arr">New ARR</span></div></div>
+    </div>
+    <div class="bv-rows bv-block" style="display:none">
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Solution Advisor</div>
+          <div class="bv-h-desc">A Zia-like advisor guiding customers to the right setup — hands off for anything binding.</div>
+          <div class="bv-h-right"><span class="vtag supp">Support efficiency</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">customer question or setup goal</span><span class="chip">current product configuration</span><span class="chip">account tier</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">understand intent via conversation</span><span class="chip">recommend configuration or setup path</span><span class="chip">hand off for any binding decision</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">in-product chat guidance</span><span class="chip">suggested next setup step</span><span class="chip">handoff to support if needed</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Self-service resolution rate — % of setup questions resolved without a ticket</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Product Recommendation</div>
+          <div class="bv-h-desc">Suggests relevant products in-product, at the moment of need.</div>
+          <div class="bv-h-right"><span class="vtag arr">Expansion ARR</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">user action in-product</span><span class="chip">current product usage gap</span><span class="chip">relevant adjacent product</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">detect moment-of-need from user behaviour</span><span class="chip">match gap to adjacent product</span><span class="chip">surface non-intrusive recommendation</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">in-product banner or tooltip</span><span class="chip">link to trial or info page</span><span class="chip">recommendation click-through report</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">In-product conversion rate — clicks from recommendation to trial or purchase</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Onboarding Guide</div>
+          <div class="bv-h-desc">Walks new customers through setup and first value.</div>
+          <div class="bv-h-right"><span class="vtag arr">New ARR</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">onboarding stage &amp; completed steps</span><span class="chip">product type &amp; vertical</span><span class="chip">time since signup</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">identify next setup milestone</span><span class="chip">guide to first-value moment</span><span class="chip">escalate if stuck past threshold</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">in-product onboarding checklist</span><span class="chip">progress bar to first-value</span><span class="chip">onboarding completion rate report</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Time-to-first-value — days from signup to first productive use</div></div>
+        </div>
+      </div>
     </div>
   </div>
 
+  <!-- RISK -->
   <div class="dom d-risk">
     <div class="dom-h"><span class="dom-dot"></span><span class="dom-name">Risk &amp; platform protection</span></div>
-    <div class="rows">
-      <div class="row"><div class="r-name">Fraud Investigation Agent</div><div class="r-desc">Fuses Stripe Radar, device and geo signals into approve / review / block.</div><div class="r-value"><span class="vtag risk">Risk reduction</span></div></div>
-      <div class="row"><div class="r-name">Payment Risk Agent</div><div class="r-desc">Predicts and pre-empts payment failures before they happen.</div><div class="r-value"><span class="vtag risk">Risk reduction</span></div></div>
-      <div class="row"><div class="r-name">Tax Compliance Agent</div><div class="r-desc">Pre-empts tax-exempt customers to avoid the charge-then-refund cycle.</div><div class="r-value"><span class="vtag risk">Risk reduction</span></div></div>
+    <div class="lv-rows lv-block">
+      <div class="lv-row"><div class="r-name">Fraud Investigation Agent</div><div class="r-desc">Fuses Stripe Radar, device and geo signals into approve / review / block.</div><div class="r-value"><span class="vtag risk">Risk reduction</span></div></div>
+      <div class="lv-row"><div class="r-name">Payment Risk Agent</div><div class="r-desc">Predicts and pre-empts payment failures before they happen.</div><div class="r-value"><span class="vtag risk">Risk reduction</span></div></div>
+      <div class="lv-row"><div class="r-name">Tax Compliance Agent</div><div class="r-desc">Pre-empts tax-exempt customers to avoid the charge-then-refund cycle.</div><div class="r-value"><span class="vtag risk">Risk reduction</span></div></div>
+      <div class="lv-row"><div class="r-name">Compliance &amp; Accessibility Agent</div><div class="r-desc">Drafts SOC 2 / GDPR / ISO attestations and accessibility conformance (VPAT / WCAG) from the same answer library — a human attests, never auto-submits.</div><div class="r-value"><span class="vtag risk">Risk reduction</span></div></div>
+    </div>
+    <div class="bv-rows bv-block" style="display:none">
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Fraud Investigation Agent</div>
+          <div class="bv-h-desc">Fuses Stripe Radar, device and geo signals into approve / review / block.</div>
+          <div class="bv-h-right"><span class="vtag risk">Risk reduction</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">Stripe Radar signal</span><span class="chip">device fingerprint</span><span class="chip">geo &amp; IP data</span><span class="chip">transaction amount &amp; pattern</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">fuse multi-source signals into risk score</span><span class="chip">apply approve / review / block logic</span><span class="chip">flag borderline for manual review</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">real-time transaction decision</span><span class="chip">manual review queue</span><span class="chip">fraud rate &amp; false-positive log</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Fraud loss rate vs. false-positive block rate — reduce both simultaneously</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Payment Risk Agent</div>
+          <div class="bv-h-desc">Predicts and pre-empts payment failures before they happen.</div>
+          <div class="bv-h-right"><span class="vtag risk">Risk reduction</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">payment risk score (high threshold)</span><span class="chip">historical payment behaviour</span><span class="chip">card expiry proximity</span><span class="chip">ARR at risk</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">confirm prediction threshold crossed</span><span class="chip">size urgency by ARR</span><span class="chip">trigger proactive outreach or card update prompt</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">proactive payment update prompt</span><span class="chip">AM alert for high-ARR accounts</span><span class="chip">predicted failure prevention report</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Payment failure rate — % of predicted failures prevented by proactive action</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Tax Compliance Agent</div>
+          <div class="bv-h-desc">Pre-empts tax-exempt customers to avoid the charge-then-refund cycle.</div>
+          <div class="bv-h-right"><span class="vtag risk">Risk reduction</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">customer billing profile</span><span class="chip">tax-exempt status indicators</span><span class="chip">invoice generation event</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">identify tax-exempt customers before charge</span><span class="chip">apply correct treatment at invoice time</span><span class="chip">flag anomalies for finance review</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">correct-tax invoice first time</span><span class="chip">charge-then-refund cycle eliminated</span><span class="chip">tax exception log for finance</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Tax refund rate — number and value of tax-related refunds issued per period</div></div>
+        </div>
+      </div>
+      <div class="bv-row">
+        <div class="bv-header" onclick="toggleRow(this)">
+          <div class="bv-h-name">Compliance &amp; Accessibility Agent</div>
+          <div class="bv-h-desc">Drafts SOC 2 / GDPR / ISO attestations and accessibility conformance from the same answer library — a human attests, never auto-submits.</div>
+          <div class="bv-h-right"><span class="vtag risk">Risk reduction</span><span class="chevron">&#8964;</span></div>
+        </div>
+        <div class="bv-body">
+          <div class="ipo-grid">
+            <div class="ipo-col"><div class="ipo-label">Input</div><div class="ipo-chips"><span class="chip">compliance framework (SOC 2, GDPR, ISO)</span><span class="chip">VPAT / WCAG requirement</span><span class="chip">maintained answer library</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Processing</div><div class="ipo-chips"><span class="chip">match requirements to answer library</span><span class="chip">draft attestation language</span><span class="chip">flag gaps requiring human evidence</span><span class="chip">route for human sign-off — never auto-submit</span></div></div>
+            <div class="ipo-col"><div class="ipo-label">Output surface</div><div class="ipo-chips"><span class="chip">draft compliance response document</span><span class="chip">gap list for legal or security review</span><span class="chip">response time &amp; gap rate report</span></div></div>
+          </div>
+          <div class="improve-row"><div class="improve-label">What improves</div><div class="improve-val">Compliance response time — hours saved per attestation, human review focused on gaps only</div></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -161,6 +757,27 @@ h1.title{font-size:30px;font-weight:600;letter-spacing:-.025em;margin-bottom:8px
     <span><span class="vtag risk">Risk</span> protection</span>
   </div>
 </div>
-<div class="pagenav"><a class="prev" href="di-glossary.html"><span class="dir">&larr; Previous</span><span class="nm">Glossary</span></a><span class="pn-spacer"></span></div>
+
+<div class="pagenav">
+  <a class="prev" href="di-glossary.html"><span class="dir">&larr; Previous</span><span class="nm">Glossary</span></a>
+  <span class="pn-spacer"></span>
+</div>
+
+<script>
+function setMode(m){
+  document.querySelectorAll('.lv-block').forEach(function(el){el.style.display = m==='lv' ? '' : 'none'});
+  document.querySelectorAll('.bv-block').forEach(function(el){el.style.display = m==='bv' ? '' : 'none'});
+  document.getElementById('btn-lv').classList.toggle('active', m==='lv');
+  document.getElementById('btn-bv').classList.toggle('active', m==='bv');
+}
+function toggleRow(header){
+  var body = header.nextElementSibling;
+  var chev = header.querySelector('.chevron');
+  var isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  header.classList.toggle('open', !isOpen);
+  if(chev) chev.classList.toggle('open', !isOpen);
+}
+</script>
 </body>
 </html>

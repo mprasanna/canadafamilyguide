@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Decision Intelligence · ABC Corp Walkthrough</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F2EC;--surface:#FFFFFF;--s2:#FAFAF7;--s3:#F0EEE7;--s4:#E9E6DC;
+  --border:#E5E2D8;--border2:#D0CEC2;
+  --ink:#181613;--ink2:#4A4844;--ink3:#87857C;--ink4:#B5B2A9;--ink5:#D7D4C9;
+  --red:#B0231C;--red-s:#FAE8E6;--red-bd:#E0ABA7;
+  --amber:#9A5209;--amber-s:#F5EACF;--amber-bd:#D9C090;
+  --green:#14653A;--green-s:#E2EEE6;--green-bd:#A8CEB0;
+  --blue:#1B3E94;--blue-s:#DDE5F6;--blue-bd:#A8BCE2;
+  --violet:#4E1F9D;--violet-s:#EAE4F7;--violet-bd:#C0B1E4;
+  --brand:#3D2314;
+  --f-sans:"IBM Plex Sans",sans-serif;--f-mono:"IBM Plex Mono",monospace;--f-serif:"IBM Plex Serif",Georgia,serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--f-sans);background:var(--bg);color:var(--ink);font-size:13px;line-height:1.55;-webkit-font-smoothing:antialiased}
+
+/* ── CHROME ── */
+.chrome{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--border);padding:8px 32px;height:auto;min-height:52px;display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-mark{width:28px;height:28px;border-radius:5px;background:var(--brand);color:var(--bg);display:grid;place-items:center;font-family:var(--f-mono);font-size:9px;font-weight:600;letter-spacing:-.04em}
+.brand-name{font-size:13px;font-weight:600}.brand-div{color:var(--border2)}.brand-doc{font-size:12px;color:var(--ink3)}
+.chrome-tabs{display:flex;align-items:center;gap:0;margin-left:auto;background:var(--s3);border:1px solid var(--border);border-radius:6px;padding:3px;flex-wrap:wrap}
+.chrome-tab{padding:4px 10px;border-radius:4px;font-size:11px;font-weight:500;color:var(--ink4);white-space:nowrap;text-decoration:none;transition:.12s}
+.chrome-tab:hover{color:var(--ink2)}
+.chrome-tab.active{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.07)}
+
+/* ── BREADCRUMB ── */
+.breadcrumb{max-width:900px;margin:0 auto;padding:10px 32px 0;display:flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;color:var(--ink4)}
+.breadcrumb a{color:var(--ink4);text-decoration:none}.breadcrumb a:hover{color:var(--ink2)}
+.breadcrumb .sep{color:var(--ink5)}.breadcrumb .current{color:var(--ink2)}
+
+/* ── PAGE ── */
+.page{max-width:900px;margin:0 auto;padding:48px 32px 80px}
+.eyebrow{font-family:var(--f-mono);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.eyebrow::after{content:'';flex:1;height:1px;background:var(--border)}
+h1.title{font-size:30px;font-weight:600;letter-spacing:-.025em;margin-bottom:8px;line-height:1.15}
+.subtitle{font-family:var(--f-serif);font-size:15px;color:var(--ink3);font-style:italic;line-height:1.6;max-width:640px;margin-bottom:28px}
+
+/* ── ABC CORP CARD ── */
+.abc-card{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--brand);border-radius:8px;padding:16px 20px;margin-bottom:40px}
+.abc-label{font-family:var(--f-mono);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--brand);margin-bottom:8px}
+.abc-name{font-size:18px;font-weight:600;letter-spacing:-.02em;margin-bottom:10px}
+.abc-facts{display:flex;flex-wrap:wrap;gap:6px}
+.fact{font-family:var(--f-mono);font-size:10px;padding:3px 9px;border-radius:4px;border:1px solid var(--border);background:var(--s3);color:var(--ink3)}
+.fact.bad{background:var(--red-s);color:var(--red);border-color:var(--red-bd)}
+.fact.warn{background:var(--amber-s);color:var(--amber);border-color:var(--amber-bd)}
+.fact.ok{background:var(--green-s);color:var(--green);border-color:var(--green-bd)}
+
+/* ── PROGRESS RAIL ── */
+.rail{display:flex;align-items:stretch;gap:0;margin-bottom:48px;overflow-x:auto}
+.rail-step{flex:1 1 0;min-width:72px;background:var(--surface);border:1px solid var(--border);border-right:none;padding:10px 12px;display:flex;flex-direction:column;gap:3px;cursor:pointer;transition:background .12s;text-decoration:none}
+.rail-step:first-child{border-radius:7px 0 0 7px}
+.rail-step:last-child{border-right:1px solid var(--border);border-radius:0 7px 7px 0}
+.rail-step:hover{background:var(--s2)}
+.rail-step.active{background:var(--brand);border-color:var(--brand)}
+.rail-n{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.06em;color:var(--ink4)}
+.rail-step.active .rail-n{color:rgba(244,242,236,.6)}
+.rail-t{font-size:11px;font-weight:600;color:var(--ink);line-height:1.3}
+.rail-step.active .rail-t{color:#F4F2EC}
+
+/* ── SECTION ── */
+.wt-section{margin-bottom:52px;scroll-margin-top:80px}
+.wt-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.wt-num{font-family:var(--f-mono);font-size:11px;font-weight:600;color:var(--bg);background:var(--brand);width:24px;height:24px;border-radius:6px;display:grid;place-items:center;flex-shrink:0}
+.wt-title{font-size:17px;font-weight:600;letter-spacing:-.02em}
+.wt-ref{font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--ink4);background:var(--s3);border:1px solid var(--border);border-radius:4px;padding:2px 8px;text-decoration:none;white-space:nowrap;margin-left:auto}
+.wt-ref:hover{color:var(--ink2);background:var(--s4)}
+.wt-desc{font-size:12.5px;color:var(--ink2);line-height:1.6;margin:6px 0 16px 36px;max-width:680px}
+
+/* ── SHARED COMPONENTS ── */
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 1px 2px rgba(24,22,19,.04);margin-bottom:14px}
+.panel-head{background:var(--s2);border-bottom:1px solid var(--border);padding:10px 14px;font-family:var(--f-mono);font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+.panel-body{padding:14px 16px}
+
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{font-family:var(--f-mono);font-size:9.5px;border-radius:4px;padding:2px 7px;border:1px solid var(--border);background:var(--s3);color:var(--ink3);white-space:nowrap}
+.chip.score{background:var(--green-s);color:var(--green);border-color:var(--green-bd)}
+.chip.agent{background:rgba(61,35,20,.07);color:var(--brand);border-color:rgba(61,35,20,.22)}
+.chip.bad{background:var(--red-s);color:var(--red);border-color:var(--red-bd)}
+.chip.warn{background:var(--amber-s);color:var(--amber);border-color:var(--amber-bd)}
+.chip.blue{background:var(--blue-s);color:var(--blue);border-color:var(--blue-bd)}
+.chip.violet{background:var(--violet-s);color:var(--violet);border-color:var(--violet-bd)}
+
+.arrow-conn{text-align:center;font-size:11px;color:var(--ink4);margin:8px 0}
+
+/* ── STEP 1: SOURCES ── */
+.source-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.source-card{background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:10px 12px}
+.source-name{font-size:12px;font-weight:600;margin-bottom:6px}
+.source-event{font-family:var(--f-mono);font-size:9.5px;color:var(--ink3);padding:2px 0;border-bottom:1px dashed var(--border)}
+.source-event:last-child{border-bottom:none}
+.source-event.hot{color:var(--red);font-weight:500}
+
+/* ── STEP 2: ACCOUNT 360 ── */
+.a360{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.a360-cell{background:var(--surface);padding:12px 14px}
+.a360-k{font-family:var(--f-mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink4);margin-bottom:5px}
+.a360-v{font-size:14px;font-weight:600;letter-spacing:-.01em}
+.a360-v.bad{color:var(--red)}.a360-v.warn{color:var(--amber)}.a360-v.ok{color:var(--green)}
+.a360-sub{font-family:var(--f-mono);font-size:9.5px;color:var(--ink4);margin-top:2px}
+
+/* ── STEP 3: SCORES ── */
+.scores-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.score-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px;box-shadow:0 1px 2px rgba(24,22,19,.04)}
+.score-name{font-size:12px;font-weight:600;margin-bottom:4px}
+.score-q{font-family:var(--f-serif);font-style:italic;font-size:11px;color:var(--ink3);margin-bottom:10px;line-height:1.4}
+.score-num{font-size:28px;font-weight:600;letter-spacing:-.03em;line-height:1}
+.score-num.bad{color:var(--red)}.score-num.warn{color:var(--amber)}.score-num.ok{color:var(--green)}.score-num.neutral{color:var(--ink3)}
+.score-why{font-family:var(--f-mono);font-size:9px;color:var(--ink4);margin-top:6px;line-height:1.5}
+
+/* ── STEP 4: AGENTS ── */
+.agents-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.agent-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px;box-shadow:0 1px 2px rgba(24,22,19,.04)}
+.agent-label{font-family:var(--f-mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink4);margin-bottom:5px}
+.agent-action{font-size:12.5px;font-weight:600;letter-spacing:-.01em;margin-bottom:10px;line-height:1.4}
+.agent-stats{display:flex;gap:12px;flex-wrap:wrap}
+.agent-stat .k{font-family:var(--f-mono);font-size:8.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink4)}
+.agent-stat .v{font-size:13px;font-weight:600}
+
+/* ── STEP 5: NBA ── */
+.formula-bar{background:var(--brand);color:#F4F2EC;border-radius:8px;padding:14px 18px;font-family:var(--f-mono);font-size:13px;text-align:center;letter-spacing:.01em;margin-bottom:14px}
+.formula-bar .sub{display:block;font-size:10px;color:rgba(244,242,236,.55);margin-top:5px;letter-spacing:.04em}
+.ev-table{width:100%;border-collapse:collapse;border:1px solid var(--border);border-radius:8px;overflow:hidden;font-size:12px;background:var(--surface)}
+.ev-table th{background:var(--s3);font-family:var(--f-mono);font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink4);font-weight:500;text-align:left;padding:8px 12px;border-bottom:1px solid var(--border)}
+.ev-table th.r,.ev-table td.r{text-align:right}
+.ev-table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--ink2)}
+.ev-table tr:last-child td{border-bottom:none}
+.ev-table tr.win td{background:var(--green-s)}
+.ev-table .ag{font-weight:600;color:var(--ink)}
+.ev-table .ev{font-family:var(--f-mono);font-weight:600;color:var(--ink)}
+.ev-table tr.win .ev{color:var(--green)}
+.rankbadge{font-family:var(--f-mono);font-size:9px;font-weight:600;padding:2px 7px;border-radius:100px;white-space:nowrap}
+.rankbadge.win{background:var(--green);color:#fff}
+.rankbadge.held{background:var(--s4);color:var(--ink3);border:1px solid var(--border2)}
+.rankbadge.block{background:var(--red-s);color:var(--red);border:1px solid var(--red-bd)}
+
+/* ── STEP 6: POLICY ── */
+.gate{border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--surface)}
+.gate-row{display:flex;align-items:flex-start;gap:11px;padding:11px 14px;border-bottom:1px solid var(--border);font-size:12.5px}
+.gate-row:last-child{border-bottom:none}
+.gate-ic{font-family:var(--f-mono);font-size:11px;font-weight:600;flex-shrink:0;width:54px}
+.gate-ic.pass{color:var(--green)}.gate-ic.block{color:var(--red)}
+.gate-tx{color:var(--ink2);line-height:1.5}.gate-tx b{color:var(--ink);font-weight:600}
+
+/* ── STEP 7: ACTION ── */
+.decision-banner{background:var(--green-s);border:1px solid var(--green-bd);border-left:4px solid var(--green);border-radius:8px;padding:16px 18px;margin-bottom:14px}
+.decision-l{font-family:var(--f-mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:5px}
+.decision-a{font-size:17px;font-weight:600;letter-spacing:-.015em;color:var(--ink)}
+.decision-sub{font-size:12px;color:var(--ink2);margin-top:7px;line-height:1.55}
+.decision-sub b{color:var(--ink);font-weight:600}
+.channels{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.channel{display:flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 12px}
+.ch-label{font-family:var(--f-mono);font-size:9px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink4);margin-bottom:2px}
+.ch-val{font-size:12px;font-weight:600;color:var(--ink)}
+
+/* ── STEP 8: SURFACES ── */
+.surfaces-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.surface-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px}
+.surf-pill{font-family:var(--f-mono);font-size:8px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:100px;border:1px solid;margin-bottom:7px;display:inline-block}
+.surf-pill.cliq{background:var(--green-s);color:var(--green);border-color:var(--green-bd)}
+.surf-pill.mail{background:var(--blue-s);color:var(--blue);border-color:var(--blue-bd)}
+.surf-pill.crm{background:rgba(61,35,20,.07);color:var(--brand);border-color:rgba(61,35,20,.22)}
+.surf-pill.dash{background:var(--violet-s);color:var(--violet);border-color:var(--violet-bd)}
+.surf-who{font-size:12px;font-weight:600;margin-bottom:4px}
+.surf-sees{font-size:11.5px;color:var(--ink2);line-height:1.5}
+
+/* ── STEP 9: OUTCOME ── */
+.outcome-flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.oc-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:11px 13px;text-align:center}
+.oc-val{font-size:20px;font-weight:600;letter-spacing:-.02em;margin-bottom:3px}
+.oc-val.good{color:var(--green)}.oc-val.bad{color:var(--red)}.oc-val.learn{color:var(--violet)}
+.oc-label{font-family:var(--f-mono);font-size:9.5px;color:var(--ink4);line-height:1.4}
+
+.loop-note{background:var(--violet-s);border:1px dashed var(--violet-bd);border-radius:7px;padding:12px 15px;font-family:var(--f-mono);font-size:11px;color:var(--violet);display:flex;align-items:center;gap:10px;margin-top:12px}
+.loop-note b{font-weight:600;color:var(--violet)}
+
+/* ── CALLOUT ── */
+.callout{background:var(--s2);border:1px solid var(--border);border-radius:7px;padding:12px 15px;font-size:12px;color:var(--ink2);line-height:1.6;margin-top:14px}
+.callout b{color:var(--ink);font-weight:600}
+
+/* ── SECTION DIVIDER ── */
+.wt-divider{height:1px;background:var(--border);margin:8px 0 40px}
+
+/* ── FOOTER ── */
+.site-footer{background:var(--surface);border-top:1px solid var(--border);padding:22px 32px}
+.site-footer-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-brand{display:flex;align-items:center;gap:8px}
+.footer-mark{width:20px;height:20px;border-radius:4px;background:var(--brand);color:var(--bg);display:grid;place-items:center;font-family:var(--f-mono);font-size:7px;font-weight:600}
+.footer-name{font-size:12px;font-weight:600;color:var(--ink2)}
+.footer-links{display:flex;gap:0;background:var(--s3);border:1px solid var(--border);border-radius:5px;padding:2px;flex-wrap:wrap}
+.footer-link{font-family:var(--f-mono);font-size:9.5px;color:var(--ink4);text-decoration:none;padding:3px 9px;border-radius:3px;white-space:nowrap;transition:.12s}
+.footer-link:hover{color:var(--ink2);background:var(--surface)}
+.footer-copy{font-family:var(--f-mono);font-size:9px;color:var(--ink5)}
+
+/* ── PAGENAV ── */
+.pagenav{max-width:900px;margin:0 auto;padding:8px 32px 48px;display:flex;align-items:stretch;gap:12px;justify-content:space-between}
+.pagenav a{flex:1 1 0;text-decoration:none;border:1px solid var(--border);border-radius:8px;padding:11px 15px;background:var(--surface);transition:border-color .12s,box-shadow .12s;display:flex;flex-direction:column;gap:3px;max-width:300px}
+.pagenav a:hover{border-color:var(--border2);box-shadow:0 2px 8px rgba(24,22,19,.06)}
+.pagenav a.next{text-align:right;align-items:flex-end}
+.pagenav .dir{font-family:var(--f-mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink4)}
+.pagenav .nm{font-size:13px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.pn-spacer{flex:1 1 0;max-width:300px}
+
+@media(max-width:600px){
+  .page{padding:32px 20px 60px}
+  .breadcrumb{padding:10px 20px 0}
+  .ev-table{font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<div class="chrome">
+  <div class="brand">
+    <div class="brand-mark">DI</div>
+    <span class="brand-name">Zoho Store</span>
+    <span class="brand-div">·</span>
+    <span class="brand-doc">Decision Intelligence — ABC Corp Walkthrough</span>
+  </div>
+  <div class="chrome-tabs">
+    <a class="chrome-tab" href="di-full-platform-demo.html">Demo</a>
+    <a class="chrome-tab" href="di-document-map.html">Map</a>
+    <a class="chrome-tab" href="di-architecture-story.html">Story</a>
+    <a class="chrome-tab" href="decision-intelligence-data-flow.html">Flow</a>
+    <a class="chrome-tab" href="di-signals-to-intelligence.html">Signals</a>
+    <a class="chrome-tab" href="di-score-reference.html">Scores</a>
+    <a class="chrome-tab" href="di-nba-decision.html">NBA</a>
+    <a class="chrome-tab" href="di-output-surfaces.html">Surfaces</a>
+    <a class="chrome-tab" href="di-glossary.html">Glossary</a>
+    <a class="chrome-tab" href="di-agent-catalog.html">Catalog</a>
+    <span class="chrome-tab active">Example</span>
+  </div>
+</div>
+
+<div class="breadcrumb">
+  <a href="di-document-map.html">DI Suite</a>
+  <span class="sep">/</span>
+  <span class="current">ABC Corp walkthrough</span>
+</div>
+
+<div class="page">
+
+  <div class="eyebrow">End-to-end example · One account, all nine concepts</div>
+  <h1 class="title">How the platform thinks about ABC Corp</h1>
+  <p class="subtitle">One real-world account traced from raw event to executed action to learning — every page in the suite visible as a single story.</p>
+
+  <!-- ABC CORP CARD -->
+  <div class="abc-card">
+    <div class="abc-label">The account · used throughout the full suite</div>
+    <div class="abc-name">ABC Corp</div>
+    <div class="abc-facts">
+      <span class="fact ok">$24,000 ARR</span>
+      <span class="fact">CRM + Books + Projects</span>
+      <span class="fact warn">Renewal in 15 days</span>
+      <span class="fact bad">Payment failed yesterday</span>
+      <span class="fact bad">Health score: 45</span>
+      <span class="fact bad">Churn score: 78</span>
+      <span class="fact bad">Payment Risk: 92</span>
+      <span class="fact">3 open Desk tickets</span>
+      <span class="fact">Login frequency down 40%</span>
+    </div>
+  </div>
+
+  <!-- PROGRESS RAIL -->
+  <div class="rail">
+    <a class="rail-step" href="#s1"><div class="rail-n">01</div><div class="rail-t">Sources</div></a>
+    <a class="rail-step" href="#s2"><div class="rail-n">02</div><div class="rail-t">Account 360</div></a>
+    <a class="rail-step" href="#s3"><div class="rail-n">03</div><div class="rail-t">Scores</div></a>
+    <a class="rail-step" href="#s4"><div class="rail-n">04</div><div class="rail-t">Agents</div></a>
+    <a class="rail-step" href="#s5"><div class="rail-n">05</div><div class="rail-t">NBA Engine</div></a>
+    <a class="rail-step" href="#s6"><div class="rail-n">06</div><div class="rail-t">Policy</div></a>
+    <a class="rail-step" href="#s7"><div class="rail-n">07</div><div class="rail-t">Action</div></a>
+    <a class="rail-step" href="#s8"><div class="rail-n">08</div><div class="rail-t">Surfaces</div></a>
+    <a class="rail-step" href="#s9"><div class="rail-n">09</div><div class="rail-t">Outcome</div></a>
+  </div>
+
+  <!-- ═══ STEP 1: SOURCES ═══ -->
+  <div class="wt-section" id="s1">
+    <div class="wt-head">
+      <span class="wt-num">1</span>
+      <span class="wt-title">Sources — raw events stream in</span>
+      <a class="wt-ref" href="di-signals-to-intelligence.html">→ Signals page</a>
+    </div>
+    <p class="wt-desc">Every system that touches ABC Corp fires a timestamped event. Nothing is inferred — each signal traces to a real thing that happened.</p>
+    <div class="source-grid">
+      <div class="source-card">
+        <div class="source-name">Zoho Payments / Stripe</div>
+        <div class="source-event hot">charge.failed · $2,000</div>
+        <div class="source-event hot">decline code: insufficient_funds</div>
+        <div class="source-event">card expiry: 2 months</div>
+      </div>
+      <div class="source-card">
+        <div class="source-name">Zoho Store</div>
+        <div class="source-event hot">renewal_due · 15 days</div>
+        <div class="source-event">subscription: CRM + Books + Projects</div>
+        <div class="source-event">ARR: $24,000</div>
+      </div>
+      <div class="source-card">
+        <div class="source-name">Product usage</div>
+        <div class="source-event hot">login_frequency: −40% over 60d</div>
+        <div class="source-event">feature_adoption: stalled</div>
+        <div class="source-event">active_users: down from 12 → 7</div>
+      </div>
+      <div class="source-card">
+        <div class="source-name">Zoho Desk</div>
+        <div class="source-event hot">tickets_open: 3 unresolved</div>
+        <div class="source-event warn">ticket_age: oldest 14 days</div>
+        <div class="source-event">csat: not submitted</div>
+      </div>
+      <div class="source-card">
+        <div class="source-name">Zoho CRM</div>
+        <div class="source-event">account_owner: Sarah M.</div>
+        <div class="source-event">last_contact: 22 days ago</div>
+        <div class="source-event">deal_stage: renewal</div>
+      </div>
+      <div class="source-card">
+        <div class="source-name">Marketing</div>
+        <div class="source-event">last_email_opened: 18 days ago</div>
+        <div class="source-event">campaign_clicks: 0 last 30d</div>
+      </div>
+    </div>
+    <div class="callout"><b>Why this matters:</b> the platform does not invent signals — every number on this page traces directly to one of these events. When the Recovery Agent fires, it fires because <code>charge.failed</code> happened, not because of a heuristic.</div>
+  </div>
+  <div class="wt-divider"></div>
+
+  <!-- ═══ STEP 2: ACCOUNT 360 ═══ -->
+  <div class="wt-section" id="s2">
+    <div class="wt-head">
+      <span class="wt-num">2</span>
+      <span class="wt-title">Account 360 — one unified view</span>
+      <a class="wt-ref" href="di-architecture-story.html">→ Architecture story</a>
+    </div>
+    <p class="wt-desc">All six source streams are joined into a single live profile. This already exists in Zoho — the DI platform reads it as its starting point.</p>
+    <div class="a360">
+      <div class="a360-cell"><div class="a360-k">Account</div><div class="a360-v">ABC Corp</div><div class="a360-sub">Since Jan 2021</div></div>
+      <div class="a360-cell"><div class="a360-k">ARR</div><div class="a360-v ok">$24,000</div><div class="a360-sub">CRM + Books + Projects</div></div>
+      <div class="a360-cell"><div class="a360-k">Renewal</div><div class="a360-v warn">15 days</div><div class="a360-sub">Annual plan</div></div>
+      <div class="a360-cell"><div class="a360-k">Last payment</div><div class="a360-v bad">Failed</div><div class="a360-sub">Yesterday · $2,000</div></div>
+      <div class="a360-cell"><div class="a360-k">Usage trend</div><div class="a360-v bad">−40%</div><div class="a360-sub">Logins over 60 days</div></div>
+      <div class="a360-cell"><div class="a360-k">Open tickets</div><div class="a360-v bad">3</div><div class="a360-sub">Oldest: 14 days</div></div>
+      <div class="a360-cell"><div class="a360-k">Account owner</div><div class="a360-v">Sarah M.</div><div class="a360-sub">Last contact: 22d ago</div></div>
+      <div class="a360-cell"><div class="a360-k">Products</div><div class="a360-v">3</div><div class="a360-sub">CRM, Books, Projects</div></div>
+    </div>
+    <div class="callout" style="margin-top:14px"><b>Already built.</b> Account 360 is not a new thing to create — it is the unified customer view Zoho already maintains. The DI platform layers on top of it.</div>
+  </div>
+  <div class="wt-divider"></div>
+
+  <!-- ═══ STEP 3: SCORES ═══ -->
+  <div class="wt-section" id="s3">
+    <div class="wt-head">
+      <span class="wt-num">3</span>
+      <span class="wt-title">Scores — the system forms an opinion</span>
+      <a class="wt-ref" href="di-score-reference.html">→ Score reference</a>
+    </div>
+    <p class="wt-desc">No human can read millions of Account 360 profiles. The platform distils each one into five 0–100 scores — computed once, read by every agent. A score is an opinion, not a verdict.</p>
+    <div class="scores-grid">
+      <div class="score-card">
+        <div class="score-name">Health</div>
+        <div class="score-q">Is this account thriving or slipping?</div>
+        <div class="score-num bad">45</div>
+        <div class="score-why">Login drop · open tickets · payment trouble · usage decline all drag it down</div>
+      </div>
+      <div class="score-card">
+        <div class="score-name">Churn</div>
+        <div class="score-q">How likely to leave?</div>
+        <div class="score-num bad">78</div>
+        <div class="score-why">High. Blocks cross-sell. Triggers retention priority before renewal.</div>
+      </div>
+      <div class="score-card">
+        <div class="score-name">Payment Risk</div>
+        <div class="score-q">Will the next payment fail?</div>
+        <div class="score-num bad">92</div>
+        <div class="score-why">Failed charge yesterday + card near expiry. Wakes Recovery Agent.</div>
+      </div>
+      <div class="score-card">
+        <div class="score-name">Expansion</div>
+        <div class="score-q">Ready to buy more?</div>
+        <div class="score-num neutral">25</div>
+        <div class="score-why">Correctly low. Do not cross-sell an account that is at-risk and failing payment.</div>
+      </div>
+      <div class="score-card">
+        <div class="score-name">Fraud</div>
+        <div class="score-q">Is this a genuine account?</div>
+        <div class="score-num ok">12</div>
+        <div class="score-why">Low. This is a billing problem, not a fraud signal. Recovery proceeds.</div>
+      </div>
+    </div>
+    <div class="callout"><b>What scores do:</b> they gate decisions. Expansion score 25 means the Bundle Agent will not even submit a cross-sell recommendation — the score prevents it before the NBA Engine is reached. Churn score 78 means the Policy Engine is pre-armed to block any expansion offer that gets through.</div>
+  </div>
+  <div class="wt-divider"></div>
+
+  <!-- ═══ STEP 4: AGENTS ═══ -->
+  <div class="wt-section" id="s4">
+    <div class="wt-head">
+      <span class="wt-num">4</span>
+      <span class="wt-title">Agents — specialists submit recommendations</span>
+      <a class="wt-ref" href="di-agent-catalog.html">→ Agent catalog</a>
+    </div>
+    <p class="wt-desc">Each agent looks at one slice of Account 360 + scores and submits exactly one recommendation — with three numbers: probability of success, ARR at stake, and cost to act. None of them decides. They report to the NBA Engine.</p>
+    <div class="agents-grid">
+      <div class="agent-card">
+        <div class="agent-label">Recovery Agent</div>
+        <div class="agent-action">Retry payment + send card-update link</div>
+        <div class="agent-stats">
+          <div class="agent-stat"><div class="k">Success</div><div class="v" style="color:var(--green)">85%</div></div>
+          <div class="agent-stat"><div class="k">ARR</div><div class="v">$24,000</div></div>
+          <div class="agent-stat"><div class="k">Cost</div><div class="v">$5</div></div>
+        </div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-label">Cancellation Rescue Agent</div>
+        <div class="agent-action">Offer monthly billing plan</div>
+        <div class="agent-stats">
+          <div class="agent-stat"><div class="k">Success</div><div class="v" style="color:var(--amber)">42%</div></div>
+          <div class="agent-stat"><div class="k">ARR</div><div class="v">$24,000</div></div>
+          <div class="agent-stat"><div class="k">Cost</div><div class="v">$100</div></div>
+        </div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-label">Renewal Agent</div>
+        <div class="agent-action">Send renewal reminder</div>
+        <div class="agent-stats">
+          <div class="agent-stat"><div class="k">Success</div><div class="v" style="color:var(--ink3)">—</div></div>
+          <div class="agent-stat"><div class="k">ARR</div><div class="v">$24,000</div></div>
+          <div class="agent-stat"><div class="k">Cost</div><div class="v">low</div></div>
+        </div>
+      </div>
+      <div class="agent-card" style="border-color:var(--red-bd)">
+        <div class="agent-label" style="color:var(--red)">Bundle Economics Agent</div>
+        <div class="agent-action">Move to Zoho One (cheaper)</div>
+        <div class="agent-stats">
+          <div class="agent-stat"><div class="k">Success</div><div class="v" style="color:var(--ink3)">15%</div></div>
+          <div class="agent-stat"><div class="k">Upside</div><div class="v">$2,000</div></div>
+          <div class="agent-stat"><div class="k">Cost</div><div class="v">low</div></div>
+        </div>
+        <div style="margin-top:8px;font-family:var(--f-mono);font-size:9px;color:var(--red)">Will be blocked by policy — expansion score 25 + churn 78</div>
+      </div>
+    </div>
+    <div class="callout"><b>Key insight:</b> the Bundle Agent fires because the economics are technically valid — Zoho One is cheaper. But it will be blocked later because policy forbids expansion offers to at-risk accounts. The agent is allowed to recommend; the NBA Engine and Policy decide.</div>
+  </div>
+  <div class="wt-divider"></div>
+
+  <!-- ═══ STEP 5: NBA ENGINE ═══ -->
+  <div class="wt-section" id="s5">
+    <div class="wt-head">
+      <span class="wt-num">5</span>
+      <span class="wt-title">NBA Engine — one number decides</span>
+      <a class="wt-ref" href="di-nba-decision.html">→ NBA page</a>
+    </div>
+    <p class="wt-desc">The NBA Engine receives four recommendations and reduces each to a single number — Expected Value — then ranks them. The highest EV that survives policy wins. For ABC Corp, that is Recovery.</p>
+    <div style="background:var(--green-s);border:1px solid var(--green-bd);border-left:4px solid var(--green);border-radius:8px;padding:16px 18px;margin-bottom:12px">
+      <div style="font-family:var(--f-mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:5px">NBA decision · ABC Corp</div>
+      <div style="font-size:16px;font-weight:600;letter-spacing:-.015em;margin-bottom:8px">Recovery Agent wins · Expected Value $20,395</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
+        <span style="font-family:var(--f-mono);font-size:9.5px;padding:2px 8px;border-radius:4px;background:var(--green-s);color:var(--green);border:1px solid var(--green-bd)">Recovery: $20,395 ← #1</span>
+        <span style="font-family:var(--f-mono);font-size:9.5px;padding:2px 8px;border-radius:4px;background:var(--s3);color:var(--ink3);border:1px solid var(--border)">Cancellation: $9,980 ← fallback</span>
+        <span style="font-family:var(--f-mono);font-size:9.5px;padding:2px 8px;border-radius:4px;background:var(--s3);color:var(--ink3);border:1px solid var(--border)">Renewal: contingent</span>
+        <span style="font-family:var(--f-mono);font-size:9.5px;padding:2px 8px;border-radius:4px;background:var(--red-s);color:var(--red);border:1px solid var(--red-bd)">Bundle: $300 → blocked by policy</span>
+      </div>
+      <div style="font-size:12px;color:var(--ink2);line-height:1.55">Recovery wins because both routes target the same $24,000 — the engine takes the cheaper, higher-probability path first and holds the monthly-plan offer as a fallback.</div>
+    </div>
+    <div class="callout">The full calculation — probability inputs, ARR weighting, cost comparison, and the step-by-step ranking logic — is on the <a href="di-nba-decision.html" style="color:var(--brand);text-decoration:none;font-weight:600">NBA Engine page →</a> This walkthrough shows the outcome. That page shows the mechanism.</div>
+  </div>
+  <div class="wt-divider"></div>
+
+  <!-- ═══ STEP 6: POLICY ═══ -->
+  <div class="wt-section" id="s6">
+    <div class="wt-head">
+      <span class="wt-num">6</span>
+      <span class="wt-title">Policy, Capacity &amp; Budget — guardrails</span>
+      <a class="wt-ref" href="di-architecture-story.html">→ Architecture story</a>
+    </div>
+    <p class="wt-desc">Expected Value proposes. Policy disposes. Hard business rules remove any action regardless of rank. Capacity ensures we only create as many tasks as humans can action. Communication Budget means one well-chosen touch, not five.</p>
+    <div class="gate">
+      <div class="gate-row"><span class="gate-ic pass">PASS</span><span class="gate-tx"><b>Retry payment</b> — no discount, no concession. No policy rule applies. Cleared.</span></div>
+      <div class="gate-row"><span class="gate-ic block">BLOCK</span><span class="gate-tx"><b>Bundle / Zoho One cross-sell</b> — policy forbids expansion to at-risk accounts (open payment failure + churn 78). Removed regardless of EV.</span></div>
+      <div class="gate-row"><span class="gate-ic pass">PASS</span><span class="gate-tx"><b>Monthly-plan fallback</b> — within the discount cap and one-save-offer-per-year limit. Allowed, but only if recovery fails.</span></div>
+      <div class="gate-row"><span class="gate-ic pass">SLOT</span><span class="gate-tx"><b>Capacity:</b> at $24,000 with 85% recoverability, ABC Corp ranks inside today's AM slots. A task is created. A $300 account would not qualify.</span></div>
+      <div class="gate-row"><span class="gate-ic pass">1 of 1</span><span class="gate-tx"><b>Communication budget:</b> one touch this cycle. The renewal reminder and any marketing mail are suppressed so they don't pile on.</span></div>
+    </div>
+  </div>
+  <div class="wt-divider"></div>
+
+  <!-- ═══ STEP 7: ACTION ═══ -->
+  <div class="wt-section" id="s7">
+    <div class="wt-head">
+      <span class="wt-num">7</span>
+      <span class="wt-title">Execution — something changes</span>
+      <a class="wt-ref" href="decision-intelligence-data-flow.html">→ Data flow</a>
+    </div>
+    <p class="wt-desc">One action is released. It goes out through the right channel — automated where possible, human-assisted where ARR and risk warrant it.</p>
+    <div class="decision-banner">
+      <div class="decision-l">Next Business Action · ABC Corp</div>
+      <div class="decision-a">Retry payment + send card-update link to billing contact</div>
+      <div class="decision-sub">Automated retry scheduled for 09:00 AM. Card-update email sent to billing contact at ABC Corp. <b>AM Sarah M. receives a task</b> to follow up by phone if retry fails within 24 hours. Fallback offer (monthly billing) is pre-approved and held.</div>
+    </div>
+    <div class="channels">
+      <div class="channel"><div><div class="ch-label">Automated</div><div class="ch-val">Stripe retry · 09:00 AM</div></div></div>
+      <div class="channel"><div><div class="ch-label">Email to customer</div><div class="ch-val">Card-update link sent</div></div></div>
+      <div class="channel"><div><div class="ch-label">AM task</div><div class="ch-val">Sarah M. · follow up if retry fails</div></div></div>
+      <div class="channel"><div><div class="ch-label">Fallback held</div><div class="ch-val">Monthly plan · pre-approved</div></div></div>
+    </div>
+  </div>
+  <div class="wt-divider"></div>
+
+  <!-- ═══ STEP 8: SURFACES ═══ -->
+  <div class="wt-section" id="s8">
+    <div class="wt-head">
+      <span class="wt-num">8</span>
+      <span class="wt-title">Surfaces — same decision, every audience</span>
+      <a class="wt-ref" href="di-output-surfaces.html">→ Surfaces page</a>
+    </div>
+    <p class="wt-desc">The decision is one thing. But four different people need to see it in four different places — each formatted for how they work.</p>
+    <div class="surfaces-grid">
+      <div class="surface-card">
+        <span class="surf-pill cliq">Cliq</span>
+        <div class="surf-who">AM · Sarah M.</div>
+        <div class="surf-sees">Real-time alert in #revenue-risk channel. Account name, ARR, action recommended, one-click to approve or escalate.</div>
+      </div>
+      <div class="surface-card">
+        <span class="surf-pill mail">Mail digest</span>
+        <div class="surf-who">Revenue Manager</div>
+        <div class="surf-sees">Morning digest ranks today's top at-risk accounts by ARR. ABC Corp appears #1. Action, probability, and ARR at stake shown inline.</div>
+      </div>
+      <div class="surface-card">
+        <span class="surf-pill crm">CRM card</span>
+        <div class="surf-who">AM · full context</div>
+        <div class="surf-sees">Account record shows the NBA decision with reasoning — which agents fired, what was blocked by policy, why Recovery won, what the fallback is.</div>
+      </div>
+      <div class="surface-card">
+        <span class="surf-pill dash">Analytics</span>
+        <div class="surf-who">Leadership</div>
+        <div class="surf-sees">Recovery rate, ARR recovered vs. lost, intervention type breakdown. Platform proves its own value here — not per-account, but in aggregate.</div>
+      </div>
+    </div>
+    <div class="callout"><b>The point of surfaces:</b> the intelligence is in one place — the NBA decision. Surfaces are just renderers. Adding a new surface (a mobile app, a partner portal) does not change the decision logic — it just adds a new way to see the same thing.</div>
+  </div>
+  <div class="wt-divider"></div>
+
+  <!-- ═══ STEP 9: OUTCOME ═══ -->
+  <div class="wt-section" id="s9">
+    <div class="wt-head">
+      <span class="wt-num">9</span>
+      <span class="wt-title">Outcome — the loop closes</span>
+      <a class="wt-ref" href="decision-intelligence-data-flow.html">→ Data flow · learning</a>
+    </div>
+    <p class="wt-desc">The retry runs. Whatever happens is recorded in the Outcome Store — not just the result, but the full chain: which agent recommended, which action was taken, what happened. That record is what makes the next decision better.</p>
+
+    <div style="font-family:var(--f-mono);font-size:10px;color:var(--ink4);margin-bottom:10px;letter-spacing:.04em">Scenario A — retry succeeds</div>
+    <div class="outcome-flow">
+      <div class="oc-card"><div class="oc-val good">✓</div><div class="oc-label">Payment recovered<br>$2,000 collected</div></div>
+      <div class="oc-card"><div class="oc-val good">$24K</div><div class="oc-label">ARR retained<br>renewal proceeds</div></div>
+      <div class="oc-card"><div class="oc-val learn">+1</div><div class="oc-label">Outcome logged<br>Recovery Agent score improves</div></div>
+      <div class="oc-card"><div class="oc-val learn">↺</div><div class="oc-label">Payment Risk model<br>retrains on this event</div></div>
+    </div>
+
+    <div style="font-family:var(--f-mono);font-size:10px;color:var(--ink4);margin:16px 0 10px;letter-spacing:.04em">Scenario B — retry fails, fallback activates</div>
+    <div class="outcome-flow">
+      <div class="oc-card"><div class="oc-val bad">✗</div><div class="oc-label">Retry failed<br>card declined again</div></div>
+      <div class="oc-card"><div class="oc-val warn">→</div><div class="oc-label">Fallback unlocked<br>monthly plan offer sent</div></div>
+      <div class="oc-card"><div class="oc-val good">✓</div><div class="oc-label">Customer accepts<br>ARR retained on monthly</div></div>
+      <div class="oc-card"><div class="oc-val learn">↺</div><div class="oc-label">Both outcomes logged<br>fallback success rate improves</div></div>
+    </div>
+
+    <div class="loop-note">
+      <b>↺ Learning loop:</b>&nbsp; both outcomes — recovery success and fallback success — feed back into Score step 03. The next time Payment Risk hits 92, the model knows the retry probability more precisely. The system gets better without re-architecting.
+    </div>
+
+    <div class="callout" style="margin-top:16px"><b>The holdout:</b> a small group of similar accounts receives no intervention. The difference in retention rate between the treated group and the holdout is the platform's true, causal impact — not correlation, but proof that the action caused the result. This is what separates a decision platform from a dashboard.</div>
+  </div>
+  <div class="wt-divider"></div>
+
+  <!-- CLOSING -->
+  <div style="background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--brand);border-radius:8px;padding:20px 22px">
+    <div style="font-family:var(--f-mono);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--brand);margin-bottom:8px">The whole platform in one line</div>
+    <div style="font-size:16px;font-weight:600;letter-spacing:-.02em;margin-bottom:10px;line-height:1.4">Sources → 360 → Scores → Agents → NBA → Policy → Action → Surfaces → Outcome → back to Scores</div>
+    <div style="font-size:12.5px;color:var(--ink2);line-height:1.65">ABC Corp is one account. This loop runs on every account, every day, in parallel — across Recovery, Cancellation, Renewal, Churn Prevention, Expansion, and every other agent in the catalog. The platform does not scale by adding people. It scales because the loop is the same regardless of how many accounts are in it.</div>
+    <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+      <a href="di-document-map.html" style="font-family:var(--f-mono);font-size:10px;color:var(--ink4);text-decoration:none;padding:4px 10px;border:1px solid var(--border);border-radius:4px;background:var(--s3)">← Back to suite map</a>
+      <a href="di-architecture-story.html" style="font-family:var(--f-mono);font-size:10px;color:var(--ink4);text-decoration:none;padding:4px 10px;border:1px solid var(--border);border-radius:4px;background:var(--s3)">Read the full story →</a>
+      <a href="di-nba-decision.html" style="font-family:var(--f-mono);font-size:10px;color:var(--ink4);text-decoration:none;padding:4px 10px;border:1px solid var(--border);border-radius:4px;background:var(--s3)">Deep-dive: NBA engine →</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="pagenav">
+  <a class="prev" href="di-agent-catalog.html"><span class="dir">&larr; Previous</span><span class="nm">Catalog</span></a>
+  <span class="pn-spacer"></span>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="footer-brand"><div class="footer-mark">DI</div><span class="footer-name">Zoho Store · Decision Intelligence</span></div>
+    <div class="footer-links">
+      <a class="footer-link" href="di-document-map.html">Map</a>
+      <a class="footer-link" href="di-architecture-story.html">Story</a>
+      <a class="footer-link" href="decision-intelligence-data-flow.html">Flow</a>
+      <a class="footer-link" href="di-signals-to-intelligence.html">Signals</a>
+      <a class="footer-link" href="di-score-reference.html">Scores</a>
+      <a class="footer-link" href="di-nba-decision.html">NBA</a>
+      <a class="footer-link" href="di-output-surfaces.html">Surfaces</a>
+      <a class="footer-link" href="di-glossary.html">Glossary</a>
+      <a class="footer-link" href="di-agent-catalog.html">Catalog</a>
+      <a class="footer-link" href="di-example-walkthrough.html">Example</a>
+    </div>
+    <span class="footer-copy">Decision Intelligence Suite · Zoho Store</span>
+  </div>
+</footer>
+
+</body>
+</html>

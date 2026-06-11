@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zoho One — Operating Layer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:#ECEAE4;color:#1A1C20;-webkit-font-smoothing:antialiased;min-height:100vh;padding:48px 40px}
+.header{max-width:1100px;margin:0 auto 48px}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;background:rgba(224,67,47,0.1);border:1px solid rgba(224,67,47,0.2);font-family:'Geist Mono',monospace;font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#E0432F;margin-bottom:18px}
+h1{font-family:'Schibsted Grotesk',system-ui,sans-serif;font-weight:800;font-size:42px;line-height:1.06;letter-spacing:-0.025em;margin-bottom:14px}
+h1 span{color:#E0432F}
+.sub{font-size:17px;line-height:1.5;color:#54565C;max-width:580px}
+.grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.section-label{max-width:1100px;margin:32px auto 12px;font-family:'Geist Mono',monospace;font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#9A9CA1}
+.card{background:#fff;border:1px solid #E6E1D8;border-radius:14px;padding:20px 22px;cursor:pointer;text-decoration:none;color:inherit;display:block;transition:box-shadow .15s,transform .15s;border-left:3px solid transparent}
+.card:hover{box-shadow:0 12px 30px rgba(0,0,0,0.09);transform:translateY(-2px)}
+.card-num{font-family:'Geist Mono',monospace;font-size:10px;font-weight:600;letter-spacing:0.06em;color:#9A9CA1;margin-bottom:10px}
+.card-num.core{color:#E0432F}
+.card-num.plus{color:#6E7077}
+.card-title{font-family:'Schibsted Grotesk',system-ui,sans-serif;font-weight:700;font-size:17px;letter-spacing:-0.01em;margin-bottom:6px}
+.card-desc{font-size:12.5px;color:#6E7077;line-height:1.45}
+.card-tag{display:inline-flex;margin-top:12px;font-family:'Geist Mono',monospace;font-size:9px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:3px 8px;border-radius:5px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">Strategic concept · v3.0 · Zoho One</div>
+  <h1>Operating Layer<br><span>Design Pack</span></h1>
+  <p class="sub">25 screens. Complete signal → recommendation → action → outcome chain. Open any screen or start with the full prototype.</p>
+  <div style="display:flex;gap:12px;margin-top:28px;flex-wrap:wrap">
+    <a href="screens/00-overview.html" style="display:inline-flex;align-items:center;gap:9px;background:#E0432F;color:#fff;padding:12px 22px;border-radius:11px;font-weight:600;font-size:14px;cursor:pointer;text-decoration:none">Open full prototype →</a>
+    <a href="screens/01-ceo-brief.html" style="display:inline-flex;align-items:center;gap:9px;background:#1A1C22;color:#fff;padding:12px 22px;border-radius:11px;font-weight:600;font-size:14px;cursor:pointer;text-decoration:none">CEO Daily Brief →</a>
+  </div>
+</div>
+
+<div class="section-label">Section A — Executive Experience (core screens)</div>
+<div class="grid">
+  <a href="screens/00-overview.html" class="card" style="border-left-color:#E0432F">
+    <div class="card-num core">00</div>
+    <div class="card-title">Overview</div>
+    <div class="card-desc">Vision statement, competitive moat, and the five CEO mental models. The frame before any data appears.</div>
+    <div class="card-tag" style="background:#FBF0EF;color:#E0432F">Hero screen</div>
+  </a>
+  <a href="screens/01-ceo-brief.html" class="card" style="border-left-color:#E0432F">
+    <div class="card-num core">01</div>
+    <div class="card-title">CEO Daily Brief</div>
+    <div class="card-desc">Five signals with sparklines. Top recommendation. Approve / Delegate / Defer. Delivered 7 AM via Cliq and Mobile.</div>
+    <div class="card-tag" style="background:#FBF0EF;color:#E0432F">Start here</div>
+  </a>
+  <a href="screens/02-growth.html" class="card" style="border-left-color:#C8841C">
+    <div class="card-num core">02</div>
+    <div class="card-title">Growth Drill-down</div>
+    <div class="card-desc">Pipeline coverage, forecast accuracy, at-risk deals, expansion opportunities. Sources: CRM, Books, Analytics.</div>
+  </a>
+  <a href="screens/03-customers.html" class="card" style="border-left-color:#D14343">
+    <div class="card-num core">03</div>
+    <div class="card-title">Customers Drill-down</div>
+    <div class="card-desc">Churn signals, health scores, open escalations, renewal risks ranked by ARR. Sources: CRM, Desk, Subscriptions.</div>
+  </a>
+  <a href="screens/04-execution.html" class="card" style="border-left-color:#6E5BD0">
+    <div class="card-num core">04</div>
+    <div class="card-title">Execution Drill-down</div>
+    <div class="card-desc">Projects at risk, milestones delayed, resource conflicts. Sources: Projects, People, Recruit.</div>
+  </a>
+  <a href="screens/05-people.html" class="card" style="border-left-color:#2D6FB8">
+    <div class="card-num core">05</div>
+    <div class="card-title">People Drill-down</div>
+    <div class="card-desc">Team utilisation, open roles, goal completion rate, attrition risk. Sources: People, Recruit, Projects.</div>
+  </a>
+  <a href="screens/06-cash.html" class="card" style="border-left-color:#1F8A5B">
+    <div class="card-num core">06</div>
+    <div class="card-title">Cash Drill-down</div>
+    <div class="card-desc">AR aging, pending approvals by impact tier, cash runway, expense risks. Sources: Books, Expense.</div>
+  </a>
+  <a href="screens/0x-what-changed.html" class="card" style="border-left-color:#6E7077">
+    <div class="card-num plus">+</div>
+    <div class="card-title">What Changed</div>
+    <div class="card-desc">Five signals with directional delta. Since yesterday / 7 days / 30 days. Executives ask what moved, not what the status is.</div>
+    <div class="card-tag" style="background:#F4F1EB;color:#54565C">Key addition</div>
+  </a>
+  <a href="screens/0x-meeting-prep.html" class="card" style="border-left-color:#6E7077">
+    <div class="card-num plus">+</div>
+    <div class="card-title">Meeting Prep</div>
+    <div class="card-desc">Auto-generated pre-meeting brief. Customer health, tickets, overdue invoice, renewal date. Appears 15 min before calendar event.</div>
+  </a>
+  <a href="screens/0x-cliq-mobile.html" class="card" style="border-left-color:#6E7077">
+    <div class="card-num plus">+</div>
+    <div class="card-title">Cliq &amp; Mobile</div>
+    <div class="card-desc">The delivery surface. Mobile lock-screen notification and Cliq in-chat card with inline approval buttons.</div>
+  </a>
+</div>
+
+<div class="section-label">Section B — Signal Intelligence</div>
+<div class="grid">
+  <a href="screens/07-signal-explorer.html" class="card" style="border-left-color:#C8841C">
+    <div class="card-num core">07</div>
+    <div class="card-title">Signal Explorer</div>
+    <div class="card-desc">All five active signals with confidence, lifecycle stage, sparkline, and status. The signal command center.</div>
+  </a>
+  <a href="screens/08-signal-detail.html" class="card" style="border-left-color:#C8841C">
+    <div class="card-num core">08</div>
+    <div class="card-title">Signal Detail</div>
+    <div class="card-desc">Three tabs: Evidence (inputs + weights), 30-Day Trend, Engine Logic (scoring formula + near-miss transparency). The trust screen.</div>
+    <div class="card-tag" style="background:#FBF3E3;color:#C8841C">Trust mechanic</div>
+  </a>
+  <a href="screens/09-business-graph.html" class="card" style="border-left-color:#6E5BD0">
+    <div class="card-num core">09</div>
+    <div class="card-title">Business Graph</div>
+    <div class="card-desc">Lead → Deal → Invoice → Payment → Support → Renewal. Click any node to see what each app holds and what it cannot see alone.</div>
+    <div class="card-tag" style="background:#EFEBFA;color:#6E5BD0">The moat</div>
+  </a>
+  <a href="screens/0x-thresholds.html" class="card" style="border-left-color:#6E7077">
+    <div class="card-num plus">+</div>
+    <div class="card-title">Signal Thresholds</div>
+    <div class="card-desc">Live sliders for every threshold rule. Proves the system is not a black box. Trust mechanic for PMs and architects.</div>
+  </a>
+</div>
+
+<div class="section-label">Section C — Recommendation &amp; Action</div>
+<div class="grid">
+  <a href="screens/10-recommendations.html" class="card" style="border-left-color:#E0432F">
+    <div class="card-num core">10</div>
+    <div class="card-title">Recommendation Center</div>
+    <div class="card-desc">All AI recommendations ranked by impact. Signal context, confidence, expected outcome. Approve / Delegate / Defer each.</div>
+  </a>
+  <a href="screens/11-approval-center.html" class="card" style="border-left-color:#E0432F">
+    <div class="card-num core">11</div>
+    <div class="card-title">Approval Center</div>
+    <div class="card-desc">In-context approvals. If-ignored vs if-approved comparison. No Books or Expense required. The hidden killer feature.</div>
+  </a>
+  <a href="screens/12-delegation.html" class="card" style="border-left-color:#E0432F">
+    <div class="card-num core">12</div>
+    <div class="card-title">Delegation Center</div>
+    <div class="card-desc">Assign recommendations to named owners. Tracks accountability and response time. Executive delegation at scale.</div>
+  </a>
+  <a href="screens/0x-outcomes.html" class="card" style="border-left-color:#1F8A5B">
+    <div class="card-num plus">+</div>
+    <div class="card-title">Outcomes</div>
+    <div class="card-desc">Signal → Action → Value. What happened after the CEO approved. Renewal secured. $120K ARR protected. Signal resolved.</div>
+    <div class="card-tag" style="background:#E6F4EF;color:#1F8A5B">Closes the loop</div>
+  </a>
+</div>
+
+<div class="section-label">Section D — Role Cascade</div>
+<div class="grid">
+  <a href="screens/13-vp-sales.html" class="card" style="border-left-color:#C8841C">
+    <div class="card-num core">13</div>
+    <div class="card-title">VP Sales Brief</div>
+    <div class="card-desc">Growth, pipeline, forecast, Revenue Risk signals only. Same framework as CEO, different signal filter and mental model.</div>
+  </a>
+  <a href="screens/14-cfo.html" class="card" style="border-left-color:#1F8A5B">
+    <div class="card-num core">14</div>
+    <div class="card-title">CFO Brief</div>
+    <div class="card-desc">Cash, collections, approvals, profitability. Finance-only mental model. Proves Operating Layer, not CEO Dashboard.</div>
+  </a>
+</div>
+
+<div class="section-label">Section E — Platform Story</div>
+<div class="grid">
+  <a href="screens/15-architecture.html" class="card" style="border-left-color:#1A1C22">
+    <div class="card-num core">15</div>
+    <div class="card-title">Architecture</div>
+    <div class="card-desc">Apps → Business Graph → Signal Engine → Operating Layer → Actions → Outcomes. Live connection status. PM and evangelist screen.</div>
+  </a>
+  <a href="screens/0x-data-flow.html" class="card" style="border-left-color:#6E7077">
+    <div class="card-num plus">+</div>
+    <div class="card-title">Data Flow</div>
+    <div class="card-desc">Event fires → signal processor → signal store → recommendation engine → brief generator → Cliq delivery. For engineers.</div>
+  </a>
+  <a href="screens/0x-metrics.html" class="card" style="border-left-color:#6E7077">
+    <div class="card-num plus">+</div>
+    <div class="card-title">Success Metrics</div>
+    <div class="card-desc">Brief open rate 80% · Approval in-brief 35% · DAU 70% · Decision time −50% · App switching −40%. Answers the ROI question.</div>
+  </a>
+  <a href="screens/0x-maturity.html" class="card" style="border-left-color:#6E7077">
+    <div class="card-num plus">+</div>
+    <div class="card-title">Maturity &amp; Roadmap</div>
+    <div class="card-desc">Brief → Recommend → Approve → Delegate → Execute. An evolution, not a moonshot. The closing screen of every demo.</div>
+  </a>
+</div>
+
+<div style="max-width:1100px;margin:48px auto 0;padding-top:28px;border-top:1px solid #DEDAD2;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+  <span style="font-family:'Geist Mono',monospace;font-size:10px;color:#9A9CA1;letter-spacing:0.06em">ZOHO ONE — OPERATING LAYER · JUNE 2026 · CONFIDENTIAL</span>
+  <span style="font-size:12.5px;color:#9A9CA1">25 screens · 5 sections · 1 guided tour</span>
+</div>
+
+</body>
+</html>
