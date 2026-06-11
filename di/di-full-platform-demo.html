@@ -239,7 +239,7 @@ body{font-family:var(--f-sans);background:var(--bg);color:var(--ink);font-size:1
   <!-- ═══════════════════════ HERO ═══════════════════════ -->
   <div class="hero">
     <div class="hero-eyebrow">Decision Intelligence · Zoho Store</div>
-    <h1 class="hero-title">Today Zoho knows everything.<br>This platform decides what to do next.</h1>
+    <h1 class="hero-title">Today Zoho knows more than any single team can process.<br>This platform decides what to do next.</h1>
     <p class="hero-sub">A complete decision layer built on top of the data Zoho already holds — turning signals into scores, scores into agent recommendations, and recommendations into a single, governed business action.</p>
     <div class="hero-ctas">
       <a class="btn-primary" href="#live">See it live on one account ↓</a>
@@ -552,7 +552,7 @@ body{font-family:var(--f-sans);background:var(--bg);color:var(--ink);font-size:1
     <h2 class="sec-title">What moves when the platform runs.</h2>
     <p class="sec-sub">Every metric below traces to a specific agent action — not to "AI" generically. Recovery rate traces to Recovery Agent. Save rate traces to Cancellation Rescue. That traceability is what makes the ROI defensible.</p>
 
-    <div class="impact-grid">
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:10px">
       <div class="impact-card">
         <div class="impact-num green">ARR</div>
         <div class="impact-label">Protected from<br>involuntary churn</div>
@@ -573,12 +573,52 @@ body{font-family:var(--f-sans);background:var(--bg);color:var(--ink);font-size:1
         <div class="impact-label">Human time focused<br>on highest value</div>
         <div class="impact-sub">Capacity Engine ensures AM time goes to the accounts where it changes the outcome</div>
       </div>
-      <div class="impact-card">
-        <div class="impact-num brand">Proof</div>
-        <div class="impact-label">Causal attribution<br>not correlation</div>
-        <div class="impact-sub">Holdout group isolates the platform's true lift from natural renewal behaviour</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 22px;display:grid;grid-template-columns:140px 1fr;gap:20px;align-items:center">
+      <div style="text-align:center;border-right:1px solid var(--border);padding-right:20px">
+        <div style="font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:rgba(61,35,20,.07);color:var(--brand);border:1px solid rgba(61,35,20,.2);border-radius:4px;padding:3px 10px;margin-bottom:8px;display:inline-block">Proof</div>
+        <div style="font-family:var(--f-mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink4);line-height:1.5">Causal attribution<br>not correlation</div>
+      </div>
+      <div>
+        <div style="font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:5px">The holdout group is what separates a decision platform from a dashboard.</div>
+        <div style="font-size:12px;color:var(--ink2);line-height:1.6">A small group of similar accounts receives no intervention. The difference in retention between the treated group and the holdout is the platform's true, causal lift — not correlation riding natural renewal behaviour. This is how the ROI number becomes defensible to a CFO, not just a product team.</div>
       </div>
     </div>
+
+    <!-- PERFORMANCE BLOCK -->
+    <div style="margin-top:14px;background:var(--brand);border-radius:10px;padding:22px 24px">
+      <div style="font-family:var(--f-mono);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(244,242,236,.55);margin-bottom:16px">Decision Intelligence · Illustrative platform performance</div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:rgba(244,242,236,.12);border-radius:7px;overflow:hidden;margin-bottom:1px">
+        <div style="background:rgba(244,242,236,.06);padding:14px 16px">
+          <div style="font-size:26px;font-weight:600;letter-spacing:-.03em;color:#F4F2EC;line-height:1;margin-bottom:4px">$2.4M</div>
+          <div style="font-family:var(--f-mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:rgba(244,242,236,.5)">Revenue influenced</div>
+        </div>
+        <div style="background:rgba(244,242,236,.06);padding:14px 16px">
+          <div style="font-size:26px;font-weight:600;letter-spacing:-.03em;color:#9FE1CB;line-height:1;margin-bottom:4px">$850K</div>
+          <div style="font-family:var(--f-mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:rgba(244,242,236,.5)">ARR saved from churn</div>
+        </div>
+        <div style="background:rgba(244,242,236,.06);padding:14px 16px">
+          <div style="font-size:26px;font-weight:600;letter-spacing:-.03em;color:#9FE1CB;line-height:1;margin-bottom:4px">$1.55M</div>
+          <div style="font-family:var(--f-mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:rgba(244,242,236,.5)">ARR expanded</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:rgba(244,242,236,.12);border-radius:7px;overflow:hidden;margin-bottom:16px">
+        <div style="background:rgba(244,242,236,.06);padding:14px 16px">
+          <div style="font-size:26px;font-weight:600;letter-spacing:-.03em;color:#F4F2EC;line-height:1;margin-bottom:4px">4,180</div>
+          <div style="font-family:var(--f-mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:rgba(244,242,236,.5)">Actions executed</div>
+        </div>
+        <div style="background:rgba(244,242,236,.06);padding:14px 16px">
+          <div style="font-size:26px;font-weight:600;letter-spacing:-.03em;color:#F4F2EC;line-height:1;margin-bottom:4px">12,450</div>
+          <div style="font-family:var(--f-mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:rgba(244,242,236,.5)">Recommendations generated</div>
+        </div>
+        <div style="background:rgba(244,242,236,.06);padding:14px 16px">
+          <div style="font-size:26px;font-weight:600;letter-spacing:-.03em;color:#F4F2EC;line-height:1;margin-bottom:4px">33.5%</div>
+          <div style="font-family:var(--f-mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:rgba(244,242,236,.5)">Acceptance rate</div>
+        </div>
+      </div>
+      <div style="font-size:11.5px;color:rgba(244,242,236,.55);line-height:1.6;border-top:1px solid rgba(244,242,236,.12);padding-top:12px">These are illustrative metrics based on platform design assumptions — not measured production results. They show the shape of what the platform produces when running at scale: a majority of recommendations held in reserve by the Communication Budget, a minority executed precisely, and every outcome feeding back into sharper future decisions. The 33.5% acceptance rate reflects disciplined prioritisation, not low adoption.</div>
+    </div>
+
   </div>
 
   <div class="sec-divider"></div>
@@ -587,7 +627,7 @@ body{font-family:var(--f-sans);background:var(--bg);color:var(--ink);font-size:1
   <div class="section">
     <div class="eyebrow">Section 06 · Specialist agents</div>
     <h2 class="sec-title">Same engine. More specialists.</h2>
-    <p class="sec-sub">Phase 1 proves the loop with the two highest-certainty, fastest-payback agents. The catalog is the runway — every additional agent plugs into the same engine, the same scores, the same guardrails.</p>
+    <p class="sec-sub">31 agents across 7 domains. Phase 1 proves the loop with the two highest-certainty, fastest-payback agents. Every additional agent plugs into the same engine, the same scores, the same guardrails — no re-architecting required.</p>
 
     <div class="catalog-domains">
       <div class="cat-domain">
@@ -637,6 +677,14 @@ body{font-family:var(--f-sans);background:var(--bg);color:var(--ink);font-size:1
           <span class="cat-agent">Adoption</span>
           <span class="cat-agent">Health Monitoring</span>
           <span class="cat-agent">Expansion Readiness</span>
+        </div>
+      </div>
+      <div class="cat-domain">
+        <div class="cat-domain-head"><span class="cat-dot" style="background:var(--ink4)"></span><span class="cat-domain-name">Customer-facing</span><span class="cat-count">3 agents</span></div>
+        <div class="cat-domain-body">
+          <span class="cat-agent">Solution Advisor</span>
+          <span class="cat-agent">Product Recommendation</span>
+          <span class="cat-agent">Onboarding Guide</span>
         </div>
       </div>
       <div class="cat-domain">
